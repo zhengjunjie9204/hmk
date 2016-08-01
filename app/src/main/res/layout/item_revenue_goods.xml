@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/iv_goods"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="8dp"
+        android:scaleType="centerCrop"/>
+
+    <TextView
+        android:id="@+id/tv_select_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@mipmap/weidu_cent"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:textColor="@color/white"
+        android:text="5"
+        android:textSize="10sp"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/iv_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_alignParentRight="true"
+        android:background="@mipmap/delete_classify"
+        android:visibility="gone"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="2dp"
+        android:background="@mipmap/revenue_goods_bottom"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:id="@+id/tv_money"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/light_color"
+            android:textSize="10sp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:singleLine="true"
+            android:text="￥100.00"/>
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@id/tv_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/title_3_color"
+            android:textSize="10sp"
+            android:layout_marginLeft="2dp"
+            android:singleLine="true"
+            android:text="水壶"/>
+
+        <TextView
+            android:id="@+id/tv_count"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@id/tv_money"
+            android:layout_below="@id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/title_6_color"
+            android:textSize="8sp"
+            android:layout_marginLeft="2dp"
+            android:singleLine="true"
+            android:text="库存：100"/>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

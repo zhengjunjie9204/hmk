@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#FFFFFF" />
+    <stroke
+        android:width="0.5dp"
+        android:color="@color/gray" />
+
+    <corners android:radius="0dp" />
+
+</shape><!--收银记账详情货物列表加减框背景-->

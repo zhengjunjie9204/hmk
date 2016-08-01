@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:atb="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/appBG"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.xgx.syzj.widget.AnalysisTabBar
+            android:id="@+id/atb_a"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            atb:atbText="今天" />
+
+        <com.xgx.syzj.widget.AnalysisTabBar
+            android:id="@+id/atb_b"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            atb:atbText="7天" />
+
+        <com.xgx.syzj.widget.AnalysisTabBar
+            android:id="@+id/atb_c"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            atb:atbText="15天" />
+
+        <com.xgx.syzj.widget.AnalysisTabBar
+            android:id="@+id/atb_d"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            atb:atbText="30天" />
+
+        <com.xgx.syzj.widget.AnalysisTabBar
+            android:id="@+id/atb_e"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            atb:atbText="其他" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="5dp"
+                    android:background="#E7E7E7"
+                    android:layout_weight="1">
+
+                    <View
+                        android:id="@+id/view"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_marginTop="3dp"
+                        android:background="@color/red" />
+
+                    <TextView
+                        android:id="@+id/tv_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@id/view"
+                        android:textColor="@color/gray"
+                        android:textSize="14sp"
+                        android:text="散客消费占比"/>
+
+                    <TextView
+                        android:id="@+id/tv_percent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="25dp"
+                        android:textColor="@color/red"
+                        android:textSize="14sp"
+                        android:layout_toRightOf="@id/view"
+                        android:layout_below="@id/tv_title"
+                        android:text="40%"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="5dp"
+                    android:background="#E7E7E7"
+                    android:layout_weight="1">
+
+                    <View
+                        android:id="@+id/m_view"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_marginTop="3dp"
+                        android:background="@color/top_bar_color" />
+
+                    <TextView
+                        android:id="@+id/tv_m_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@id/m_view"
+                        android:textColor="@color/gray"
+                        android:textSize="14sp"
+                        android:text="会员消费占比"/>
+
+                    <TextView
+                        android:id="@+id/tv_m_percent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="25dp"
+                        android:textColor="@color/top_bar_color"
+                        android:textSize="14sp"
+                        android:layout_toRightOf="@id/m_view"
+                        android:layout_below="@id/tv_m_title"
+                        android:text="60%"/>
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/pieChart"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center_horizontal"
+                    android:padding="10dp"
+                    android:text="消费总额"
+                    android:textColor="@color/gray"
+                    android:textSize="14sp" />
+
+                <com.xgx.syzj.widget.TextItemView
+                    android:id="@+id/tv_all_member"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    atb:bgResource="@drawable/custom_text_item_bg"
+                    atb:descColor="@color/gray"
+                    atb:descTexts="9笔"
+                    atb:rightArrow="false"
+                    atb:titleTexts="会员:￥0" />
+
+                <com.xgx.syzj.widget.TextItemView
+                    android:id="@+id/tv_all_other"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    atb:bgResource="@drawable/custom_text_item_bg"
+                    atb:descColor="@color/gray"
+                    atb:descTexts="20笔"
+                    atb:rightArrow="false"
+                    atb:titleTexts="零售:￥0" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center_horizontal"
+                    android:padding="10dp"
+                    android:text="客单价"
+                    android:textColor="@color/gray"
+                    android:textSize="14sp" />
+
+                <com.xgx.syzj.widget.TextItemView
+                    android:id="@+id/tv_new_member"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    atb:bgResource="@drawable/custom_text_item_bg"
+                    atb:descColor="@color/gray"
+                    atb:descTexts="1000"
+                    atb:rightArrow="true"
+                    atb:titleTexts="新增会员" />
+
+                <com.xgx.syzj.widget.TextItemView
+                    android:id="@+id/tv_add_money"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    atb:bgResource="@drawable/custom_text_item_bg"
+                    atb:descColor="@color/gray"
+                    atb:descTexts="¥ 23215.00"
+                    atb:rightArrow="true"
+                    atb:titleTexts="会员储值" />
+
+                <com.xgx.syzj.widget.TextItemView
+                    android:id="@+id/tv_add_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    atb:bgResource="@drawable/custom_text_item_bg"
+                    atb:descColor="@color/gray"
+                    atb:descTexts="¥ 15214.00"
+                    atb:rightArrow="true"
+                    atb:titleTexts="会员充次" />
+            </LinearLayout>
+
+            <!--<TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_horizontal"
+                android:padding="10dp"
+                android:text="年龄分布"
+                android:textColor="@color/gray"
+                android:textSize="14sp" />
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/barChartAge"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:background="@color/white"/>-->
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"/>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

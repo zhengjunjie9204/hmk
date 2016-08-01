@@ -1,0 +1,29 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- 输入框高度 -->
+    <dimen name="et_height">46dip</dimen>
+    <!-- 登录注册输入框高度-->
+    <dimen name="et_log_reg_height">36dip</dimen>
+    <!-- 搜索框高度 -->
+    <dimen name="ser_et_height">30dip</dimen>
+    <!-- 反馈输入框高度 -->
+    <dimen name="fb_et_height">160dip</dimen>
+    <!-- 顶部栏高度 -->
+    <dimen name="top_bar_height">48dp</dimen>
+    <!-- Tab高 -->
+    <dimen name="tab_height">35dp</dimen>
+    <!-- 会员列表筛选字母字体大小 -->
+    <dimen name="sidebar_text_size">12sp</dimen>
+
+    <!--计算器行高-->
+    <dimen name="cpt_height">40dp</dimen>
+    <!--计算器结算行高度，是cpt_height的2倍加上横向分割线数量-->
+    <dimen name="cpt_js_height">101dp</dimen>
+    <!--计算器分割线高度，是cpt_height的4倍加上横向分割线数量-->
+    <dimen name="cpt_line_height">203dp</dimen>
+
+    <dimen name="TextItemView_titleMarginLeft">20dp</dimen>
+</resources>

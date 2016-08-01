@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
+    android:background="@drawable/list_item_selector_bg"
+    android:orientation="vertical">
+
+    <com.xgx.syzj.widget.CircleImageView
+        android:id="@+id/iv_good"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:src="@mipmap/c_goodspicture"/>
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/iv_good"
+        android:singleLine="true"
+        android:textSize="14sp"
+        android:layout_marginTop="15dp"
+        android:text="电脑"/>
+
+    <TextView
+        android:id="@+id/tv_money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="100dp"
+        android:layout_toRightOf="@id/iv_good"
+        android:layout_marginTop="6dp"
+        android:layout_below="@id/tv_name"
+        android:textColor="@color/red"
+        android:singleLine="true"
+        android:textSize="14sp"
+        android:text="$100.00"/>
+
+    <CheckBox
+        android:id="@+id/cb"
+        style="@style/checkbox_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:visibility="gone"
+        android:focusable="false"
+        android:checked="false"/>
+
+    <TextView
+        android:id="@+id/tv_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_name"
+        android:layout_marginLeft="30dp"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="6dp"
+        android:layout_toRightOf="@id/tv_money"
+        android:textSize="12sp"
+        android:textColor="@color/gray"
+        android:text="库存：100件"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/iv_good"
+        android:layout_toRightOf="@id/iv_good"
+        android:background="@color/gray_bg" />
+
+</RelativeLayout>

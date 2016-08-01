@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/iv_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:src="@mipmap/qrcode"/>
+
+    <Button
+        android:id="@+id/btn_delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/button_menu_cancel"
+        android:onClick="onDelete"
+        android:paddingBottom="12dp"
+        android:paddingTop="12dp"
+        android:text="@string/app_button_delete"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/btn_delete"
+        android:layout_below="@+id/iv_code"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:drawableLeft="@mipmap/card_no"
+                android:drawablePadding="5dp"
+                android:text="@string/member_add_card_no"
+                android:textColor="@color/title_3_color"
+                android:textSize="14sp"/>
+
+            <EditText
+                android:id="@+id/et_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="right"
+                android:hint="@string/member_add_card_hint"
+                android:inputType="number"
+                android:padding="12dp"
+                android:singleLine="true"
+                android:textColor="@color/title_6_color"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+        <include layout="@layout/layout_line"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:drawableLeft="@mipmap/card_name"
+                android:drawablePadding="5dp"
+                android:drawableRight="@mipmap/bitian"
+                android:text="@string/member_add_card_name"
+                android:textColor="@color/title_3_color"
+                android:textSize="14sp"/>
+
+            <EditText
+                android:id="@+id/et_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="right"
+                android:padding="12dp"
+                android:singleLine="true"
+                android:textColor="@color/title_6_color"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+        <include layout="@layout/layout_line"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:drawableLeft="@mipmap/card_phone"
+                android:drawablePadding="5dp"
+                android:drawableRight="@mipmap/bitian"
+                android:text="@string/member_add_card_phone"
+                android:textColor="@color/title_3_color"
+                android:textSize="14sp"/>
+
+            <EditText
+                android:id="@+id/et_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="right"
+                android:inputType="phone"
+                android:padding="12dp"
+                android:singleLine="true"
+                android:textColor="@color/title_6_color"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+        <include layout="@layout/layout_line"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:drawableLeft="@mipmap/card_group"
+                android:drawablePadding="5dp"
+                android:drawableRight="@mipmap/bitian"
+                android:text="@string/member_add_car_number"
+                android:textColor="@color/title_3_color"
+                android:textSize="14sp"/>
+
+            <EditText
+                android:id="@+id/et_carNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="right"
+                android:padding="12dp"
+                android:singleLine="true"
+                android:textColor="@color/title_6_color"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+        <include layout="@layout/layout_line"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:drawableLeft="@mipmap/card_address"
+                android:drawablePadding="5dp"
+                android:text="@string/member_add_car_type"
+                android:textColor="@color/title_3_color"
+                android:textSize="14sp"/>
+
+            <EditText
+                android:id="@+id/et_carType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="right"
+                android:padding="12dp"
+                android:singleLine="true"
+                android:textColor="@color/title_6_color"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+        <include layout="@layout/layout_line"/>
+
+    </LinearLayout>
+</RelativeLayout>

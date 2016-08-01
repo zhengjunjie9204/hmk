@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/appBG"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:background="#02CAC3"
+            android:gravity="center_vertical"
+            android:onClick="onMemberGoods"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:tag="member">
+
+            <!--<com.xgx.syzj.widget.CircleImageView
+                android:id="@+id/iv_header"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:scaleType="centerInside"
+                android:src="@mipmap/revenue_member"
+                app:border_color="@color/title_context_bg"
+                app:border_width="0dp" />-->
+            <ImageView
+                android:id="@+id/iv_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="centerInside"
+                android:src="@mipmap/revenue_member"/>
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="会员"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/white_right_tw"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:background="#62BEFD"
+            android:gravity="center_vertical"
+            android:onClick="onMemberGoods"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:tag="goods">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/revenue_goods" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="选商品"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/white_right_tw"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_hint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="请直接输入销售金额"
+            android:textColor="@color/gray"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_money"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/solid_black"
+            android:textSize="22sp"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/ll_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="当前记录"
+                android:textColor="@color/gray"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/weidu_cent"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:text="1"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="笔销售"
+                android:textColor="@color/gray"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingBottom="13dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="13dp">
+
+        <TextView
+            android:id="@+id/tv_remark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingRight="10dp"
+            android:singleLine="true"
+            android:text="备注："
+            android:textColor="@color/gray"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="¥ 0.00"
+            android:minWidth="60dp"
+            android:singleLine="true"
+            android:textColor="@color/gray"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <include layout="@layout/layout_line" />
+
+    <android.support.percent.PercentRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <Button
+            android:id="@+id/seven"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/cpt_height"
+            android:background="@drawable/button_selector_bg"
+            android:gravity="center"
+            android:onClick="onCalculate"
+            android:tag="7"
+            android:text="7"
+            android:textColor="@color/gray"
+            android:textSize="26sp"
+            app:layout_widthPercent="25%" />
+
+        <View
+            android:id="@+id/line_one"
+            android:layout_width="1dp"
+            android:layout_height="@dimen/cpt_line_height"
+            android:layout_toRightOf="@id/seven"
+            android:background="#EFEFEF" />
+
+        <Button
+            android:id="@+id/eight"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/cpt_height"
+            android:layout_toRightOf="@id/line_one"
+            android:background="@drawable/button_selector_bg"
+            android:gravity="center"
+            android:onClick="onCalculate"
+            android:tag="8"
+            android:text="8"
+            android:textColor="@color/gray"
+            android:textSize="26sp"
+            app:layout_widthPercent="25%" />
+
+        <View
+            android:id="@+id/line_two"
+            android:layout_width="1dp"
+            android:layout_height="@dimen/cpt_line_height"
+            android:layout_toRightOf="@id/eight"
+            android:background="#EFEFEF" />
+
+        <Button
+            android:id="@+id/nine"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/cpt_height"
+            android:layout_toRightOf="@id/line_two"
+            android:background="@drawable/button_selector_bg"
+            android:gravity="center"
+            android:onClick="onCalculate"
+            android:tag="9"
+            android:text="9"
+            android:textColor="@color/gray"
+            android:textSize="26sp"
+            app:layout_widthPercent="25%" />
+
+        <View
+            android:id="@+id/line_three"
+            android:layout_width="1dp"
+            android:layout_height="@dimen/cpt_line_height"
+            android:layout_toRightOf="@id/nine"
+            android:background="#EFEFEF" />
+
+        <Button
+            android:id="@+id/clean"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/cpt_height"
+            android:layout_toRightOf="@id/line_three"
+            android:background="@drawable/button_selector_bg"
+            android:gravity="center"
+            android:onClick="onCalculate"
+            android:tag="C"
+            android:text="C"
+            android:textColor="@color/gray"
+            android:textSize="26sp"
+            app:layout_widthPercent="25%" />
+
+        <View
+            android:id="@+id/line_four"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/seven"
+            android:background="#EFEFEF" />
+
+        <Button
+            android:id="@+id/four"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/cpt_height"
+            android:layout_below="@id/line_four"
+            android:background="@drawable/button_selector_bg"
+            android:gravity="center"
+            android:onClick="onCalculate"
+            android:tag="4"
+            android:text="4"
+            android:textColor="@color/gray"
+            android:textSize="26sp"
+            app:layout_widthPercent="25%" />
+
+        <Button
+            android:id="@+id/five"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/cpt_height"
+            android:layout_below="@id/line_four"
+            android:layout_toRightOf="@id/line_one"
+            android:background="@drawable/button_selector_bg"
+            android:gravity="center"
+            android:onClick="onCalculate"
+            android:tag="5"
+            android:text="5"
+            android:textColor="@color/gray"
+            android:textSize="26sp"
+            app:layout_widthPercent="25%" />
+
+        <Button
+            android:id="@+id/six"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/cpt_height"
+            android:layout_below="@id/line_four"
+            android:layout_toRightOf="@id/line_two"
+            android:background="@drawable/button_selector_bg"
+            android:gravity="center"
+            android:onClick="onCalculate"
+            android:tag="6"
+            android:text="6"
+            android:textColor="@color/gray"
+            android:textSize="26sp"
+            app:layout_widthPercent="25%" />
+
+        <ImageView
+            android:id="@+id/delete"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/cpt_height"
+            android:layout_below="@id/line_four"
+            android:layout_toRightOf="@id/line_three"
+            android:layout_weight="1"
+            android:background="@drawable/button_selector_bg"
+            android:gravity="center"
+            android:onClick="onCalculate"
+            android:scaleType="center"
+            android:src="@mipmap/delete_number"
+            android:tag="D"
+            android:textColor="@color/gray"
+            android:textSize="26sp"
+            app:layout_widthPercent="25%" />
+
+        <View
+            android:id="@+id/line_five"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/four"
+            android:background="#EFEFEF" />
+
+        <Button
+            android:id="@+id/one"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/cpt_height"
+            android:layout_below="@id/line_five"
+            android:background="@drawable/button_selector_bg"
+            android:gravity="center"
+            android:onClick="onCalculate"
+            android:tag="1"
+            android:text="1"
+            android:textColor="@color/gray"
+            android:textSize="26sp"
+            app:layout_widthPercent="25%" />
+
+        <Button
+            android:id="@+id/two"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/cpt_height"
+            android:layout_below="@id/line_five"
+            android:layout_toRightOf="@id/line_one"
+            android:background="@drawable/button_selector_bg"
+            android:gravity="center"
+            android:onClick="onCalculate"
+            android:tag="2"
+            android:text="2"
+            android:textColor="@color/gray"
+            android:textSize="26sp"
+            app:layout_widthPercent="25%" />
+
+        <Button
+            android:id="@+id/three"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/cpt_height"
+            android:layout_below="@id/line_five"
+            android:layout_toRightOf="@id/line_two"
+            android:background="@drawable/button_selector_bg"
+            android:gravity="center"
+            android:onClick="onCalculate"
+            android:tag="3"
+            android:text="3"
+            android:textColor="@color/gray"
+            android:textSize="26sp"
+            app:layout_widthPercent="25%" />
+
+        <View
+            android:id="@+id/line_six"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/one"
+            android:background="#EFEFEF" />
+
+        <Button
+            android:id="@+id/zero"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/cpt_height"
+            android:layout_below="@id/line_six"
+            android:background="@drawable/button_selector_bg"
+            android:gravity="center"
+            android:onClick="onCalculate"
+            android:tag="0"
+            android:text="0"
+            android:textColor="@color/gray"
+            android:textSize="26sp"
+            app:layout_widthPercent="25%" />
+
+        <Button
+            android:id="@+id/dot"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/cpt_height"
+            android:layout_below="@id/line_six"
+            android:layout_toRightOf="@id/line_one"
+            android:background="@drawable/button_selector_bg"
+            android:gravity="center"
+            android:onClick="onCalculate"
+            android:tag="dot"
+            android:text="."
+            android:textColor="@color/gray"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_widthPercent="25%" />
+
+        <Button
+            android:id="@+id/add"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/cpt_height"
+            android:layout_below="@id/line_six"
+            android:layout_toRightOf="@id/line_two"
+            android:background="@drawable/button_selector_bg"
+            android:gravity="center"
+            android:onClick="onCalculate"
+            android:tag="A"
+            android:text="+"
+            android:textColor="@color/red"
+            android:textSize="40sp"
+            app:layout_widthPercent="25%" />
+
+        <Button
+            android:id="@+id/jiesuan"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/cpt_js_height"
+            android:layout_below="@id/line_five"
+            android:layout_toRightOf="@id/line_three"
+            android:background="@color/gray_bg"
+            android:gravity="center"
+            android:onClick="onCalculate"
+            android:tag="J"
+            android:text="结算"
+            android:textColor="@color/gray"
+            android:textSize="16sp"
+            app:layout_widthPercent="25%" />
+
+        <View
+            android:layout_below="@id/zero"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#EFEFEF" />
+    </android.support.percent.PercentRelativeLayout>
+
+</LinearLayout>

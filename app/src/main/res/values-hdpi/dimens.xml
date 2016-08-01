@@ -1,0 +1,9 @@
+<resources>
+
+    <!--计算器行高-->
+    <dimen name="cpt_height">70dp</dimen>
+    <!--计算器结算行高度，是上面高度的2倍-->
+    <dimen name="cpt_js_height">141dp</dimen>
+    <!--计算器分割线高度，是cpt_height的4倍-->
+    <dimen name="cpt_line_height">283dp</dimen>
+</resources>

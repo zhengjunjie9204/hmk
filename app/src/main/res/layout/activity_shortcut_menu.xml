@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/button_menu_cancel"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
+            android:text="@string/app_button_cancel"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:onClick="onCancel"/>
+
+        <Button
+            android:id="@+id/btn_sure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/button_menu_sure"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
+            android:text="@string/app_button_sure"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:onClick="onSure"/>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lv_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/ll_button"
+        android:divider="@color/line_color"
+        android:dividerHeight="0.5dp"/>
+
+</RelativeLayout>

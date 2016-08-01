@@ -1,0 +1,1 @@
+include ':app', ':library', ':MPChartLib', ':SwipeMenuListViewLibrary', ':ptr-lib', ':logger','AnimationsLibrary'

@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/appBG"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/top_bar_height"
+        android:background="@color/top_bar_color">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/iv_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="@mipmap/menu" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_center"
+        android:layout_below="@id/rl_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/top_bar_color"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/button_selector_bg"
+            android:drawablePadding="8dp"
+            android:drawableTop="@mipmap/main_send_card"
+            android:onClick="onAddMember"
+            android:paddingBottom="16dp"
+            android:paddingTop="16dp"
+            android:text="@string/main_add_menber"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="12dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="16dp"
+            android:background="@color/white" />
+
+        <Button
+            android:id="@+id/btn_revenue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/button_selector_bg"
+            android:drawablePadding="8dp"
+            android:drawableTop="@mipmap/main_payfor_big"
+            android:onClick="onAddMoney"
+            android:paddingBottom="16dp"
+            android:paddingTop="16dp"
+            android:text="@string/main_add_money"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="12dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="16dp"
+            android:background="@color/white" />
+
+        <Button
+            android:id="@+id/btn_order"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/button_selector_bg"
+            android:drawablePadding="8dp"
+            android:drawableTop="@mipmap/main_addsales_bit"
+            android:onClick="onMyStore"
+            android:paddingBottom="16dp"
+            android:paddingTop="16dp"
+            android:text="@string/main_small_order"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_location"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#bf555555"
+        android:padding="3dp"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:visibility="gone" />
+
+    <ScrollView
+        android:id="@+id/sv1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/ll_center"
+        android:layout_above="@id/tv_location"
+        android:background="@color/white"
+        android:visibility="visible"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible"
+            android:orientation="vertical">
+
+            <include layout="@layout/layout_line"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:background="@drawable/button_selector_bg"
+                android:onClick="onManGoods">
+
+                <ImageView
+                    android:id="@+id/iv_bt1"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@mipmap/tool_sales_management"/>
+
+                <TextView
+                    android:id="@+id/tv_title1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/iv_bt1"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="3dp"
+                    android:text="@string/main_manage_goods"
+                    android:textSize="15sp"
+                    android:textColor="@color/title_3_color"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/iv_bt1"
+                    android:layout_below="@id/tv_title1"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/main_manage_goods_message"
+                    android:textSize="14sp"
+                    android:textColor="@color/gray"/>
+
+            </RelativeLayout>
+
+            <include layout="@layout/layout_line"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:background="@drawable/button_selector_bg"
+                android:onClick="onManMember">
+
+                <ImageView
+                    android:id="@+id/iv_bt2"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@mipmap/tool_user_management"/>
+
+                <TextView
+                    android:id="@+id/tv_title2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/iv_bt2"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="3dp"
+                    android:text="@string/main_manage_menber"
+                    android:textSize="15sp"
+                    android:textColor="@color/title_3_color"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/iv_bt2"
+                    android:layout_below="@id/tv_title2"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/main_manage_member_message"
+                    android:textSize="14sp"
+                    android:textColor="@color/gray"/>
+
+            </RelativeLayout>
+
+            <include layout="@layout/layout_line"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:background="@drawable/button_selector_bg"
+                android:onClick="onCheckSell">
+
+                <ImageView
+                    android:id="@+id/iv_bt3"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@mipmap/tool_shop_management"/>
+
+                <TextView
+                    android:id="@+id/tv_title3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/iv_bt3"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="3dp"
+                    android:text="@string/main_check_sell"
+                    android:textSize="15sp"
+                    android:textColor="@color/title_3_color"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/iv_bt3"
+                    android:layout_below="@id/tv_title3"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/main_check_sell_message"
+                    android:textSize="14sp"
+                    android:textColor="@color/gray"/>
+
+            </RelativeLayout>
+
+            <include layout="@layout/layout_line"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:background="@drawable/button_selector_bg"
+                android:onClick="onAddPay">
+
+                <ImageView
+                    android:id="@+id/iv_bt4"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@mipmap/tool_sales_account"/>
+
+                <TextView
+                    android:id="@+id/tv_title4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/iv_bt4"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="3dp"
+                    android:text="@string/main_add_revenue"
+                    android:textSize="15sp"
+                    android:textColor="@color/title_3_color"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/iv_bt4"
+                    android:layout_below="@id/tv_title4"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/main_add_revenue_message"
+                    android:textSize="14sp"
+                    android:textColor="@color/gray"/>
+
+            </RelativeLayout>
+
+            <include layout="@layout/layout_line"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:background="@drawable/button_selector_bg"
+                android:onClick="onGoodsAnalysis">
+
+                <ImageView
+                    android:id="@+id/iv_bt5"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@mipmap/tool_analysis"/>
+
+                <TextView
+                    android:id="@+id/tv_title5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/iv_bt5"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="3dp"
+                    android:text="@string/main_analysis"
+                    android:textSize="15sp"
+                    android:textColor="@color/title_3_color"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/iv_bt5"
+                    android:layout_below="@id/tv_title5"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/main_analysis_message"
+                    android:textSize="14sp"
+                    android:textColor="@color/gray"/>
+
+            </RelativeLayout>
+
+            <include layout="@layout/layout_line"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:background="@null"
+                android:visibility="gone"
+                android:text="+添加功能"/>
+
+            <include layout="@layout/layout_line"/>
+        </LinearLayout>
+    </ScrollView>
+
+
+</RelativeLayout>

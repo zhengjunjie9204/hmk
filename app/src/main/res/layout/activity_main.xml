@@ -1,0 +1,23 @@
+<android.support.v4.widget.SlidingPaneLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/SlidingPanel"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <fragment
+        android:id="@+id/leftfragment"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        android:name="com.xgx.syzj.ui.MainMenuListFragment"
+        tools:layout="@layout/fragment_main_menu_list" />
+
+    <fragment
+        android:id="@+id/rightfragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:layout_weight="1"
+        android:name="com.xgx.syzj.ui.MainContainerFragment"
+        tools:layout="@layout/fragment_main_container" />
+</android.support.v4.widget.SlidingPaneLayout>

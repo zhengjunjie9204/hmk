@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:txv="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/appBG">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:txv="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.xgx.syzj.widget.TextItemView
+            android:id="@+id/tiv_num"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            txv:titleTexts="订单号"
+            txv:titleMarginLeft="10dp"
+            txv:titleColor="@color/title_3_color"
+            txv:descTexts="18451025012"/>
+
+        <com.xgx.syzj.widget.TextItemView
+            android:id="@+id/tiv_userName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            txv:titleTexts="会员名"
+            txv:titleMarginLeft="10dp"
+            txv:titleColor="@color/title_3_color"
+            txv:descTexts="张三(18451025012)"/>
+
+        <com.xgx.syzj.widget.TextItemView
+            android:id="@+id/tiv_orderTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            txv:titleTexts="订单时间"
+            txv:titleMarginLeft="10dp"
+            txv:titleColor="@color/title_3_color"
+            txv:descTexts="2015-08-17 22:52:10"/>
+
+        <com.xgx.syzj.widget.TextItemView
+            android:id="@+id/tiv_reservationTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            txv:titleTexts="预约时间"
+            txv:titleMarginLeft="10dp"
+            txv:titleColor="@color/title_3_color"
+            txv:descTexts="2015-08-19 22:52:10"/>
+
+        <com.xgx.syzj.widget.TextItemView
+            android:id="@+id/tiv_goods"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            txv:titleTexts="商品明细"
+            txv:titleMarginLeft="10dp"
+            txv:titleColor="@color/title_3_color"
+            txv:descTexts="合计：￥520.00"/>
+
+        <LinearLayout
+            android:id="@+id/container"
+            android:layout_marginTop="1dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+        <Button
+            android:id="@+id/btn_delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/button_orange_bg"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"
+            android:layout_margin="40dp"
+            android:text="订单作废"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+</ScrollView>

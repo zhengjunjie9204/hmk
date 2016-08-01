@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="10dp"
+    android:background="@drawable/list_item_selector_bg"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:textColor="@color/title_3_color"
+        android:text="粤Q23315"
+        app:layout_widthPercent="40%"/>
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/tv_number"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:textColor="@color/gray"
+        android:text="吴勇"
+        app:layout_widthPercent="25%"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:layout_toRightOf="@id/tv_name"
+        android:padding="10dp"
+        android:textColor="@color/red"
+        android:text="VIP"
+        app:layout_widthPercent="25%"/>
+
+
+</android.support.percent.PercentRelativeLayout>

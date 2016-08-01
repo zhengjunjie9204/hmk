@@ -1,0 +1,111 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_reg_step_header" />
+
+    <LinearLayout
+        android:id="@+id/ll_input"
+        android:layout_below="@id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/et_number"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/et_height"
+            android:background="@drawable/edittext_bg"
+            android:inputType="number"
+            android:paddingLeft="10dp"
+            android:singleLine="true"
+            android:textColor="@color/edite_color"
+            android:textColorHint="@color/edite_color"
+            android:textCursorDrawable="@null"
+            android:hint="@string/reg_two_input_hint"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btn_send"
+            android:layout_marginLeft="10dp"
+            android:layout_width="0dp"
+            android:layout_weight="1.5"
+            android:layout_height="@dimen/et_height"
+            android:background="@drawable/button_verify_bg"
+            android:textColor="@color/gray"
+            android:paddingLeft="8dp"
+            android:gravity="center"
+            android:paddingRight="8dp"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_next"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_input"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/button_login_bg"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:text="@string/reg_next_step"
+        android:textColor="@color/white" />
+
+    <LinearLayout
+        android:layout_below="@id/btn_next"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/detail_bgColor"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/gray"
+            android:layout_margin="20dp"
+            android:text="@string/reg_two_one"/>
+
+        <TextView
+            android:id="@+id/tv_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="15965462144"
+            android:textColor="@color/gray"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/gray"
+            android:text="@string/reg_two_two"/>
+
+        <Button
+            android:id="@+id/btn_send_sms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reg_two_three"
+            android:textColor="@color/gray"
+            android:padding="15dp"
+            android:background="@drawable/button_send_sms_bg"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <include layout="@layout/layout_copyright" />
+
+    </LinearLayout>
+
+</RelativeLayout>

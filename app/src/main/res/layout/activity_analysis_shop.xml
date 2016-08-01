@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ProgressWheel="http://schemas.android.com/apk/res-auto"
+    xmlns:txv="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/top_bar_color"
+        android:paddingBottom="20dp"
+        android:paddingTop="10dp">
+
+        <TextView
+            android:id="@+id/tv_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="一键回眸"
+            android:background="@mipmap/tiyan"
+            android:textColor="@color/white" />
+
+        <!--<com.xgx.syzj.widget.ProgressWheel
+            android:id="@+id/progress"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_centerHorizontal="true"
+            android:visibility="visible"
+            ProgressWheel:barColor="@color/white"
+            ProgressWheel:barLength="30dp"
+            ProgressWheel:barWidth="3dp"
+            ProgressWheel:contourColor="#0000"
+            ProgressWheel:contourSize="1dp"
+            ProgressWheel:rimColor="@color/gray_bg"
+            ProgressWheel:rimWidth="1dp"
+            ProgressWheel:spinSpeed="1dp"
+            ProgressWheel:text="一键回眸"
+            ProgressWheel:textColor="@color/white"
+            ProgressWheel:textSize="14sp" />-->
+
+    </RelativeLayout>
+
+    <com.xgx.syzj.widget.TextItemView
+        android:id="@+id/tv_kucun"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        txv:rightArrow="true"
+        txv:descColor="@color/light_color"
+        txv:titleColor="@color/title_6_color"
+        txv:titleTexts="库存积压情况"/>
+
+    <include layout="@layout/layout_line"/>
+
+    <com.xgx.syzj.widget.TextItemView
+        android:id="@+id/tv_member"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        txv:rightArrow="true"
+        txv:titleColor="@color/title_6_color"
+        txv:descColor="@color/light_color"
+        txv:titleTexts="会员活跃情况" />
+
+    <include layout="@layout/layout_line"/>
+
+    <com.xgx.syzj.widget.TextItemView
+        android:id="@+id/tv_pay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        txv:rightArrow="true"
+        txv:descColor="@color/light_color"
+        txv:titleColor="@color/title_6_color"
+        txv:titleTexts="移动支付使用" />
+
+    <include layout="@layout/layout_line"/>
+
+    <com.xgx.syzj.widget.TextItemView
+        android:id="@+id/tv_conpon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        txv:rightArrow="true"
+        txv:descColor="@color/light_color"
+        txv:titleColor="@color/title_6_color"
+        txv:titleTexts="卡券核销情况" />
+
+    <include layout="@layout/layout_line"/>
+</LinearLayout>

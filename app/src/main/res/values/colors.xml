@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- <color name="red">#bf2323</color>
+    <color name="light_red">#942a2a</color>
+    <color name="green">#090</color>
+    <color name="blue">#009</color>
+    <color name="white">#FFF</color>
+    <color name="black">#000</color>
+    <color name="gray">#d8d8d8</color>
+    <color name="transparent">#0000</color>
+
+    <color name="backColor">#2000</color>
+    <color name="detail_bgColor">#f5f5f5</color>
+
+    <color name="defaultTextColor">#666</color>
+	<color name="loadingMorebg">#F2F2F2 </color>
+	<color name="appBG">#e6e6e6</color>
+
+	<color name="top_bar_bg">#f4f4f4</color>
+	<color name="top_bar_bomttom_line">#b3b3b3</color>
+	<color name="behind_user_top_bg">#c63c3c</color>
+	<color name="behind_user_content_bg">#eeeeee</color>
+	<color name="behind_user_bottom_bg">#b7b7b7</color>
+	<color name="song_list_text_bg">#5f5f5f</color>
+	<color name="comment_list_item_right">#c3c3c3</color>
+	<color name="edite_text_color">#666666</color>
+	列表颜色
+	<color name="listTitleTextColor">#5f5f5f</color>
+	<color name="listSubTitleTextColor">#a1a1a1</color> -->
+
+    <color name="window_background">#FFF5F5F5</color>
+
+    <color name="light_red">#942a2a</color>
+    <color name="green">#090</color>
+    <color name="blue">#009</color>
+    <color name="light_blue">#39A1E8</color>
+    <color name="btn_green">#38B89F</color>
+
+
+    <color name="backColor">#2000</color>
+    <color name="detail_bgColor">#f5f5f5</color>
+
+    <color name="defaultTextColor">#666</color>
+    <color name="loadingMorebg">#F2F2F2</color>
+
+    <color name="top_bar_bg">#f4f4f4</color>
+    <color name="top_bar_bomttom_line">#b3b3b3</color>
+    <color name="behind_user_top_bg">#c63c3c</color>
+    <color name="behind_user_content_bg">#eeeeee</color>
+    <color name="behind_user_bottom_bg">#b7b7b7</color>
+    <color name="song_list_text_bg">#5f5f5f</color>
+    <color name="forum_send_text_bg">#dd5862</color>
+    <color name="comment_list_item_right">#c3c3c3</color>
+    <color name="edite_text_color">#4e4e4e</color>
+
+    <!-- tab字体及游标颜色 -->
+    <color name="tab_red">#dd5862</color>
+    <!-- app中的红色 -->
+    <color name="red">#dd5862</color>
+    <!-- 整个app背景 -->
+    <!-- 导航栏背景 -->
+    <color name="tab_bg">#272727</color>
+    <!-- 导航栏文字未选择状态色值 -->
+    <color name="tab_normal">#7d7d7d</color>
+    <!-- 列表线的颜色 -->
+    <color name="line_color">#c1c1c1</color>
+    <!-- 话题列表线的颜色 -->
+    <color name="froum_line_color">#d8d8d8</color>
+
+    <!-- tab或内容的底色 -->
+    <color name="tab_context_bg">#f6f6f6</color>
+    <!-- 标题或内容的底色 -->
+
+    <color name="title_context_bg">#f4f4f4</color>
+    <!-- 话题内容user名颜色，点赞、评论数 、内容数量-->
+    <!-- 期刊评论user 名颜色 -->
+    <color name="forum_user_color">#9a9a9a</color>
+    <color name="list_sub_text_color">#9a9a9a</color>
+    <!-- 话题内容时间、来自-->
+    <color name="forum_time_color">#bababa</color>
+    <!-- 话题及内容文字颜色 -->
+    <color name="forum_context_color">#4e4e4e</color>
+    <!-- 列表标题或详情内容标题颜色 -->
+    <color name="listTitleTextColor">#1a1a1a</color>
+    <!-- 列表副标题或者正文颜色 -->
+    <color name="listSubTitleTextColor">#3b3b3b</color>
+    <!-- 输入框提示文字颜色 -->
+    <color name="editHintColor">#bababa</color>
+    <!-- <color name="editHintColor">#d2d2d2</color>  -->
+    <!-- 次要文字（地址、用户名、数量） -->
+    <color name="otherColor">#626262</color>
+    <!-- 内容评论底色 -->
+    <color name="forum_detail_bg">#f3f3f5</color>
+    <!-- 歌曲歌手名称 -->
+    <color name="list_song_singer">#bababa</color>
+    <!-- 私信页面时间 -->
+    <color name="message_time_bg">#b1b1b1</color>
+
+
+    <color name="light_color">#F26340</color>
+    <color name="un_enable_color">#E5E5E5</color>
+    <color name="dialog_msg_color">#555555</color>
+    <color name="dialog_btn_color">#4995D5</color>
+
+    <color name="main_center_color">#F37A5A</color>
+    <color name="short_menu_cancel_n_color">#F37A5A</color>
+    <color name="short_menu_cancel_p_color">#E45C33</color>
+    <color name="short_menu_sure_n_color">#F26340</color>
+    <color name="short_menu_sure_p_color">#E45C33</color>
+
+    <color name="pic_choose_cancel_p_bg">#554D5355</color>
+    <color name="pic_choose_cancel_n_bg">#4D5355</color>
+
+    <color name="result_view">#b0000000</color>
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="possible_result_points">#c0ffff00</color>
+
+    <color name="button_goods_delete_color">#F58265</color>
+    <color name="button_goods_add_sell_color">#F37350</color>
+    <color name="button_goods_share_color">#F2623D</color>
+
+    <color name="edite_color">#B1B1B1</color>
+
+    <!--常规-->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="gray">#888888</color>
+    <color name="gray_bg">#EFEFEF</color>
+    <color name="transparent">#0000</color>
+    <!--应用底色-->
+    <color name="appBG">#F7F7F7</color>
+    <!--侧滑栏底色-->
+    <color name="main_menu_color">#09304B</color>
+    <!--顶部bar颜色-->
+    <color name="top_bar_color">#39A1E8</color>
+    <!--二级黑色-->
+    <color name="text_black">#484848</color>
+    <color name="title_3_color">#333333</color>
+    <color name="title_6_color">#666666</color>
+</resources>

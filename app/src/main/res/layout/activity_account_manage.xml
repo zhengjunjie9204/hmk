@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/appBG"
+    android:orientation="vertical">
+
+    <com.xgx.syzj.widget.CircleImageView
+        android:id="@+id/civ_logo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="20dp"
+        android:src="@mipmap/pic"
+        app:border_color="@color/top_bar_color"
+        app:border_width="2dp" />
+
+    <include layout="@layout/layout_line" />
+
+    <com.xgx.syzj.widget.TextItemView
+        android:id="@+id/tiv_shop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:descColor="@color/title_6_color"
+        app:descTexts="和记黄埔"
+        app:iconLeft="@mipmap/account_manage_shop"
+        app:rightArrow="true"
+        app:titleColor="@color/title_3_color"
+        app:titleMarginLeft="10dp"
+        app:titleTexts="店铺信息" />
+
+    <include layout="@layout/layout_line" />
+
+    <com.xgx.syzj.widget.TextItemView
+        android:id="@+id/tiv_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:descColor="@color/title_6_color"
+        app:descTexts="张三（老板）"
+        app:iconLeft="@mipmap/account_manage_user"
+        app:rightArrow="true"
+        app:titleColor="@color/title_3_color"
+        app:titleMarginLeft="10dp"
+        app:titleTexts="当前用户"/>
+
+    <include layout="@layout/layout_line" />
+
+    <com.xgx.syzj.widget.TextItemView
+        android:id="@+id/tiv_manage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:descColor="@color/title_6_color"
+        app:descTexts="美容美发）"
+        app:iconLeft="@mipmap/account_manage_manage"
+        app:rightArrow="true"
+        app:titleColor="@color/title_3_color"
+        app:titleMarginLeft="10dp"
+        app:titleTexts="员工管理" />
+
+    <include layout="@layout/layout_line" />
+
+    <com.xgx.syzj.widget.TextItemView
+        android:id="@+id/tiv_new"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:descColor="@color/title_6_color"
+        app:descTexts=""
+        app:iconLeft="@mipmap/account_manage_new"
+        app:rightArrow="true"
+        app:titleColor="@color/title_3_color"
+        app:titleMarginLeft="10dp"
+        app:titleTexts="新建员工" />
+
+    <include layout="@layout/layout_line" />
+
+    <com.xgx.syzj.widget.TextItemView
+        android:id="@+id/tiv_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:descColor="@color/title_6_color"
+        app:descTexts="美容美发"
+        app:iconLeft="@mipmap/account_manage_type"
+        app:rightArrow="true"
+        app:titleColor="@color/title_3_color"
+        app:titleMarginLeft="10dp"
+        app:titleTexts="行业类型" />
+
+    <include layout="@layout/layout_line" />
+
+</LinearLayout>

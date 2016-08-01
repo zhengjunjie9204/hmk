@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:txv="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/appBG"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_goods_type_big"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="商品大分类0种"/>
+
+    <TextView
+        android:id="@+id/tv_goods_type_small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="15dp"
+        android:text="商品小分类0种"/>
+
+    <com.xgx.syzj.widget.TextItemView
+        android:id="@+id/tv_kucun"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        txv:rightArrow="true"
+        txv:descTexts="0件"
+        txv:descColor="@color/gray"
+        txv:titleTexts="库存数量"
+        txv:bgResource="@drawable/custom_text_item_bg"/>
+
+    <com.xgx.syzj.widget.TextItemView
+        android:id="@+id/tv_money"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        txv:rightArrow="true"
+        txv:descTexts="￥0.00"
+        txv:descColor="@color/gray"
+        txv:titleTexts="库存成本"/>
+
+    <!--<com.xgx.syzj.widget.TextItemView
+        android:id="@+id/tv_sell_count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        txv:rightArrow="true"
+        txv:descTexts="康师傅牛肉面"
+        txv:descColor="@color/gray"
+        txv:titleTexts="销售笔数最高"/>
+
+    <com.xgx.syzj.widget.TextItemView
+        android:id="@+id/tv_sell_money"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        txv:rightArrow="true"
+        txv:descTexts="康师傅牛肉面"
+        txv:descColor="@color/gray"
+        txv:titleTexts="销售额最高"/>
+
+    <com.xgx.syzj.widget.TextItemView
+        android:id="@+id/tv_sell_profit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        txv:rightArrow="true"
+        txv:descTexts="康师傅牛肉面"
+        txv:descColor="@color/gray"
+        txv:titleTexts="销售毛利最高"/>-->
+</LinearLayout>

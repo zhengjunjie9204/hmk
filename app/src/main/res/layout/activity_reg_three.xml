@@ -1,0 +1,129 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/layout_reg_step_header" />
+
+
+    <LinearLayout
+        android:id="@+id/ll_account"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/header"
+        android:layout_margin="20dp"
+        android:background="@drawable/edittext_bg"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_phone"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/et_height"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="15932564582"
+            android:textColor="@color/gray" />
+
+        <include layout="@layout/layout_line" />
+
+        <EditText
+            android:id="@+id/et_psw"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/et_height"
+            android:layout_weight="1"
+            android:background="@null"
+            android:drawableLeft="@mipmap/bitian"
+            android:drawablePadding="5dp"
+            android:hint="@string/reg_three_password_hint"
+            android:inputType="textPassword"
+            android:paddingLeft="10dp"
+            android:singleLine="true"
+            android:textColor="@color/edite_color"
+            android:textColorHint="@color/edite_color"
+            android:textCursorDrawable="@null"
+            android:textSize="14sp"/>
+
+        <include layout="@layout/layout_line" />
+
+        <EditText
+            android:id="@+id/et_re_psw"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/et_height"
+            android:layout_weight="1"
+            android:background="@null"
+            android:drawableLeft="@mipmap/bitian"
+            android:drawablePadding="5dp"
+            android:hint="@string/reg_three_re_password_hint"
+            android:inputType="textPassword"
+            android:paddingLeft="10dp"
+            android:singleLine="true"
+            android:textColor="@color/edite_color"
+            android:textColorHint="@color/edite_color"
+            android:textCursorDrawable="@null"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_account"
+        android:background="@drawable/edittext_bg"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/et_shop"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/et_height"
+            android:layout_weight="1"
+            android:background="@null"
+            android:drawableLeft="@mipmap/bitian"
+            android:drawablePadding="5dp"
+            android:hint="@string/reg_three_shop_hint"
+            android:inputType="text"
+            android:paddingLeft="10dp"
+            android:singleLine="true"
+            android:textColor="@color/edite_color"
+            android:textColorHint="@color/edite_color"
+            android:textCursorDrawable="@null"
+            android:textSize="14sp" />
+
+        <include layout="@layout/layout_line" />
+
+        <EditText
+            android:id="@+id/et_name"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/et_height"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="@string/reg_three_name_hint"
+            android:inputType="text"
+            android:paddingLeft="10dp"
+            android:singleLine="true"
+            android:textColor="@color/edite_color"
+            android:textColorHint="@color/edite_color"
+            android:textCursorDrawable="@null"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_reg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_info"
+        android:layout_margin="20dp"
+        android:background="@drawable/button_un_enable_bg"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:text="@string/reg_three_reg_button"
+        android:textColor="@color/white"/>
+
+    <include layout="@layout/layout_copyright"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
+</RelativeLayout>

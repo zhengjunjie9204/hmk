@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/appBG"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/edittext_bg"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/et_phone"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/et_height"
+            android:layout_weight="1"
+            android:background="@null"
+            android:drawableLeft="@mipmap/bitian"
+            android:drawablePadding="5dp"
+            android:hint="@string/account_manage_add_staff_phone_hint"
+            android:inputType="phone"
+            android:paddingLeft="10dp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textColorHint="@color/edite_color"
+            android:textCursorDrawable="@null"
+            android:textSize="14sp"/>
+
+        <include layout="@layout/layout_line" />
+
+        <EditText
+            android:id="@+id/et_name"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/et_height"
+            android:layout_weight="1"
+            android:background="@null"
+            android:drawableLeft="@mipmap/bitian"
+            android:drawablePadding="5dp"
+            android:hint="@string/account_manage_add_staff_name_hint"
+            android:inputType="text"
+            android:paddingLeft="10dp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textColorHint="@color/edite_color"
+            android:textCursorDrawable="@null"
+            android:textSize="14sp"/>
+
+        <include layout="@layout/layout_line" />
+
+        <EditText
+            android:id="@+id/et_psw"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/et_height"
+            android:layout_weight="1"
+            android:background="@null"
+            android:drawableLeft="@mipmap/bitian"
+            android:drawablePadding="5dp"
+            android:hint="@string/account_manage_add_staff_psw_hint"
+            android:inputType="textPassword"
+            android:paddingLeft="10dp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textColorHint="@color/edite_color"
+            android:textCursorDrawable="@null"
+            android:textSize="14sp"/>
+
+        <include layout="@layout/layout_line" />
+
+        <EditText
+            android:id="@+id/et_re_psw"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/et_height"
+            android:layout_weight="1"
+            android:background="@null"
+            android:drawableLeft="@mipmap/bitian"
+            android:drawablePadding="5dp"
+            android:hint="@string/account_manage_add_staff_re_psw_hint"
+            android:inputType="textPassword"
+            android:paddingLeft="10dp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textColorHint="@color/edite_color"
+            android:textCursorDrawable="@null"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+</LinearLayout>

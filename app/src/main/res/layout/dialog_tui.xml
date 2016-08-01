@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginLeft="40dp"
+    android:layout_marginRight="40dp"
+    android:background="@color/transparent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/my_dialog_bg">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:text="退货原因"
+            android:textColor="@color/title_3_color"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_title"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/tui_dialog"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingBottom="20dp">
+
+            <RadioGroup
+                android:id="@+id/rg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:fadingEdge="none"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/tui_a"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="商品质量原因，客户退货"
+                    android:textSize="12sp"
+                    android:paddingLeft="5dp"
+                    android:button="@drawable/checkbox_menu"
+                    android:textColor="@color/title_6_color"/>
+
+                <RadioButton
+                    android:id="@+id/tui_b"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:checked="false"
+                    android:text="商品不一致，客户退货"
+                    android:paddingLeft="5dp"
+                    android:textSize="12sp"
+                    android:button="@drawable/checkbox_menu"
+                    android:textColor="@color/title_6_color"/>
+
+                <RadioButton
+                    android:id="@+id/tui_c"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:checked="false"
+                    android:text="其他原因，客户退货"
+                    android:paddingLeft="5dp"
+                    android:textSize="12sp"
+                    android:button="@drawable/checkbox_menu"
+                    android:textColor="@color/title_6_color"/>
+
+                <RadioButton
+                    android:id="@+id/tui_d"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:checked="false"
+                    android:text="输入错误，删除本条记录"
+                    android:paddingLeft="5dp"
+                    android:textSize="12sp"
+                    android:button="@drawable/checkbox_menu"
+                    android:textColor="@color/light_color"/>
+            </RadioGroup>
+
+            <Button
+                android:id="@+id/btn_continue"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@mipmap/button_orange_bg"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text="确认"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerHorizontal="true"
+        android:background="@mipmap/sale_dialog_cancel" />
+
+</RelativeLayout>

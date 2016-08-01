@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="UselessParent">
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:maxWidth="100dp"
+        android:paddingBottom="20dp"
+        android:paddingTop="20dp"
+        android:text="3D坐垫"
+        android:textColor="@color/title_3_color" />
+
+    <TextView
+        android:id="@+id/tv_money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:maxWidth="80dp"
+        android:layout_centerInParent="true"
+        android:text="35.0"
+        android:textColor="@color/red"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_toLeftOf="@+id/tv_money"
+        android:layout_centerInParent="true"
+        android:text="￥"
+        android:textColor="@color/red"
+        android:textSize="16sp" />
+
+    <ImageView
+        android:id="@+id/iv_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="10dp"
+        android:background="@mipmap/delete_classify" />
+
+    <EditText
+        android:id="@+id/et_time"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_toLeftOf="@+id/iv_delete"
+        android:layout_centerVertical="true"
+        android:selectAllOnFocus="true"
+        android:background="@mipmap/meetting_edittext_bg"
+        android:gravity="center"
+        android:inputType="numberDecimal"
+        android:maxLength="4"
+        android:padding="5dp"
+        android:text="1"
+        android:textColor="@color/title_3_color" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_toLeftOf="@+id/et_time"
+        android:layout_centerVertical="true"
+        android:text="工时"
+        android:textColor="@color/title_3_color" />
+
+    <include layout="@layout/layout_line"
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:layout_below="@+id/tv_name"
+        android:layout_marginLeft="30dp"/>
+    </RelativeLayout>
+
+</LinearLayout>

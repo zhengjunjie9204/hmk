@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:txv="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/appBG"
+    android:orientation="vertical">
+
+    <com.xgx.syzj.widget.TextItemView
+        android:id="@+id/tv_goods"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        txv:rightArrow="true"
+        txv:titleTexts="商品分析"/>
+
+    <include layout="@layout/layout_line"/>
+
+    <com.xgx.syzj.widget.TextItemView
+        android:id="@+id/tv_member"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        txv:rightArrow="true"
+        txv:titleTexts="会员分析"/>
+
+    <include layout="@layout/layout_line"/>
+
+    <com.xgx.syzj.widget.TextItemView
+        android:id="@+id/tv_sell"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        txv:rightArrow="true"
+        txv:titleTexts="销售分析"/>
+
+    <include layout="@layout/layout_line"/>
+</LinearLayout>
