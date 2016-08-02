@@ -42,18 +42,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        hideTopBar();
-        btn_log = (Button) findViewById(R.id.btn_log);
-        btn_reg = (Button) findViewById(R.id.btn_reg);
-        btn_forget = (Button) findViewById(R.id.btn_forget);
-        btn_demo = (TextView) findViewById(R.id.btn_demo);
-        et_username = (EditText) findViewById(R.id.et_username);
-        et_password = (EditText) findViewById(R.id.et_password);
-
-        btn_log.setOnClickListener(this);
-        btn_reg.setOnClickListener(this);
-        btn_forget.setOnClickListener(this);
-        btn_demo.setOnClickListener(this);
+        initView();
+        initListener();
 
 //        et_username.setText("dianzhang1");
 //        et_password.setText("dianzhang1");
@@ -62,6 +52,23 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             UserDataModel.loginByToken(token);
         }
         EventCenter.bindContainerAndHandler(this, eventHandler);
+    }
+
+    private void initView() {
+        hideTopBar();
+        btn_log = (Button) findViewById(R.id.btn_log);
+        btn_reg = (Button) findViewById(R.id.btn_reg);
+        btn_forget = (Button) findViewById(R.id.btn_forget);
+        btn_demo = (TextView) findViewById(R.id.btn_demo);
+        et_username = (EditText) findViewById(R.id.et_username);
+        et_password = (EditText) findViewById(R.id.et_password);
+    }
+
+    private void initListener() {
+        btn_log.setOnClickListener(this);
+        btn_reg.setOnClickListener(this);
+        btn_forget.setOnClickListener(this);
+        btn_demo.setOnClickListener(this);
     }
 
     private SimpleEventHandler eventHandler = new SimpleEventHandler(){

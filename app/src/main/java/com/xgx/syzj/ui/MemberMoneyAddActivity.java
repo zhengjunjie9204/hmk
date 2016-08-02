@@ -21,6 +21,9 @@ import com.xgx.syzj.widget.CheckSwitchButton;
 import com.xgx.syzj.widget.CustomAlertDialog;
 import com.xgx.syzj.widget.TextItemView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * 会员储值
  *
@@ -71,26 +74,33 @@ public class MemberMoneyAddActivity extends BaseActivity implements View.OnClick
 
     private SimpleEventHandler eventHandler = new SimpleEventHandler() {
 
-        public void onEvent(Result result) {
-            hideLoadingDialog();
-            showShortToast("充值成功");
-//            member.setCardValue(Double.parseDouble(recharge) + Double.parseDouble(gift) + member.getCardValue());
-//            member.setCumulativeRechargeAmount(member.getCumulativeRechargeAmount() + Double.parseDouble(recharge));
-//            tv_user.setText("¥ " + member.getStrCardValue());
-//            tv_profit.setText("¥ " + member.getStrCumulativeRechargeAmount());
-            Intent data = new Intent();
-            data.setAction(Constants.Broadcast.RECEIVER_ADD_RECHARGE);
-            data.putExtra("member", member);
-            sendBroadcast(data);
-            et_recharge.setText("");
-            et_gift.setText("");
-            et_remark.setText("");
-            if (csb_sms.isChecked()) {
-                csb_sms.setChecked(false);
+        public void onEvent(Result result)
+        {
+            if (result.geteCode() == RechargeDataModel.GET_RECORDS) {
+                try {
+                    JSONObject json = new JSONObject(result.getResult());
+                    tv_total.setText("¥ " + json.optDouble("consumeByChuzhi", 0));
+                    tv_user.setText("¥ " + json.optDouble("storedMoney", 0));
+                    tv_profit.setText("¥ " + json.optDouble("storeAmount", 0));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                hideLoadingDialog();
+                if(!TextUtils.isEmpty(result.getMessage())){
+                    showShortToast(result.getMessage());
+                }
+                if(result.getStatus() == 200){
+                    Intent data = new Intent(Constants.Broadcast.RECEIVER_ADD_RECHARGE);
+                    data.putExtra("member", member);
+                    sendBroadcast(data);
+                    finish();
+                }
             }
         }
 
-        public void onEvent(String error) {
+        public void onEvent(String error)
+        {
             hideLoadingDialog();
             showShortToast(error);
         }

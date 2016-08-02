@@ -8,8 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.xgx.syzj.R;
-import com.xgx.syzj.bean.Recharge;
-import com.xgx.syzj.utils.StrUtil;
+import com.xgx.syzj.bean.StoreRecordBean;
+import com.xgx.syzj.utils.DateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,18 +20,17 @@ import java.util.List;
  * @author zajo
  * @created 2015年08月31日 16:37
  */
-public class MemberMoneyRecordAdapter extends BaseAdapter {
-
+public class StoreRecordAdapter extends BaseAdapter {
     private Context mContext;
-    private List<Recharge> mList = new ArrayList<>();
+    private List<StoreRecordBean> mList = new ArrayList<>();
     private HoldClass hold;
 
-    public MemberMoneyRecordAdapter(Context context, List<Recharge> list) {
+    public StoreRecordAdapter(Context context, List<StoreRecordBean> list) {
         this.mContext = context;
         this.mList = list;
     }
 
-    public void appendList(List<Recharge> list) {
+    public void appendList(List<StoreRecordBean> list) {
         if (list == null || list.size() == 0)
             return;
         mList.addAll(list);
@@ -55,7 +54,7 @@ public class MemberMoneyRecordAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final Recharge record = mList.get(position);
+        final StoreRecordBean record = mList.get(position);
         if (convertView == null) {
             hold = new HoldClass();
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_member_money_record, null);
@@ -66,9 +65,9 @@ public class MemberMoneyRecordAdapter extends BaseAdapter {
         } else {
             hold = (HoldClass) convertView.getTag();
         }
-        hold.tv_time.setText(StrUtil.getFriendlyTime(record.getRechargeDatetime(),"yyyy-MM-dd \n HH:mm:ss"));
-        hold.tv_count.setText("¥ " + record.getAfterRechargeValue());
-        hold.tv_add.setText("¥ " + record.getRechargeAmount());
+        hold.tv_time.setText(DateUtil.getStringByFormat(record.getCreateTime(), DateUtil.dateFormatYMDHMS));
+        hold.tv_add.setText("¥ " + record.getStoreFee());
+        hold.tv_count.setText("¥ " + record.getPayOrder());
         return convertView;
     }
 

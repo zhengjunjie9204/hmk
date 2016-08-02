@@ -252,7 +252,27 @@ public class Api extends BaseRequest {
         params.put("info", info);
         return getRequest(Url.USER_GETLIST_STAFF, params, getHeader(), listener);
     }
-
+    /**
+     * 充次记录
+     * @param memberId
+     * @param listener
+     * @return
+     */
+    public static StringRequest getConsumeList(int memberId, OnRequestListener listener) {
+        Map<String, String> params = null;
+        Map<String, Object> info;
+        try {
+            params = new HashMap<>();
+            info = new HashMap<>();
+            info.put("memberId", memberId);
+            String json = FastJsonUtil.bean2Json(info);
+            json = Base64Util.encode(json.getBytes("UTF-8"));
+            params.put("info", json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getRequest(Url.CONSUME_LIST, params, getHeader(), listener);
+    }
     /**
      * 添加商品
      */
@@ -515,6 +535,27 @@ public class Api extends BaseRequest {
         }
         return getRequest(Url.PROJECT_EXT_LIST, params, getHeader(), listener);
     }
+    /**
+     * 3.5.11.	查询会员项目计次余次
+     * @param memberId
+     * @param listener
+     * @return
+     */
+    public static StringRequest getMenberItem(int memberId, OnRequestListener listener) {
+        Map<String, String> params = null;
+        Map<String, Object> info;
+        try {
+            params = new HashMap<>();
+            info = new HashMap<>();
+            info.put("memberId", memberId);
+            String json = FastJsonUtil.bean2Json(info);
+            json = Base64Util.encode(json.getBytes("UTF-8"));
+            params.put("info", json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getRequest(Url.FIND_MENBER_ITEM, params, getHeader(), listener);
+    }
 
     /**
      * 获取商品总数量
@@ -596,7 +637,27 @@ public class Api extends BaseRequest {
         }
         return getRequest(Url.CARD_LIST, params, getHeader(), listener);
     }
-
+    /**
+     * 3.5.14.	查询会员计次累计充值金额
+     * @param memberId
+     * @param listener
+     * @return
+     */
+    public static StringRequest getSumRecord(int memberId, OnRequestListener listener) {
+        Map<String, String> params = null;
+        Map<String, Object> info;
+        try {
+            params = new HashMap<>();
+            info = new HashMap<>();
+            info.put("memberId", memberId);
+            String json = FastJsonUtil.bean2Json(info);
+            json = Base64Util.encode(json.getBytes("UTF-8"));
+            params.put("info", json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getRequest(Url.SUM_ITEM_RECORD, params, getHeader(), listener);
+    }
     /**
      * 获取会员卡积分储值详情
      *
@@ -618,6 +679,56 @@ public class Api extends BaseRequest {
         } catch (Exception e) {
         }
         return getRequest(Url.CARD_DETAIL, params, getHeader(), listener);
+    }
+    /**
+     * 会员计次充值
+     */
+    public static StringRequest addItemCombo(int memberId, String fee, int payType, String comboList,String itemList, String content,String sendSMSFlag, OnRequestListener listener) {
+        Map<String, String> params = null;
+        Map<String, Object> info;
+        try {
+            params = new HashMap<>();
+            info = new HashMap<>();
+            info.put("memberId", memberId);
+            info.put("storeId", CacheUtil.getmInstance().getUser().getStoreId());
+            info.put("employee", CacheUtil.getmInstance().getUser().getEmployeeId());//接单员ID
+            info.put("fee", fee);//充值金额
+            info.put("payType", payType);//付款方式  支付类型（1：微信支付；2:余额；3：现金支付）
+//            info.put("authCode", rechargeType);//微信授权码，现金支付不需要
+            info.put("comboList", comboList);//Long数组 套餐ID（套和项目,二必选一）
+            info.put("itemList", itemList);//Long数组 项目ID数组（套餐和项目,二必选一）
+            info.put("content", content);//备注
+            info.put("sendSMSFlag", sendSMSFlag);//是否发送充值短信 1：发   0：不发
+            String json = FastJsonUtil.bean2Json(info);
+            json = Base64Util.encode(json.getBytes("UTF-8"));
+            params.put("info", json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getRequest(Url.ADD_ITEM_COMBO, params, getHeader(), listener);
+    }
+    /**
+     * 删除会员
+     * @param memberId
+     * @param listener
+     * @return
+     */
+    public static StringRequest getConsumeHistory(int memberId,int pageNo,int pageSize, OnRequestListener listener) {
+        Map<String, String> params = null;
+        Map<String, Object> info;
+        try {
+            params = new HashMap<>();
+            info = new HashMap<>();
+            info.put("memberId", memberId);
+            info.put("pageNo", pageNo);
+            info.put("pageSize", pageSize);
+            String json = FastJsonUtil.bean2Json(info);
+            json = Base64Util.encode(json.getBytes("UTF-8"));
+            params.put("info", json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getRequest(Url.CONSUME_HISTORY, params, getHeader(), listener);
     }
 
     /**
@@ -644,7 +755,43 @@ public class Api extends BaseRequest {
 
         return getRequest(Url.CARD_DELETE, params, getHeader(), listener);
     }
-
+    /**
+     * 会员储值
+     *
+     * @param associatorId
+     * @param rechargeAmount
+     * @param giftAmount
+     * @param rechargeType
+     * @param description
+     * @param listener
+     * @return
+     */
+    /**
+     * 会员储值
+     */
+    public static StringRequest addStoreMoney(int memberId, String fee, int payType, String giveMoney, String content,String sendSMSFlag, OnRequestListener listener) {
+        Map<String, String> params = null;
+        Map<String, Object> info;
+        try {
+            params = new HashMap<>();
+            info = new HashMap<>();
+            info.put("memberId", memberId);
+            info.put("storeId", CacheUtil.getmInstance().getUser().getStoreId());
+            info.put("employee", CacheUtil.getmInstance().getUser().getEmployeeId());//接单员ID
+            info.put("fee", fee);//充值金额
+            info.put("payType", payType);//付款方式  支付类型（1：微信支付；2:余额；3：现金支付）
+//            info.put("authCode", rechargeType);//微信授权码，现金支付不需要
+            info.put("giveMoney", giveMoney);//微信授权码，现金支付不需要
+            info.put("content", content);
+            info.put("sendSMSFlag", sendSMSFlag);//是否发送充值短信 1：发   0：不发
+            String json = FastJsonUtil.bean2Json(info);
+            json = Base64Util.encode(json.getBytes("UTF-8"));
+            params.put("info", json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getRequest(Url.ADD_STORE_MONEY, params, getHeader(), listener);
+    }
 
     /**
      * 更新会员卡信息
@@ -841,6 +988,29 @@ public class Api extends BaseRequest {
         return getRequest(Url.ASSOCIATOR_RECHARGE, params, getHeader(), listener);
     }
 
+
+    /**
+     * 获取会员充值历史列表
+     *
+     * @param memberId
+     * @param listener
+     * @return
+     */
+    public static StringRequest getRecordList(int memberId, OnRequestListener listener) {
+        Map<String, String> params = null;
+        Map<String, Object> info;
+        try {
+            params = new HashMap<>();
+            info = new HashMap<>();
+            info.put("memberId", memberId);
+            String json = FastJsonUtil.bean2Json(info);
+            json = Base64Util.encode(json.getBytes("UTF-8"));
+            params.put("info", json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getRequest(Url.STORE_MONEY_RECORD, params, getHeader(), listener);
+    }
     /**
      * 获取会员充值历史列表
      *
@@ -894,7 +1064,31 @@ public class Api extends BaseRequest {
 
         return getRequest(Url.ASSOCIATOR_EXC_INTEGRAL, params, getHeader(), listener);
     }
-
+    /**
+     * 3.4.1.	根据套餐名关键字查询门店下套餐
+     * @param listener
+     * @return
+     */
+    public static StringRequest getComboList(String key,int pageNo,int pageSize, OnRequestListener listener) {
+        Map<String, String> params = null;
+        Map<String, Object> info;
+        try {
+            params = new HashMap<>();
+            info = new HashMap<>();
+            if(!TextUtils.isEmpty(key)){
+                info.put("key", key);
+            }
+            info.put("storeId", CacheUtil.getmInstance().getUser().getStoreId());
+            info.put("pageNo", pageNo);
+            info.put("pageSize", pageSize);
+            String json = FastJsonUtil.bean2Json(info);
+            json = Base64Util.encode(json.getBytes("UTF-8"));
+            params.put("info", json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getRequest(Url.COMBO_LIST, params, getHeader(), listener);
+    }
     /**
      * 挂单
      *

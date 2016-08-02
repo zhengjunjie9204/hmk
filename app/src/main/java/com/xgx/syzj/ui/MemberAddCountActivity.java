@@ -21,35 +21,53 @@ import com.xgx.syzj.widget.CheckSwitchButton;
 import com.xgx.syzj.widget.CustomAlertDialog;
 import com.xgx.syzj.widget.TextItemView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * 会员充次
  *
  * @author zajo
  * @created 2015年10月10日 15:20
  */
-public class MemberAddCountActivity extends BaseActivity implements View.OnClickListener{
+/**
+ * 会员充次
+ *
+ * @author zajo
+ * @created 2015年10月10日 15:20
+ */
+public class MemberAddCountActivity extends BaseActivity implements View.OnClickListener {
 
-    private TextView tv_user,tv_total,tv_profit;
+    private TextView tv_user, tv_total, tv_profit;
     private EditText et_money, et_remark;
-    private TextItemView tv_mode,tv_count;
+    private TextItemView tv_mode, tv_count;
     private CheckSwitchButton csb_sms;
     private Button btn_ok;
     private String money, count, remark;
     private Member member;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member_add_count);
-        setTitleText("会员计次");
-        setSubmit("记录");
 
         member = getIntent().getParcelableExtra("member");
         if (member == null) {
             defaultFinish();
             return;
         }
+        initView();
+        initListener();
+        RechargeDataModel.getMenberItem(member.getId());
+        RechargeDataModel.getSumRecord(member.getId());
+    }
 
+    private void initView()
+    {
+        setTitleText("会员计次");
+        setSubmit("记录");
         et_money = (EditText) findViewById(R.id.et_money);
         tv_count = (TextItemView) findViewById(R.id.tv_count);
         et_remark = (EditText) findViewById(R.id.et_remark);
@@ -59,75 +77,106 @@ public class MemberAddCountActivity extends BaseActivity implements View.OnClick
         tv_user = (TextView) findViewById(R.id.tv_user);
         tv_total = (TextView) findViewById(R.id.tv_total);
         tv_profit = (TextView) findViewById(R.id.tv_profit);
+    }
 
+    private void initListener()
+    {
         btn_ok.setOnClickListener(this);
         tv_mode.setOnClickListener(this);
         tv_count.setOnClickListener(this);
-
-
         EventCenter.bindContainerAndHandler(this, eventHandler);
     }
 
     private SimpleEventHandler eventHandler = new SimpleEventHandler() {
 
-        public void onEvent(Result result) {
-            hideLoadingDialog();
-            showShortToast("充值成功");
+        public void onEvent(Result result)
+        {
+            if (result.geteCode() == RechargeDataModel.GET_MENBER) {
+                try {
+                    JSONObject json = new JSONObject(result.getResult());
+                    tv_user.setText(json.optInt("length", 0) + "次");
+                    JSONArray memberItems = json.optJSONArray("memberItems");
+                    if (null != memberItems || memberItems.length() > 0) {
+                        int count = 0;
+                        for (int i = 0; i < memberItems.length(); i++) {
+                            count += memberItems.getJSONObject(i).optInt("itemCount", 0);
+                        }
+                        tv_total.setText(count + "个");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } else if (result.geteCode() == RechargeDataModel.GET_SUMRECORD) {
+                try {
+                    JSONObject json = new JSONObject(result.getResult());
+                    tv_profit.setText("¥ " + json.optDouble("money", 0.00));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                hideLoadingDialog();
+                showShortToast("充值成功");
 //            member.setCardCount(member.getCardCount() + Integer.parseInt(count));
 //            member.setCumulativeRechargeAmount(member.getCumulativeRechargeAmount() + Double.parseDouble(money));
 //            tv_user.setText(member.getCardCount()+"");
-//            tv_profit.setText("¥ " + member.getStrCumulativeRechargeAmount());
-            Intent data = new Intent();
-            data.setAction(Constants.Broadcast.RECEIVER_ADD_RECHARGE);
-            data.putExtra("member", member);
-            sendBroadcast(data);
-            et_money.setText("");
-            et_remark.setText("");
-            if (csb_sms.isChecked()) {
-                csb_sms.setChecked(false);
+                Intent data = new Intent();
+                data.setAction(Constants.Broadcast.RECEIVER_ADD_RECHARGE);
+                data.putExtra("member", member);
+                sendBroadcast(data);
             }
         }
 
-        public void onEvent(String error) {
+        public void onEvent(String error)
+        {
             hideLoadingDialog();
             showShortToast(error);
         }
     };
 
     @Override
-    protected void submit() {
+    protected void submit()
+    {
         super.submit();
         Bundle bundle = new Bundle();
         bundle.putParcelable("member", member);
-        gotoActivity(MemberMoneyRecordActivity.class,bundle);
+        gotoActivity(MemberMoneyRecordActivity.class, bundle);
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(View v)
+    {
         switch (v.getId()) {
             case R.id.btn_ok:
                 if (checkInput()) {
                     showLoadingDialog(R.string.loading_member_add_recharge);
-                    RechargeDataModel.addRecharge(member.getId(), Integer.parseInt(money),
-                            0, Integer.parseInt(count), Constants.RechargeType.RECHARGE_COUNT,
-                            Utils.getPayIndex(tv_mode.getDesc()), remark);
+                    //TODO:会员冲次
+                    String sendMsg = "0";
+                    if (csb_sms.isChecked()) {
+                        sendMsg = "1";
+                    }
+                    RechargeDataModel.addItemCombo(member.getId(), money, 3, null, null, remark, sendMsg);
+//                    RechargeDataModel.addRecharge(member.getId(), Integer.parseInt(money),
+//                            0, Integer.parseInt(count), Constants.RechargeType.RECHARGE_COUNT,
+//                            Utils.getPayIndex(tv_mode.getDesc()), remark);
                 }
                 break;
             case R.id.tv_mode:
-                CustomAlertDialog.showPayModeDialog(this,false, new CustomAlertDialog.IAlertListDialogItemClickListener() {
+                CustomAlertDialog.showPayModeDialog(this, false, new CustomAlertDialog.IAlertListDialogItemClickListener() {
                     @Override
-                    public void onItemClick(int position) {
+                    public void onItemClick(int position)
+                    {
                         tv_mode.setDesc(Utils.getPayResName(position));
                     }
                 });
                 break;
             case R.id.tv_count:
-                gotoActivityForResult(MemberSelectProjectActivity.class,null,2005);
+                gotoActivityForResult(MemberSelectProjectActivity.class, null, 2005);
                 break;
         }
     }
 
-    private boolean checkInput() {
+    private boolean checkInput()
+    {
         money = et_money.getText().toString().trim();
         remark = et_remark.getText().toString().trim();
         if (TextUtils.isEmpty(money)) {
@@ -138,12 +187,13 @@ public class MemberAddCountActivity extends BaseActivity implements View.OnClick
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != RESULT_OK) return;
-        if(requestCode==2005){
-            String name=data.getStringExtra("project");
-            String money=data.getStringExtra("money");
+        if (requestCode == 2005) {
+            String name = data.getStringExtra("project");
+            String money = data.getStringExtra("money");
             tv_count.setDesc(name);
             et_money.setText(money);
         }

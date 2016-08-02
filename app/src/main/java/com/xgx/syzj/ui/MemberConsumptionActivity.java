@@ -56,23 +56,20 @@ public class MemberConsumptionActivity extends BaseActivity {
     private TextView tv_pay_count,tv_nopay_count;
     private List<BillGoodsDetailbean> mList = new ArrayList<>();
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_member_consumption);
-        setTitleText(getString(R.string.member_consumption_title));
-        setSubmit(getString(R.string.member_consumption_pay_type));
-        btnPayType = (Button) findViewById(R.id.btn_submit);
-        lv_bill_record = (SwipeMenuListView) findViewById(R.id.lv_data);
-        loadMoreListViewContainer = (LoadMoreListViewContainer)findViewById(R.id.load_more_list_view_container);
         initView();
         setData();
     }
 
     private void initView(){
+        setTitleText(getString(R.string.member_consumption_title));
+//        setSubmit(getString(R.string.member_consumption_pay_type));
+        btnPayType = (Button) findViewById(R.id.btn_submit);
+        lv_bill_record = (SwipeMenuListView) findViewById(R.id.lv_data);
+        loadMoreListViewContainer = (LoadMoreListViewContainer)findViewById(R.id.load_more_list_view_container);
         tv_pay_count = (TextView)findViewById(R.id.tv_pay_count);
         tv_nopay_count = (TextView)findViewById(R.id.tv_nopay_count);
         SwipeMenuCreator creator = new SwipeMenuCreator() {
@@ -86,11 +83,11 @@ public class MemberConsumptionActivity extends BaseActivity {
             }
         };
 
-       // lv_bill_record.setMenuCreator(creator);
+        // lv_bill_record.setMenuCreator(creator);
         lv_bill_record.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
-               // deleteSwipeItem(position);
+                // deleteSwipeItem(position);
                 return false;
             }
         });
@@ -133,7 +130,6 @@ public class MemberConsumptionActivity extends BaseActivity {
 
     };
     private void setData() {
-
         curDate = new Date(System.currentTimeMillis());
         currentTime = DateUtil.getStringByOffset(curDate,DateUtil.dateFormatYMDHMS, Calendar.DATE,0);
         startTime = DateUtil.getStringByOffset(curDate,DateUtil.dateFormatYMDHMS, Calendar.DATE,-30);
@@ -143,9 +139,9 @@ public class MemberConsumptionActivity extends BaseActivity {
         }
         EventCenter.bindContainerAndHandler(this,simpleEventHandler);
         EventBus.getDefault().registerSticky(simpleEventHandler);
-        billListRecordModel = new BillListRecordModel(Constants.LOAD_COUNT,member.getId(),startTime,currentTime,customerType,flag);
+        billListRecordModel = new BillListRecordModel(Constants.LOAD_COUNT,member.getId());
         billListRecordModel.getMemberPayRecord(member.getId(),startTime,currentTime,customerType,flag);
-        billListRecordModel.queryNextPage();
+        billListRecordModel.queryFirstPage();
     }
 
 

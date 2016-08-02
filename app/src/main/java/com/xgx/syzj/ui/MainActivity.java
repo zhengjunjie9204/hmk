@@ -199,15 +199,7 @@ public class MainActivity extends FragmentActivity implements IMainMenuListItemC
 //                gotoActivity(ShopInfoActivity.class);
 //                break;
             case 4:
-                SYZJApplication.getInstance().getSpUtil().addString(Constants.SharedPreferencesClass.SP_TOKEN,"");
-                CustomAlertDialog.showRemindDialog(MainActivity.this, "温馨提示", "是否退出登录", new CustomAlertDialog.IAlertDialogListener() {
-                    @Override
-                    public void onSure(Object obj) {
-                        gotoActivity(LoginActivity.class);
-                        finish();
-                    }
-                });
-
+                onLogout();
                 break;
             case   100:
                 mSlidingPanel.openPane();
@@ -216,6 +208,24 @@ public class MainActivity extends FragmentActivity implements IMainMenuListItemC
                 mSlidingPanel.closePane();
                 break;
         }
+    }
+
+    private void onLogout() {
+        try {
+            CacheUtil.getmInstance().setUser(null);
+            SYZJApplication.getInstance().getSpUtil().delete(Constants.SharedPreferencesClass.SP_PSW);
+            SYZJApplication.getInstance().getSpUtil().delete(Constants.SharedPreferencesClass.SP_ROLES);
+            SYZJApplication.getInstance().getSpUtil().addString(Constants.SharedPreferencesClass.SP_TOKEN,"");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        CustomAlertDialog.showRemindDialog(MainActivity.this, "温馨提示", "是否退出登录", new CustomAlertDialog.IAlertDialogListener() {
+            @Override
+            public void onSure(Object obj) {
+                gotoActivity(LoginActivity.class);
+                finish();
+            }
+        });
     }
 
     private IMainActivityClick mainContainerFragmentListener;

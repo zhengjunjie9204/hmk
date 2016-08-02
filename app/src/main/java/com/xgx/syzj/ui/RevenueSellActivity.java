@@ -91,6 +91,10 @@ public class RevenueSellActivity extends BaseActivity implements View.OnClickLis
     public void onGoodsAddSell(View view) {
         gotoActivityForResult(ProjectListActivity.class, null, 2002);
     }
+    public void onGoodsClick(View view)
+    {
+        gotoActivityForResult(RevenueGoodsListActivity.class, null, 2003);
+    }
 
     private ProjectListAdapter.IDeleteItemCount deleteItemCount = new ProjectListAdapter.IDeleteItemCount() {
         @Override
