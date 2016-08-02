@@ -11,11 +11,10 @@ import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.xgx.syzj.R;
-import com.xgx.syzj.adapter.ConsumptionAdapter;
+import com.xgx.syzj.adapter.ConsumeHistoryAdapter;
 import com.xgx.syzj.app.Constants;
 import com.xgx.syzj.base.BaseActivity;
-import com.xgx.syzj.bean.BillGoodsDetailbean;
-import com.xgx.syzj.bean.Consumption;
+import com.xgx.syzj.bean.ConsumeHistory;
 import com.xgx.syzj.bean.Member;
 import com.xgx.syzj.datamodel.BillListRecordModel;
 import com.xgx.syzj.event.EventCenter;
@@ -42,37 +41,32 @@ import in.srain.cube.views.loadmore.LoadMoreListViewContainer;
  * @created 2015年09月21日 14:20
  */
 public class MemberConsumptionActivity extends BaseActivity {
-
     private Button btnPayType;
     private SwipeMenuListView lv_bill_record;
-    private Consumption data;
     private int deleteIndex = -1,customerType = 1,flag = 0,selectData =-30;
-    private ConsumptionAdapter mAdapter;
+    private ConsumeHistoryAdapter mAdapter;
     private LoadMoreListViewContainer loadMoreListViewContainer;
     private BillListRecordModel billListRecordModel;
     private Member member;
     private String currentTime,startTime;
     private Date curDate;
     private TextView tv_pay_count,tv_nopay_count;
-    private List<BillGoodsDetailbean> mList = new ArrayList<>();
-
-
+    private List<ConsumeHistory> mList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_member_consumption);
-        setTitleText(getString(R.string.member_consumption_title));
-        setSubmit(getString(R.string.member_consumption_pay_type));
-        btnPayType = (Button) findViewById(R.id.btn_submit);
-        lv_bill_record = (SwipeMenuListView) findViewById(R.id.lv_data);
-        loadMoreListViewContainer = (LoadMoreListViewContainer)findViewById(R.id.load_more_list_view_container);
         initView();
         setData();
     }
 
     private void initView(){
+        setTitleText(getString(R.string.member_consumption_title));
+//        setSubmit(getString(R.string.member_consumption_pay_type));
+        btnPayType = (Button) findViewById(R.id.btn_submit);
+        lv_bill_record = (SwipeMenuListView) findViewById(R.id.lv_data);
+        loadMoreListViewContainer = (LoadMoreListViewContainer)findViewById(R.id.load_more_list_view_container);
         tv_pay_count = (TextView)findViewById(R.id.tv_pay_count);
         tv_nopay_count = (TextView)findViewById(R.id.tv_nopay_count);
         SwipeMenuCreator creator = new SwipeMenuCreator() {
@@ -86,11 +80,11 @@ public class MemberConsumptionActivity extends BaseActivity {
             }
         };
 
-       // lv_bill_record.setMenuCreator(creator);
+        // lv_bill_record.setMenuCreator(creator);
         lv_bill_record.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
-               // deleteSwipeItem(position);
+                // deleteSwipeItem(position);
                 return false;
             }
         });
@@ -104,7 +98,7 @@ public class MemberConsumptionActivity extends BaseActivity {
             }
         });
 
-        mAdapter = new ConsumptionAdapter(MemberConsumptionActivity.this,mList);
+        mAdapter = new ConsumeHistoryAdapter(MemberConsumptionActivity.this,mList);
         lv_bill_record.setAdapter(mAdapter);
     }
 
@@ -119,35 +113,29 @@ public class MemberConsumptionActivity extends BaseActivity {
 //        });
 //    }
 
-    private SimpleEventHandler simpleEventHandler = new SimpleEventHandler(){
-
-        public void onEvent(List<BillGoodsDetailbean> list){
-            loadMoreListViewContainer.loadMoreFinish(billListRecordModel.getListPageInfo().isEmpty(),billListRecordModel.getListPageInfo().hasMore());
-            mAdapter.appendList(list);
-            mAdapter.notifyDataSetChanged();
-
-        }
-        public void onEvent(Map<String,Object> map){
-            tv_nopay_count.setText(map.get("count").toString());
-        }
-
-    };
     private void setData() {
-
-        curDate = new Date(System.currentTimeMillis());
-        currentTime = DateUtil.getStringByOffset(curDate,DateUtil.dateFormatYMDHMS, Calendar.DATE,0);
-        startTime = DateUtil.getStringByOffset(curDate,DateUtil.dateFormatYMDHMS, Calendar.DATE,-30);
         member = getIntent().getParcelableExtra("member");
         if(member == null){
             defaultFinish();
         }
         EventCenter.bindContainerAndHandler(this,simpleEventHandler);
         EventBus.getDefault().registerSticky(simpleEventHandler);
-        billListRecordModel = new BillListRecordModel(Constants.LOAD_COUNT,member.getId(),startTime,currentTime,customerType,flag);
+        billListRecordModel = new BillListRecordModel(Constants.LOAD_COUNT,member.getId());
         billListRecordModel.getMemberPayRecord(member.getId(),startTime,currentTime,customerType,flag);
-        billListRecordModel.queryNextPage();
+        billListRecordModel.queryFirstPage();
     }
 
+    private SimpleEventHandler simpleEventHandler = new SimpleEventHandler(){
+
+        public void onEvent(List<ConsumeHistory> list){
+            loadMoreListViewContainer.loadMoreFinish(billListRecordModel.getListPageInfo().isEmpty(), billListRecordModel.getListPageInfo().hasMore());
+            mAdapter.appendList(list);
+        }
+
+        public void onEvent(Map<String,Object> map){
+//            tv_nopay_count.setText(map.get("count").toString());
+        }
+    };
 
     private ConsumptionPopupWindowUtil.IPopupWindowCallListener ipopCallListener = new ConsumptionPopupWindowUtil.IPopupWindowCallListener() {
 
@@ -168,7 +156,6 @@ public class MemberConsumptionActivity extends BaseActivity {
             }
         }
     };
-
 
     private void selectBillpay(){
         startTime = DateUtil.getStringByOffset(curDate,DateUtil.dateFormatYMDHMS, Calendar.DATE,selectData);

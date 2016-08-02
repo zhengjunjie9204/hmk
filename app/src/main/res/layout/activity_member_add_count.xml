@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:txv="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/appBG">
+            xmlns:txv="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/appBG">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:txv="http://schemas.android.com/apk/res-auto"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:orientation="vertical">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,16 +31,16 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
-                    android:text="13次"
+                    android:text="0次"
                     android:textColor="@color/white"
-                    android:textSize="26sp" />
+                    android:textSize="26sp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="计次项目余次"
                     android:textColor="@color/white"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"/>
 
             </LinearLayout>
 
@@ -58,16 +58,16 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
-                    android:text="41个"
+                    android:text="0个"
                     android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="计次项目"
                     android:textColor="@color/white"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"/>
 
             </LinearLayout>
 
@@ -87,14 +87,14 @@
                     android:layout_weight="1"
                     android:text="￥0.00"
                     android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="累计充值"
                     android:textColor="@color/white"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"/>
 
             </LinearLayout>
         </RelativeLayout>
@@ -107,7 +107,7 @@
             txv:descColor="@color/title_6_color"
             txv:rightArrow="true"
             txv:titleColor="@color/title_3_color"
-            txv:titleTexts="选择充值项目/套餐" />
+            txv:titleTexts="选择充值项目/套餐"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -125,7 +125,7 @@
                 android:layout_marginTop="10dp"
                 android:text="充值金额"
                 android:textColor="@color/title_3_color"
-                android:textSize="14sp" />
+                android:textSize="14sp"/>
 
             <EditText
                 android:id="@+id/et_money"
@@ -138,7 +138,7 @@
                 android:padding="15dp"
                 android:singleLine="true"
                 android:textColor="@color/title_3_color"
-                android:textSize="14sp" />
+                android:textSize="14sp"/>
         </LinearLayout>
 
         <com.xgx.syzj.widget.TextItemView
@@ -150,7 +150,7 @@
             txv:descTexts="现金支付"
             txv:rightArrow="true"
             txv:titleColor="@color/title_3_color"
-            txv:titleTexts="@string/member_money_add_pay_type" />
+            txv:titleTexts="@string/member_money_add_pay_type"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -168,7 +168,7 @@
                 android:layout_marginTop="10dp"
                 android:text="@string/member_money_add_remark"
                 android:textColor="@color/title_3_color"
-                android:textSize="14sp" />
+                android:textSize="14sp"/>
 
             <EditText
                 android:id="@+id/et_remark"
@@ -180,7 +180,7 @@
                 android:padding="15dp"
                 android:singleLine="true"
                 android:textColor="@color/gray"
-                android:textSize="14sp" />
+                android:textSize="14sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -200,7 +200,7 @@
                 android:layout_weight="1"
                 android:text="@string/member_money_add_send_sms"
                 android:textColor="@color/title_3_color"
-                android:textSize="14sp" />
+                android:textSize="14sp"/>
 
             <com.xgx.syzj.widget.CheckSwitchButton
                 android:id="@+id/csb_sms"
@@ -208,7 +208,7 @@
                 android:layout_height="20dp"
                 android:layout_gravity="center"
                 android:layout_marginRight="20dp"
-                android:enabled="true" />
+                android:enabled="true"/>
         </LinearLayout>
 
         <Button
@@ -223,6 +223,6 @@
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
             android:text="确认充值"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"/>
     </LinearLayout>
 </ScrollView>

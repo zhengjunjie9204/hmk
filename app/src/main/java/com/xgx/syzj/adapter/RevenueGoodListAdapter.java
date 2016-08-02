@@ -14,20 +14,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.xgx.syzj.R;
-import com.xgx.syzj.bean.Project;
+import com.xgx.syzj.bean.Goods;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class ProjectListAdapter extends BaseAdapter implements View.OnTouchListener{
+public class RevenueGoodListAdapter extends BaseAdapter implements View.OnTouchListener{
 
     private Context mContext;
-    private List<Project> mList = new ArrayList<>();
+    private List<Goods> mList = new ArrayList<>();
     private IDeleteItemCount deleteItemCount;
     private ITextChange textChange;
 
-    public ProjectListAdapter(Context context, List<Project> list, IDeleteItemCount deleteItemCount, ITextChange textChange) {
+    public RevenueGoodListAdapter(Context context, List<Goods> list, IDeleteItemCount deleteItemCount, ITextChange textChange) {
         this.mContext = context;
         this.mList = list;
         this.deleteItemCount = deleteItemCount;
@@ -52,7 +52,7 @@ public class ProjectListAdapter extends BaseAdapter implements View.OnTouchListe
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        final Project project = mList.get(position);
+        final Goods goods = mList.get(position);
         final HoldClass hold;
         if (convertView == null) {
             hold = new HoldClass();
@@ -83,15 +83,15 @@ public class ProjectListAdapter extends BaseAdapter implements View.OnTouchListe
                         textChange.onTextChange(position,s.toString());
                     if(!TextUtils.isEmpty(s.toString())){
                         double count=Double.parseDouble(s.toString());
-                        hold.tv_money.setText("" + project.getPrice() * count);
+                        hold.tv_money.setText("" + goods.getSellingPrice() * count);
                     }
                 }
 
             }
         });
-        hold.tv_name.setText(project.getName());
-        hold.et_time.setText(project.getLaborTime() + "");
-        hold.tv_money.setText("" + project.getPrice() * project.getLaborTime());
+        hold.tv_name.setText(goods.getProductName());
+        hold.et_time.setText(goods.getQuantity() + "");
+        hold.tv_money.setText("" + goods.getSellingPrice() * goods.getQuantity());
         hold.iv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

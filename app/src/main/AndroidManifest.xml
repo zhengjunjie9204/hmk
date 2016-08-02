@@ -129,7 +129,8 @@
         <!--微订单-->
         <activity android:name=".ui.OrderFormActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.OrderFormDetailActivity" android:screenOrientation="portrait"/>
-
+        <!-- ding -->
+        <activity android:name=".ui.RevenueGoodsListActivity" android:screenOrientation="portrait"></activity>
         <!--错误显示view-->
         <activity android:name="com.xgx.syzj.crashhandler.CrashLogActivity" />
 

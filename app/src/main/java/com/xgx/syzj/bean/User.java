@@ -8,8 +8,19 @@ public class User implements Serializable {
     private String token;//token
     private int roles;//用户角色（1：老板；2：店长；3：店员）
     private int storeId;
+    private int employeeId;
+    private String userPhone;//永固
     private String userName;//登陆账号
-    private String userPhone;
+
+    public int getEmployeeId()
+    {
+        return employeeId;
+    }
+
+    public void setEmployeeId(int employeeId)
+    {
+        this.employeeId = employeeId;
+    }
 
     public String getToken() {
         return token;

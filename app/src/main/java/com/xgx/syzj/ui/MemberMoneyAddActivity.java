@@ -21,6 +21,9 @@ import com.xgx.syzj.widget.CheckSwitchButton;
 import com.xgx.syzj.widget.CustomAlertDialog;
 import com.xgx.syzj.widget.TextItemView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * 会员储值
  *
@@ -28,7 +31,6 @@ import com.xgx.syzj.widget.TextItemView;
  * @created 2015年08月31日 17:27
  */
 public class MemberMoneyAddActivity extends BaseActivity implements View.OnClickListener {
-
     private EditText et_recharge, et_gift, et_remark;
     private TextView tv_user,tv_total,tv_profit;
     private TextItemView tv_mode;
@@ -41,14 +43,20 @@ public class MemberMoneyAddActivity extends BaseActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member_money_add);
-        setTitleText(getString(R.string.member_money_add_title));
-        setSubmit("记录");
-
         member = getIntent().getParcelableExtra("member");
         if (member == null) {
             defaultFinish();
             return;
         }
+        initView();
+        initListener();
+        RechargeDataModel.getRecordList(member.getId());
+    }
+
+    private void initView()
+    {
+        setTitleText(getString(R.string.member_money_add_title));
+        setSubmit("记录");
         et_recharge = (EditText) findViewById(R.id.et_recharge);
         et_gift = (EditText) findViewById(R.id.et_gift);
         et_remark = (EditText) findViewById(R.id.et_remark);
@@ -58,39 +66,44 @@ public class MemberMoneyAddActivity extends BaseActivity implements View.OnClick
         tv_user = (TextView) findViewById(R.id.tv_user);
         tv_total = (TextView) findViewById(R.id.tv_total);
         tv_profit = (TextView) findViewById(R.id.tv_profit);
+    }
 
+    private void initListener()
+    {
         btn_next.setOnClickListener(this);
         tv_mode.setOnClickListener(this);
-
-//        tv_total.setText("¥ " + member.getStrCumulativeUsedValue());
-//        tv_user.setText("¥ " + member.getStrCardValue());
-//        tv_profit.setText("¥ " + member.getStrCumulativeRechargeAmount());
-
         EventCenter.bindContainerAndHandler(this, eventHandler);
     }
 
     private SimpleEventHandler eventHandler = new SimpleEventHandler() {
 
-        public void onEvent(Result result) {
-            hideLoadingDialog();
-            showShortToast("充值成功");
-//            member.setCardValue(Double.parseDouble(recharge) + Double.parseDouble(gift) + member.getCardValue());
-//            member.setCumulativeRechargeAmount(member.getCumulativeRechargeAmount() + Double.parseDouble(recharge));
-//            tv_user.setText("¥ " + member.getStrCardValue());
-//            tv_profit.setText("¥ " + member.getStrCumulativeRechargeAmount());
-            Intent data = new Intent();
-            data.setAction(Constants.Broadcast.RECEIVER_ADD_RECHARGE);
-            data.putExtra("member", member);
-            sendBroadcast(data);
-            et_recharge.setText("");
-            et_gift.setText("");
-            et_remark.setText("");
-            if (csb_sms.isChecked()) {
-                csb_sms.setChecked(false);
+        public void onEvent(Result result)
+        {
+            if (result.geteCode() == RechargeDataModel.GET_RECORDS) {
+                try {
+                    JSONObject json = new JSONObject(result.getResult());
+                    tv_total.setText("¥ " + json.optDouble("consumeByChuzhi", 0));
+                    tv_user.setText("¥ " + json.optDouble("storedMoney", 0));
+                    tv_profit.setText("¥ " + json.optDouble("storeAmount", 0));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                hideLoadingDialog();
+                if(!TextUtils.isEmpty(result.getMessage())){
+                    showShortToast(result.getMessage());
+                }
+                if(result.getStatus() == 200){
+                    Intent data = new Intent(Constants.Broadcast.RECEIVER_ADD_RECHARGE);
+                    data.putExtra("member", member);
+                    sendBroadcast(data);
+                    defaultFinish();
+                }
             }
         }
 
-        public void onEvent(String error) {
+        public void onEvent(String error)
+        {
             hideLoadingDialog();
             showShortToast(error);
         }
@@ -111,9 +124,11 @@ public class MemberMoneyAddActivity extends BaseActivity implements View.OnClick
             case R.id.btn_next:
                 if (checkInput()) {
                     showLoadingDialog(R.string.loading_member_add_recharge);
-                    RechargeDataModel.addRecharge(member.getId(), Integer.parseInt(recharge),
-                            Integer.parseInt(gift), 0, Constants.RechargeType.RECHARGE_VALUE,
-                            Utils.getPayIndex(tv_mode.getDesc()), remark);
+                    String sendMsg = "0";
+                    if(csb_sms.isChecked()){
+                        sendMsg = "1";
+                    }
+                    RechargeDataModel.addStoreMoney(member.getId(), recharge, 3, gift, remark, sendMsg);
                 }
                 break;
             case R.id.tv_mode:

@@ -1,16 +1,12 @@
 package com.xgx.syzj.datamodel;
 
-import android.util.Log;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.xgx.syzj.app.Api;
 import com.xgx.syzj.base.BaseRequest.OnRequestListener;
-import com.xgx.syzj.bean.Goods;
 import com.xgx.syzj.bean.Project;
 import com.xgx.syzj.bean.Result;
 import com.xgx.syzj.event.EventCenter;
-import com.xgx.syzj.event.GoodsListDataEvent;
 import com.xgx.syzj.event.ProjectListDataEvent;
 import com.xgx.syzj.utils.FastJsonUtil;
 import com.xgx.syzj.widget.list.ListPageInfo;
@@ -23,12 +19,16 @@ import java.util.List;
  * @author zajo
  * @created 2015年10月13日 10:06
  */
-public class ProjectDataModel extends PagedListDataModel<Project> {
+/**
+ * @author zajo
+ * @created 2015年10月13日 10:06
+ */
+public class ComboDataModel extends PagedListDataModel<Project> {
     private static byte code;
     private String key;
     private ProjectListDataEvent data = new ProjectListDataEvent();
 
-    public ProjectDataModel(int num) {
+    public ComboDataModel(int num) {
         mListPageInfo = new ListPageInfo<>(num);
     }
 
@@ -42,16 +42,15 @@ public class ProjectDataModel extends PagedListDataModel<Project> {
 
     @Override
     protected void doQueryData() {
-        Api.getProjectList(key, mListPageInfo.getPage(), mListPageInfo.getNumPerPage(), new OnRequestListener() {
-
+        Api.getComboList(key, mListPageInfo.getPage(), mListPageInfo.getNumPerPage(), new OnRequestListener() {
             @Override
             public void onSuccess(Result result) {
-                JSONObject object= JSON.parseObject(result.getResult());
+                JSONObject object = JSON.parseObject(result.getResult());
                 List<Project> list;
                 if (result.getStatus() == 200) {
                     list = FastJsonUtil.json2List(object.getString("items"), Project.class);
-                }else {
-                    list=new ArrayList<>();
+                } else {
+                    list = new ArrayList<>();
                 }
                 data.dataList = list;
                 if (list != null && list.size() > 0) {
@@ -89,5 +88,4 @@ public class ProjectDataModel extends PagedListDataModel<Project> {
             EventCenter.getInstance().post(message);
         }
     };
-
 }

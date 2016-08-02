@@ -1,5 +1,7 @@
 package com.xgx.syzj.datamodel;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.xgx.syzj.app.Api;
 import com.xgx.syzj.base.BaseRequest;
 import com.xgx.syzj.bean.Recharge;
@@ -16,12 +18,21 @@ import java.util.List;
  * @author zajo
  * @created 2015年10月30日 11:01
  */
+/**
+ * @author zajo
+ * @created 2015年10月30日 11:01
+ */
 public class RechargeDataModel extends PagedListDataModel<Recharge> {
 
     public static final byte ADD_RECHARGE = 0x10;
     public static final byte LIST_RECHARGE = 0x11;
     public static final byte EXC_INTEGRAL = 0x12;
     public static final byte MEMBER_CARD_IFO = 0x12;
+    public static final byte GET_RECORDS = 0x14;
+    public static final byte GET_CONSUME = 0x16;
+    public static final byte GET_MENBER = 0x17;
+    public static final byte GET_SUMRECORD = 0x18;
+    public static final byte ADD_STORE_MONEY = 0x15;
 
     private static byte code;
     private int mAssociatorId;
@@ -40,6 +51,8 @@ public class RechargeDataModel extends PagedListDataModel<Recharge> {
 
             @Override
             public void onSuccess(Result result) {
+                JSONObject object= JSON.parseObject(result.getResult());
+
                 List<Recharge> list = FastJsonUtil.json2List(result.getResult(), Recharge.class);
                 data.dataList = list;
                 if (list != null && list.size() > 0) {
@@ -81,6 +94,41 @@ public class RechargeDataModel extends PagedListDataModel<Recharge> {
     public static void addRecharge(int associatorId, int rechargeAmount, int giftAmount, int rechargeCount, int rechargeType, int modeOfPayment, String description) {
         code = ADD_RECHARGE;
         Api.addRecharge(associatorId, rechargeAmount, giftAmount, rechargeCount, rechargeType, modeOfPayment, description, listener);
+    }
+    //用户储值
+    public static void addStoreMoney(int memberId, String fee, int payType, String giveMoney, String content,String sendSMSFlag) {
+        code = ADD_STORE_MONEY;
+        Api.addStoreMoney(memberId, fee, payType, giveMoney, content, sendSMSFlag, listener);
+    }
+
+    //用户冲次
+    public static void addItemCombo(int memberId, String fee, int payType, String comboList, String itemList, String content,String sendSMSFlag) {
+        code = ADD_STORE_MONEY;
+        Api.addItemCombo(memberId, fee, payType, comboList, itemList, content, sendSMSFlag, listener);
+    }
+
+    //获取储值详情
+    public static void getRecordList(int memberId) {
+        code = GET_RECORDS;
+        Api.getRecordList(memberId, listener);
+    }
+
+    //获取冲次记录
+    public static void getConsumeList(int memberId) {
+        code = GET_CONSUME;
+        Api.getConsumeList(memberId, listener);
+    }
+
+    //查询会员项目计次余次
+    public static void getMenberItem(int memberId) {
+        code = GET_MENBER;
+        Api.getMenberItem(memberId, listener);
+    }
+
+    //查询会员项目计次余次
+    public static void getSumRecord(int memberId) {
+        code = GET_SUMRECORD;
+        Api.getSumRecord(memberId, listener);
     }
 
     //兑换积分
