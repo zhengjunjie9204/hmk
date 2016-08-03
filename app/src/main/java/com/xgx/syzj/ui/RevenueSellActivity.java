@@ -95,6 +95,10 @@ public class RevenueSellActivity extends BaseActivity implements View.OnClickLis
     {
         gotoActivityForResult(ProjectListActivity.class, null, 2002);
     }
+    public void onGoodsClick(View view)
+    {
+        gotoActivityForResult(RevenueGoodsListActivity.class, null, 2003);
+    }
 
     public void onGoodsClick(View view)
     {
