@@ -23,7 +23,6 @@ import com.xgx.syzj.event.EventCenter;
 import com.xgx.syzj.event.SimpleEventHandler;
 import com.xgx.syzj.utils.Utils;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,30 +44,30 @@ public class GoodsInOutActivity extends BaseActivity implements View.OnClickList
     private int flag = 0;//0入库、1出库
     private Goods goods;
     private ListView lv_data;
-    private List<String> tList=new ArrayList<>(),cList=new ArrayList<>();
+    private List<stockRecordHistory> mDataList = new ArrayList<>();
     private OutInHistoryAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_in_out);
-        initView();
         Bundle bundle = getIntent().getExtras();
         goods = (Goods) bundle.get("goods");
-        GoodsDataModel.queryhistoryData(goods.getProductId());
         if (goods == null) {
             defaultFinish();
             return;
         }
+        initView();
+        initListener();
         tv_count.setText(goods.getQuantity() + "");
-
         EventCenter.bindContainerAndHandler(this, eventHandler);
+        GoodsDataModel.queryhistoryData(goods.getProductId());
     }
 
     private void initView() {
         setTitleText(getString(R.string.goods_kucun_title));
         setSubmit(getString(R.string.app_button_sure));
-        lv_data= (ListView) findViewById(R.id.lv_data);
+        lv_data = (ListView) findViewById(R.id.lv_data);
         tv_count = (TextView) findViewById(R.id.tv_count);
         ll_in = (LinearLayout) findViewById(R.id.ll_in);
         ll_out = (LinearLayout) findViewById(R.id.ll_out);
@@ -79,23 +78,32 @@ public class GoodsInOutActivity extends BaseActivity implements View.OnClickList
         btn_add = (Button) findViewById(R.id.btn_add);
         btn_cut = (Button) findViewById(R.id.btn_cut);
         et_count = (EditText) findViewById(R.id.et_count);
+        mAdapter = new OutInHistoryAdapter(GoodsInOutActivity.this, mDataList);
+        lv_data.setAdapter(mAdapter);
+    }
+
+    private void initListener()
+    {
         ll_in.setOnClickListener(this);
         ll_out.setOnClickListener(this);
         btn_add.setOnClickListener(this);
         btn_cut.setOnClickListener(this);
         et_count.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+            {
 
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
 
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
+            public void afterTextChanged(Editable s)
+            {
                 String str = s.toString().trim();
                 if (str.equals("0")) {
                     et_count.setText("");
@@ -109,21 +117,16 @@ public class GoodsInOutActivity extends BaseActivity implements View.OnClickList
                 }
             }
         });
-
-        mAdapter=new OutInHistoryAdapter(GoodsInOutActivity.this,cList,tList);
-        lv_data.setAdapter(mAdapter);
-
     }
 
     private SimpleEventHandler eventHandler = new SimpleEventHandler() {
 
         public void onEvent(List<stockRecordHistory> list){
-            for (stockRecordHistory history  : list) {
-                tList.add(history.getCreateTime());
-                cList.add(history.getStock_count()+"件");
-            }
+            mDataList.clear();
+            mDataList.addAll(list);
             mAdapter.notifyDataSetChanged();
         }
+
         public void onEvent(Result result) {
             hideLoadingDialog();
             String strNum = et_count.getText().toString();
@@ -138,6 +141,7 @@ public class GoodsInOutActivity extends BaseActivity implements View.OnClickList
             }
             tv_count.setText(goods.getQuantity() + "");
             EventBus.getDefault().postSticky(goods);
+            GoodsDataModel.queryhistoryData(goods.getProductId());
         }
 
         public void onEvent(String error) {
@@ -249,22 +253,7 @@ public class GoodsInOutActivity extends BaseActivity implements View.OnClickList
         if (flag == 1)
             num = 0 - num;
         showLoadingDialog(R.string.loading_date);
+        //TODO:出入库
         GoodsDataModel.inAndOutGoods(flag, goods.getProductId(), num, "描述");
-        et_count.setText("");
-        SimpleDateFormat sdf=new SimpleDateFormat("MM-dd hh:mm");
-        String date=sdf.format(System.currentTimeMillis());
-        tList.add(date);
-        if (flag == 0) {
-            showShortToast("入库成功");
-            cList.add(num+"件");
-            goods.setQuantity(goods.getQuantity() + num);
-        } else {
-            showShortToast("出库成功");
-            cList.add(num+"件");
-            goods.setQuantity(goods.getQuantity() - num);
-        }
-        tv_count.setText(goods.getQuantity() + "");
-        EventBus.getDefault().postSticky(goods);
-        mAdapter.notifyDataSetChanged();
     }
 }

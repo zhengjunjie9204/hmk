@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.xgx.syzj.R;
+import com.xgx.syzj.bean.stockRecordHistory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,26 +20,22 @@ import java.util.List;
  * @created 2015年09月23日 10:31
  */
 public class OutInHistoryAdapter extends BaseAdapter {
-
     private Context mContext;
-    private List<String> cList = new ArrayList<>();
-    private List<String> tList=new ArrayList<>();
+    private List<stockRecordHistory> mDataList = new ArrayList<>();
 
-    public OutInHistoryAdapter(Context context, List<String> clist, List<String> tList){
+    public OutInHistoryAdapter(Context context, List<stockRecordHistory> mDataList){
         this.mContext = context;
-        this.cList = clist;
-        this.tList=tList;
+        this.mDataList = mDataList;
     }
-
 
     @Override
     public int getCount() {
-        return cList.size();
+        return mDataList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return cList.get(position);
+        return mDataList.get(position);
     }
 
     @Override
@@ -58,8 +55,8 @@ public class OutInHistoryAdapter extends BaseAdapter {
         } else {
             hold = (HoldClass) convertView.getTag();
         }
-        hold.tv_time.setText(tList.get(position));
-        hold.tv_count.setText(cList.get(position));
+        hold.tv_time.setText(mDataList.get(position).getCreateTime());
+        hold.tv_count.setText(mDataList.get(position).getStock_count()+"次");
         return convertView;
     }
 

@@ -5,32 +5,32 @@ package com.xgx.syzj.bean;
  */
 public class StoreRecordBean {
 
-    private String createTime;
+    private String payTime;
     //储值金额
-    private String storeFee;
+    private String fee;
     //
     private String payOrder;
     //储值后金额
-    private double storeMoneySum;
+    private double storedMoney;
 
-    public String getCreateTime()
+    public String getPayTime()
     {
-        return createTime;
+        return payTime;
     }
 
-    public void setCreateTime(String createTime)
+    public void setPayTime(String payTime)
     {
-        this.createTime = createTime;
+        this.payTime = payTime;
     }
 
-    public String getStoreFee()
+    public String getFee()
     {
-        return storeFee;
+        return fee;
     }
 
-    public void setStoreFee(String storeFee)
+    public void setFee(String fee)
     {
-        this.storeFee = storeFee;
+        this.fee = fee;
     }
 
     public String getPayOrder()
@@ -43,13 +43,13 @@ public class StoreRecordBean {
         this.payOrder = payOrder;
     }
 
-    public double getStoreMoneySum()
+    public double getStoredMoney()
     {
-        return storeMoneySum;
+        return storedMoney;
     }
 
-    public void setStoreMoneySum(double storeMoneySum)
+    public void setStoredMoney(double storedMoney)
     {
-        this.storeMoneySum = storeMoneySum;
+        this.storedMoney = storedMoney;
     }
 }

@@ -1,6 +1,7 @@
 package com.xgx.syzj.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,9 +66,11 @@ public class StoreRecordAdapter extends BaseAdapter {
         } else {
             hold = (HoldClass) convertView.getTag();
         }
-        hold.tv_time.setText(DateUtil.getStringByFormat(record.getCreateTime(), DateUtil.dateFormatYMDHMS));
-        hold.tv_add.setText("¥ " + record.getStoreFee());
-        hold.tv_count.setText("¥ " + record.getPayOrder());
+        if(!TextUtils.isEmpty(record.getPayOrder())){
+            hold.tv_time.setText(DateUtil.getStringByFormat(record.getPayOrder(), DateUtil.dateFormatYMDHMS));
+        }
+        hold.tv_add.setText("¥ " + record.getFee());
+        hold.tv_count.setText("¥ " + record.getStoredMoney());
         return convertView;
     }
 

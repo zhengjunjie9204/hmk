@@ -47,7 +47,7 @@ public class BillListRecordModel extends PagedListDataModel<ConsumeHistory> {
                 JSONObject object = JSON.parseObject(result.getResult());
                 List<ConsumeHistory> list;
                 if (result.getStatus() == 200) {
-                    EventCenter.getInstance().post(result);
+                    EventCenter.getInstance().post(object);
                     list = FastJsonUtil.json2List(object.getString("consumeHistory"), ConsumeHistory.class);
                 } else {
                     list = new ArrayList<>();
