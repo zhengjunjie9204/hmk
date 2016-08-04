@@ -31,6 +31,7 @@ public class GoodsDataModel extends PagedListDataModel<Goods> {
     public static final byte GET_COUNT_SUCCESS = 0x14;
     public static final byte DELETE_SUCCESS_TWO=0x15;
     public static final byte QUERY_STORAGE_HISTORY=0x16;
+    public static final byte ADD_BYSTORE=0x17;
 
     private static byte code;
     private String key;
@@ -151,6 +152,29 @@ public class GoodsDataModel extends PagedListDataModel<Goods> {
     public static void addGoods(String barcode, String productName, String categoryId, String inputPrice, String sellingPrice, String quantity, String specification, String brand,String unitid,String image) {
         code = ADD_SUCCESS;
         Api.addProducts(barcode, productName, categoryId, inputPrice, sellingPrice, quantity, specification, brand,unitid,image, listener);
+    }
+    public static void addProductByStore(long storeId){
+        code=ADD_BYSTORE;
+        Api.addProductByStore(storeId, new OnRequestListener() {
+            @Override
+            public void onSuccess(Result result) {
+                JSONObject object= JSON.parseObject(result.getResult());//stockRecordHistory
+                List<Goods> list;
+                if(result.getStatus()==200) {
+                    list = FastJsonUtil.json2List(object.getString("products"), Goods.class);
+                }else {
+                    list=new ArrayList<>();
+                }
+
+                EventCenter.getInstance().post(list);
+            }
+
+            @Override
+            public void onError(String errorCode, String message) {
+                EventCenter.getInstance().post(message);
+
+            }
+        });
     }
 
     public static void queryhistoryData(int productId){

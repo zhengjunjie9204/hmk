@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -21,9 +22,11 @@ import com.xgx.syzj.adapter.GoodsListAdapter;
 import com.xgx.syzj.adapter.GoodsSelectAdapter;
 import com.xgx.syzj.base.BaseActivity;
 import com.xgx.syzj.bean.Goods;
+import com.xgx.syzj.bean.Result;
 import com.xgx.syzj.datamodel.GoodsDataModel;
 import com.xgx.syzj.event.EventCenter;
 import com.xgx.syzj.event.SimpleEventHandler;
+import com.xgx.syzj.utils.FastJsonUtil;
 import com.xgx.syzj.utils.Utils;
 
 import java.util.ArrayList;
@@ -73,6 +76,7 @@ public class GoodsSelectActivity extends BaseActivity implements View.OnClickLis
         });
         mDataModel.queryNextPage();
         dialog.show();
+        mDataModel.addProductByStore(new Goods().getStoreId());
         mAdapter = new GoodsSelectAdapter(GoodsSelectActivity.this, products, onItemCheck);
         lv_products.setAdapter(mAdapter);
         setListener();
@@ -83,9 +87,12 @@ public class GoodsSelectActivity extends BaseActivity implements View.OnClickLis
 
         public void onEvent(List<Goods> list) {
             hideLoadingDialog();
+            byte code = new Result().geteCode();
+            if(code==GoodsDataModel.ADD_BYSTORE) {
+                products.addAll(list);
+            }
             loadMoreListViewContainer.loadMoreFinish(mDataModel.getListPageInfo().isEmpty(), mDataModel.getListPageInfo().hasMore());
-            products.addAll(list);
-            mAdapter.notifyDataSetChanged();
+
         }
 
 
@@ -121,7 +128,6 @@ public class GoodsSelectActivity extends BaseActivity implements View.OnClickLis
         btn_sure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
             }
         });
 

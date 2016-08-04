@@ -34,6 +34,7 @@ public class Url {
     public static final String INTO_OUT_PRODUCTS = HOST_URL + "qcmr/stockRecord_add.action";//商品出入库
     public static final String DELETE_PRODUCTS_TWO=HOST_URL+"qcmr/product_removeProducyFromStore.action";//删除商品2
     public static final String STOCK_RECORD=HOST_URL+"qcmr/stockRecord_stockRecordHistory.action";//库存历史
+    public static final String ADD_PRODUCTS_BY_STORE=HOST_URL+"qcmr/product_findByNoStore.action";//添加未存在商品
 
     //项目
     public static final String PROJECT_EXT_LIST=HOST_URL+"qcmr/item_findStoreItemByKey.action";//项目列表

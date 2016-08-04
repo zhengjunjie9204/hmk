@@ -83,7 +83,7 @@ public class GoodsModifyActivity extends BaseActivity implements UploadPictureVi
 
     private void initData() {
         tv_code.setText(goods.getBarcode());
-        et_type.setText(goods.getCategoryName());
+        et_type.setText(goods.getCategoryId());
         et_name.setText(goods.getProductName());
         et_brand.setText(goods.getBrand());
         et_input_money.setText(goods.getInputPrice() + "");
@@ -99,7 +99,7 @@ public class GoodsModifyActivity extends BaseActivity implements UploadPictureVi
             if (result.getStatus() == 200) {
                 showShortToast("修改成功");
                 JSONObject obj = JSON.parseObject(result.getResult());
-                goods = FastJsonUtil.json2Bean(obj.getString("info"), Goods.class);
+                goods = FastJsonUtil.json2Bean(obj.toJSONString(), Goods.class);
                 EventBus.getDefault().postSticky(goods);
                 AppManager.getAppManager().returnToActivity(GoodsListActivity.class);
             } else {
@@ -200,7 +200,7 @@ public class GoodsModifyActivity extends BaseActivity implements UploadPictureVi
             showShortToast(String.format("商品%s不能为空", msg));
             return flag;
         }
-        if (strCode.equals(goods.getBarcode()) && strName.equals(goods.getProductName())
+        if (strType.equals(goods.getCategoryId())&&strCode.equals(goods.getBarcode()) && strName.equals(goods.getProductName())
                 && strInputMoney.equals(goods.getInputPrice() + "") && strSellMoney.equals(goods.getSellingPrice() + "")
                 && strInputCount.equals(goods.getQuantity() + "") && strGuige.equals(goods.getSpecification())) {
             showShortToast("未做修改");

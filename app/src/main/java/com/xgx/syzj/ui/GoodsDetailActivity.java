@@ -80,7 +80,7 @@ public class GoodsDetailActivity extends BaseActivity {
         if (goods == null) return;
         tv_code.setText(goods.getBarcode());
         tv_name.setText(goods.getProductName());
-        tv_type.setText(goods.getCategoryName());
+        tv_type.setText(goods.getCategoryId());
         tv_guige.setText(goods.getSpecification());
         tv_money.setText("￥" + goods.getInputPrice());
         tv_sell.setText("￥" + goods.getSellingPrice());

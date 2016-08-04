@@ -321,6 +321,7 @@ public class Api extends BaseRequest {
             params.put("quantity", quantity);
             params.put("specification", specification);
             params.put("unitid", unitid);
+            Log.e("zjj",params.toString());
             String json = FastJsonUtil.bean2Json(params);
             String info = Base64Util.encode(json.getBytes("UTF-8"));
             params.clear();
@@ -331,6 +332,28 @@ public class Api extends BaseRequest {
         }
 
         return getRequest(Url.UPDATE_PRODUCTS, params, getHeader(), listener);
+    }
+
+    /**
+     * 添加本店没有的商品
+     * @param storeID
+     * @param listener
+     * @return
+     */
+    public static StringRequest addProductByStore(long storeID, OnRequestListener listener) {
+        Map<String, String> params = null;
+        try {
+            params = new HashMap<>();
+            params.put("storeID", storeID+"");
+            String json = FastJsonUtil.bean2Json(params);
+            String info = Base64Util.encode(json.getBytes("UTF-8"));
+            params.clear();
+            params.put("info", info);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return getRequest(Url.ADD_PRODUCTS_BY_STORE, params, getHeader(), listener);
     }
 
     /**

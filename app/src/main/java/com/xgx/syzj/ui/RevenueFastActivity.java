@@ -94,6 +94,7 @@ public class RevenueFastActivity extends BaseActivity {
     public void onCarType(View view){
         Utils.hideSoftInput(this);
         key_number.setVisibility(View.GONE);
+        english_car.setVisibility(View.GONE);
         et_car_number.clearFocus();
         key_car.setVisibility(View.VISIBLE);
         key_car.setFocusable(true);

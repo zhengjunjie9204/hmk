@@ -25,12 +25,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/**
- * 会员充次
- *
- * @author zajo
- * @created 2015年10月10日 15:20
- */
+
 /**
  * 会员充次
  *
