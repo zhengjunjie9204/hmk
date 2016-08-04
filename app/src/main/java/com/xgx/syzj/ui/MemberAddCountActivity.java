@@ -9,8 +9,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.xgx.syzj.R;
+import com.xgx.syzj.app.Api;
 import com.xgx.syzj.app.Constants;
 import com.xgx.syzj.base.BaseActivity;
+import com.xgx.syzj.base.BaseRequest;
 import com.xgx.syzj.bean.Member;
 import com.xgx.syzj.bean.Result;
 import com.xgx.syzj.datamodel.RechargeDataModel;
@@ -31,6 +33,7 @@ import org.json.JSONObject;
  * @author zajo
  * @created 2015年10月10日 15:20
  */
+
 /**
  * 会员充次
  *
@@ -59,7 +62,7 @@ public class MemberAddCountActivity extends BaseActivity implements View.OnClick
         initView();
         initListener();
         RechargeDataModel.getMenberItem(member.getId());
-        RechargeDataModel.getSumRecord(member.getId());
+        getSumRecord();
     }
 
     private void initView()
@@ -86,40 +89,32 @@ public class MemberAddCountActivity extends BaseActivity implements View.OnClick
     }
 
     private SimpleEventHandler eventHandler = new SimpleEventHandler() {
+        public void onEvent(JSONObject json)
+        {
+            try {
+                tv_user.setText(json.optInt("length", 0) + "次");
+                JSONArray memberItems = json.optJSONArray("memberItems");
+                if (null != memberItems || memberItems.length() > 0) {
+                    int count = 0;
+                    for (int i = 0; i < memberItems.length(); i++) {
+                        count += memberItems.getJSONObject(i).optInt("itemCount", 0);
+                    }
+                    tv_total.setText(count + "个");
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
 
         public void onEvent(Result result)
         {
-            if (result.geteCode() == RechargeDataModel.GET_MENBER) {
-                try {
-                    JSONObject json = new JSONObject(result.getResult());
-                    tv_user.setText(json.optInt("length", 0) + "次");
-                    JSONArray memberItems = json.optJSONArray("memberItems");
-                    if (null != memberItems || memberItems.length() > 0) {
-                        int count = 0;
-                        for (int i = 0; i < memberItems.length(); i++) {
-                            count += memberItems.getJSONObject(i).optInt("itemCount", 0);
-                        }
-                        tv_total.setText(count + "个");
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            } else if (result.geteCode() == RechargeDataModel.GET_SUMRECORD) {
-                try {
-                    JSONObject json = new JSONObject(result.getResult());
-                    tv_profit.setText("¥ " + json.optDouble("money", 0.00));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                hideLoadingDialog();
-                showShortToast("充值成功");
-                Intent data = new Intent();
-                data.setAction(Constants.Broadcast.RECEIVER_ADD_RECHARGE);
-                data.putExtra("member", member);
-                sendBroadcast(data);
-                defaultFinish();
-            }
+            hideLoadingDialog();
+            showShortToast("充值成功");
+            Intent data = new Intent();
+            data.setAction(Constants.Broadcast.RECEIVER_ADD_RECHARGE);
+            data.putExtra("member", member);
+            sendBroadcast(data);
+            defaultFinish();
         }
 
         public void onEvent(String error)
@@ -169,6 +164,29 @@ public class MemberAddCountActivity extends BaseActivity implements View.OnClick
                 gotoActivityForResult(MemberSelectProjectActivity.class, null, 2005);
                 break;
         }
+    }
+
+    private void getSumRecord(){
+        Api.getSumRecord(member.getId(), new BaseRequest.OnRequestListener() {
+            @Override
+            public void onSuccess(Result result)
+            {
+                if (result.getStatus() == 200) {
+                    try {
+                        org.json.JSONObject json = new org.json.JSONObject(result.getResult());
+                        tv_profit.setText("¥ " + json.optDouble("money", 0.00));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onError(String errorCode, String message)
+            {
+                EventCenter.getInstance().post(message);
+            }
+        });
     }
 
     private boolean checkInput()

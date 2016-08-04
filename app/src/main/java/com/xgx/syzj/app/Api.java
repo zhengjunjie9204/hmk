@@ -10,7 +10,6 @@ import com.xgx.syzj.bean.BillDetail;
 import com.xgx.syzj.bean.GoodsCart;
 import com.xgx.syzj.secret.Base64Util;
 import com.xgx.syzj.secret.RSAManager;
-import com.xgx.syzj.ui.SYZJApplication;
 import com.xgx.syzj.ui.SaleHistoryActivity;
 import com.xgx.syzj.utils.CacheUtil;
 import com.xgx.syzj.utils.FastJsonUtil;
@@ -399,6 +398,7 @@ public class Api extends BaseRequest {
         try {
             params = new HashMap<>();
             info = new HashMap<>();
+            info.put("storeId", CacheUtil.getmInstance().getUser().getStoreId());
             info.put("productId", productId);
             info.put("stockCount", stockCount);//数量
             info.put("flag",flag);
