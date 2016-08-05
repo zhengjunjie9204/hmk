@@ -1,21 +1,5 @@
 [
     {
-        "merged": "F:\\闪电开单\\hmk\\ptr-lib\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\cube_views_load_more_default_footer.xml",
-        "source": "F:\\闪电开单\\hmk\\ptr-lib\\build\\intermediates\\bundles\\debug\\res\\layout\\cube_views_load_more_default_footer.xml"
-    },
-    {
-        "merged": "F:\\闪电开单\\hmk\\ptr-lib\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\cube_ptr_simple_loading.xml",
-        "source": "F:\\闪电开单\\hmk\\ptr-lib\\build\\intermediates\\bundles\\debug\\res\\layout\\cube_ptr_simple_loading.xml"
-    },
-    {
-        "merged": "C:\\Users\\Administrator\\Desktop\\新建文件夹 (3)\\hmk\\ptr-lib\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\cube_ptr_simple_loading.xml",
-        "source": "C:\\Users\\Administrator\\Desktop\\新建文件夹 (3)\\hmk\\ptr-lib\\build\\intermediates\\bundles\\debug\\res\\layout\\cube_ptr_simple_loading.xml"
-    },
-    {
-        "merged": "C:\\Users\\Administrator\\Desktop\\回眸客\\hmk\\ptr-lib\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\cube_views_load_more_default_footer.xml",
-        "source": "C:\\Users\\Administrator\\Desktop\\回眸客\\hmk\\ptr-lib\\build\\intermediates\\bundles\\debug\\res\\layout\\cube_views_load_more_default_footer.xml"
-    },
-    {
         "merged": "C:\\Users\\Administrator\\Desktop\\8月1日\\hmk\\ptr-lib\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\cube_ptr_simple_loading.xml",
         "source": "C:\\Users\\Administrator\\Desktop\\8月1日\\hmk\\ptr-lib\\build\\intermediates\\bundles\\debug\\res\\layout\\cube_ptr_simple_loading.xml"
     },
@@ -24,39 +8,7 @@
         "source": "C:\\Users\\Administrator\\Desktop\\8月1日\\hmk\\ptr-lib\\build\\intermediates\\bundles\\debug\\res\\layout\\cube_ptr_classic_default_header.xml"
     },
     {
-        "merged": "C:\\project\\hmk\\ptr-lib\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\cube_views_load_more_default_footer.xml",
-        "source": "C:\\project\\hmk\\ptr-lib\\build\\intermediates\\bundles\\debug\\res\\layout\\cube_views_load_more_default_footer.xml"
-    },
-    {
-        "merged": "C:\\Users\\Administrator\\Desktop\\回眸客\\hmk\\ptr-lib\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\cube_ptr_simple_loading.xml",
-        "source": "C:\\Users\\Administrator\\Desktop\\回眸客\\hmk\\ptr-lib\\build\\intermediates\\bundles\\debug\\res\\layout\\cube_ptr_simple_loading.xml"
-    },
-    {
-        "merged": "C:\\project\\hmk\\ptr-lib\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\cube_ptr_simple_loading.xml",
-        "source": "C:\\project\\hmk\\ptr-lib\\build\\intermediates\\bundles\\debug\\res\\layout\\cube_ptr_simple_loading.xml"
-    },
-    {
-        "merged": "C:\\project\\hmk\\ptr-lib\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\cube_ptr_classic_default_header.xml",
-        "source": "C:\\project\\hmk\\ptr-lib\\build\\intermediates\\bundles\\debug\\res\\layout\\cube_ptr_classic_default_header.xml"
-    },
-    {
         "merged": "C:\\Users\\Administrator\\Desktop\\8月1日\\hmk\\ptr-lib\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\cube_views_load_more_default_footer.xml",
         "source": "C:\\Users\\Administrator\\Desktop\\8月1日\\hmk\\ptr-lib\\build\\intermediates\\bundles\\debug\\res\\layout\\cube_views_load_more_default_footer.xml"
-    },
-    {
-        "merged": "C:\\Users\\Administrator\\Desktop\\新建文件夹 (3)\\hmk\\ptr-lib\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\cube_ptr_classic_default_header.xml",
-        "source": "C:\\Users\\Administrator\\Desktop\\新建文件夹 (3)\\hmk\\ptr-lib\\build\\intermediates\\bundles\\debug\\res\\layout\\cube_ptr_classic_default_header.xml"
-    },
-    {
-        "merged": "C:\\Users\\Administrator\\Desktop\\新建文件夹 (3)\\hmk\\ptr-lib\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\cube_views_load_more_default_footer.xml",
-        "source": "C:\\Users\\Administrator\\Desktop\\新建文件夹 (3)\\hmk\\ptr-lib\\build\\intermediates\\bundles\\debug\\res\\layout\\cube_views_load_more_default_footer.xml"
-    },
-    {
-        "merged": "F:\\闪电开单\\hmk\\ptr-lib\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\cube_ptr_classic_default_header.xml",
-        "source": "F:\\闪电开单\\hmk\\ptr-lib\\build\\intermediates\\bundles\\debug\\res\\layout\\cube_ptr_classic_default_header.xml"
-    },
-    {
-        "merged": "C:\\Users\\Administrator\\Desktop\\回眸客\\hmk\\ptr-lib\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\cube_ptr_classic_default_header.xml",
-        "source": "C:\\Users\\Administrator\\Desktop\\回眸客\\hmk\\ptr-lib\\build\\intermediates\\bundles\\debug\\res\\layout\\cube_ptr_classic_default_header.xml"
     }
 ]

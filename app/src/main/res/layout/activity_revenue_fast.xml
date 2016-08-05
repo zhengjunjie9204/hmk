@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/appBG"
     android:orientation="vertical">
@@ -73,15 +74,25 @@
 
     <include layout="@layout/layout_line"/>
 
-    <ListView
+    <GridView
         android:id="@+id/lv_data"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:cacheColorHint="#0000"
-        android:divider="@color/line_color"
+        android:verticalSpacing="3dp"
+        android:horizontalSpacing="3dp"
+        android:numColumns="3"
         android:dividerHeight="0.5dp"
-        tools:listitem="@layout/item_revenue_history"/>
+        tools:listitem="@layout/item_car_history"/>
+    <!--<ListView-->
+        <!--android:id="@+id/lv_data"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:cacheColorHint="#0000"-->
+        <!--android:divider="@color/line_color"-->
+        <!--android:dividerHeight="0.5dp"-->
+        <!--tools:listitem="@layout/item_revenue_history"/>-->
 
     <android.support.percent.PercentRelativeLayout
         android:id="@+id/key_car"

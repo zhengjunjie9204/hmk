@@ -133,7 +133,7 @@ public class ProjectListActivity extends BaseActivity implements AdapterView.OnI
                 mAdapter.notifyDataSetChanged();
                 String text = et_text.getText().toString().trim();
                 mDataModel.setKey(text);
-                mDataModel.queryNextPage();
+                 mDataModel.queryNextPage();
                 Utils.hideSoftInput(ProjectListActivity.this);
             }
             return false;
