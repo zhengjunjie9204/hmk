@@ -116,6 +116,8 @@ public class Url {
     public static final String CONSUME_LIST = HOST_URL + "qcmr/member_itemAllConsume.action";//会员储值充值
     public static final String FIND_MENBER_ITEM = HOST_URL + "qcmr/memberStore_findMenberItemLeft.action";//3.5.11.	查询会员项目计次余次
     public static final String MENBER_BY_ID = HOST_URL + "qcmr/member_findMemberById.action";//3.5.1.	会员详情
+    public static final String MONEY_REPORT = HOST_URL + "qcmr/statistics_moneyReport.action";//3.8.1.	资金流水
+    public static final String SALE_REPORT = HOST_URL + "qcmr/statistics_saleReport.action";//3.8.2.	销售分析
 
     //未完成接口
     //消费历史、兑换积分、储值记录、销售列表、销售详情、退货原因、考勤列表、设置考勤位置、考勤、修改店铺信息
