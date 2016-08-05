@@ -79,12 +79,13 @@ public class RevenueFastActivity extends BaseActivity  {
         lv_data.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView absListView, int i) {
-
-            }
+                key_car.setVisibility(View.GONE);
+                key_number.setVisibility(View.GONE);
+                english_car.setVisibility(View.GONE);            }
 
             @Override
             public void onScroll(AbsListView absListView, int i, int i1, int i2) {
-                key_car.setVisibility(View.GONE);
+
             }
         });
         lv_data.setOnItemClickListener(new AdapterView.OnItemClickListener() {
