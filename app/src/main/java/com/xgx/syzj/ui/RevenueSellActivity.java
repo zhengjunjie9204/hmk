@@ -15,9 +15,13 @@ import com.xgx.syzj.base.BaseActivity;
 import com.xgx.syzj.bean.Goods;
 import com.xgx.syzj.bean.Member;
 import com.xgx.syzj.bean.Project;
+import com.xgx.syzj.event.EventCenter;
+import com.xgx.syzj.event.SimpleEventHandler;
 import com.xgx.syzj.utils.Utils;
 import com.xgx.syzj.widget.CustomAlertDialog;
 import com.xgx.syzj.widget.ListViewExtend;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,8 +48,10 @@ public class RevenueSellActivity extends BaseActivity{
         setContentView(R.layout.activity_revenue_sell);
         Utils.hideSoftInput(this);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        EventCenter.bindContainerAndHandler(this, eventHandler);
         initView();
         initData();
+        //        RechargeDataModel.getMenberItem();
     }
 
     private void initView()
@@ -175,6 +181,17 @@ public class RevenueSellActivity extends BaseActivity{
         super.onSubmit(view);
         gotoActivity(RevenueMemberActivity.class);
     }
+
+    private SimpleEventHandler eventHandler = new SimpleEventHandler() {
+
+        public void onEvent(JSONObject jsonObject) {
+
+        }
+
+        public void onEvent(String error) {
+
+        }
+    };
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
