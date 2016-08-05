@@ -999,6 +999,32 @@ public class Api extends BaseRequest {
     }
 
     /**
+     * 3.8.1.	资金流水
+     *
+     * @param startTime
+     * @param endTime
+     * @param listener
+     * @return
+     */
+    public static StringRequest getSaleReport(String startTime,String endTime, OnRequestListener listener) {
+        Map<String, String> params = null;
+        Map<String, Object> info;
+        try {
+            params = new HashMap<>();
+            info = new HashMap<>();
+            info.put("startTime", startTime);
+            info.put("endTime", endTime);
+            info.put("storeId", CacheUtil.getmInstance().getUser().getStoreId());
+            String json = FastJsonUtil.bean2Json(info);
+            json = Base64Util.encode(json.getBytes("UTF-8"));
+            params.put("info", json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getRequest(Url.SALE_REPORT, params, getHeader(), listener);
+    }
+
+    /**
      * 更新会员信息
      */
     public static StringRequest updateAssociator(long id, String name,String carNumber, String telephone, String carType, String cardNumber, OnRequestListener listener) {
