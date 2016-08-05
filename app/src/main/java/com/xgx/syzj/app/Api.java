@@ -946,8 +946,30 @@ public class Api extends BaseRequest {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return getRequest(Url.ASSOCIATOR_DELETE, params, getHeader(), listener);
+    }
+
+    /**
+     * 删除会员
+     *
+     * @param memberId
+     * @param listener
+     * @return
+     */
+    public static StringRequest getMenberDetails(int memberId, OnRequestListener listener) {
+        Map<String, String> params = null;
+        Map<String, Object> info;
+        try {
+            params = new HashMap<>();
+            info = new HashMap<>();
+            info.put("memberId", memberId);
+            String json = FastJsonUtil.bean2Json(info);
+            json = Base64Util.encode(json.getBytes("UTF-8"));
+            params.put("info", json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getRequest(Url.MENBER_BY_ID, params, getHeader(), listener);
     }
 
     /**
