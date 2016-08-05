@@ -6,9 +6,11 @@ import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -19,6 +21,7 @@ import com.xgx.syzj.R;
 import com.xgx.syzj.adapter.RevenueFastAdapter;
 import com.xgx.syzj.base.BaseActivity;
 import com.xgx.syzj.utils.Utils;
+import com.xgx.syzj.widget.CustomAlertDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +29,13 @@ import java.util.List;
 /**
  * 接车开单
  */
-public class RevenueFastActivity extends BaseActivity {
+public class RevenueFastActivity extends BaseActivity  {
 
     private Button btn_car_title;
     private PercentRelativeLayout key_car,key_number;
     private EditText et_car_number;
     private PercentRelativeLayout english_car;
+    private GridView lv_data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +49,7 @@ public class RevenueFastActivity extends BaseActivity {
         key_car= (PercentRelativeLayout) findViewById(R.id.key_car);
         key_number= (PercentRelativeLayout) findViewById(R.id.key_number);
         english_car = (PercentRelativeLayout)findViewById(R.id.english_car);
-        ListView lv_data = (ListView) findViewById(R.id.lv_data);
+        lv_data = (GridView) findViewById(R.id.lv_data);
         List<String> nameList=new ArrayList<>();
         final List<String> mList=new ArrayList<>();
         for(int i=0;i<10;i++){
@@ -54,6 +58,7 @@ public class RevenueFastActivity extends BaseActivity {
         }
         RevenueFastAdapter mAdapter=new RevenueFastAdapter(this,mList,nameList);
         lv_data.setAdapter(mAdapter);
+
         et_car_number.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -71,14 +76,31 @@ public class RevenueFastActivity extends BaseActivity {
             }
         });
         et_car_number.clearFocus();
+        lv_data.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int i, int i1, int i2) {
+                key_car.setVisibility(View.GONE);
+            }
+        });
         lv_data.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String name=mList.get(position);
-                Bundle bundle=new Bundle();
+                final Bundle bundle=new Bundle();
                 bundle.putString("carnumber",name);
                 bundle.putBoolean("isPay",true);
-                gotoActivity(RevenueSellActivity.class,bundle);
+                CustomAlertDialog.showRemindDialog(RevenueFastActivity.this, "温馨提示", "是否完成订单", new CustomAlertDialog.IAlertDialogListener() {
+                    @Override
+                    public void onSure(Object obj) {
+                        gotoActivity(RevenueSellActivity.class,bundle);
+                        finish();
+                    }
+                });
             }
         });
     }
@@ -98,7 +120,7 @@ public class RevenueFastActivity extends BaseActivity {
         et_car_number.clearFocus();
         key_car.setVisibility(View.VISIBLE);
         key_car.setFocusable(true);
-        setAnimator(Techniques.SlideInUp,key_car);
+//        setAnimator(Techniques.SlideInUp,key_car);
     }
     //确定按钮
     @Override
@@ -108,6 +130,7 @@ public class RevenueFastActivity extends BaseActivity {
         Bundle bundle=new Bundle();
         bundle.putString("carnumber",name);
         bundle.putBoolean("isPay",false);
+
         gotoActivity(RevenueSellActivity.class,bundle);
     }
 
@@ -480,4 +503,7 @@ public class RevenueFastActivity extends BaseActivity {
             }
         }
     }
+
+
+
 }
