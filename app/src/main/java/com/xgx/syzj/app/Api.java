@@ -706,7 +706,7 @@ public class Api extends BaseRequest {
     /**
      * 会员计次充值
      */
-    public static StringRequest addItemCombo(int memberId, String fee, int payType, String comboList,String itemList, String content,String sendSMSFlag, OnRequestListener listener) {
+    public static StringRequest addItemCombo(int memberId, String fee, int payType, long[] comboList,long[] itemList, String content,String sendSMSFlag, OnRequestListener listener) {
         Map<String, String> params = null;
         Map<String, Object> info;
         try {
@@ -1022,6 +1022,29 @@ public class Api extends BaseRequest {
             e.printStackTrace();
         }
         return getRequest(Url.SALE_REPORT, params, getHeader(), listener);
+    }
+
+    /**
+     * 3.3.2.	查询门店下所有项目
+     * @param listener
+     * @return
+     */
+    public static StringRequest getStoreItem(int pageNo,int pageSize, OnRequestListener listener) {
+        Map<String, String> params = null;
+        Map<String, Object> info;
+        try {
+            params = new HashMap<>();
+            info = new HashMap<>();
+            info.put("pageNo", pageNo);
+            info.put("pageSize", pageSize);
+            info.put("storeId", CacheUtil.getmInstance().getUser().getStoreId());
+            String json = FastJsonUtil.bean2Json(info);
+            json = Base64Util.encode(json.getBytes("UTF-8"));
+            params.put("info", json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getRequest(Url.ALL_STORE_ITEM, params, getHeader(), listener);
     }
 
     /**

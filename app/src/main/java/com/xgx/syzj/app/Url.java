@@ -108,11 +108,12 @@ public class Url {
 
     //会员
     public static final String COMBO_LIST = HOST_URL + "qcmr/combo_findByKey.action";//3.4.1.	根据套餐名关键字查询门店下套餐
+    public static final String ALL_STORE_ITEM = HOST_URL + "qcmr/item_findAllStoreItem.action";//3.3.2.	查询门店下所有项目
     public static final String SUM_ITEM_RECORD = HOST_URL + "qcmr/memberStore_sumStoreItemRecord.action";//3.5.14.	查询会员计次累计充值金额
     public static final String STORE_MONEY_RECORD = HOST_URL + "qcmr/member_storeMoneyRecord.action";//储值记录
     public static final String CONSUME_HISTORY = HOST_URL + "qcmr/member_consumeHistory.action";//消费历史
     public static final String ADD_STORE_MONEY = HOST_URL + "qcmr/memberStore_addStoreMoney.action";//会员储值充值
-    public static final String ADD_ITEM_COMBO = HOST_URL + "qcmr/memberStore_ addItemCombo.action";//消费历史
+    public static final String ADD_ITEM_COMBO = HOST_URL + "qcmr/memberStore_addItemCombo.action";//消费历史
     public static final String CONSUME_LIST = HOST_URL + "qcmr/member_itemAllConsume.action";//会员储值充值
     public static final String FIND_MENBER_ITEM = HOST_URL + "qcmr/memberStore_findMenberItemLeft.action";//3.5.11.	查询会员项目计次余次
     public static final String MENBER_BY_ID = HOST_URL + "qcmr/member_findMemberById.action";//3.5.1.	会员详情
