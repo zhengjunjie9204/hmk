@@ -2,7 +2,7 @@ package com.xgx.syzj.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,8 +13,10 @@ import com.xgx.syzj.app.Api;
 import com.xgx.syzj.app.Constants;
 import com.xgx.syzj.base.BaseActivity;
 import com.xgx.syzj.base.BaseRequest;
+import com.xgx.syzj.bean.Combo;
 import com.xgx.syzj.bean.Member;
 import com.xgx.syzj.bean.Result;
+import com.xgx.syzj.bean.StoreItem;
 import com.xgx.syzj.datamodel.RechargeDataModel;
 import com.xgx.syzj.event.EventCenter;
 import com.xgx.syzj.event.SimpleEventHandler;
@@ -48,7 +50,8 @@ public class MemberAddCountActivity extends BaseActivity implements View.OnClick
     private Button btn_ok;
     private String money, count, remark;
     private Member member;
-
+    private Combo combo;
+    private StoreItem storeItem;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -70,6 +73,7 @@ public class MemberAddCountActivity extends BaseActivity implements View.OnClick
         setTitleText("会员计次");
         setSubmit("记录");
         et_money = (EditText) findViewById(R.id.et_money);
+        et_money.setEnabled(false);
         tv_count = (TextItemView) findViewById(R.id.tv_count);
         et_remark = (EditText) findViewById(R.id.et_remark);
         tv_mode = (TextItemView) findViewById(R.id.tv_mode);
@@ -145,10 +149,18 @@ public class MemberAddCountActivity extends BaseActivity implements View.OnClick
                     if (csb_sms.isChecked()) {
                         sendMsg = "1";
                     }
-                    RechargeDataModel.addItemCombo(member.getId(), money, 3, null, null, remark, sendMsg);
-//                    RechargeDataModel.addRecharge(member.getId(), Integer.parseInt(money),
-//                            0, Integer.parseInt(count), Constants.RechargeType.RECHARGE_COUNT,
-//                            Utils.getPayIndex(tv_mode.getDesc()), remark);
+                    long[] storeArr = null;
+                    if(storeItem != null){
+                        money = ""+storeItem.getPrice();
+                        storeArr = new long[]{storeItem.getId()};
+                    }
+                    long[] comboArr  = null;
+                    if(combo != null){
+                        money = ""+combo.getPrice();
+                        comboArr = new long[]{combo.getId()};
+                    }
+                    Log.d("TTTTTT", comboArr.toString());
+                    RechargeDataModel.addItemCombo(member.getId(), money, 3, comboArr, storeArr, remark, sendMsg);
                 }
                 break;
             case R.id.tv_mode:
@@ -191,10 +203,10 @@ public class MemberAddCountActivity extends BaseActivity implements View.OnClick
 
     private boolean checkInput()
     {
-        money = et_money.getText().toString().trim();
+//        money = et_money.getText().toString().trim();
         remark = et_remark.getText().toString().trim();
-        if (TextUtils.isEmpty(money)) {
-            showShortToast("请输入充值金额");
+        if(storeItem == null && combo == null){
+            showShortToast("请选择充值项目或者套餐");
             return false;
         }
         return true;
@@ -206,10 +218,15 @@ public class MemberAddCountActivity extends BaseActivity implements View.OnClick
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != RESULT_OK) return;
         if (requestCode == 2005) {
-            String name = data.getStringExtra("project");
-            String money = data.getStringExtra("money");
-            tv_count.setDesc(name);
-            et_money.setText(money);
+            storeItem = (StoreItem) data.getSerializableExtra("store");
+            combo = (Combo) data.getSerializableExtra("combo");
+            if(storeItem != null){
+                tv_count.setDesc(storeItem.getName());
+                et_money.setText(storeItem.getPrice()+"");
+            }else if(combo != null){
+                tv_count.setDesc(combo.getName());
+                et_money.setText(combo.getPrice()+"");
+            }
         }
     }
 }

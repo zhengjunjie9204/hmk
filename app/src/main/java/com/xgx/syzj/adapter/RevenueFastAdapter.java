@@ -8,9 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.xgx.syzj.R;
-import com.xgx.syzj.bean.Member;
+import com.xgx.syzj.bean.FastOrder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,15 +21,12 @@ import java.util.List;
 public class RevenueFastAdapter extends BaseAdapter {
 
     private Context mContext;
-    private List<String> mList = new ArrayList<>();
-    private List<String> nameList=new ArrayList<>();
+    private List<FastOrder> mList;
 
-    public RevenueFastAdapter(Context context, List<String> list,List<String> nameList){
+    public RevenueFastAdapter(Context context, List<FastOrder> list){
         this.mContext = context;
         this.mList = list;
-        this.nameList=nameList;
     }
-
 
     @Override
     public int getCount() {
@@ -59,8 +55,14 @@ public class RevenueFastAdapter extends BaseAdapter {
         } else {
             hold = (HoldClass) convertView.getTag();
         }
-        hold.tv_name.setText("粤A123"+position);
-        hold.tv_result.setText("未完成");
+        FastOrder fastOrder = mList.get(position);
+
+        hold.tv_name.setText(fastOrder.getCarNumber());
+        if (fastOrder.getPayStatus() == 0) {
+            hold.tv_result.setText("未完成");
+        }else if(fastOrder.getPayStatus() == 3){
+            hold.tv_result.setText("已完成");
+        }
         return convertView;
     }
 

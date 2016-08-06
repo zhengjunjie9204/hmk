@@ -4,7 +4,6 @@ import android.content.Context;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,48 +13,44 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.xgx.syzj.R;
-import com.xgx.syzj.bean.ReItem;
+import com.xgx.syzj.bean.StoreItem;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2016/8/3 0003.
  */
-public class GoodsrechargeAdapter extends BaseAdapter implements View.OnClickListener {
+public class GoodsrechargeAdapter extends BaseAdapter {
     Context mContext;
-    List<ReItem> mList;
-    GoodCallBack mCallback;
-
-    public GoodsrechargeAdapter(Context context, List mList ,GoodCallBack callback) {
+    List<StoreItem> mList;
+    private Map<Integer, StoreItem> selectMap;
+    public GoodsrechargeAdapter(Context context, List<StoreItem> mList)
+    {
         this.mContext = context;
         this.mList = mList;
-        this.mCallback=callback;
+        selectMap = new HashMap<>();
+    }
+
+    public Map<Integer, StoreItem> getSlectMap(){
+        return selectMap;
+    }
+
+    public void cleanMap(){
+        selectMap.clear();
+        notifyDataSetChanged();
     }
 
     @Override
-    public int getCount() {
-        if (mList.size() > 0) {
-            return mList.size();
-
-        }
-        return 3;
+    public int getCount()
+    {
+        return mList.size();
     }
 
     @Override
-    public void onClick(View view) {
-
-        mCallback.click(view);
-    }
-
-
-
-    public interface GoodCallBack {
-        public void click(View v);
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup viewGroup) {
+    public View getView(int position, View convertView, ViewGroup viewGroup)
+    {
         final HoldClass hold;
         if (convertView == null) {
             hold = new HoldClass();
@@ -68,42 +63,72 @@ public class GoodsrechargeAdapter extends BaseAdapter implements View.OnClickLis
         } else {
             hold = (HoldClass) convertView.getTag();
         }
-        final ReItem item = mList.get(position);
-        hold.tv_money.setText(item.getMoney()+"");
+        final StoreItem item = mList.get(position);
+        hold.tv_name.setText(item.getName());
+        hold.tv_money.setText(item.getPrice() + "");
         hold.et_count.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2)
+            {
 
             }
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
+            {
                 String s = hold.et_count.getText().toString();
-                if(!TextUtils.isEmpty(s))
-                {
-                    hold.cb_wash .setChecked(true);
-                    int c=Integer.parseInt(s.toString());
-                    hold.tv_money.setText(item.getMoney()*c+"");
+                if (!TextUtils.isEmpty(s)) {
+                    hold.cb_wash.setChecked(true);
+                    int c = Integer.parseInt(s.toString());
+                    hold.tv_money.setText(item.getPrice() * c + "");
                 }
             }
 
             @Override
-            public void afterTextChanged(Editable editable) {
+            public void afterTextChanged(Editable editable)
+            {
 
             }
         });
-        hold.cb_wash.setOnClickListener(this);
-
+        if (selectMap.containsKey(item.getId())) {
+            hold.cb_wash.setChecked(true);
+        } else {
+            hold.cb_wash.setChecked(false);
+        }
+        hold.cb_wash.setOnClickListener(new MyClickListener(item));
         return convertView;
     }
 
+    class MyClickListener implements View.OnClickListener {
+        StoreItem item;
+
+        MyClickListener(StoreItem item)
+        {
+            this.item = item;
+        }
+
+        @Override
+        public void onClick(View v)
+        {
+            if (selectMap.containsKey(item.getId())) {
+                selectMap.clear();
+            }else{
+                selectMap.clear();
+                selectMap.put(item.getId(),item);
+            }
+            notifyDataSetChanged();
+        }
+    }
+
     @Override
-    public Object getItem(int position) {
+    public Object getItem(int position)
+    {
         return mList.get(position);
     }
 
     @Override
-    public long getItemId(int position) {
+    public long getItemId(int position)
+    {
         return position;
     }
 
@@ -115,5 +140,13 @@ public class GoodsrechargeAdapter extends BaseAdapter implements View.OnClickLis
     }
 
 
+    private SignledListener mListener;
+    public interface SignledListener{
+        public void onStoreClick(StoreItem item);
+    }
+
+    public void setSignledClick(SignledListener mListener){
+        this.mListener = mListener;
+    }
 
 }

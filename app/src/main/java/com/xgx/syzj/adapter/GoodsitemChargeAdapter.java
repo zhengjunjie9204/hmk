@@ -1,86 +1,88 @@
 package com.xgx.syzj.adapter;
 
 import android.content.Context;
-import android.database.DataSetObserver;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.ExpandableListAdapter;
 import android.widget.TextView;
 
 import com.xgx.syzj.R;
-import com.xgx.syzj.bean.ReItem;
+import com.xgx.syzj.bean.Combo;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2016/8/4 0004.
  */
-public class GoodsitemChargeAdapter implements ExpandableListAdapter{
+public class GoodsitemChargeAdapter extends BaseExpandableListAdapter {
     private Context mContext;
-    private List<ReItem> sList;
+    private List<Combo> mDataList;
+    private Map<Integer, Combo> comboMap;
 
-    public GoodsitemChargeAdapter(Context context, List sList ) {
+    public GoodsitemChargeAdapter(Context context, List<Combo> mDataList)
+    {
         this.mContext = context;
-        this.sList = sList;
+        this.mDataList = mDataList;
+        comboMap = new HashMap<>();
     }
-    @Override
-    public void registerDataSetObserver(DataSetObserver dataSetObserver) {
-        
+
+    public Map<Integer, Combo> getSlectMap(){
+        return comboMap;
+    }
+
+    public void cleanMap(){
+        comboMap.clear();
+        notifyDataSetChanged();
     }
 
     @Override
-    public void unregisterDataSetObserver(DataSetObserver dataSetObserver) {
-
+    public int getGroupCount()
+    {
+        return mDataList.size();
     }
 
     @Override
-    public int getGroupCount() {
-        if(sList.size()>0){
-            return sList.size();
+    public int getChildrenCount(int position)
+    {
+        if (null != mDataList.get(position).getItems()) {
+            return mDataList.get(position).getItems().size();
         }
         return 0;
     }
 
     @Override
-    public int getChildrenCount(int i) {
-         if(sList.size()>0){
-            return sList.size();
-        }
-        return 0;
+    public Object getGroup(int groupPosition)
+    {
+        return groupPosition;
     }
 
     @Override
-    public Object getGroup(int i) {
-        return null;
+    public Object getChild(int groupPosition, int childPosition)
+    {
+        return childPosition;
     }
 
     @Override
-    public Object getChild(int i, int i1) {
-        return null;
+    public long getGroupId(int groupPosition)
+    {
+        return groupPosition;
     }
 
     @Override
-    public long getGroupId(int i) {
-        return 0;
+    public long getChildId(int groupPosition, int childPosition)
+    {
+        return childPosition;
     }
 
-    @Override
-    public long getChildId(int i, int i1) {
-        return 0;
-    }
 
     @Override
-    public boolean hasStableIds() {
-        return false;
-    }
-
-    @Override
-    public View getGroupView(int position, boolean b, View convertView, ViewGroup viewGroup) {
-
-            HoldClass hold;
+    public View getGroupView(int position, boolean b, View convertView, ViewGroup viewGroup)
+    {
+        HoldClass hold;
         if (convertView == null) {
             hold = new HoldClass();
             convertView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.activity_menber_select_item, null);
@@ -91,15 +93,42 @@ public class GoodsitemChargeAdapter implements ExpandableListAdapter{
         } else {
             hold = (HoldClass) convertView.getTag();
         }
-        ReItem reItem = sList.get(position);
-        hold.tv_meal.setText(reItem.getName());
-        hold.tv_money2.setText(reItem.getMoney()+"");
-
+        Combo combo = mDataList.get(position);
+        hold.tv_meal.setText(combo.getName());
+        hold.tv_money2.setText(combo.getPrice() + "");
+        if (comboMap.containsKey(combo.getId())) {
+            hold.cb_wash2.setChecked(true);
+        } else {
+            hold.cb_wash2.setChecked(false);
+        }
+        hold.cb_wash2.setOnClickListener(new MyClickListener(combo));
         return convertView;
     }
 
+    class MyClickListener implements View.OnClickListener {
+        Combo combo;
+
+        MyClickListener(Combo combo)
+        {
+            this.combo = combo;
+        }
+
+        @Override
+        public void onClick(View v)
+        {
+            if (comboMap.containsKey(combo.getId())) {
+                comboMap.clear();
+            }else{
+                comboMap.clear();
+                comboMap.put(combo.getId(),combo);
+            }
+            notifyDataSetChanged();
+        }
+    }
+
     @Override
-    public View getChildView(int position, int i1, boolean b, View convertView, ViewGroup viewGroup) {
+    public View getChildView(int position, int position1, boolean b, View convertView, ViewGroup viewGroup)
+    {
         HoldClass hold;
         if (convertView == null) {
             hold = new HoldClass();
@@ -110,51 +139,35 @@ public class GoodsitemChargeAdapter implements ExpandableListAdapter{
         } else {
             hold = (HoldClass) convertView.getTag();
         }
-        ReItem reItem = sList.get(position);
-        hold.tv_item.setText(reItem.getName());
-        hold.tv_count.setText("15");
+        Combo.ItemsBean itemsBean = mDataList.get(position).getItems().get(position1);
+        hold.tv_item.setText(itemsBean.getName());
+        hold.tv_count.setText("X" + itemsBean.getCount());
         return convertView;
-
-
     }
 
     @Override
-    public boolean isChildSelectable(int i, int i1) {
+    public boolean isChildSelectable(int groupPosition, int childPosition)
+    {
         return false;
     }
 
     @Override
-    public boolean areAllItemsEnabled() {
+    public boolean hasStableIds()
+    {
         return false;
     }
 
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
-
-    @Override
-    public void onGroupExpanded(int i) {
-
-    }
-
-    @Override
-    public void onGroupCollapsed(int i) {
-
-    }
-
-    @Override
-    public long getCombinedChildId(long l, long l1) {
-        return 0;
-    }
-
-    @Override
-    public long getCombinedGroupId(long l) {
-        return 0;
-    }
-    public class HoldClass{
-        public TextView tv_meal,tv_item,tv_count,tv_money2;
+    public class HoldClass {
+        public TextView tv_meal, tv_item, tv_count, tv_money2;
         public CheckBox cb_wash2;
+    }
 
+    private SignledListener mListener;
+    public interface SignledListener{
+        public void onComboClick(Combo combo);
+    }
+
+    public void setSignledClick(SignledListener mListener){
+        this.mListener = mListener;
     }
 }
