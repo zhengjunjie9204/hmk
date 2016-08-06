@@ -21,11 +21,19 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by sam on 2016/3/18 17:14.
  */
-public class BusinessSaleAnalyModel{
+public class BusinessSaleAnalyModel extends BaseDataModel{
+    public static final byte MONEY_REPORT = 0x10;
+    public static final byte SALE_REPORT = 0x11;
 
-    public static final byte SALE_ANALY_GROSSPROFIT = 0x06;
-    public static final byte SALE_ANALY_GROSSSALES = 0x05;
+    public static void getMoneyReport(String startTime,String endTime){
+        code = MONEY_REPORT;
+        Api.getMoneyReport(startTime,endTime, listener);
+    }
 
+    public static void getSaleReport(String startTime,String endTime){
+        code = SALE_REPORT;
+        Api.getSaleReport(startTime,endTime, listener);
+    }
 
     //报表分析：销售分析 毛利总额
     public static void getSalesAnalyTotal(String begin, String end, int page, int pageSize) {

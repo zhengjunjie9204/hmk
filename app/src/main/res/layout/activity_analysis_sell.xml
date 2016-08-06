@@ -101,15 +101,16 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textColor="@color/red"
-                        android:text="￥3665.31"
+                        android:text="￥0.00"
                         android:textSize="15sp"/>
 
                     <TextView
+                        android:id="@+id/tv_all_money_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingRight="10dp"
                         android:textColor="@color/gray"
-                        android:text="9笔"/>
+                        android:text="0笔"/>
 
                 </LinearLayout>
 
@@ -138,7 +139,7 @@
                         android:singleLine="true"
                         android:layout_toRightOf="@+id/iv_project"
                         android:textColor="@color/title_3_color"
-                        android:text="￥3500.00"/>
+                        android:text="￥0.00"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -173,7 +174,7 @@
                         android:layout_toRightOf="@+id/iv_goods"
                         android:textColor="@color/title_3_color"
                         android:singleLine="true"
-                        android:text="￥3500.00"/>
+                        android:text="￥0.00"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -213,7 +214,7 @@
                         android:singleLine="true"
                         android:layout_toRightOf="@+id/iv_card"
                         android:textColor="@color/title_3_color"
-                        android:text="￥3500.00"/>
+                        android:text="￥0.00"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -248,7 +249,7 @@
                         android:layout_toRightOf="@+id/iv_count"
                         android:textColor="@color/title_3_color"
                         android:singleLine="true"
-                        android:text="￥3500.00"/>
+                        android:text="￥0.00"/>
 
                     <TextView
                         android:layout_width="wrap_content"

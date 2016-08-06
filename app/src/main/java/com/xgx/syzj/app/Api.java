@@ -946,8 +946,82 @@ public class Api extends BaseRequest {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return getRequest(Url.ASSOCIATOR_DELETE, params, getHeader(), listener);
+    }
+
+    /**
+     * 删除会员
+     *
+     * @param memberId
+     * @param listener
+     * @return
+     */
+    public static StringRequest getMenberDetails(int memberId, OnRequestListener listener) {
+        Map<String, String> params = null;
+        Map<String, Object> info;
+        try {
+            params = new HashMap<>();
+            info = new HashMap<>();
+            info.put("memberId", memberId);
+            String json = FastJsonUtil.bean2Json(info);
+            json = Base64Util.encode(json.getBytes("UTF-8"));
+            params.put("info", json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getRequest(Url.MENBER_BY_ID, params, getHeader(), listener);
+    }
+
+    /**
+     * 3.8.1.	资金流水
+     *
+     * @param startTime
+     * @param endTime
+     * @param listener
+     * @return
+     */
+    public static StringRequest getMoneyReport(String startTime,String endTime, OnRequestListener listener) {
+        Map<String, String> params = null;
+        Map<String, Object> info;
+        try {
+            params = new HashMap<>();
+            info = new HashMap<>();
+            info.put("startTime", startTime);
+            info.put("endTime", endTime);
+            info.put("storeId", CacheUtil.getmInstance().getUser().getStoreId());
+            String json = FastJsonUtil.bean2Json(info);
+            json = Base64Util.encode(json.getBytes("UTF-8"));
+            params.put("info", json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getRequest(Url.MONEY_REPORT, params, getHeader(), listener);
+    }
+
+    /**
+     * 3.8.1.	资金流水
+     *
+     * @param startTime
+     * @param endTime
+     * @param listener
+     * @return
+     */
+    public static StringRequest getSaleReport(String startTime,String endTime, OnRequestListener listener) {
+        Map<String, String> params = null;
+        Map<String, Object> info;
+        try {
+            params = new HashMap<>();
+            info = new HashMap<>();
+            info.put("startTime", startTime);
+            info.put("endTime", endTime);
+            info.put("storeId", CacheUtil.getmInstance().getUser().getStoreId());
+            String json = FastJsonUtil.bean2Json(info);
+            json = Base64Util.encode(json.getBytes("UTF-8"));
+            params.put("info", json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getRequest(Url.SALE_REPORT, params, getHeader(), listener);
     }
 
     /**
