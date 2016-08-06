@@ -91,17 +91,22 @@ public class RevenueFastActivity extends BaseActivity  {
         lv_data.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String name=mList.get(position);
-                final Bundle bundle=new Bundle();
-                bundle.putString("carnumber",name);
-                bundle.putBoolean("isPay",true);
-                CustomAlertDialog.showRemindDialog(RevenueFastActivity.this, "温馨提示", "是否完成订单", new CustomAlertDialog.IAlertDialogListener() {
-                    @Override
-                    public void onSure(Object obj) {
-                        gotoActivity(RevenueSellActivity.class,bundle);
-                        finish();
-                    }
-                });
+                final TextView tv_result = (TextView) view.findViewById(R.id.tv_result);
+                if((tv_result.getText().toString()).equals("已完成")) {
+                    String name = mList.get(position);
+                    final Bundle bundle = new Bundle();
+                    bundle.putString("carnumber", name);
+                    gotoActivity(RevenuseSellFinishActivity.class, bundle);
+
+                }else{
+
+                    CustomAlertDialog.showRemindDialog(RevenueFastActivity.this, "温馨提示", "是否完成订单", new CustomAlertDialog.IAlertDialogListener() {
+                        @Override
+                        public void onSure(Object obj) {
+                            tv_result.setText("已完成");
+                        }
+                    });
+                }
             }
         });
     }

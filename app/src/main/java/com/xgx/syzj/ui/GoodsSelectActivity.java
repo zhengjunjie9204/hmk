@@ -23,6 +23,7 @@ import com.xgx.syzj.adapter.GoodsSelectAdapter;
 import com.xgx.syzj.base.BaseActivity;
 import com.xgx.syzj.bean.Goods;
 import com.xgx.syzj.bean.Result;
+import com.xgx.syzj.datamodel.GoodAddModel;
 import com.xgx.syzj.datamodel.GoodsDataModel;
 import com.xgx.syzj.event.EventCenter;
 import com.xgx.syzj.event.SimpleEventHandler;
@@ -49,7 +50,7 @@ public class GoodsSelectActivity extends BaseActivity implements View.OnClickLis
     private ArrayList<Goods> products = new ArrayList<>();
     private EditText et_text;
     private Button btn_sure;
-    private GoodsDataModel mDataModel;;
+    private GoodAddModel mDataModel;;
 
 
 
@@ -65,7 +66,7 @@ public class GoodsSelectActivity extends BaseActivity implements View.OnClickLis
 
         EventCenter.bindContainerAndHandler(this, eventHandler);
         EventBus.getDefault().registerSticky(eventHandler);
-        mDataModel = new GoodsDataModel(20);
+        mDataModel = new GoodAddModel(20);
         loadMoreListViewContainer = (LoadMoreListViewContainer) findViewById(R.id.load_more_list_view_container);
         loadMoreListViewContainer.useDefaultFooter();
         loadMoreListViewContainer.setLoadMoreHandler(new LoadMoreHandler() {
@@ -86,16 +87,11 @@ public class GoodsSelectActivity extends BaseActivity implements View.OnClickLis
     private SimpleEventHandler eventHandler = new SimpleEventHandler() {
 
         public void onEvent(List<Goods> list) {
-            hideLoadingDialog();
-            byte code = new Result().geteCode();
-            if(code==GoodsDataModel.ADD_BYSTORE) {
-                products.addAll(list);
-            }
             loadMoreListViewContainer.loadMoreFinish(mDataModel.getListPageInfo().isEmpty(), mDataModel.getListPageInfo().hasMore());
-
+//            mAdapter.appendList(list);
+              products.addAll(list);
+              hideLoadingDialog();
         }
-
-
 
         public void onEvent(String error) {
             hideLoadingDialog();

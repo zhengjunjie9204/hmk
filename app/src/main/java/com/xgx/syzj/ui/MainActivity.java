@@ -115,7 +115,7 @@ public class MainActivity extends FragmentActivity implements IMainMenuListItemC
         gotoActivity(MemberListActivity.class);
     }
 
-    //收银记录
+    //单据列表
     public void onCheckSell(View view) {
         gotoActivity(SaleHistoryActivity.class);
     }

@@ -153,29 +153,6 @@ public class GoodsDataModel extends PagedListDataModel<Goods> {
         code = ADD_SUCCESS;
         Api.addProducts(barcode, productName, categoryId, inputPrice, sellingPrice, quantity, specification, brand,unitid,image, listener);
     }
-    public static void addProductByStore(long storeId){
-        code=ADD_BYSTORE;
-        Api.addProductByStore(storeId, new OnRequestListener() {
-            @Override
-            public void onSuccess(Result result) {
-                JSONObject object= JSON.parseObject(result.getResult());//stockRecordHistory
-                List<Goods> list;
-                if(result.getStatus()==200) {
-                    list = FastJsonUtil.json2List(object.getString("products"), Goods.class);
-                }else {
-                    list=new ArrayList<>();
-                }
-
-                EventCenter.getInstance().post(list);
-            }
-
-            @Override
-            public void onError(String errorCode, String message) {
-                EventCenter.getInstance().post(message);
-
-            }
-        });
-    }
 
     public static void queryhistoryData(int productId){
         code=QUERY_STORAGE_HISTORY;
