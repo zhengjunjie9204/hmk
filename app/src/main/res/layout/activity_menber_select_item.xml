@@ -28,8 +28,7 @@
             android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
-            android:focusable="false"
-            android:checked="true"/>
+            android:focusable="false"/>
 
         <TextView
             android:id="@+id/tv_money2"

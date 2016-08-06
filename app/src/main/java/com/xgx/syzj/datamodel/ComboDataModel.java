@@ -4,10 +4,10 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.xgx.syzj.app.Api;
 import com.xgx.syzj.base.BaseRequest.OnRequestListener;
-import com.xgx.syzj.bean.Project;
+import com.xgx.syzj.bean.Combo;
 import com.xgx.syzj.bean.Result;
+import com.xgx.syzj.event.ComboListDataEvent;
 import com.xgx.syzj.event.EventCenter;
-import com.xgx.syzj.event.ProjectListDataEvent;
 import com.xgx.syzj.utils.FastJsonUtil;
 import com.xgx.syzj.widget.list.ListPageInfo;
 import com.xgx.syzj.widget.list.PagedListDataModel;
@@ -19,14 +19,10 @@ import java.util.List;
  * @author zajo
  * @created 2015年10月13日 10:06
  */
-/**
- * @author zajo
- * @created 2015年10月13日 10:06
- */
-public class ComboDataModel extends PagedListDataModel<Project> {
+public class ComboDataModel extends PagedListDataModel<Combo> {
     private static byte code;
     private String key;
-    private ProjectListDataEvent data = new ProjectListDataEvent();
+    private ComboListDataEvent data = new ComboListDataEvent();
 
     public ComboDataModel(int num) {
         mListPageInfo = new ListPageInfo<>(num);
@@ -46,9 +42,9 @@ public class ComboDataModel extends PagedListDataModel<Project> {
             @Override
             public void onSuccess(Result result) {
                 JSONObject object = JSON.parseObject(result.getResult());
-                List<Project> list;
+                List<Combo> list;
                 if (result.getStatus() == 200) {
-                    list = FastJsonUtil.json2List(object.getString("items"), Project.class);
+                    list = FastJsonUtil.json2List(object.getString("combos"), Combo.class);
                 } else {
                     list = new ArrayList<>();
                 }

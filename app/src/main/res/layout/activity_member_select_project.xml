@@ -1,97 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--xmlns:tools="http://schemas.android.com/tools"-->
-    <!--android:background="@color/appBG">-->
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btn_ok"
+        android:fillViewport="true">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableRight="@mipmap/black_bottom_tw"
-            android:paddingBottom="15dp"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
-            android:paddingTop="15dp"
-            android:text="请选择充值项目" />
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:orientation="vertical">
 
-        <include layout="@layout/layout_line"
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginLeft="40dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:drawableRight="@mipmap/black_bottom_tw"
+                android:gravity="center_vertical"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:text="请选择充值项目"/>
 
-        <ListView
-            android:id="@+id/lv_count"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            <include
+                layout="@layout/layout_line"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="40dp"/>
 
-        </ListView>
+            <com.xgx.syzj.widget.ListViewExtend
+                android:id="@+id/lv_count"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
-        <include layout="@layout/layout_line"
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"/>
+            <include
+                layout="@layout/layout_line"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableRight="@mipmap/black_bottom_tw"
-            android:paddingBottom="15dp"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
-            android:paddingTop="15dp"
-            android:text="请选择充值套餐" />
-        <include layout="@layout/layout_line"
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginLeft="40dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:drawableRight="@mipmap/black_bottom_tw"
+                android:gravity="center_vertical"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:text="请选择充值套餐"/>
 
-        <ExpandableListView
-            android:id="@+id/exp_lv_package"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </ExpandableListView>
+            <include
+                layout="@layout/layout_line"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="40dp"/>
 
+            <com.xgx.syzj.widget.ExpandableListViewExtend
+                android:id="@+id/exp_lv_package"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
-        <include layout="@layout/layout_line"
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"/>
-</LinearLayout>
-    <LinearLayout
+            <include
+                layout="@layout/layout_line"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btn_ok"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_height="wrap_content">
-        <Button
-            android:id="@+id/btn_ok"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:layout_alignParentBottom="true"
-            android:background="@mipmap/button_orange_bg"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:text="确认"
-            android:textColor="@color/white" />
-    </LinearLayout>
-
-
-</LinearLayout>
-<!--</ScrollView>-->
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:background="@mipmap/button_orange_bg"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:text="确认"
+        android:textColor="@color/white"/>
+</RelativeLayout>
