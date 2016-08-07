@@ -60,7 +60,7 @@ public class RevenueGoodListAdapter extends BaseAdapter implements View.OnTouchL
             hold.tv_money = (TextView) convertView.findViewById(R.id.tv_money);
             hold.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
             hold.et_time = (EditText) convertView.findViewById(R.id.et_time);
-            hold.iv_delete = (ImageView) convertView.findViewById(R.id.iv_delete);
+//            hold.iv_delete = (ImageView) convertView.findViewById(R.id.iv_delete);
             convertView.setTag(hold);
         } else {
             hold = (HoldClass) convertView.getTag();
@@ -92,13 +92,13 @@ public class RevenueGoodListAdapter extends BaseAdapter implements View.OnTouchL
         hold.tv_name.setText(goods.getProductName());
         hold.et_time.setText(goods.getQuantity() + "");
         hold.tv_money.setText("" + goods.getSellingPrice() * goods.getQuantity());
-        hold.iv_delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (deleteItemCount != null)
-                    deleteItemCount.onItemDelete(position);
-            }
-        });
+//        hold.iv_delete.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (deleteItemCount != null)
+//                    deleteItemCount.onItemDelete(position);
+//            }
+//        });
         convertView.setOnTouchListener(this);
         hold.et_time.setOnTouchListener(this);
 

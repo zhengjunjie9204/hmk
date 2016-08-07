@@ -3,6 +3,9 @@ package com.xgx.syzj.ui;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -61,6 +64,7 @@ public class SaleHistoryActivity extends BaseActivity{
     private ISaleHistoryItemClick iSaleHistoryItemClick;
     private LoadMoreListViewContainer loadMoreListViewContainer;
     private SaleListRecordModel mDataModel;
+    private String[] CONTENT;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,8 +75,10 @@ public class SaleHistoryActivity extends BaseActivity{
     private void initView() {
         setTitleText("单据列表");
         setSubmit("筛选");
+        CONTENT = new String[]{"待完成", "已完成"};
         btnPayType = (Button) findViewById(R.id.btn_submit);
         lv_data = (SwipeMenuListView) findViewById(R.id.lv_data);
+        FragmentPagerAdapter adapter = new MyFragmentAdapter(getSupportFragmentManager());
         SwipeMenuCreator creator = new SwipeMenuCreator() {
 
             @Override
@@ -303,6 +309,22 @@ public class SaleHistoryActivity extends BaseActivity{
         bundle.putString("currentTime",currentTime);
         bundle.putString("startTime",startTime);
         EventBus.getDefault().post(bundle);
+    }
+
+    private class MyFragmentAdapter extends FragmentPagerAdapter {
+        public MyFragmentAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public int getCount() {
+            return 0;
+        }
     }
 
 //    @Override

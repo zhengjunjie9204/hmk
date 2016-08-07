@@ -60,7 +60,7 @@ public class ProjectListAdapter extends BaseAdapter implements View.OnTouchListe
             hold.tv_money = (TextView) convertView.findViewById(R.id.tv_money);
             hold.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
             hold.et_time = (EditText) convertView.findViewById(R.id.et_time);
-            hold.iv_delete = (ImageView) convertView.findViewById(R.id.iv_delete);
+//            hold.iv_delete = (ImageView) convertView.findViewById(R.id.iv_delete);
             convertView.setTag(hold);
         } else {
             hold = (HoldClass) convertView.getTag();
@@ -92,13 +92,13 @@ public class ProjectListAdapter extends BaseAdapter implements View.OnTouchListe
         hold.tv_name.setText(project.getName());
         hold.et_time.setText(project.getLaborTime() + "");
         hold.tv_money.setText("" + project.getPrice() * project.getLaborTime());
-        hold.iv_delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (deleteItemCount != null)
-                    deleteItemCount.onItemDelete(position);
-            }
-        });
+//        hold.iv_delete.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (deleteItemCount != null)
+//                    deleteItemCount.onItemDelete(position);
+//            }
+//        });
         convertView.setOnTouchListener(this);
         hold.et_time.setOnTouchListener(this);
 
