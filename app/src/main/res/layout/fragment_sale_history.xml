@@ -11,15 +11,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <com.baoyz.swipemenulistview.SwipeMenuListView
-        android:id="@+id/lv_data"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:cacheColorHint="#0000"
-        android:divider="@color/line_color"
-        android:dividerHeight="0.5dp"
-        tools:listitem="@layout/item_sale_history" />
+        <com.baoyz.swipemenulistview.SwipeMenuListView
+            android:id="@+id/lv_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:cacheColorHint="#0000"
+            android:divider="@color/line_color"
+            android:dividerHeight="0.5dp"
+            tools:listitem="@layout/item_sale_history" />
 
     </in.srain.cube.views.loadmore.LoadMoreListViewContainer>
     <!--<LinearLayout

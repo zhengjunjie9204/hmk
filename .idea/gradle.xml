@@ -19,6 +19,18 @@
             <option value="$PROJECT_DIR$/ptr-lib" />
           </set>
         </option>
+        <option name="myModules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/AnimationsLibrary" />
+            <option value="$PROJECT_DIR$/MPChartLib" />
+            <option value="$PROJECT_DIR$/SwipeMenuListViewLibrary" />
+            <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/library" />
+            <option value="$PROJECT_DIR$/logger" />
+            <option value="$PROJECT_DIR$/ptr-lib" />
+          </set>
+        </option>
       </GradleProjectSettings>
     </option>
   </component>
