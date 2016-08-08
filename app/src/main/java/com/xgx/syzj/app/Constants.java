@@ -31,6 +31,7 @@ public class Constants {
         public static final String SP_MAIN_BUSINESS_TYPE = "SP_MAIN_BUSINESS_TYPE";//行业类型
         public static final String SP_TOKEN="SP_TOKEN";//登录token
         public static final String SP_ROLES="SP_ROLES";//用户角色
+        public static final String SP_STORE_ID="SP_STORE_ID";//用户角色
 
     }
 

@@ -52,6 +52,7 @@ public class MemberAddCountActivity extends BaseActivity implements View.OnClick
     private Combo combo;
     private StoreItem storeItem;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {

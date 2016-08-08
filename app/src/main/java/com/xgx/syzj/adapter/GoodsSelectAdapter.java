@@ -106,6 +106,7 @@ public class GoodsSelectAdapter extends BaseAdapter {
                 selected.add(g);
                 keyList.add(getKey(g));
             }
+
             if (onGoodsitemCheck != null)
                 onGoodsitemCheck.onItemCheck(selected, index);
         }

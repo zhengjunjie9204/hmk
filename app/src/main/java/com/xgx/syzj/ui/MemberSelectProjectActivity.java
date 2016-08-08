@@ -101,7 +101,7 @@ public class MemberSelectProjectActivity extends BaseActivity implements View.On
             Intent data = new Intent();
             if (proAdapter.getSlectMap().size() > 0) {
                 for (Map.Entry<Integer, StoreItem> integerStoreItemEntry : proAdapter.getSlectMap().entrySet()) {
-                    data.putExtra("store",integerStoreItemEntry.getValue());
+                    data.putExtra("store",integerStoreItemEntry.getValue()+"");
                 }
             } else if (comboAdapter.getSlectMap().size() > 0) {
                 for (Map.Entry<Integer, Combo> integerComboEntry : comboAdapter.getSlectMap().entrySet()) {

@@ -375,6 +375,30 @@ public class Api extends BaseRequest {
     }
 
     /**
+     * 3.1.7.	添加新商品到门店
+     * @param storeID
+     * @param listener
+     * @return
+     */
+    public static StringRequest addProductToStore(long storeID, long productID,OnRequestListener listener)
+    {
+        Map<String, String> params = null;
+        try {
+            params = new HashMap<>();
+            params.put("storeId", storeID + "");
+            params.put("productId", productID + "");
+            String json = FastJsonUtil.bean2Json(params);
+            String info = Base64Util.encode(json.getBytes("UTF-8"));
+            params.clear();
+            params.put("info", info);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return getRequest(Url.ADD_PRODUCT_TO_STORE, params, getHeader(), listener);
+    }
+
+    /**
      * 删除商品
      *
      * @param uId
@@ -417,6 +441,7 @@ public class Api extends BaseRequest {
             info = new HashMap<>();
             info.put("productId", productId);
             info.put("storeId", storeId);
+
             String json = FastJsonUtil.bean2Json(info);
             json = Base64Util.encode(json.getBytes("UTF-8"));
             params.put("info", json);
