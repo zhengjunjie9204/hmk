@@ -14,6 +14,9 @@ import com.xgx.syzj.ui.SaleHistoryActivity;
 import com.xgx.syzj.utils.CacheUtil;
 import com.xgx.syzj.utils.FastJsonUtil;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +30,8 @@ import java.util.Map;
  */
 public class Api extends BaseRequest {
 
-    private static Map<String, String> getHeader() {
+    private static Map<String, String> getHeader()
+    {
         Map<String, String> header = null;
         try {
             header = new HashMap<>();
@@ -47,10 +51,11 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest login(String username, String password, final OnRequestListener listener) {
+    public static StringRequest login(String username, String password, final OnRequestListener listener)
+    {
         Map<String, String> params = new HashMap<>();
         params.put("userName", username);
-        params.put("passWord",password);
+        params.put("passWord", password);
 
         String json = FastJsonUtil.bean2Json(params);
         String info = Base64Util.encode(json.getBytes());
@@ -61,7 +66,8 @@ public class Api extends BaseRequest {
         return getRequest(Url.USER_LOGIN, params, listener);
     }
 
-    public static StringRequest loginByToken(String token,OnRequestListener listener){
+    public static StringRequest loginByToken(String token, OnRequestListener listener)
+    {
         Map<String, String> params = new HashMap<>();
         params.put("token", token);
 
@@ -82,11 +88,12 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest register(String mobile, String psw, String codeNum, OnRequestListener listener) {
+    public static StringRequest register(String mobile, String psw, String codeNum, OnRequestListener listener)
+    {
         Map<String, String> params = new HashMap<>();
         params.put("accountId", mobile);
         params.put("mobilePhone", mobile);
-       // params.put("password", StrUtil.getMD5(psw));
+        // params.put("password", StrUtil.getMD5(psw));
         String json = FastJsonUtil.bean2Json(params);
         String rsaUserEncrypt = RSAManager.getInstance(mContext).encrypt(json);//RSA加密
 
@@ -145,7 +152,8 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest registerStaff(String mobile, String psw, String userName, int authority, int storeId, OnRequestListener listener) {
+    public static StringRequest registerStaff(String mobile, String psw, String userName, int authority, int storeId, OnRequestListener listener)
+    {
         Map<String, String> params = new HashMap<>();
         params.put("accountId", mobile);
         params.put("mobilePhone", mobile);
@@ -181,7 +189,8 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest updateEmployee(String accountId, String mobilePhone, String password, int authority, OnRequestListener listener) {
+    public static StringRequest updateEmployee(String accountId, String mobilePhone, String password, int authority, OnRequestListener listener)
+    {
         Map<String, String> params = null;
         String info = null;
         try {
@@ -207,7 +216,8 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest deleteEmployee(String accountId, OnRequestListener listener) {
+    public static StringRequest deleteEmployee(String accountId, OnRequestListener listener)
+    {
         Map<String, String> params = null;
         String info = null;
         try {
@@ -232,7 +242,8 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest getEmployeeList(String key, int page, int pageSize, OnRequestListener listener) {
+    public static StringRequest getEmployeeList(String key, int page, int pageSize, OnRequestListener listener)
+    {
         Map<String, String> params = null;
         String info = null;
         try {
@@ -251,13 +262,16 @@ public class Api extends BaseRequest {
         params.put("info", info);
         return getRequest(Url.USER_GETLIST_STAFF, params, getHeader(), listener);
     }
+
     /**
      * 充次记录
+     *
      * @param memberId
      * @param listener
      * @return
      */
-    public static StringRequest getConsumeList(int memberId, OnRequestListener listener) {
+    public static StringRequest getConsumeList(int memberId, OnRequestListener listener)
+    {
         Map<String, String> params = null;
         Map<String, Object> info;
         try {
@@ -272,10 +286,12 @@ public class Api extends BaseRequest {
         }
         return getRequest(Url.CONSUME_LIST, params, getHeader(), listener);
     }
+
     /**
      * 添加商品
      */
-    public static StringRequest addProducts( String barcode, String productName, String categoryId, String inputPrice, String sellingPrice, String quantity, String specification, String brand, String unitid, String image, OnRequestListener listener) {
+    public static StringRequest addProducts(String barcode, String productName, String categoryId, String inputPrice, String sellingPrice, String quantity, String specification, String brand, String unitid, String image, OnRequestListener listener)
+    {
         Map<String, String> params = null;
         try {
             params = new HashMap<>();
@@ -306,7 +322,8 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest updateProducts(int productId, String barcode, String productName, String categoryId, String inputPrice, String sellingPrice, String quantity, String specification, String brand, String unitid, String image, OnRequestListener listener) {
+    public static StringRequest updateProducts(int productId, String barcode, String productName, String categoryId, String inputPrice, String sellingPrice, String quantity, String specification, String brand, String unitid, String image, OnRequestListener listener)
+    {
         Map<String, String> params = null;
         try {
             params = new HashMap<>();
@@ -320,7 +337,7 @@ public class Api extends BaseRequest {
             params.put("quantity", quantity);
             params.put("specification", specification);
             params.put("unitid", unitid);
-            Log.e("zjj",params.toString());
+            Log.e("zjj", params.toString());
             String json = FastJsonUtil.bean2Json(params);
             String info = Base64Util.encode(json.getBytes("UTF-8"));
             params.clear();
@@ -335,15 +352,17 @@ public class Api extends BaseRequest {
 
     /**
      * 添加本店没有的商品
+     *
      * @param storeID
      * @param listener
      * @return
      */
-    public static StringRequest addProductByStore(long storeID, OnRequestListener listener) {
+    public static StringRequest addProductByStore(long storeID, OnRequestListener listener)
+    {
         Map<String, String> params = null;
         try {
             params = new HashMap<>();
-            params.put("storeID", storeID+"");
+            params.put("storeID", storeID + "");
             String json = FastJsonUtil.bean2Json(params);
             String info = Base64Util.encode(json.getBytes("UTF-8"));
             params.clear();
@@ -362,7 +381,8 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest deleteProducts(Long uId, OnRequestListener listener) {
+    public static StringRequest deleteProducts(Long uId, OnRequestListener listener)
+    {
         Map<String, String> params = null;
         Map<String, Object> info;
         try {
@@ -379,6 +399,7 @@ public class Api extends BaseRequest {
 
         return getRequest(Url.DELETE_PRODUCTS, params, getHeader(), listener);
     }
+
     /**
      * 删除商品2
      *
@@ -387,14 +408,15 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest deleteProductsTwo(int productId,int storeId,OnRequestListener listener) {
+    public static StringRequest deleteProductsTwo(int productId, int storeId, OnRequestListener listener)
+    {
         Map<String, String> params = null;
         Map<String, Object> info;
         try {
             params = new HashMap<>();
             info = new HashMap<>();
             info.put("productId", productId);
-            info.put("storeId",storeId);
+            info.put("storeId", storeId);
             String json = FastJsonUtil.bean2Json(info);
             json = Base64Util.encode(json.getBytes("UTF-8"));
             params.put("info", json);
@@ -415,7 +437,8 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest mIntoAndOutProducts(int flag, int productId, int stockCount, String description, OnRequestListener listener) {
+    public static StringRequest mIntoAndOutProducts(int flag, int productId, int stockCount, String description, OnRequestListener listener)
+    {
         Map<String, String> params = null;
         Map<String, Object> info;
         try {
@@ -424,7 +447,7 @@ public class Api extends BaseRequest {
             info.put("storeId", CacheUtil.getmInstance().getUser().getStoreId());
             info.put("productId", productId);
             info.put("stockCount", stockCount);//数量
-            info.put("flag",flag);
+            info.put("flag", flag);
             info.put("description", description);//备注
             String json = FastJsonUtil.bean2Json(info);
             json = Base64Util.encode(json.getBytes("UTF-8"));
@@ -438,16 +461,18 @@ public class Api extends BaseRequest {
 
     /**
      * 获取出入库历史
+     *
      * @param productId
      * @return
      */
-    public static StringRequest stockRecordHistory(int productId,OnRequestListener listener){
+    public static StringRequest stockRecordHistory(int productId, OnRequestListener listener)
+    {
         Map<String, String> params = null;
         Map<String, Object> info;
         try {
             params = new HashMap<>();
             info = new HashMap<>();
-            info.put("storeId",1);
+            info.put("storeId", 1);
             info.put("productId", productId);
             String json = FastJsonUtil.bean2Json(info);
             params.clear();
@@ -470,7 +495,8 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest getProductsList(String key, String categoryId, int page, int pageSize, OnRequestListener listener) {
+    public static StringRequest getProductsList(String key, String categoryId, int page, int pageSize, OnRequestListener listener)
+    {
         Map<String, String> params = null;
         Map<String, Object> info;
         try {
@@ -483,8 +509,8 @@ public class Api extends BaseRequest {
                 info.put("categoryId", categoryId);
             }
             //CacheUtil.getmInstance().getUser().getStoreId()
-            Long storeID= (long)1;
-            info.put("storeId",storeID);
+            Long storeID = (long) 1;
+            info.put("storeId", storeID);
             info.put("pageNo", page);
             info.put("pageSize", pageSize);
             String json = FastJsonUtil.bean2Json(info);
@@ -498,15 +524,15 @@ public class Api extends BaseRequest {
     }
 
     /**
-     *
-     * @param brand   品牌
+     * @param brand      品牌
      * @param categoryId
      * @param page
      * @param pageSize
      * @param listener
      * @return
      */
-    public static StringRequest getProductsListByBand(String brand, String categoryId, int page, int pageSize, OnRequestListener listener) {
+    public static StringRequest getProductsListByBand(String brand, String categoryId, int page, int pageSize, OnRequestListener listener)
+    {
         Map<String, String> params = null;
         Map<String, Object> info;
         try {
@@ -535,7 +561,8 @@ public class Api extends BaseRequest {
     /**
      * 获取项目列表
      */
-    public static StringRequest getProjectList(String key, int page, int pageSize, OnRequestListener listener) {
+    public static StringRequest getProjectList(String key, int page, int pageSize, OnRequestListener listener)
+    {
         Map<String, String> params = null;
         Map<String, Object> info;
         try {
@@ -548,7 +575,7 @@ public class Api extends BaseRequest {
             info.put("pageNo", page);
             info.put("pageSize", pageSize);
             //CacheUtil.getmInstance().getUser().getStoreId()  id
-            info.put("storeId",1);
+            info.put("storeId", 1);
             String json = FastJsonUtil.bean2Json(info);
             Log.e("json:", json);
             json = Base64Util.encode(json.getBytes("UTF-8"));
@@ -558,13 +585,16 @@ public class Api extends BaseRequest {
         }
         return getRequest(Url.PROJECT_EXT_LIST, params, getHeader(), listener);
     }
+
     /**
      * 3.5.11.	查询会员项目计次余次
+     *
      * @param memberId
      * @param listener
      * @return
      */
-    public static StringRequest getMenberItem(int memberId, OnRequestListener listener) {
+    public static StringRequest getMenberItem(int memberId, OnRequestListener listener)
+    {
         Map<String, String> params = null;
         Map<String, Object> info;
         try {
@@ -587,7 +617,8 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest getProductsCount(String key, OnRequestListener listener) {
+    public static StringRequest getProductsCount(String key, OnRequestListener listener)
+    {
         Map<String, String> params = null;
         Map<String, Object> info;
         try {
@@ -617,7 +648,8 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest addCardType(String cardTypeName, boolean supportIntegral, boolean supportValue, boolean supportCount, boolean needPassord, int discount, int integralRatio, OnRequestListener listener) {
+    public static StringRequest addCardType(String cardTypeName, boolean supportIntegral, boolean supportValue, boolean supportCount, boolean needPassord, int discount, int integralRatio, OnRequestListener listener)
+    {
         Map<String, Object> params;
         Map<String, String> params2 = null;
         try {
@@ -646,7 +678,8 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest getCardTypeList(OnRequestListener listener) {
+    public static StringRequest getCardTypeList(OnRequestListener listener)
+    {
         Map<String, Object> info;
         Map<String, String> params = null;
         try {
@@ -660,13 +693,16 @@ public class Api extends BaseRequest {
         }
         return getRequest(Url.CARD_LIST, params, getHeader(), listener);
     }
+
     /**
      * 3.5.14.	查询会员计次累计充值金额
+     *
      * @param memberId
      * @param listener
      * @return
      */
-    public static StringRequest getSumRecord(int memberId, OnRequestListener listener) {
+    public static StringRequest getSumRecord(int memberId, OnRequestListener listener)
+    {
         Map<String, String> params = null;
         Map<String, Object> info;
         try {
@@ -681,6 +717,7 @@ public class Api extends BaseRequest {
         }
         return getRequest(Url.SUM_ITEM_RECORD, params, getHeader(), listener);
     }
+
     /**
      * 获取会员卡积分储值详情
      *
@@ -688,7 +725,8 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest getCardDetail(int cardId, OnRequestListener listener) {
+    public static StringRequest getCardDetail(int cardId, OnRequestListener listener)
+    {
         Map<String, Object> paramInfo = null;
         Map<String, String> params = new HashMap<>();
 
@@ -703,15 +741,16 @@ public class Api extends BaseRequest {
         }
         return getRequest(Url.CARD_DETAIL, params, getHeader(), listener);
     }
+
     /**
      * 会员计次充值
      */
-    public static StringRequest addItemCombo(int memberId, String fee, int payType, long[] comboList,long[] itemList, String content,String sendSMSFlag, OnRequestListener listener) {
+    public static StringRequest addItemCombo(int memberId, String fee, int payType, JSONArray comboList, JSONArray itemList, String content, String sendSMSFlag, OnRequestListener listener)
+    {
         Map<String, String> params = null;
-        Map<String, Object> info;
         try {
             params = new HashMap<>();
-            info = new HashMap<>();
+            JSONObject info = new JSONObject();
             info.put("memberId", memberId);
             info.put("storeId", CacheUtil.getmInstance().getUser().getStoreId());
             info.put("employee", CacheUtil.getmInstance().getUser().getEmployeeId());//接单员ID
@@ -722,21 +761,267 @@ public class Api extends BaseRequest {
             info.put("itemList", itemList);//Long数组 项目ID数组（套餐和项目,二必选一）
             info.put("content", content);//备注
             info.put("sendSMSFlag", sendSMSFlag);//是否发送充值短信 1：发   0：不发
-            String json = FastJsonUtil.bean2Json(info);
-            json = Base64Util.encode(json.getBytes("UTF-8"));
+            String json = Base64Util.encode(info.toString().getBytes("UTF-8"));
             params.put("info", json);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return getRequest(Url.ADD_ITEM_COMBO, params, getHeader(), listener);
     }
+
+    /**
+     * 获取未支付的订单
+     */
+    public static StringRequest getUnpayOrder(int pageNo, int paegSize, OnRequestListener listener)
+    {
+        Map<String, String> params = null;
+        try {
+            params = new HashMap<>();
+            JSONObject info = new JSONObject();
+            info.put("storeId", CacheUtil.getmInstance().getUser().getStoreId());
+            info.put("pageNo", pageNo);
+            info.put("paegSize", paegSize);
+            String json = Base64Util.encode(info.toString().getBytes("UTF-8"));
+            params.put("info", json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getRequest(Url.ORDER_UNPAY_LIST, params, getHeader(), listener);
+    }
+
+    /**
+     * 3.7.5.	设项目订单未支付已完成
+     */
+    public static StringRequest setOrderDone(int payOrderId, OnRequestListener listener)
+    {
+        Map<String, String> params = null;
+        try {
+            params = new HashMap<>();
+            JSONObject info = new JSONObject();
+            info.put("storeId", CacheUtil.getmInstance().getUser().getStoreId());
+            info.put("payOrderId", payOrderId);
+            String json = Base64Util.encode(info.toString().getBytes("UTF-8"));
+            params.put("info", json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getRequest(Url.ORDER_SET_DONE, params, getHeader(), listener);
+    }
+
+    /**
+     * 3.7.2.	支付只含商品的订单
+     *
+     * @param memberId
+     * @param payTwiceFlag
+     * @param payType
+     * @param authCode
+     * @param productList
+     */
+    public static StringRequest orderPayProduct(int memberId, int payTwiceFlag, int payType, String fee, String authCode, JSONArray productList, OnRequestListener listener)
+    {
+        Map<String, String> params = null;
+        try {
+            params = new HashMap<>();
+            JSONObject info = new JSONObject();
+            info.put("storeId", CacheUtil.getmInstance().getUser().getStoreId());
+            info.put("employee", CacheUtil.getmInstance().getUser().getEmployeeId());
+            info.put("memberId", memberId);
+            info.put("fee", fee);
+            info.put("payTwiceFlag", payTwiceFlag);
+            info.put("payType", payType);
+            info.put("authCode", authCode);
+            info.put("productList", productList);
+            String json = Base64Util.encode(info.toString().getBytes("UTF-8"));
+            params.put("info", json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getRequest(Url.ORDER_PAY_PRODUCT, params, getHeader(), listener);
+    }
+
+    /**
+     * 3.7.3.	创建含项目订单
+     *
+     * @param memberId    会员Id
+     * @param fee         金额
+     * @param payType     支付方式
+     * @param productList 商品
+     * @param itemList    项目
+     */
+    public static StringRequest orderCreate(int memberId, String fee, int payType, JSONArray productList, JSONArray itemList, OnRequestListener listener)
+    {
+        Map<String, String> params = null;
+        try {
+            params = new HashMap<>();
+            JSONObject info = new JSONObject();
+            info.put("storeId", CacheUtil.getmInstance().getUser().getStoreId());
+            info.put("employee", CacheUtil.getmInstance().getUser().getEmployeeId());
+            info.put("memberId", memberId);
+            info.put("fee", fee);
+            info.put("payType", payType);
+            info.put("productList", productList);
+            info.put("itemList", itemList);
+            String json = Base64Util.encode(info.toString().getBytes("UTF-8"));
+            params.put("info", json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getRequest(Url.ORDER_CREATE, params, getHeader(), listener);
+    }
+
+    /**
+     * 3.7.6.	支付含项目订单
+     *
+     * @param payOrderId   订单Id
+     * @param payTwiceFlag 1:是，0:否,如果使用了两种支付方式则为1，否则为0
+     * @param payType      如果使用两种方式（则为除储值外的第二个方式）
+     * @param authCode     微信授权码
+     */
+    public static StringRequest orderPayItem(String payOrderId, String payTwiceFlag, String payType, String authCode, OnRequestListener listener)
+    {
+        Map<String, String> params = null;
+        try {
+            params = new HashMap<>();
+            JSONObject info = new JSONObject();
+            info.put("storeId", CacheUtil.getmInstance().getUser().getStoreId());
+            info.put("payOrderId", payOrderId);
+            info.put("payTwiceFlag", payTwiceFlag);
+            info.put("payType", payType);
+            info.put("authCode", authCode);
+            String json = Base64Util.encode(info.toString().getBytes("UTF-8"));
+            params.put("info", json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getRequest(Url.ORDER_PAY_ITEM, params, getHeader(), listener);
+    }
+
+    /**
+     * 3.7.8.	订单详情
+     */
+    public static StringRequest getOrderDetail(int payOrderId, OnRequestListener listener)
+    {
+        Map<String, String> params = null;
+        try {
+            params = new HashMap<>();
+            JSONObject info = new JSONObject();
+            info.put("storeId", CacheUtil.getmInstance().getUser().getStoreId());
+            info.put("payOrderId", payOrderId);
+            String json = Base64Util.encode(info.toString().getBytes("UTF-8"));
+            params.put("info", json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getRequest(Url.ORDER_DETAILS, params, getHeader(), listener);
+    }
+
+    /**
+     * 3.7.9.	订单筛选
+     */
+    public static StringRequest getOrderFilter(String carNumber, String itemName, String productName, String startTime, String endTime, int pageNo, int pageSize, OnRequestListener listener)
+    {
+        Map<String, String> params = null;
+        try {
+            params = new HashMap<>();
+            JSONObject info = new JSONObject();
+            info.put("storeId", CacheUtil.getmInstance().getUser().getStoreId());
+            info.put("carNumber", carNumber);
+            info.put("itemName", itemName);
+            info.put("productName", productName);
+            info.put("startTime", startTime);
+            info.put("endTime", endTime);
+            info.put("pageNo", pageNo);
+            info.put("pageSize", pageSize);
+            String json = Base64Util.encode(info.toString().getBytes("UTF-8"));
+            params.put("info", json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getRequest(Url.ORDER_FILTER_LIST, params, getHeader(), listener);
+    }
+
+    /**
+     * 3.7.7.	作废订单
+     */
+    public static StringRequest setOrderCancel(String payOrderId, OnRequestListener listener)
+    {
+        Map<String, String> params = null;
+        try {
+            params = new HashMap<>();
+            JSONObject info = new JSONObject();
+            info.put("storeId", CacheUtil.getmInstance().getUser().getStoreId());
+            info.put("payOrderId", payOrderId);
+            String json = Base64Util.encode(info.toString().getBytes("UTF-8"));
+            params.put("info", json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getRequest(Url.ORDER_CANCEL, params, getHeader(), listener);
+    }
+
+    /**
+     * 3.5.13.	查询会员储值累计充值金额
+     */
+    public static StringRequest getMemberSumMoney(String memberId, OnRequestListener listener)
+    {
+        Map<String, String> params = null;
+        try {
+            params = new HashMap<>();
+            JSONObject info = new JSONObject();
+            info.put("memberId", memberId);
+            String json = Base64Util.encode(info.toString().getBytes("UTF-8"));
+            params.put("info", json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getRequest(Url.MEMBER_SUM_MONEY, params, getHeader(), listener);
+    }
+
+    /**
+     * 3.5.12.	查询会员储值卡累计消费金额
+     */
+    public static StringRequest getMemberPayMoney(String memberId, OnRequestListener listener)
+    {
+        Map<String, String> params = null;
+        try {
+            params = new HashMap<>();
+            JSONObject info = new JSONObject();
+            info.put("memberId", memberId);
+            String json = Base64Util.encode(info.toString().getBytes("UTF-8"));
+            params.put("info", json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getRequest(Url.MEMBER_PAY_MONEY, params, getHeader(), listener);
+    }
+
+    /**
+     * 3.5.15.	查询会员基本信息
+     */
+    public static StringRequest getMemberBaseInfo(String memberId, OnRequestListener listener)
+    {
+        Map<String, String> params = null;
+        try {
+            params = new HashMap<>();
+            JSONObject info = new JSONObject();
+            info.put("memberId", memberId);
+            String json = Base64Util.encode(info.toString().getBytes("UTF-8"));
+            params.put("info", json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getRequest(Url.MEMBER_BASE_INFO, params, getHeader(), listener);
+    }
+
     /**
      * 删除会员
+     *
      * @param memberId
      * @param listener
      * @return
      */
-    public static StringRequest getConsumeHistory(int memberId,int pageNo,int pageSize, OnRequestListener listener) {
+    public static StringRequest getConsumeHistory(int memberId, int pageNo, int pageSize, OnRequestListener listener)
+    {
         Map<String, String> params = null;
         Map<String, Object> info;
         try {
@@ -761,7 +1046,8 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest deleteCardType(int cardTypeId, OnRequestListener listener) {
+    public static StringRequest deleteCardType(int cardTypeId, OnRequestListener listener)
+    {
         Map<String, Object> info;
         Map<String, String> params = null;
         try {
@@ -792,7 +1078,8 @@ public class Api extends BaseRequest {
     /**
      * 会员储值
      */
-    public static StringRequest addStoreMoney(int memberId, String fee, int payType, String giveMoney, String content,String sendSMSFlag, OnRequestListener listener) {
+    public static StringRequest addStoreMoney(int memberId, String fee, int payType, String giveMoney, String content, String sendSMSFlag, OnRequestListener listener)
+    {
         Map<String, String> params = null;
         Map<String, Object> info;
         try {
@@ -830,7 +1117,8 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest updateCardType(int cardTypeId, String cardTypeName, boolean supportIntegral, boolean supportValue, boolean supportCount, boolean needPassord, int discount, int integralRatio, OnRequestListener listener) {
+    public static StringRequest updateCardType(int cardTypeId, String cardTypeName, boolean supportIntegral, boolean supportValue, boolean supportCount, boolean needPassord, int discount, int integralRatio, OnRequestListener listener)
+    {
         Map<String, Object> params;
         Map<String, String> params2 = null;
         try {
@@ -857,7 +1145,8 @@ public class Api extends BaseRequest {
     /**
      * 新增会员
      */
-    public static StringRequest addAssociator(String name, String carNumber, String telephone, String carType, String cardNumber, OnRequestListener listener) {
+    public static StringRequest addAssociator(String name, String carNumber, String telephone, String carType, String cardNumber, OnRequestListener listener)
+    {
         Map<String, Object> info;
         Map<String, String> params = null;
 
@@ -883,7 +1172,8 @@ public class Api extends BaseRequest {
     /**
      * 获取会员列表包含搜索
      */
-    public static StringRequest getAssociatorList(String key, int page, int pageSize, OnRequestListener listener) {
+    public static StringRequest getAssociatorList(String key, int page, int pageSize, OnRequestListener listener)
+    {
         Map<String, String> params = null;
         Map<String, Object> info;
         try {
@@ -910,7 +1200,8 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest getAssociatorCount(OnRequestListener listener) {
+    public static StringRequest getAssociatorCount(OnRequestListener listener)
+    {
         Map<String, String> params = null;
         Map<String, Object> info;
         try {
@@ -933,7 +1224,8 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest deleteAssociator(int memberId, OnRequestListener listener) {
+    public static StringRequest deleteAssociator(int memberId, OnRequestListener listener)
+    {
         Map<String, String> params = null;
         Map<String, Object> info;
         try {
@@ -956,7 +1248,8 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest getMenberDetails(int memberId, OnRequestListener listener) {
+    public static StringRequest getMenberDetails(int memberId, OnRequestListener listener)
+    {
         Map<String, String> params = null;
         Map<String, Object> info;
         try {
@@ -980,7 +1273,8 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest getMoneyReport(String startTime,String endTime, OnRequestListener listener) {
+    public static StringRequest getMoneyReport(String startTime, String endTime, OnRequestListener listener)
+    {
         Map<String, String> params = null;
         Map<String, Object> info;
         try {
@@ -1006,7 +1300,8 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest getSaleReport(String startTime,String endTime, OnRequestListener listener) {
+    public static StringRequest getSaleReport(String startTime, String endTime, OnRequestListener listener)
+    {
         Map<String, String> params = null;
         Map<String, Object> info;
         try {
@@ -1026,10 +1321,12 @@ public class Api extends BaseRequest {
 
     /**
      * 3.3.2.	查询门店下所有项目
+     *
      * @param listener
      * @return
      */
-    public static StringRequest getStoreItem(int pageNo,int pageSize, OnRequestListener listener) {
+    public static StringRequest getStoreItem(int pageNo, int pageSize, OnRequestListener listener)
+    {
         Map<String, String> params = null;
         Map<String, Object> info;
         try {
@@ -1050,7 +1347,8 @@ public class Api extends BaseRequest {
     /**
      * 更新会员信息
      */
-    public static StringRequest updateAssociator(long id, String name,String carNumber, String telephone, String carType, String cardNumber, OnRequestListener listener) {
+    public static StringRequest updateAssociator(long id, String name, String carNumber, String telephone, String carType, String cardNumber, OnRequestListener listener)
+    {
         Map<String, Object> info;
         Map<String, String> params = null;
         try {
@@ -1063,7 +1361,7 @@ public class Api extends BaseRequest {
             info.put("carType", carType);
             info.put("cardNumber", cardNumber);
             String json = FastJsonUtil.bean2Json(info);
-            Log.e("json",json);
+            Log.e("json", json);
             json = Base64Util.encode(json.getBytes("UTF-8"));
             params.clear();
             params.put("info", json);
@@ -1085,7 +1383,8 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest addRecharge(int associatorId, int rechargeAmount, int giftAmount, int rechargeCount, int rechargeType, int modeOfPayment, String description, OnRequestListener listener) {
+    public static StringRequest addRecharge(int associatorId, int rechargeAmount, int giftAmount, int rechargeCount, int rechargeType, int modeOfPayment, String description, OnRequestListener listener)
+    {
         Map<String, String> params = null;
         Map<String, Object> info;
         try {
@@ -1116,7 +1415,8 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest getRecordList(int memberId, OnRequestListener listener) {
+    public static StringRequest getRecordList(int memberId, OnRequestListener listener)
+    {
         Map<String, String> params = null;
         Map<String, Object> info;
         try {
@@ -1131,6 +1431,7 @@ public class Api extends BaseRequest {
         }
         return getRequest(Url.STORE_MONEY_RECORD, params, getHeader(), listener);
     }
+
     /**
      * 获取会员充值历史列表
      *
@@ -1138,7 +1439,8 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest getRechargeList(int associatorId, OnRequestListener listener) {
+    public static StringRequest getRechargeList(int associatorId, OnRequestListener listener)
+    {
         Map<String, String> params = null;
         Map<String, Object> info;
         try {
@@ -1165,7 +1467,8 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest exchangeIntegral(String cardId, int productId, int integral, String description, OnRequestListener listener) {
+    public static StringRequest exchangeIntegral(String cardId, int productId, int integral, String description, OnRequestListener listener)
+    {
         Map<String, String> params = null;
         Map<String, Object> info;
         try {
@@ -1184,18 +1487,21 @@ public class Api extends BaseRequest {
 
         return getRequest(Url.ASSOCIATOR_EXC_INTEGRAL, params, getHeader(), listener);
     }
+
     /**
      * 3.4.1.	根据套餐名关键字查询门店下套餐
+     *
      * @param listener
      * @return
      */
-    public static StringRequest getComboList(String key,int pageNo,int pageSize, OnRequestListener listener) {
+    public static StringRequest getComboList(String key, int pageNo, int pageSize, OnRequestListener listener)
+    {
         Map<String, String> params = null;
         Map<String, Object> info;
         try {
             params = new HashMap<>();
             info = new HashMap<>();
-            if(!TextUtils.isEmpty(key)){
+            if (!TextUtils.isEmpty(key)) {
                 info.put("key", key);
             }
             info.put("storeId", CacheUtil.getmInstance().getUser().getStoreId());
@@ -1209,6 +1515,7 @@ public class Api extends BaseRequest {
         }
         return getRequest(Url.COMBO_LIST, params, getHeader(), listener);
     }
+
     /**
      * 挂单
      *
@@ -1221,7 +1528,8 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest cartPutUp(String cartName, int associatorId, double totalValue, String accountId, String description, List<GoodsCart> gcList, OnRequestListener listener) {
+    public static StringRequest cartPutUp(String cartName, int associatorId, double totalValue, String accountId, String description, List<GoodsCart> gcList, OnRequestListener listener)
+    {
         Map<String, String> params = null;
         Map<String, Object> info;
         try {
@@ -1250,7 +1558,8 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest getCartDetails(int cartId, OnRequestListener listener) {
+    public static StringRequest getCartDetails(int cartId, OnRequestListener listener)
+    {
         Map<String, String> params = null;
         Map<String, Object> info;
         try {
@@ -1275,7 +1584,8 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest getExtCartList(int page, int pageSize, OnRequestListener listener) {
+    public static StringRequest getExtCartList(int page, int pageSize, OnRequestListener listener)
+    {
         Map<String, String> params = null;
         Map<String, Object> info;
         try {
@@ -1304,7 +1614,8 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest cartBillCheck(int cartId, int associatorId, double receivableValue, double paidValue, int modeOfPay, int customerType, List<BillDetail> billDetails, OnRequestListener listener) {
+    public static StringRequest cartBillCheck(int cartId, int associatorId, double receivableValue, double paidValue, int modeOfPay, int customerType, List<BillDetail> billDetails, OnRequestListener listener)
+    {
         Map<String, String> params = null;
         Map<String, Object> info;
         try {
@@ -1336,7 +1647,8 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest saleHistory(String type, String begin, String end, OnRequestListener listener) {
+    public static StringRequest saleHistory(String type, String begin, String end, OnRequestListener listener)
+    {
         String url;
         if (SaleHistoryActivity.SALE_ALL.equals(type)) {
             url = Url.ANALYSIS_TOTAL_SALE;
@@ -1372,7 +1684,8 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest getBillExtcount(int associatorId, String begin, String end, int customerType, int flag, OnRequestListener listener) {
+    public static StringRequest getBillExtcount(int associatorId, String begin, String end, int customerType, int flag, OnRequestListener listener)
+    {
         Map<String, String> params = null;
         Map<String, Object> info;
 
@@ -1406,7 +1719,8 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest getBillTextList(int associatorId, String begin, String end, int customerType, int flag, int page, int pageSize, OnRequestListener listener) {
+    public static StringRequest getBillTextList(int associatorId, String begin, String end, int customerType, int flag, int page, int pageSize, OnRequestListener listener)
+    {
         Map<String, String> params = null;
         Map<String, Object> info;
 
@@ -1438,7 +1752,8 @@ public class Api extends BaseRequest {
      * @param billId
      * @param listener
      */
-    public static StringRequest cancelBill(int billId, OnRequestListener listener) {
+    public static StringRequest cancelBill(int billId, OnRequestListener listener)
+    {
 
         Map<String, Object> param = new HashMap<String, Object>();
         Map<String, String> params = new HashMap<String, String>();
@@ -1463,7 +1778,8 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest updateStoreInfo(String storeName, String telephone, String storeAddr, OnRequestListener listener) {
+    public static StringRequest updateStoreInfo(String storeName, String telephone, String storeAddr, OnRequestListener listener)
+    {
         Map<String, String> params = null;
         String info = null;
         try {
@@ -1489,7 +1805,8 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest returnSaleBillGoods(int billDetailsId, int returnReason, OnRequestListener listener) {
+    public static StringRequest returnSaleBillGoods(int billDetailsId, int returnReason, OnRequestListener listener)
+    {
         Map<String, String> params = null;
         Map<String, Integer> objMap = null;
         String info = null;
@@ -1518,7 +1835,8 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest getSalesAnalyTotal(String url, String begin, String end, int page, int pageSize, OnRequestListener listener) {
+    public static StringRequest getSalesAnalyTotal(String url, String begin, String end, int page, int pageSize, OnRequestListener listener)
+    {
         Map<String, String> params = null;
         Map<String, Object> objMap = null;
         String info = null;
@@ -1554,7 +1872,8 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest getSalesAnalyGrossales(String url, String begin, String end, int page, int pageSize, OnRequestListener listener) {
+    public static StringRequest getSalesAnalyGrossales(String url, String begin, String end, int page, int pageSize, OnRequestListener listener)
+    {
         Map<String, String> params = null;
         Map<String, Object> objMap = null;
         String info = null;
@@ -1590,7 +1909,8 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest getSalesAnalyCount(String url, String begin, String end, int page, int pageSize, OnRequestListener listener) {
+    public static StringRequest getSalesAnalyCount(String url, String begin, String end, int page, int pageSize, OnRequestListener listener)
+    {
         Map<String, String> params = null;
         Map<String, Object> objMap = null;
         String info = null;

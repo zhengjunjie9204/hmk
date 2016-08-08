@@ -2,7 +2,6 @@ package com.xgx.syzj.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -52,6 +51,7 @@ public class MemberAddCountActivity extends BaseActivity implements View.OnClick
     private Member member;
     private Combo combo;
     private StoreItem storeItem;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -149,18 +149,29 @@ public class MemberAddCountActivity extends BaseActivity implements View.OnClick
                     if (csb_sms.isChecked()) {
                         sendMsg = "1";
                     }
-                    long[] storeArr = null;
-                    if(storeItem != null){
-                        money = ""+storeItem.getPrice();
-                        storeArr = new long[]{storeItem.getId()};
+                    try {
+                        JSONArray storeList = null;
+                        if (storeItem != null) {
+                            money = "" + storeItem.getPrice();
+                            storeList = new JSONArray();
+                            JSONObject params = new JSONObject();
+                            params.put("itemId", storeItem.getId());
+                            params.put("amount", storeItem.getLaborTime());
+                            storeList.put(params);
+                        }
+                        JSONArray comboList = null;
+                        if (combo != null) {
+                            money = "" + combo.getPrice();
+                            comboList = new JSONArray();
+                            JSONObject params = new JSONObject();
+                            params.put("comboId", combo.getId());
+                            params.put("amount", 1);
+                            comboList.put(params);
+                        }
+                        RechargeDataModel.addItemCombo(member.getId(), money, 3, comboList, storeList, remark, sendMsg);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                    long[] comboArr  = null;
-                    if(combo != null){
-                        money = ""+combo.getPrice();
-                        comboArr = new long[]{combo.getId()};
-                    }
-                    Log.d("TTTTTT", comboArr.toString());
-                    RechargeDataModel.addItemCombo(member.getId(), money, 3, comboArr, storeArr, remark, sendMsg);
                 }
                 break;
             case R.id.tv_mode:
@@ -178,7 +189,8 @@ public class MemberAddCountActivity extends BaseActivity implements View.OnClick
         }
     }
 
-    private void getSumRecord(){
+    private void getSumRecord()
+    {
         Api.getSumRecord(member.getId(), new BaseRequest.OnRequestListener() {
             @Override
             public void onSuccess(Result result)
@@ -205,7 +217,7 @@ public class MemberAddCountActivity extends BaseActivity implements View.OnClick
     {
 //        money = et_money.getText().toString().trim();
         remark = et_remark.getText().toString().trim();
-        if(storeItem == null && combo == null){
+        if (storeItem == null && combo == null) {
             showShortToast("请选择充值项目或者套餐");
             return false;
         }
@@ -220,12 +232,12 @@ public class MemberAddCountActivity extends BaseActivity implements View.OnClick
         if (requestCode == 2005) {
             storeItem = (StoreItem) data.getSerializableExtra("store");
             combo = (Combo) data.getSerializableExtra("combo");
-            if(storeItem != null){
+            if (storeItem != null) {
                 tv_count.setDesc(storeItem.getName());
-                et_money.setText(storeItem.getPrice()+"");
-            }else if(combo != null){
+                et_money.setText(storeItem.getPrice() + "");
+            } else if (combo != null) {
                 tv_count.setDesc(combo.getName());
-                et_money.setText(combo.getPrice()+"");
+                et_money.setText(combo.getPrice() + "");
             }
         }
     }

@@ -188,8 +188,8 @@ public class AnalysisSellActivity extends BaseActivity implements View.OnClickLi
             try {
                 if (result.getStatus() == 200) {
                     JSONObject json = new JSONObject(result.getResult());
-//                    tvAllCount.setText("￥" + json.optDouble("storeItemSale", 0.00));
-//                    tv_all_money.setText("￥" + json.optDouble("storeItemSale", 0.00));
+                    tvAllCount.setText(json.optInt("count", 0) + "笔");
+                    tv_all_money.setText("￥" + json.optDouble("totalSale", 0.00));
                     tvProMoney.setText("￥" + json.optDouble("productSale", 0.00));
                     tvGoodMoney.setText("￥" + json.optDouble("itemSale", 0.00));
                     tvCardMoney.setText("￥" + json.optDouble("storeMoneySale", 0.00));

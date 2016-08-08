@@ -12,6 +12,7 @@ import com.xgx.syzj.utils.FastJsonUtil;
 import com.xgx.syzj.widget.list.ListPageInfo;
 import com.xgx.syzj.widget.list.PagedListDataModel;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.List;
@@ -114,7 +115,7 @@ public class RechargeDataModel extends PagedListDataModel<Recharge> {
     }
 
     //用户冲次
-    public static void addItemCombo(int memberId, String fee, int payType, long[] comboList, long[] itemList, String content, String sendSMSFlag)
+    public static void addItemCombo(int memberId, String fee, int payType, JSONArray comboList, JSONArray itemList, String content, String sendSMSFlag)
     {
         code = ADD_STORE_MONEY;
         Api.addItemCombo(memberId, fee, payType, comboList, itemList, content, sendSMSFlag, listener);

@@ -1,6 +1,5 @@
 package com.xgx.syzj.ui;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -13,6 +12,7 @@ import com.xgx.syzj.R;
 import com.xgx.syzj.adapter.ProjectListAdapter;
 import com.xgx.syzj.adapter.RevenueGoodListAdapter;
 import com.xgx.syzj.base.BaseActivity;
+import com.xgx.syzj.bean.FastOrder;
 import com.xgx.syzj.bean.Goods;
 import com.xgx.syzj.bean.Member;
 import com.xgx.syzj.bean.Project;
@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RevenuseSellFinishActivity extends BaseActivity implements View.OnClickListener {
-
     private ListViewExtend mSellListView;
     private ListViewExtend lv_project;
     private ListViewExtend lv_data;
@@ -38,13 +37,14 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
     private List<Goods> mGood = new ArrayList<>();
     private ProjectListAdapter projectAdapter;
     private RevenueGoodListAdapter mAdapter;
-
+    private FastOrder order;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_revenuse_sell_finish);
         Utils.hideSoftInput(this);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        order = (FastOrder) getIntent().getSerializableExtra("order");
         initView();
         initData();
     }
@@ -54,7 +54,7 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
     }
 
     private void initView() {
-        setTitleText(getIntent().getExtras().getString("carnumber"));
+        setTitleText(order.getCarNumber());
         setSubmit("会员");
         mSellListView = (ListViewExtend) findViewById(R.id.sell_listview);
         lv_project = (ListViewExtend) findViewById(R.id.lv_project);
