@@ -54,7 +54,6 @@ public class CardCreateActivity extends BaseActivity {
         csb_cuzhi = (CheckSwitchButton) findViewById(R.id.csb_cuzhi);
         csb_count = (CheckSwitchButton) findViewById(R.id.csb_count);
         csb_password = (CheckSwitchButton) findViewById(R.id.csb_password);
-
         csb_count.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

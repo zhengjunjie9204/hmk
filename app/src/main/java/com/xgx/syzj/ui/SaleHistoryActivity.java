@@ -1,12 +1,17 @@
 package com.xgx.syzj.ui;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 
@@ -27,6 +32,7 @@ import com.xgx.syzj.event.BillEventPostData;
 import com.xgx.syzj.utils.DateUtil;
 import com.xgx.syzj.utils.Utils;
 import com.xgx.syzj.widget.ConsumptionPopupWindowUtil;
+import com.xgx.syzj.widget.PagerSlidingTabStrip;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -45,7 +51,7 @@ import in.srain.cube.views.loadmore.LoadMoreListViewContainer;
  * @author sam
  * @created 2015年09月24日 14:22
  */
-public class SaleHistoryActivity extends BaseActivity{
+public class SaleHistoryActivity extends BaseActivity implements SaleHistoryFragment.ISaleHistoryItemClick {
     private String currentTime,startTime;
     private Date curDate;
     private int selectData =-30;
@@ -61,14 +67,16 @@ public class SaleHistoryActivity extends BaseActivity{
     private SaleDetailAdapter saleDetailAdapter;
     private List<BillListItemBean> mList = new ArrayList<>();
     private int deleteIndex = -1;
-    private ISaleHistoryItemClick iSaleHistoryItemClick;
+    private SaleHistoryFragment.ISaleHistoryItemClick iSaleHistoryItemClick;
     private LoadMoreListViewContainer loadMoreListViewContainer;
     private SaleListRecordModel mDataModel;
     private String[] CONTENT;
+    private PagerSlidingTabStrip indicator;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_sale_history);
+        setContentView(R.layout.activity_sale_history);
         initView();
     }
 
@@ -77,167 +85,18 @@ public class SaleHistoryActivity extends BaseActivity{
         setSubmit("筛选");
         CONTENT = new String[]{"待完成", "已完成"};
         btnPayType = (Button) findViewById(R.id.btn_submit);
-        lv_data = (SwipeMenuListView) findViewById(R.id.lv_data);
         FragmentPagerAdapter adapter = new MyFragmentAdapter(getSupportFragmentManager());
-        SwipeMenuCreator creator = new SwipeMenuCreator() {
-
-            @Override
-            public void create(SwipeMenu menu) {
-                SwipeMenuItem deleteItem = new SwipeMenuItem(getActivity());
-                deleteItem.setBackground(new ColorDrawable(Color.rgb(0xF9, 0x3F, 0x25)));
-                deleteItem.setWidth(Utils.dp2px(getActivity(), 90));
-                deleteItem.setTitle("作废");
-                deleteItem.setTitleColor(getResources().getColor(R.color.white));
-                deleteItem.setTitleSize(18);
-                menu.addMenuItem(deleteItem);
-            }
-        };
-        lv_data.setMenuCreator(creator);
-        lv_data.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (iSaleHistoryItemClick != null)
-                    iSaleHistoryItemClick.onItemClick(mList.get(position));
-            }
-        });
-        lv_data.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
-                deleteItemBill(position);
-                return false;
-            }
-        });
-        mDataModel = new SaleListRecordModel(Constants.LOAD_COUNT,mFlag);
-        mDataModel.setTime(DateUtil.getStringByFormat(System.currentTimeMillis()-864000001, "yyyy-MM-dd"),
-                DateUtil.getStringByFormat(System.currentTimeMillis(), "yyyy-MM-dd"));
-
-        loadMoreListViewContainer = (LoadMoreListViewContainer)
-                findViewById(R.id.load_more_list_view_container);
-        loadMoreListViewContainer.useDefaultFooter();
-        loadMoreListViewContainer.setShowLoadingForFirstPage(true);
-        loadMoreListViewContainer.setLoadMoreHandler(new LoadMoreHandler() {
-            @Override
-            public void onLoadMore(LoadMoreContainer loadMoreContainer) {
-                mDataModel.queryNextPage();
-            }
-        });
-
-        for(int i=0;i<10;i++){
-            BillListItemBean shy=new BillListItemBean();
-            List<BillListItemBean.BillDetailsEntity> list=new ArrayList<>();
-            for(int j=0;j<3;j++){
-                BillListItemBean.BillDetailsEntity bde=new BillListItemBean.BillDetailsEntity();
-                bde.setProductName(mFlag+"水壶"+i);
-                bde.setQuantity(j);
-                bde.setTotalValue(j+0.2);
-                bde.setStoreId(j);
-                bde.setBillDetailsId(j);
-                bde.setBillId(j);
-                bde.setSellingPrice(2.3+j);
-                list.add(bde);
-            }
-            shy.setBillDetails(list);
-            shy.setCustomerType(1);
-            shy.setBillDatetime(System.currentTimeMillis());
-            shy.setAssociatorId(1);
-            shy.setFlag(1);
-            shy.setBillId(i);
-            shy.setModeOfPay(2);
-            shy.setAssociatorName("这样"+i);
-            shy.setPaidValue(20.2+i);
-            shy.setReceivableValue(i);
-            shy.setDescription("sd"+i);
-            shy.setReturnValue(i);
-            shy.setStoreId(i);
-            mList.add(shy);
-        }
-
-        mAdapter = new SaleHistroyAdapter(getActivity(),mFlag,mList);
-        saleDetailAdapter = new SaleDetailAdapter(getActivity());
-        lv_data.setAdapter(mAdapter);
-        lv_data.setOnItemClickListener(itemClickListener);
-        mDataModel.queryNextPage();
-    }
-
-    public void onEventMainThread(BillEventPostData<BillListItemBean> billData){
-
-        if(billData.str.equals(mFlag)){
-            loadMoreListViewContainer.loadMoreFinish(mDataModel.getListPageInfo().isEmpty(),
-                    mDataModel.getListPageInfo().hasMore());
-            if(mList.size() > 0 ){
-                if(mList.get(0).getBillDatetime() != billData.dataList.get(0).getBillDatetime()){
-                    mAdapter.appendList(mList);
-                }
-            }else {
-                mAdapter.appendList(billData.dataList);
-            }
-            mAdapter.notifyDataSetChanged();
-        }
+        ViewPager pager = (ViewPager) findViewById(R.id.viewpager);
+        pager.setAdapter(adapter);
+        indicator = (PagerSlidingTabStrip) findViewById(R.id.indicator);
+        indicator.setViewPager(pager);
+        // 设置tab样式
+        DisplayMetrics dm = getResources().getDisplayMetrics();
+        SetTab(SaleHistoryActivity.this, indicator, dm, 50);
 
     }
 
-    private AdapterView.OnItemClickListener itemClickListener=new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            BillListItemBean shy=mList.get(position);
-            if(shy == null) return;
-            Bundle bundle = new Bundle();
-            bundle.putParcelableArrayList(SALE_BILL_ITEM,reSetData(shy));
-            gotoActivityForResult(SaleDetailActivity.class,bundle,0x01);
-        }
-    };
 
-    public void onEventMainThread(Bundle bundle){
-        if(bundle != null){
-            mList.clear();
-            mDataModel.setCustomerType(mFlag);
-            mDataModel.setTime(bundle.getString("startTime"),bundle.getString("currentTime"));
-            mDataModel.queryNextPage();
-            mAdapter.notifyDataSetChanged();
-        }
-    }
-
-
-
-    public void onEventMainThread(Map map){
-        if(map != null)
-            for(BillListItemBean bim : mList){
-                for (int i = 0 ;i<bim.getBillDetails().size();i++){
-                    int reId = Integer.parseInt(map.get("returnId").toString());
-                    if(reId == bim.getBillDetails().get(i).getBillDetailsId()){
-                        bim.getBillDetails().remove(bim.getBillDetails().get(i));
-                    }
-                }
-                if(bim.getBillDetails().size() == 0){
-                    mList.remove(bim);
-                }
-            }
-        mAdapter.notifyDataSetChanged();
-    }
-
-
-    public void onEventMainThread(Result result){
-        if(result.geteCode() == mDataModel.DELETE_SALE_RECORD){
-            mList.remove(mList.get(deleteIndex));
-            showShortToast("取消该订单成功");
-        }
-        mAdapter.notifyDataSetChanged();
-    }
-
-
-    private void deleteItemBill(int position) {
-        deleteIndex = position;
-        SaleListRecordModel.doRequst(mList.get(position).getBillId());
-    }
-//
-//    @Override
-//    public void notifyChangeData(int id) {
-//
-//    }
-
-    public interface ISaleHistoryItemClick {
-        void onItemClick(BillListItemBean shy);
-    }
 
     @Override
     public void onDestroy() {
@@ -300,6 +159,46 @@ public class SaleHistoryActivity extends BaseActivity{
         }
     };
 
+    @Override
+    public void onItemClick(BillListItemBean shy) {
+        if(shy == null) return;
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList(SALE_BILL_ITEM,reSetData(shy));
+        gotoActivityForResult(SaleDetailActivity.class,bundle,0x01);
+    }
+
+    class MyFragmentAdapter extends FragmentPagerAdapter {
+
+        ArrayList<Fragment> mList = new ArrayList<>();
+
+        public MyFragmentAdapter(FragmentManager fm) {
+            super(fm);
+            mList.add(new SaleHistoryFragment(false));
+            mList.add(new SaleHistoryFragment(true));
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return CONTENT.length;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return CONTENT[position % CONTENT.length].toUpperCase();
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            // TODO Auto-generated method stub
+            super.destroyItem(container, position, object);
+        }
+    }
+
     private void selectBillpay(){
         curDate = new Date(System.currentTimeMillis());
         currentTime = DateUtil.getStringByOffset(curDate,DateUtil.dateFormatYMDHMS, Calendar.DATE,0);
@@ -310,22 +209,38 @@ public class SaleHistoryActivity extends BaseActivity{
         bundle.putString("startTime",startTime);
         EventBus.getDefault().post(bundle);
     }
+    private void SetTab(Context context, PagerSlidingTabStrip indicator, DisplayMetrics dm, int padsize) {
 
-    private class MyFragmentAdapter extends FragmentPagerAdapter {
-        public MyFragmentAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return null;
-        }
-
-        @Override
-        public int getCount() {
-            return 0;
-        }
+        indicator.setIndicatorleftrightpadsize((int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, 0, dm));
+        // 设置Tab是自动填充满屏幕的
+        indicator.setShouldExpand(true);
+        // 设置Tab的分割线是透明的
+        indicator.setDividerColor(Color.TRANSPARENT);
+//        indicator.setDividerColor(R.color.gray);
+//        indicator.setDividerPadding(1);
+        // 设置Tab底部线的高度
+        indicator.setUnderlineHeight((int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, 0, dm));
+        // 设置Tab Indicator的高度
+        indicator.setIndicatorHeight((int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, 1, dm));
+        // 设置Tab标题文字的大小
+        indicator.setTextSize((int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_SP, 13, dm));
+        indicator.setTabPaddingLeftRight((int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, 0, dm));
+        indicator.setTabPadding((int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, 24, dm));
+        // 设置Tab Indicator的颜色
+        indicator.setIndicatorColor(context.getResources().getColor(R.color.top_bar_color));
+        // 设置选中Tab文字的颜色 (这是我自定义的一个方法)
+        indicator.setSelectedTextColor(context.getResources().getColor(R.color.top_bar_color));
+        // 取消点击Tab时的背景色
+        indicator.setTabBackground(0);
     }
+
+
 
 //    @Override
 //    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -337,4 +252,5 @@ public class SaleHistoryActivity extends BaseActivity{
 //                break;
 //        }
 //    }
+
 }

@@ -41,9 +41,11 @@ import in.srain.cube.views.loadmore.LoadMoreListViewContainer;
  * @author zajo
  * @created 2015年11月24日 15:49
  */
+@SuppressLint("ValidFragment")
 public class SaleHistoryFragment extends Fragment/* implements SaleHistoryInterfaces*/{
 
 
+    private  boolean complete;//标示是否完成订单
     private String mFlag = "";
     private SwipeMenuListView lv_data;
     private SaleHistroyAdapter mAdapter;
@@ -56,9 +58,7 @@ public class SaleHistoryFragment extends Fragment/* implements SaleHistoryInterf
     private int returnId = -1;
     private Context mContext;
 
-    public SaleHistoryFragment() {
-        super();
-    }
+
 
     @SuppressLint("ValidFragment")
     public SaleHistoryFragment(Context context ,String flag) {
@@ -66,11 +66,17 @@ public class SaleHistoryFragment extends Fragment/* implements SaleHistoryInterf
         this.mContext = context;
         this.mFlag = flag;
     }
+    @SuppressLint("ValidFragment")
+    public SaleHistoryFragment(boolean flag) {
+        super();
+        this.complete = flag;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
+
     }
 
     @Override
@@ -134,7 +140,14 @@ public class SaleHistoryFragment extends Fragment/* implements SaleHistoryInterf
                 mDataModel.queryNextPage();
             }
         });
+        initData();
+        mAdapter = new SaleHistroyAdapter(getActivity(),mFlag,mList);
+        saleDetailAdapter = new SaleDetailAdapter(getActivity());
+        lv_data.setAdapter(mAdapter);
+        mDataModel.queryNextPage();
+    }
 
+    private void initData() {
         for(int i=0;i<10;i++){
             BillListItemBean shy=new BillListItemBean();
             List<BillListItemBean.BillDetailsEntity> list=new ArrayList<>();
@@ -164,11 +177,6 @@ public class SaleHistoryFragment extends Fragment/* implements SaleHistoryInterf
             shy.setStoreId(i);
             mList.add(shy);
         }
-
-        mAdapter = new SaleHistroyAdapter(getActivity(),mFlag,mList);
-        saleDetailAdapter = new SaleDetailAdapter(getActivity());
-        lv_data.setAdapter(mAdapter);
-        mDataModel.queryNextPage();
     }
 
     public void onEventMainThread(BillEventPostData<BillListItemBean> billData){
