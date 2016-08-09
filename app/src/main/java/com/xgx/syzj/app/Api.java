@@ -569,7 +569,7 @@ public class Api extends BaseRequest {
             if (!TextUtils.isEmpty(categoryId)) {
                 info.put("categoryId", categoryId);
             }
-            //CacheUtil.getmInstance().getUser().getStoreId()
+//            CacheUtil.getmInstance().getUser().getStoreId()
             info.put("pageNo", page);
             info.put("pageSize", pageSize);
             String json = FastJsonUtil.bean2Json(info);
@@ -1792,6 +1792,80 @@ public class Api extends BaseRequest {
         param.clear();
         params.put("info", json);
         return getRequest(Url.BILL_CANCEL, params, getHeader(), listener);
+    }
+
+    /**
+     * 用户信息
+     * @param userName
+     * @param listener
+     * @return
+     */
+    public static StringRequest userInfo(String userName, OnRequestListener listener)
+    {
+
+        Map<String, String> params = null;
+        Map<String, Object> info;
+
+        try {
+            params = new HashMap<>();
+            info = new HashMap<>();
+            info.put("userName", userName);
+            String json = FastJsonUtil.bean2Json(info);
+            json = Base64Util.encode(json.getBytes("UTF-8"));
+            params.put("info", json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getRequest(Url.USER_INFO, params, getHeader(), listener);
+    }
+
+    /**
+     * 门店信息2
+     * @param storeId
+     * @param listener
+     * @return
+     */
+    public static StringRequest storeInfo(Long storeId, OnRequestListener listener)
+    {
+
+        Map<String, String> params = null;
+        Map<String, Object> info;
+
+        try {
+            params = new HashMap<>();
+            info = new HashMap<>();
+            info.put("storeId", storeId);
+            String json = FastJsonUtil.bean2Json(info);
+            json = Base64Util.encode(json.getBytes("UTF-8"));
+            params.put("info", json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getRequest(Url.STORE_INFO, params, getHeader(), listener);
+    }
+    /**
+     * 门店信息2
+     * @param storeId
+     * @param listener
+     * @return
+     */
+    public static StringRequest findStoreEmployee(Long storeId, OnRequestListener listener)
+    {
+
+        Map<String, String> params = null;
+        Map<String, Object> info;
+
+        try {
+            params = new HashMap<>();
+            info = new HashMap<>();
+            info.put("storeId", storeId);
+            String json = FastJsonUtil.bean2Json(info);
+            json = Base64Util.encode(json.getBytes("UTF-8"));
+            params.put("info", json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getRequest(Url.FIND_STORE_EMPLOYEE, params, getHeader(), listener);
     }
 
     /**

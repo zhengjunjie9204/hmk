@@ -105,6 +105,10 @@ public class Url {
     public static final String  ANALY_SALE_SALESCOUNT = HOST_URL + "analysis/salescount";//销售总量
     public static final String  ANALY_SALE_GROSSPROFIT = HOST_URL + "analysis/grossprofit";// 利润总额
     public static final String  ANALY_SALE_COUNT = HOST_URL + "analysis/salescount";// 利润总额
+    //门店管理
+    public static final String USER_INFO = HOST_URL + "qcmr/user_userInfo.action";//3.9.1账号信息
+    public static final String STORE_INFO = HOST_URL + "qcmr/store_storeInfo.action";//3.9.2门店信息
+    public static final String FIND_STORE_EMPLOYEE = HOST_URL + "qcmr/store_findStoreEmployee.action";//3.9.2门店信息
 
     //会员
     public static final String COMBO_LIST = HOST_URL + "qcmr/combo_findByKey.action";//3.4.1.	根据套餐名关键字查询门店下套餐

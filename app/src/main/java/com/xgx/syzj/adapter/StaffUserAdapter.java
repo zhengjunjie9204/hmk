@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.xgx.syzj.R;
 import com.xgx.syzj.bean.User;
+import com.xgx.syzj.bean.UserInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,10 +20,10 @@ public class StaffUserAdapter extends BaseAdapter {
 
 
     private Context mContext;
-    private List<User> mList = new ArrayList<User>();
+    private List<UserInfo> mList = new ArrayList<UserInfo>();
 
 
-    public StaffUserAdapter(Context context, List<User> mList) {
+    public StaffUserAdapter(Context context, List<UserInfo> mList) {
         this.mContext = context;
         this.mList=mList;
     }
@@ -44,7 +45,7 @@ public class StaffUserAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        User user=mList.get(position);
+        UserInfo user=mList.get(position);
         final HoldClass hold;
         if (convertView == null) {
             hold = new HoldClass();
@@ -55,8 +56,8 @@ public class StaffUserAdapter extends BaseAdapter {
         } else {
             hold = (HoldClass) convertView.getTag();
         }
-        hold.tv_name.setText(user.getUserName());
-        hold.tv_phone.setText(user.getUserPhone());
+        hold.tv_name.setText(user.getName());
+        hold.tv_phone.setText(user.getPhone());
 
         return convertView;
     }

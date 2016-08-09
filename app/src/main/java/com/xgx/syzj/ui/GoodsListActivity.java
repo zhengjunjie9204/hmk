@@ -191,6 +191,7 @@ public class GoodsListActivity extends BaseActivity  {
                 mDataModel.setKey(text);
                 //根据品牌
                 mDataModel.setBrand(text);
+                mDataModel.setCategoryId(text);
                 mDataModel.queryNextPage();
                 Utils.hideSoftInput(GoodsListActivity.this);
             }
