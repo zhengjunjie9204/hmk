@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by 32918 on 2016/8/5.
  */
-public class FastOrder implements Serializable {
+public class OrderList implements Serializable {
     private int id;
     private int payAmount;
     private String createTime;

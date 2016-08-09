@@ -1,6 +1,6 @@
 package com.xgx.syzj.event;
 
-import com.xgx.syzj.bean.FastOrder;
+import com.xgx.syzj.bean.OrderList;
 
 import java.util.List;
 
@@ -11,6 +11,6 @@ import java.util.List;
 public class OrderListDataEvent {
 
     public boolean hasMore;
-    public List<FastOrder> dataList;
+    public List<OrderList> dataList;
 
 }

@@ -14,7 +14,7 @@ import com.xgx.syzj.R;
 import com.xgx.syzj.adapter.RevenueFastAdapter;
 import com.xgx.syzj.app.Constants;
 import com.xgx.syzj.base.BaseActivity;
-import com.xgx.syzj.bean.FastOrder;
+import com.xgx.syzj.bean.OrderList;
 import com.xgx.syzj.bean.Result;
 import com.xgx.syzj.datamodel.OrderDataModel;
 import com.xgx.syzj.event.EventCenter;
@@ -35,7 +35,7 @@ public class RevenueFastActivity extends BaseActivity {
     private PercentRelativeLayout english_car;
     private GridView lv_data;
     private RevenueFastAdapter mAdapter;
-    private List<FastOrder> mDataList;
+    private List<OrderList> mDataList;
     private OrderDataModel mDataModel;
     //未完成的位置
     private int selectPosition;
@@ -128,7 +128,7 @@ public class RevenueFastActivity extends BaseActivity {
 
     private SimpleEventHandler eventHandler = new SimpleEventHandler() {
 
-        public void onEvent(List<FastOrder> list)
+        public void onEvent(List<OrderList> list)
         {
             mDataList.addAll(list);
             mAdapter.notifyDataSetChanged();

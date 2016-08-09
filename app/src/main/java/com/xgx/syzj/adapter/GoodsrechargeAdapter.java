@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.xgx.syzj.R;
-import com.xgx.syzj.bean.StoreItem;
+import com.xgx.syzj.bean.Storeitem;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,16 +24,16 @@ import java.util.Map;
  */
 public class GoodsrechargeAdapter extends BaseAdapter {
     Context mContext;
-    List<StoreItem> mList;
-    private Map<Integer, StoreItem> selectMap;
-    public GoodsrechargeAdapter(Context context, List<StoreItem> mList)
+    List<Storeitem> mList;
+    private Map<Integer, Storeitem> selectMap;
+    public GoodsrechargeAdapter(Context context, List<Storeitem> mList)
     {
         this.mContext = context;
         this.mList = mList;
         selectMap = new HashMap<>();
     }
 
-    public Map<Integer, StoreItem> getSlectMap(){
+    public Map<Integer, Storeitem> getSlectMap(){
         return selectMap;
     }
 
@@ -63,7 +63,7 @@ public class GoodsrechargeAdapter extends BaseAdapter {
         } else {
             hold = (HoldClass) convertView.getTag();
         }
-        final StoreItem item = mList.get(position);
+        final Storeitem item = mList.get(position);
         hold.tv_name.setText(item.getName());
         hold.tv_money.setText(item.getPrice() + "");
         hold.et_count.addTextChangedListener(new TextWatcher() {
@@ -100,9 +100,9 @@ public class GoodsrechargeAdapter extends BaseAdapter {
     }
 
     class MyClickListener implements View.OnClickListener {
-        StoreItem item;
+        Storeitem item;
 
-        MyClickListener(StoreItem item)
+        MyClickListener(Storeitem item)
         {
             this.item = item;
         }
@@ -142,7 +142,7 @@ public class GoodsrechargeAdapter extends BaseAdapter {
 
     private SignledListener mListener;
     public interface SignledListener{
-        public void onStoreClick(StoreItem item);
+        public void onStoreClick(Storeitem item);
     }
 
     public void setSignledClick(SignledListener mListener){

@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.xgx.syzj.app.Api;
 import com.xgx.syzj.base.BaseRequest.OnRequestListener;
-import com.xgx.syzj.bean.FastOrder;
+import com.xgx.syzj.bean.OrderList;
 import com.xgx.syzj.bean.Result;
 import com.xgx.syzj.event.EventCenter;
 import com.xgx.syzj.event.OrderListDataEvent;
@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * @author ding
  */
-public class OrderDataModel extends PagedListDataModel<FastOrder> {
+public class OrderDataModel extends PagedListDataModel<OrderList> {
     private static byte code;
     public static final byte ORDER_DONE = 0x13;
     public static final byte ORDER_DETAIL = 0x14;
@@ -43,9 +43,9 @@ public class OrderDataModel extends PagedListDataModel<FastOrder> {
             public void onSuccess(Result result)
             {
                 JSONObject object = JSON.parseObject(result.getResult());
-                List<FastOrder> list;
+                List<OrderList> list;
                 if (result.getStatus() == 200) {
-                    list = FastJsonUtil.json2List(object.getString("orders"), FastOrder.class);
+                    list = FastJsonUtil.json2List(object.getString("orders"), OrderList.class);
                 } else {
                     list = new ArrayList<>();
                 }
