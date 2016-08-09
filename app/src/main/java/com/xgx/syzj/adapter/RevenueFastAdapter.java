@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.xgx.syzj.R;
-import com.xgx.syzj.bean.FastOrder;
+import com.xgx.syzj.bean.OrderList;
 
 import java.util.List;
 
@@ -21,9 +21,9 @@ import java.util.List;
 public class RevenueFastAdapter extends BaseAdapter {
 
     private Context mContext;
-    private List<FastOrder> mList;
+    private List<OrderList> mList;
 
-    public RevenueFastAdapter(Context context, List<FastOrder> list){
+    public RevenueFastAdapter(Context context, List<OrderList> list){
         this.mContext = context;
         this.mList = list;
     }
@@ -55,12 +55,12 @@ public class RevenueFastAdapter extends BaseAdapter {
         } else {
             hold = (HoldClass) convertView.getTag();
         }
-        FastOrder fastOrder = mList.get(position);
+        OrderList orderList = mList.get(position);
 
-        hold.tv_name.setText(fastOrder.getCarNumber());
-        if (fastOrder.getPayStatus() == 0) {
+        hold.tv_name.setText(orderList.getCarNumber());
+        if (orderList.getPayStatus() == 0) {
             hold.tv_result.setText("未完成");
-        }else if(fastOrder.getPayStatus() == 3){
+        }else if(orderList.getPayStatus() == 3){
             hold.tv_result.setText("已完成");
         }
         return convertView;

@@ -10,7 +10,6 @@ import com.xgx.syzj.bean.BillDetail;
 import com.xgx.syzj.bean.GoodsCart;
 import com.xgx.syzj.secret.Base64Util;
 import com.xgx.syzj.secret.RSAManager;
-import com.xgx.syzj.ui.SaleHistoryActivity;
 import com.xgx.syzj.utils.CacheUtil;
 import com.xgx.syzj.utils.FastJsonUtil;
 
@@ -1674,14 +1673,7 @@ public class Api extends BaseRequest {
      */
     public static StringRequest saleHistory(String type, String begin, String end, OnRequestListener listener)
     {
-        String url;
-        if (SaleHistoryActivity.SALE_ALL.equals(type)) {
-            url = Url.ANALYSIS_TOTAL_SALE;
-        } else if (SaleHistoryActivity.SALE_MEMBER.equals(type)) {
-            url = Url.ANALYSIS_MEMBER_SALE;
-        } else {
-            url = Url.ANALYSIS_GROSS_SALE;
-        }
+        String url = Url.ANALYSIS_TOTAL_SALE;
         Map<String, String> params = new HashMap<>();
         params.put("begin", begin);
         params.put("end", end);
@@ -1732,44 +1724,26 @@ public class Api extends BaseRequest {
     }
 
     /**
-     * 获取账单列表
-     *
-     * @param associatorId
-     * @param begin
-     * @param end
-     * @param customerType
-     * @param flag
-     * @param page
+     * 订单列表(7.10)
+     * @param pageNo
      * @param pageSize
      * @param listener
      * @return
      */
-    public static StringRequest getBillTextList(int associatorId, String begin, String end, int customerType, int flag, int page, int pageSize, OnRequestListener listener)
+    public static StringRequest getOrderList(int pageNo, int pageSize, OnRequestListener listener)
     {
         Map<String, String> params = null;
-        Map<String, Object> info;
-
         try {
             params = new HashMap<>();
-            info = new HashMap<>();
-            info.put("begin", begin);
-            info.put("end", end);
-            info.put("flag", flag);
-            info.put("page", page);
+            JSONObject info = new JSONObject();
+            info.put("storeId", CacheUtil.getmInstance().getUser().getStoreId());
+            info.put("pageNo", pageNo);
             info.put("pageSize", pageSize);
-            if (-1 != associatorId) {
-                info.put("associatorId", associatorId);
-            }
-            if (-1 != customerType) {
-                info.put("customerType", customerType);
-            }
-            String json = FastJsonUtil.bean2Json(info);
-            json = Base64Util.encode(json.getBytes("UTF-8"));
-            params.put("info", json);
+            params.put("info", Base64Util.encode(info.toString().getBytes("UTF-8")));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return getRequest(Url.BILL_GETEXTLIST, params, getHeader(), listener);
+        return getRequest(Url.ORDER_LIST, params, getHeader(), listener);
     }
 
 

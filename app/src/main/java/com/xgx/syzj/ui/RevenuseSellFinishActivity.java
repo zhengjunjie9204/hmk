@@ -12,7 +12,7 @@ import com.xgx.syzj.R;
 import com.xgx.syzj.adapter.ProjectListAdapter;
 import com.xgx.syzj.adapter.RevenueGoodListAdapter;
 import com.xgx.syzj.base.BaseActivity;
-import com.xgx.syzj.bean.FastOrder;
+import com.xgx.syzj.bean.OrderList;
 import com.xgx.syzj.bean.Goods;
 import com.xgx.syzj.bean.Member;
 import com.xgx.syzj.bean.Project;
@@ -37,14 +37,14 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
     private List<Goods> mGood = new ArrayList<>();
     private ProjectListAdapter projectAdapter;
     private RevenueGoodListAdapter mAdapter;
-    private FastOrder order;
+    private OrderList order;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_revenuse_sell_finish);
         Utils.hideSoftInput(this);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        order = (FastOrder) getIntent().getSerializableExtra("order");
+        order = (OrderList) getIntent().getSerializableExtra("order");
         initView();
         initData();
     }

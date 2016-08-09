@@ -127,7 +127,6 @@ public class Url {
     public static final String SUM_ITEM_RECORD = HOST_URL + "qcmr/memberStore_sumStoreItemRecord.action";//3.5.14.	查询会员计次累计充值金额
     public static final String MEMBER_BASE_INFO = HOST_URL + "qcmr/memberStore_memberBasicInfo.action";//3.5.15.	查询会员基本信息
 
-    public static final String ORDER_PAY = HOST_URL + "qcmr/pay_microPay.action";//3.7.1.	支付订单
     public static final String ORDER_PAY_PRODUCT = HOST_URL + "qcmr/memberStore_ payOnlyProduct.action";//3.7.2.	支付只含商品的订单
     public static final String ORDER_CREATE = HOST_URL + "qcmr/memberStore_createOrderWithItem.action";//3.7.3.	创建含项目订单
     public static final String ORDER_UNPAY_LIST = HOST_URL + "qcmr/memberStore_findUnpayedOrder.action";//3.7.4.	查询未支付项目订单
@@ -136,6 +135,8 @@ public class Url {
     public static final String ORDER_CANCEL = HOST_URL + "qcmr/memberStore_cancelOrder.action";//3.7.7.	作废订单
     public static final String ORDER_DETAILS = HOST_URL + "qcmr/payOrder_orderDetail.action";//3.7.8.	订单详情
     public static final String ORDER_FILTER_LIST = HOST_URL + "qcmr/payOrder_ filterOrder.action";//3.7.9.	订单筛选
+    public static final String SEND_MSG = HOST_URL + "qcmr/payOrder_sendSMS.action";//发送短信(7.9)
+    public static final String ORDER_LIST = HOST_URL + "qcmr/payOrder_findOkOrder.action";//订单列表(7.10)
 
     public static final String MONEY_REPORT = HOST_URL + "qcmr/statistics_moneyReport.action";//3.8.1.	资金流水
     public static final String SALE_REPORT = HOST_URL + "qcmr/statistics_saleReport.action";//3.8.2.	销售分析

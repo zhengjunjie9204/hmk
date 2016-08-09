@@ -14,7 +14,7 @@ import com.xgx.syzj.app.Constants;
 import com.xgx.syzj.base.BaseActivity;
 import com.xgx.syzj.bean.Combo;
 import com.xgx.syzj.bean.Result;
-import com.xgx.syzj.bean.StoreItem;
+import com.xgx.syzj.bean.Storeitem;
 import com.xgx.syzj.datamodel.ComboDataModel;
 import com.xgx.syzj.datamodel.ProjectDataModel;
 import com.xgx.syzj.event.EventCenter;
@@ -36,7 +36,7 @@ public class MemberSelectProjectActivity extends BaseActivity implements View.On
     private ExpandableListViewExtend exp_lv_package;
     private GoodsrechargeAdapter proAdapter;
     private GoodsitemChargeAdapter comboAdapter;
-    private ArrayList<StoreItem> mStoreList;
+    private ArrayList<Storeitem> mStoreList;
     private ArrayList<Combo> mComboList;
     private Button mBtnOk;
 
@@ -73,7 +73,7 @@ public class MemberSelectProjectActivity extends BaseActivity implements View.On
         {
             if (result.getStatus() == 200) {
                 JSONObject object = JSON.parseObject(result.getResult());
-                List<StoreItem> list = FastJsonUtil.json2List(object.getString("items"), StoreItem.class);
+                List<Storeitem> list = FastJsonUtil.json2List(object.getString("items"), Storeitem.class);
                 mStoreList.addAll(list);
                 proAdapter.notifyDataSetChanged();
             }
@@ -100,8 +100,8 @@ public class MemberSelectProjectActivity extends BaseActivity implements View.On
         } else {
             Intent data = new Intent();
             if (proAdapter.getSlectMap().size() > 0) {
-                for (Map.Entry<Integer, StoreItem> integerStoreItemEntry : proAdapter.getSlectMap().entrySet()) {
-                    data.putExtra("store",integerStoreItemEntry.getValue()+"");
+                for (Map.Entry<Integer, Storeitem> integerStoreItemEntry : proAdapter.getSlectMap().entrySet()) {
+                    data.putExtra("store",integerStoreItemEntry.getValue());
                 }
             } else if (comboAdapter.getSlectMap().size() > 0) {
                 for (Map.Entry<Integer, Combo> integerComboEntry : comboAdapter.getSlectMap().entrySet()) {
@@ -114,7 +114,7 @@ public class MemberSelectProjectActivity extends BaseActivity implements View.On
     }
 
     @Override
-    public void onStoreClick(StoreItem item)
+    public void onStoreClick(Storeitem item)
     {
         comboAdapter.cleanMap();
     }
