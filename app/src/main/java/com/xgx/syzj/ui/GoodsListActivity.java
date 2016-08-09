@@ -220,8 +220,10 @@ public class GoodsListActivity extends BaseActivity  {
     protected void submit() {
         if(CacheUtil.getmInstance().getUser().getRoles()==1) {
             gotoActivity(GoodsAddActivity.class);
+            finish();
         }else{
             gotoActivity(GoodsSelectActivity.class);
+            finish();
         }
     }
 

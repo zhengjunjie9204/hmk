@@ -89,8 +89,6 @@ public class GoodAddModel extends PagedListDataModel<Goods> {
         code=ADDPRODUCT;
         int storeid = SYZJApplication.getInstance().getSpUtil().getInt("SP_STORE_ID");
         for (Goods g : goods) {
-            Log.v("zjj","StoreId="+storeid +"=============="+"Product"+g.getProductId()+"");
-
             Api.addProductToStore(storeid,g.getProductId(),listener);
         }
     }
