@@ -126,8 +126,10 @@ public class Url {
     public static final String MEMBER_SUM_MONEY = HOST_URL + "qcmr/memberStore_sumStoreMoneyRecord.action";//3.5.13.	查询会员储值累计充值金额
     public static final String SUM_ITEM_RECORD = HOST_URL + "qcmr/memberStore_sumStoreItemRecord.action";//3.5.14.	查询会员计次累计充值金额
     public static final String MEMBER_BASE_INFO = HOST_URL + "qcmr/memberStore_memberBasicInfo.action";//3.5.15.	查询会员基本信息
+    public static final String FIND_CARNUMBER = HOST_URL + "qcmr/member_findByCarNumber.action";//根据车牌号查询会员(5.16)
+    public static final String ADD_OTHER_MEMBER = HOST_URL + "qcmr/member_addOtherMember.action";//新增散客(5.17)
 
-    public static final String ORDER_PAY_PRODUCT = HOST_URL + "qcmr/memberStore_ payOnlyProduct.action";//3.7.2.	支付只含商品的订单
+    public static final String ORDER_PAY_PRODUCT = HOST_URL + "qcmr/memberStore_payOnlyProduct.action";//支付只含商品的订单(7.1)
     public static final String ORDER_CREATE = HOST_URL + "qcmr/memberStore_createOrderWithItem.action";//3.7.3.	创建含项目订单
     public static final String ORDER_UNPAY_LIST = HOST_URL + "qcmr/memberStore_findUnpayedOrder.action";//3.7.4.	查询未支付项目订单
     public static final String ORDER_SET_DONE = HOST_URL + "qcmr/memberStore_setOrderUnpayDone.action";//3.7.5.	设项目订单未支付已完成

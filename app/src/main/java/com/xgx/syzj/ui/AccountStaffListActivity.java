@@ -1,6 +1,5 @@
 package com.xgx.syzj.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,7 +15,7 @@ import com.xgx.syzj.base.BaseActivity;
 import com.xgx.syzj.base.BaseRequest;
 import com.xgx.syzj.bean.Result;
 import com.xgx.syzj.bean.User;
-import com.xgx.syzj.bean.UserInfo;
+import com.xgx.syzj.bean.userInfo;
 import com.xgx.syzj.event.EventCenter;
 import com.xgx.syzj.event.SimpleEventHandler;
 import com.xgx.syzj.utils.CacheUtil;
@@ -33,7 +32,7 @@ import de.greenrobot.event.EventBus;
  */
 public class AccountStaffListActivity extends BaseActivity implements AdapterView.OnItemClickListener {
 
-    private List<UserInfo> mList = new ArrayList<>();
+    private List<userInfo> mList = new ArrayList<>();
     private StaffUserAdapter mAdapter;
     private int index;
 
@@ -67,7 +66,7 @@ public class AccountStaffListActivity extends BaseActivity implements AdapterVie
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
         index = position;
-        UserInfo user = mList.get(position);
+        userInfo user = mList.get(position);
         Bundle bundle = new Bundle();
         bundle.putSerializable("user", user);
     }
@@ -78,7 +77,7 @@ public class AccountStaffListActivity extends BaseActivity implements AdapterVie
             hideLoadingDialog();
             JSONObject obj = JSON.parseObject(result.getResult());
             String info = obj.getString("employees");
-            List<UserInfo> UserInfo = FastJsonUtil.json2List(info, UserInfo.class);
+            List<userInfo> UserInfo = FastJsonUtil.json2List(info, userInfo.class);
             mList.addAll(UserInfo);
             mAdapter.notifyDataSetChanged();
         }

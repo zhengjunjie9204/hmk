@@ -1,7 +1,9 @@
 package com.xgx.syzj.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.percent.PercentRelativeLayout;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AbsListView;
@@ -12,16 +14,24 @@ import android.widget.GridView;
 
 import com.xgx.syzj.R;
 import com.xgx.syzj.adapter.RevenueFastAdapter;
+import com.xgx.syzj.app.Api;
 import com.xgx.syzj.app.Constants;
 import com.xgx.syzj.base.BaseActivity;
+import com.xgx.syzj.base.BaseRequest;
+import com.xgx.syzj.bean.CountItemsBean;
 import com.xgx.syzj.bean.OrderList;
 import com.xgx.syzj.bean.Result;
 import com.xgx.syzj.datamodel.OrderDataModel;
 import com.xgx.syzj.event.EventCenter;
 import com.xgx.syzj.event.SimpleEventHandler;
+import com.xgx.syzj.utils.FastJsonUtil;
 import com.xgx.syzj.utils.Utils;
 import com.xgx.syzj.widget.CustomAlertDialog;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +49,8 @@ public class RevenueFastActivity extends BaseActivity {
     private OrderDataModel mDataModel;
     //未完成的位置
     private int selectPosition;
+    private String carNumber;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -100,14 +112,15 @@ public class RevenueFastActivity extends BaseActivity {
                         public void onSure(Object obj)
                         {
                             selectPosition = position;
-                           OrderDataModel.setOrderDone(mDataList.get(position).getId());
+                            OrderDataModel.setOrderDone(mDataList.get(position).getId());
                         }
                     });
-                }else {//已完成
-                    String name = mDataList.get(position).getName();
+                } else {//已完成
                     final Bundle bundle = new Bundle();
                     bundle.putSerializable("order", mDataList.get(position));
                     gotoActivity(RevenuseSellFinishActivity.class, bundle);
+//                    carNumber = mDataList.get(position).getCarNumber();
+//                    getCarNumber();
                 }
             }
         });
@@ -174,12 +187,83 @@ public class RevenueFastActivity extends BaseActivity {
     public void onSubmit(View view)
     {
         super.onSubmit(view);
-        String name = btn_car_title.getText().toString() + et_car_number.getText().toString();
-        Bundle bundle = new Bundle();
-        bundle.putString("carnumber", name);
-        bundle.putBoolean("isPay", false);
+        String number = et_car_number.getText().toString();
+        if (TextUtils.isEmpty(number) || number.length() < 6) {
+            showShortToast("请输入正确的车牌号");
+            return;
+        }
+        carNumber = btn_car_title.getText().toString() + number;
+        getCarNumber();
+    }
 
-        gotoActivity(RevenueSellActivity.class, bundle);
+    private void getCarNumber()
+    {
+        Api.getCarNumber(carNumber, new BaseRequest.OnRequestListener() {
+            @Override
+            public void onSuccess(Result result)
+            {
+                try {
+                    if (result.getStatus() == 200) {
+                        JSONObject json = new JSONObject(result.getResult());
+                        int memberId = json.optInt("memberId", 0);
+                        List<CountItemsBean> countItemsList = FastJsonUtil.json2List(json.getString("items"), CountItemsBean.class);
+                        toSellActivity(memberId, countItemsList);
+                    } else if (result.getStatus() == 300) {
+                        CustomAlertDialog.showRemindDialog(RevenueFastActivity.this, "温馨提示", "该车辆非会员，是否进行散客开单？", new CustomAlertDialog.IAlertDialogListener() {
+                            @Override
+                            public void onSure(Object obj)
+                            {
+                                addOtherMember();
+                            }
+                        });
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(String errorCode, String message)
+            {
+
+            }
+        });
+    }
+
+    private void toSellActivity(int memberId,List<CountItemsBean> countItemsList)
+    {
+        Intent intent = new Intent(this,RevenuseSellFinishActivity.class);
+        intent.putExtra("carNumber",carNumber);
+        intent.putExtra("memberId",memberId);
+        if(null != countItemsList){
+            intent.putExtra("countItemsList", (Serializable) countItemsList);
+        }
+        startActivity(intent);
+    }
+
+    private void addOtherMember()
+    {
+        Api.addOtherMember(carNumber, new BaseRequest.OnRequestListener() {
+            @Override
+            public void onSuccess(Result result)
+            {
+                try {
+                    if (result.getStatus() == 200) {
+                        JSONObject json = new JSONObject(result.getResult());
+                        int memberId = json.optInt("memberId", 0);
+                        toSellActivity(memberId,null);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(String errorCode, String message)
+            {
+
+            }
+        });
     }
 
     @Override
