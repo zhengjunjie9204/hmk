@@ -46,4 +46,5 @@ dependencies {
     compile 'de.greenrobot:eventbus:2.4.0'
     compile files('libs/core.jar')
     compile project(':logger')
+    compile files('VPayPrintLib_v1.0.12.jar')
 }

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -32,6 +33,7 @@ import com.xgx.syzj.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import de.greenrobot.event.EventBus;
 import in.srain.cube.views.loadmore.LoadMoreContainer;
@@ -41,7 +43,7 @@ import in.srain.cube.views.loadmore.LoadMoreListViewContainer;
 /**
  * 商品门店管理
  */
-public class GoodsSelectActivity extends BaseActivity implements View.OnClickListener {
+public class GoodsSelectActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
 
     private ListView lv_products;
@@ -51,7 +53,7 @@ public class GoodsSelectActivity extends BaseActivity implements View.OnClickLis
     private EditText et_text;
     private Button btn_sure;
     private GoodAddModel mDataModel;;
-
+    private List  mList=new ArrayList<Goods>();;
 
 
     @Override
@@ -59,11 +61,7 @@ public class GoodsSelectActivity extends BaseActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_list);
         setTitleText(getString(R.string.main_manage_goods));
-
-        et_text = (EditText) findViewById(R.id.et_text);
-        btn_sure = (Button) findViewById(R.id.btn_sure);
-        lv_products = (ListView) findViewById(R.id.lv_goods);
-
+        initView();
         EventCenter.bindContainerAndHandler(this, eventHandler);
         EventBus.getDefault().registerSticky(eventHandler);
         mDataModel = new GoodAddModel(20);
@@ -75,13 +73,22 @@ public class GoodsSelectActivity extends BaseActivity implements View.OnClickLis
                 mDataModel.queryNextPage();
             }
         });
+
         mDataModel.queryNextPage();
         dialog.show();
         mDataModel.addProductByStore(new Goods().getStoreId());
         mAdapter = new GoodsSelectAdapter(GoodsSelectActivity.this, products, onItemCheck);
         lv_products.setAdapter(mAdapter);
+        lv_products.setOnItemClickListener(this);
         setListener();
         btn_sure.setOnClickListener(this);
+        Log.v("zjj","123444444444444444");
+    }
+
+    private void initView() {
+        et_text = (EditText) findViewById(R.id.et_text);
+        btn_sure = (Button) findViewById(R.id.btn_sure);
+        lv_products = (ListView) findViewById(R.id.lv_goods);
     }
 
     private SimpleEventHandler eventHandler = new SimpleEventHandler() {
@@ -121,11 +128,6 @@ public class GoodsSelectActivity extends BaseActivity implements View.OnClickLis
     private void setListener() {
         et_text.setOnEditorActionListener(onEditorActionListener);
 
-        btn_sure.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
 
     }
 
@@ -133,7 +135,7 @@ public class GoodsSelectActivity extends BaseActivity implements View.OnClickLis
 
     private GoodsSelectAdapter.IGoodsItemCheck onItemCheck = new GoodsSelectAdapter.IGoodsItemCheck() {
         @Override
-        public void onItemCheck(List<Goods> list, int position) {
+        public void onItemCheck(Map<Integer,Goods> list, int position) {
             if (list != null && list.size() >= 1) {
                 btn_sure.setVisibility(View.VISIBLE);
 
@@ -146,7 +148,23 @@ public class GoodsSelectActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
+        Map<Integer, Goods> selected = mAdapter.getSelected();
+        ArrayList<Goods> data = new ArrayList();
+        for (Goods value : selected.values()){
+            data.add(value);
+        }
+        mList.addAll(data);
+        GoodAddModel.addProduct(mList);
+        mList.clear();
         gotoActivity(GoodsListActivity.class);
         finish();
+    }
+
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        CheckBox cb = (CheckBox) view.findViewById(R.id.cb);
+        cb.setChecked(!cb.isChecked());
+
     }
 }

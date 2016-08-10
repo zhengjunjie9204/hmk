@@ -84,6 +84,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 SYZJApplication.getInstance().getSpUtil().addString(Constants.SharedPreferencesClass.SP_PSW, password);
                 SYZJApplication.getInstance().getSpUtil().addString(Constants.SharedPreferencesClass.SP_TOKEN, user.getToken());
                 SYZJApplication.getInstance().getSpUtil().addInt(Constants.SharedPreferencesClass.SP_ROLES,user.getRoles());
+                SYZJApplication.getInstance().getSpUtil().addInt(Constants.SharedPreferencesClass.SP_STORE_ID,user.getStoreId());
                 gotoActivity(MainActivity.class);
                 defaultFinish();
             }else {

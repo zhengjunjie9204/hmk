@@ -191,6 +191,7 @@ public class GoodsListActivity extends BaseActivity  {
                 mDataModel.setKey(text);
                 //根据品牌
                 mDataModel.setBrand(text);
+                mDataModel.setCategoryId(text);
                 mDataModel.queryNextPage();
                 Utils.hideSoftInput(GoodsListActivity.this);
             }
@@ -219,8 +220,10 @@ public class GoodsListActivity extends BaseActivity  {
     protected void submit() {
         if(CacheUtil.getmInstance().getUser().getRoles()==1) {
             gotoActivity(GoodsAddActivity.class);
+            finish();
         }else{
             gotoActivity(GoodsSelectActivity.class);
+            finish();
         }
     }
 

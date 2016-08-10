@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.xgx.syzj.R;
@@ -16,7 +17,9 @@ import com.xgx.syzj.app.Api;
 import com.xgx.syzj.bean.Goods;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 商品列表适配器
@@ -25,8 +28,7 @@ public class GoodsSelectAdapter extends BaseAdapter {
 
     private Context mContext;
     private List<Goods> mList = new ArrayList<Goods>();
-    private ArrayList<Goods> selected = new ArrayList<Goods>();//选中的List集合
-    private List<String> keyList=new ArrayList<String>();
+    private Map<Integer,Goods> selected=new HashMap<>();//选中的List集合
     private IGoodsItemCheck onGoodsitemCheck;
 
     public GoodsSelectAdapter(Context context, List<Goods> list, IGoodsItemCheck onGoodsitemCheck) {
@@ -59,6 +61,7 @@ public class GoodsSelectAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_goods_list, null);
             hold.iv_goods = (ImageView) convertView.findViewById(R.id.iv_good);
             hold.cb = (CheckBox) convertView.findViewById(R.id.cb);
+            hold.rl_item = (RelativeLayout) convertView.findViewById(R.id.rl_item);
             hold.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
             hold.tv_count = (TextView) convertView.findViewById(R.id.tv_count);
             hold.tv_money = (TextView) convertView.findViewById(R.id.tv_money);
@@ -68,11 +71,6 @@ public class GoodsSelectAdapter extends BaseAdapter {
         }
         hold.cb.setOnCheckedChangeListener(cbListener);
         hold.cb.setTag(position);
-        if (keyList.contains(goods.getProductName()+goods.getProductId())) {
-            hold.cb.setChecked(true);
-        } else {
-            hold.cb.setChecked(false);
-        }
         hold.iv_goods.setTag(position);
         if (!TextUtils.isEmpty(goods.getImage())) {
             String path=goods.getImage().replace("\\","");
@@ -91,6 +89,7 @@ public class GoodsSelectAdapter extends BaseAdapter {
         private ImageView iv_goods;
         private CheckBox cb;
         private TextView tv_name, tv_count, tv_money;
+        private RelativeLayout rl_item;
     }
 
     private CompoundButton.OnCheckedChangeListener cbListener = new CompoundButton.OnCheckedChangeListener() {
@@ -99,28 +98,23 @@ public class GoodsSelectAdapter extends BaseAdapter {
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             int index = (Integer) buttonView.getTag();
             Goods g = mList.get(index);
-            if (!isChecked && keyList.contains(getKey(g))) {
-                selected.remove(g);
-                keyList.remove(getKey(g));
-            } else if (isChecked && ! keyList.contains(getKey(g))) {
-                selected.add(g);
-                keyList.add(getKey(g));
+            if (!isChecked ) {
+                selected.remove(index);
             }
-            if (onGoodsitemCheck != null)
+            if (isChecked) {
+                selected.put(index,g);
+            }
+            if (onGoodsitemCheck != null) {
                 onGoodsitemCheck.onItemCheck(selected, index);
+            }
         }
     };
 
-    public ArrayList<Goods> getSelected() {
+    public Map<Integer,Goods> getSelected() {
         return selected;
     }
 
-    public void updata(Goods old, Goods news) {
-        if (selected.contains(old)) {
-            selected.remove(old);
-            selected.add(news);
-        }
-    }
+
 
     public void appendList(List<Goods> list) {
         if (list == null || list.size() == 0) return;
@@ -129,7 +123,7 @@ public class GoodsSelectAdapter extends BaseAdapter {
     }
 
     public interface IGoodsItemCheck {
-        void onItemCheck(List<Goods> list, int position);
+        void onItemCheck(Map<Integer,Goods> list, int position);
     }
 
     private String getKey(Goods goods){
