@@ -51,7 +51,16 @@
     <string name="toast_reg_loading_text">正在提交注册信息...</string>
     <string name="toast_reg_phone_error">手机号码格式不正确</string>
     <string name="toast_reg_code_error">请输入四位验证码</string>
-
+    <!--修改密码-->
+    <string name="account_manage_user_old_psw">旧密码</string>
+    <string name="account_manage_user_new_psw">新密码</string>
+    <string name="account_manage_user_psw_sure">确定密码</string>
+    <!--账号管理-->
+    <string name="account_manage_user_name">账号</string>
+    <string name="account_manage_user_number">手机号码</string>
+    <string name="account_manage_user_password">新密码</string>
+    <string name="account_manage_user_password_comfit">确认密码</string>
+    <string name="account_manage_user_permission">用户权限</string>
     <!--  忘记密码 -->
     <string name="forget_psw_title">找回密码</string>
     <string name="forget_psw_one_info">1.输入邮箱或手机号 > 2.输入验证码 > 3.重置密码</string>
@@ -151,6 +160,7 @@
 
     <string name="goods_list_title">商品列表</string>
     <string name="goods_list_search_hint">请输入商品名称、拼音、数字...</string>
+    <string name="goods_list_search_hint2">请输入车牌号码、项目名、商品名...</string>
     <string name="goods_list_pan">商品盘点</string>
     <string name="goods_list_count">总正库存 %s 件，</string>
     <string name="goods_list_cost">总成本 %s 元</string>
@@ -345,4 +355,7 @@
     <string name="loading_cart_bill_check">正在结帐...</string>
     <string name="loading_modify_employee">正在修改员工信息...</string>
     <string name="loading_modify_stoore">正在修店铺信息...</string>
+    <string name="loading_update_password">正在修改密码...</string>
+    <string name="loading_add_employee">正在添加员工信息...</string>
+
 </resources>

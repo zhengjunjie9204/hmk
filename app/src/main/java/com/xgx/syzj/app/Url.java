@@ -36,6 +36,8 @@ public class Url {
     public static final String STOCK_RECORD=HOST_URL+"qcmr/stockRecord_stockRecordHistory.action";//库存历史
     public static final String ADD_PRODUCTS_BY_STORE=HOST_URL+"qcmr/product_findByNoStore.action";//添加未存在商品
     public static final String ADD_PRODUCT_TO_STORE=HOST_URL+"qcmr/product_addProductToStore.action";//添加新商品到门店
+    //订单
+    public static final String FILTER_ORDER=HOST_URL+"qcmr/payOrder_filterOrder.action";//3.7.8订单刷选
 
     //项目
     public static final String PROJECT_EXT_LIST=HOST_URL+"qcmr/item_findStoreItemByKey.action";//项目列表
@@ -109,6 +111,8 @@ public class Url {
     public static final String USER_INFO = HOST_URL + "qcmr/user_userInfo.action";//3.9.1账号信息
     public static final String STORE_INFO = HOST_URL + "qcmr/store_storeInfo.action";//3.9.2门店信息
     public static final String FIND_STORE_EMPLOYEE = HOST_URL + "qcmr/store_findStoreEmployee.action";//3.9.2门店信息
+    public static final String CHANGE_PASSWORD = HOST_URL + "qcmr/user_changePassword.action";//3.9.4修改密码
+    public static final String ADD_EMPLOYEE = HOST_URL + "qcmr/user_addEmployee.action";//3.9.5新增会员
 
     //会员
     public static final String COMBO_LIST = HOST_URL + "qcmr/combo_findByKey.action";//3.4.1.	根据套餐名关键字查询门店下套餐

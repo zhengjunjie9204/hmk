@@ -65,6 +65,14 @@ public class AccountStaffListActivity extends BaseActivity implements AdapterVie
     }
 
     @Override
+    public void onSubmit(View view) {
+        super.onSubmit(view);
+        gotoActivity(AccountNewEmployeeActivity.class);
+        finish();
+
+    }
+
+    @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
         index = position;
         UserInfo user = mList.get(position);
