@@ -165,4 +165,5 @@ public class GoodsDataModel extends PagedListDataModel<Goods> {
         code = GET_COUNT_SUCCESS;
         Api.getProductsCount(key, listener);
     }
+
 }

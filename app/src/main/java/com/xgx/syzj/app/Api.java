@@ -606,7 +606,7 @@ public class Api extends BaseRequest {
     /**
      * 订单筛选
      */
-    public static StringRequest filterOrder(Long StoreId,String carNumber,String itemName,String productName,String startTime,String endTime, OnRequestListener listener)
+    public static StringRequest filterOrder(Long StoreId,String carNumber,String itemName,String productName,String startTime,String endTime,String minMoney,String maxMoney, OnRequestListener listener)
     {
         Map<String, String> params = null;
         Map<String, Object> info;
@@ -615,14 +615,18 @@ public class Api extends BaseRequest {
             info = new HashMap<>();
             if (!TextUtils.isEmpty(startTime)) {
                 info.put("startTime", startTime);
-            } else if (!TextUtils.isEmpty(endTime)) {
+            } if (!TextUtils.isEmpty(endTime)) {
                 info.put("endTime", endTime);
-            }else if (!TextUtils.isEmpty(carNumber)) {
+            } if (!TextUtils.isEmpty(carNumber)) {
                 info.put("carNumber", carNumber);
-            }else if (!TextUtils.isEmpty(itemName)) {
+            } if (!TextUtils.isEmpty(itemName)) {
                 info.put("itemName", itemName);
-            }else if (!TextUtils.isEmpty(productName)) {
+            } if (!TextUtils.isEmpty(productName)) {
                 info.put("productName", productName);
+            }if (!TextUtils.isEmpty(minMoney)) {
+                info.put("minMoney", minMoney);
+            }if (!TextUtils.isEmpty(maxMoney)) {
+                info.put("maxMoney", maxMoney);
             }
             info.put("StoreId", StoreId);
             String json = FastJsonUtil.bean2Json(info);
