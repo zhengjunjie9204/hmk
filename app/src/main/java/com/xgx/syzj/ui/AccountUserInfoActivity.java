@@ -2,7 +2,6 @@ package com.xgx.syzj.ui;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -11,18 +10,13 @@ import com.xgx.syzj.R;
 import com.xgx.syzj.app.Api;
 import com.xgx.syzj.base.BaseActivity;
 import com.xgx.syzj.base.BaseRequest;
-import com.xgx.syzj.bean.Goods;
 import com.xgx.syzj.bean.Result;
 import com.xgx.syzj.bean.User;
-import com.xgx.syzj.bean.UserInfo;
-import com.xgx.syzj.datamodel.GoodsDataModel;
+import com.xgx.syzj.bean.userInfo;
 import com.xgx.syzj.event.EventCenter;
 import com.xgx.syzj.event.SimpleEventHandler;
 import com.xgx.syzj.utils.CacheUtil;
 import com.xgx.syzj.utils.FastJsonUtil;
-import com.xgx.syzj.utils.Utils;
-
-import java.util.List;
 
 import de.greenrobot.event.EventBus;
 
@@ -79,7 +73,7 @@ public class AccountUserInfoActivity extends BaseActivity{
             hideLoadingDialog();
             JSONObject obj = JSON.parseObject(result.getResult());
             String info = obj.getString("info");
-            UserInfo userInfo = FastJsonUtil.json2Bean(info, UserInfo.class);
+            userInfo userInfo = FastJsonUtil.json2Bean(info, com.xgx.syzj.bean.userInfo.class);
             tv_user_phone.setText(userInfo.getPhone());
             et_user_name.setText(userInfo.getName());
             tv_user_auth.setText(userInfo.getRight());

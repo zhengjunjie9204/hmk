@@ -5,12 +5,12 @@ import java.io.Serializable;
 /**
  * Created by Administrator on 2016/8/9 0009.
  */
-public class UserInfo implements Serializable{
+public class userInfo implements Serializable{
     private String phone;
     private String name;
     private String right;
 
-    public UserInfo() {
+    public userInfo() {
     }
 
     public String getPhone() {

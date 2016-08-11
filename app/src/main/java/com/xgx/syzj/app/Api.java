@@ -375,11 +375,12 @@ public class Api extends BaseRequest {
 
     /**
      * 3.1.7.	添加新商品到门店
+     *
      * @param storeID
      * @param listener
      * @return
      */
-    public static StringRequest addProductToStore(long storeID, long productID,OnRequestListener listener)
+    public static StringRequest addProductToStore(long storeID, long productID, OnRequestListener listener)
     {
         Map<String, String> params = null;
         try {
@@ -817,6 +818,44 @@ public class Api extends BaseRequest {
     }
 
     /**
+     * 根据车牌号查询会员(5.16)
+     */
+    public static StringRequest getCarNumber(String carNumber, OnRequestListener listener)
+    {
+        Map<String, String> params = null;
+        try {
+            params = new HashMap<>();
+            JSONObject info = new JSONObject();
+            info.put("storeId", CacheUtil.getmInstance().getUser().getStoreId());
+            info.put("carNumber", carNumber);
+            String json = Base64Util.encode(info.toString().getBytes("UTF-8"));
+            params.put("info", json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getRequest(Url.FIND_CARNUMBER, params, getHeader(), listener);
+    }
+
+    /**
+     * 新增散客(5.17)
+     */
+    public static StringRequest addOtherMember(String carNumber, OnRequestListener listener)
+    {
+        Map<String, String> params = null;
+        try {
+            params = new HashMap<>();
+            JSONObject info = new JSONObject();
+            info.put("storeId", CacheUtil.getmInstance().getUser().getStoreId());
+            info.put("carNumber", carNumber);
+            String json = Base64Util.encode(info.toString().getBytes("UTF-8"));
+            params.put("info", json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getRequest(Url.ADD_OTHER_MEMBER, params, getHeader(), listener);
+    }
+
+    /**
      * 获取未支付的订单
      */
     public static StringRequest getUnpayOrder(int pageNo, int paegSize, OnRequestListener listener)
@@ -924,7 +963,7 @@ public class Api extends BaseRequest {
      * @param payType      如果使用两种方式（则为除储值外的第二个方式）
      * @param authCode     微信授权码
      */
-    public static StringRequest orderPayItem(String payOrderId, String payTwiceFlag, String payType, String authCode, OnRequestListener listener)
+    public static StringRequest orderPayItem(int payOrderId, int payTwiceFlag, int payType, String authCode, OnRequestListener listener)
     {
         Map<String, String> params = null;
         try {
@@ -1748,6 +1787,7 @@ public class Api extends BaseRequest {
 
     /**
      * 订单列表(7.10)
+     *
      * @param pageNo
      * @param pageSize
      * @param listener
@@ -1793,6 +1833,7 @@ public class Api extends BaseRequest {
 
     /**
      * 用户信息
+     *
      * @param userName
      * @param listener
      * @return
@@ -1818,6 +1859,7 @@ public class Api extends BaseRequest {
 
     /**
      * 门店信息2
+     *
      * @param storeId
      * @param listener
      * @return
@@ -1840,8 +1882,10 @@ public class Api extends BaseRequest {
         }
         return getRequest(Url.STORE_INFO, params, getHeader(), listener);
     }
+
     /**
      * 门店信息2
+     *
      * @param storeId
      * @param listener
      * @return

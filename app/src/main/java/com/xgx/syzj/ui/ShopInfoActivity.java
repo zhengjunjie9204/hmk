@@ -13,7 +13,6 @@ import com.xgx.syzj.base.BaseRequest;
 import com.xgx.syzj.bean.Result;
 import com.xgx.syzj.bean.StoreInfo;
 import com.xgx.syzj.bean.User;
-import com.xgx.syzj.bean.UserInfo;
 import com.xgx.syzj.event.EventCenter;
 import com.xgx.syzj.event.SimpleEventHandler;
 import com.xgx.syzj.utils.CacheUtil;
