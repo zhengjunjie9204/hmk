@@ -56,7 +56,7 @@ public class RevenueGoodsListActivity extends BaseActivity {
 
     private void initView()
     {
-        setTitleText(getString(R.string.project_list));
+        setTitleText(getString(R.string.goods_list));
         et_text = (EditText) findViewById(R.id.et_text);
         tv_count = (TextView) findViewById(R.id.tv_count);
         et_text.setOnEditorActionListener(onEditorActionListener);

@@ -213,7 +213,9 @@
     <string name="account_manage_shop_phone_error">铺面电话格式错误</string>
 
     <string name="project_list_search_hint">请输入项目名…</string>
+    <string name="good_list_search_hint">请输入商品名称…</string>
     <string name="project_list">项目列表</string>
+    <string name="goods_list">商品列表</string>
 
     <!-- 会员 -->
     <string name="member_add_title">新会员办理</string>
