@@ -283,7 +283,10 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="ZZWrLAglnp9YE2626vhn6PxvNsVLfG2L" />
 
-        <activity android:name=".ui.RevenuseSellFinishActivity"></activity>
+        <activity android:name=".ui.RevenuseSellFinishActivity" />
+        <activity android:name=".ui.AccountModifyPasswordActivity" />
+        <activity android:name=".ui.AccountNewEmployeeActivity" />
+        <activity android:name=".ui.SaleHistoryFilterActivity"></activity>
     </application>
 
 </manifest>

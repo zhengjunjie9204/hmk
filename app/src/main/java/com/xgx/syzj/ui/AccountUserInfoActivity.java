@@ -63,6 +63,8 @@ public class AccountUserInfoActivity extends BaseActivity{
     }
 
     public void onModifyPsw(View view){
+        gotoActivity(AccountModifyPasswordActivity.class);
+        finish();
 
     }
     private SimpleEventHandler eventHandler = new SimpleEventHandler() {

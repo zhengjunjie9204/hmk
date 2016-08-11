@@ -63,6 +63,7 @@ public class GoodsListActivity extends BaseActivity  {
     private TextView tv_count;
     private String flag;
     private int deleteIndex = -1;
+    private int storeId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +73,7 @@ public class GoodsListActivity extends BaseActivity  {
 
         setTitleText(getString(R.string.main_manage_goods));
         setSubmit(getString(R.string.goods_list_add));
+
 
         Bundle bundle=getIntent().getExtras();
         //获取商品信息
@@ -114,7 +116,8 @@ public class GoodsListActivity extends BaseActivity  {
                 mDataModel.queryNextPage();
             }
         });
-
+        storeId = CacheUtil.getmInstance().getUser().getStoreId();
+        mDataModel.setStoreId(storeId);
         mAdapter = new GoodsListAdapter(this, this.goods);
         lv_goods.setAdapter(mAdapter);
         lv_goods.setOnItemClickListener(onItemClickListener);
@@ -191,7 +194,6 @@ public class GoodsListActivity extends BaseActivity  {
                 mDataModel.setKey(text);
                 //根据品牌
                 mDataModel.setBrand(text);
-                mDataModel.setCategoryId(text);
                 mDataModel.queryNextPage();
                 Utils.hideSoftInput(GoodsListActivity.this);
             }

@@ -514,13 +514,12 @@ public class Api extends BaseRequest {
      * 获取商品列表
      *
      * @param key        搜索关键字
-     * @param categoryId 类别ID
      * @param page
      * @param pageSize
      * @param listener
      * @return
      */
-    public static StringRequest getProductsList(String key, String categoryId, int page, int pageSize, OnRequestListener listener)
+    public static StringRequest getProductsList(String key,long storeId, int page, int pageSize, OnRequestListener listener)
     {
         Map<String, String> params = null;
         Map<String, Object> info;
@@ -530,16 +529,10 @@ public class Api extends BaseRequest {
             if (!TextUtils.isEmpty(key)) {
                 info.put("key", key);
             }
-            if (!TextUtils.isEmpty(categoryId)) {
-                info.put("categoryId", categoryId);
-            }
-            //CacheUtil.getmInstance().getUser().getStoreId()
-            Long storeID = (long) 1;
-            info.put("storeId", storeID);
+            info.put("storeId", storeId);
             info.put("pageNo", page);
             info.put("pageSize", pageSize);
             String json = FastJsonUtil.bean2Json(info);
-            Log.e("json:", json);
             json = Base64Util.encode(json.getBytes("UTF-8"));
             params.put("info", json);
         } catch (Exception e) {
@@ -609,6 +602,40 @@ public class Api extends BaseRequest {
             e.printStackTrace();
         }
         return getRequest(Url.PROJECT_EXT_LIST, params, getHeader(), listener);
+    }
+    /**
+     * 订单筛选
+     */
+    public static StringRequest filterOrder(Long StoreId,String carNumber,String itemName,String productName,String startTime,String endTime,String minMoney,String maxMoney, OnRequestListener listener)
+    {
+        Map<String, String> params = null;
+        Map<String, Object> info;
+        try {
+            params = new HashMap<>();
+            info = new HashMap<>();
+            if (!TextUtils.isEmpty(startTime)) {
+                info.put("startTime", startTime);
+            } if (!TextUtils.isEmpty(endTime)) {
+                info.put("endTime", endTime);
+            } if (!TextUtils.isEmpty(carNumber)) {
+                info.put("carNumber", carNumber);
+            } if (!TextUtils.isEmpty(itemName)) {
+                info.put("itemName", itemName);
+            } if (!TextUtils.isEmpty(productName)) {
+                info.put("productName", productName);
+            }if (!TextUtils.isEmpty(minMoney)) {
+                info.put("minMoney", minMoney);
+            }if (!TextUtils.isEmpty(maxMoney)) {
+                info.put("maxMoney", maxMoney);
+            }
+            info.put("StoreId", StoreId);
+            String json = FastJsonUtil.bean2Json(info);
+            json = Base64Util.encode(json.getBytes("UTF-8"));
+            params.put("info", json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getRequest(Url.FILTER_ORDER, params, getHeader(), listener);
     }
 
     /**
@@ -1912,6 +1939,61 @@ public class Api extends BaseRequest {
             e.printStackTrace();
         }
         return getRequest(Url.STORE_UPDATE, params, getHeader(), listener);
+    }
+
+    /**
+     * 修改密码
+     * @param userName
+     * @param oldPassword
+     * @param newPassword
+     * @param listener
+     * @return
+     */
+    public static StringRequest changePassword(String userName, String oldPassword, String newPassword, OnRequestListener listener)
+    {
+        Map<String, String> params = null;
+        String info = null;
+        try {
+            params = new HashMap<>();
+            params.put("userName", userName);
+            params.put("oldPassword", oldPassword);
+            params.put("newPassword", newPassword);
+            String json = FastJsonUtil.bean2Json(params);
+            info = Base64Util.encode(json.getBytes("UTF-8"));
+            params.clear();
+            params.put("info", info);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getRequest(Url.CHANGE_PASSWORD, params, getHeader(), listener);
+    }
+
+    /**
+     * 新增店员
+     * @param userName
+     * @param newPassword
+     * @param listener
+     * @return
+     */
+    public static StringRequest addEmployee(Long storeId, String userName, String newPassword,String phone,Long right, OnRequestListener listener)
+    {
+        Map<String, String> params = null;
+        String info = null;
+        try {
+            params = new HashMap<>();
+            params.put("storeId", storeId+"");
+            params.put("userName", userName);
+            params.put("newPassword", newPassword);
+            params.put("phone", phone);
+            params.put("right", right+"");
+            String json = FastJsonUtil.bean2Json(params);
+            info = Base64Util.encode(json.getBytes("UTF-8"));
+            params.clear();
+            params.put("info", info);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getRequest(Url.ADD_EMPLOYEE, params, getHeader(), listener);
     }
 
     /**

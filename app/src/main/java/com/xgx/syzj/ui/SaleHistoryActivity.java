@@ -4,8 +4,12 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
@@ -15,6 +19,7 @@ import com.xgx.syzj.R;
 import com.xgx.syzj.adapter.OrderListAdapter;
 import com.xgx.syzj.app.Constants;
 import com.xgx.syzj.base.BaseActivity;
+import com.xgx.syzj.bean.Goods;
 import com.xgx.syzj.bean.OrderList;
 import com.xgx.syzj.bean.Result;
 import com.xgx.syzj.datamodel.SaleListRecordModel;
@@ -22,6 +27,7 @@ import com.xgx.syzj.event.EventCenter;
 import com.xgx.syzj.event.SimpleEventHandler;
 import com.xgx.syzj.utils.Utils;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +51,7 @@ public class SaleHistoryActivity extends BaseActivity {
     private OrderListAdapter mAdapter;
     private List<OrderList> mDataList;
     private int cancelPosition;
+    private EditText mSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -63,6 +70,8 @@ public class SaleHistoryActivity extends BaseActivity {
         setTitleText("单据列表");
         setSubmit("筛选");
         mDataList = new ArrayList<>();
+        mSearch = (EditText)findViewById(R.id.et_text);
+        mSearch.setOnEditorActionListener(onEditorActionListener);
         lv_data = (SwipeMenuListView) findViewById(R.id.lv_data);
         loadMoreListViewContainer = (LoadMoreListViewContainer) findViewById(R.id.load_more_list_view_container);
         loadMoreListViewContainer.useDefaultFooter();
@@ -143,10 +152,37 @@ public class SaleHistoryActivity extends BaseActivity {
     };
 
     @Override
+    public void onSubmit(View view) {
+        super.onSubmit(view);
+        Bundle bundle = new Bundle();
+        gotoActivityForResult(SaleHistoryFilterActivity.class,bundle,2003);
+
+    }
+
+    @Override
     public void onDestroy()
     {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
+    private TextView.OnEditorActionListener onEditorActionListener= new TextView.OnEditorActionListener(){
 
+        @Override
+        public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+            return false;
+        }
+    };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_OK) return;
+        if (requestCode == 2003) {
+            ArrayList<OrderList> list = (ArrayList<OrderList>) data.getSerializableExtra("list");
+            if (list.size()==0) return;
+            mDataList.clear();
+            mDataList.addAll(list);
+            mAdapter.notifyDataSetChanged();
+        }
+    }
 }

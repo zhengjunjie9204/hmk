@@ -200,6 +200,7 @@ public class CustomAlertDialog {
             }
         });
         dialog.show();
+        dialog.setCanceledOnTouchOutside(true);
     }
 
     public static void showListDialog(Context context, String title, String[] items, final IAlertListDialogItemClickListener listener) {
@@ -283,7 +284,33 @@ public class CustomAlertDialog {
         });
         dialog.show();
     }
+    /**
+     * 选择员工权限
+     */
 
+    public static void choicePermission(Context context,final IAlertListDialogItemClickListener listener){
+        final Dialog dialog = new Dialog(context, R.style.MyDialog);
+        dialog.setContentView(R.layout.dialog_choice_permission);
+        dialog.findViewById(R.id.ll_dianzhang).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                if(listener!=null){
+                    listener.onItemClick(0);
+                }
+            }
+        });
+        dialog.findViewById(R.id.ll_yuangong).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                if(listener!=null){
+                    listener.onItemClick(1);
+                }
+            }
+        });
+        dialog.show();
+    }
     /**
      * 选取支付方式
      */

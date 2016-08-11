@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.xgx.syzj.app.Api;
 import com.xgx.syzj.base.BaseRequest;
+import com.xgx.syzj.bean.Goods;
 import com.xgx.syzj.bean.OrderList;
 import com.xgx.syzj.bean.Result;
 import com.xgx.syzj.event.EventCenter;
@@ -134,5 +135,30 @@ public class SaleListRecordModel extends PagedListDataModel<OrderList> {
             EventCenter.getInstance().post(message);
         }
     };
+    public static void getFilterOrder(long storeId,String businessname,String product,String back,String mintime,String maxtime,String minMoney,String maxMoney){
+
+        Api.filterOrder(storeId, businessname, product, back, mintime, maxtime, minMoney, maxMoney, new BaseRequest.OnRequestListener() {
+            @Override
+            public void onSuccess(Result result) {
+                JSONObject object= JSON.parseObject(result.getResult());//stockRecordHistory
+                List<OrderList> list;
+                if(result.getStatus()==200) {
+                    list = FastJsonUtil.json2List(object.getString("payOrders"), OrderList.class);
+                }else {
+                    list=new ArrayList<>();
+                }
+
+                EventCenter.getInstance().post(list);
+
+            }
+
+            @Override
+            public void onError(String errorCode, String message) {
+                EventCenter.getInstance().post(message);
+
+            }
+        });
+
+    }
 
 }

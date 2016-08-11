@@ -36,7 +36,7 @@ public class GoodsDataModel extends PagedListDataModel<Goods> {
     private static byte code;
     private String key;
     private String brand;
-    private String categoryId;
+    private long storeId;
     private GoodsListDataEvent data = new GoodsListDataEvent();
 
     public GoodsDataModel(int num) {
@@ -56,8 +56,8 @@ public class GoodsDataModel extends PagedListDataModel<Goods> {
         mListPageInfo = new ListPageInfo<>(mListPageInfo.getNumPerPage());
     }
 
-    public void setCategoryId(String categoryId) {
-        this.categoryId = categoryId;
+    public void setStoreId(long storeId) {
+        this.storeId = storeId;
         data.dataList = null;
         data.hasMore = false;
         mListPageInfo = new ListPageInfo<>(mListPageInfo.getNumPerPage());
@@ -65,7 +65,7 @@ public class GoodsDataModel extends PagedListDataModel<Goods> {
 
     @Override
     protected void doQueryData() {
-        Api.getProductsList(key, categoryId, mListPageInfo.getPage(), mListPageInfo.getNumPerPage(), new OnRequestListener() {
+        Api.getProductsList(key, storeId, mListPageInfo.getPage(), mListPageInfo.getNumPerPage(), new OnRequestListener() {
 
             @Override
             public void onSuccess(Result result) {
@@ -99,38 +99,7 @@ public class GoodsDataModel extends PagedListDataModel<Goods> {
                 EventCenter.getInstance().post(message);
             }
         });
-        Api.getProductsListByBand(brand, categoryId, mListPageInfo.getPage(), mListPageInfo.getNumPerPage(), new OnRequestListener() {
 
-            @Override
-            public void onSuccess(Result result) {
-                JSONObject object= JSON.parseObject(result.getResult());
-                List<Goods> list;
-                if(result.getStatus()==200) {
-                    list = FastJsonUtil.json2List(object.getString("products"), Goods.class);
-                }else {
-                    list=new ArrayList<>();
-                }
-                data.dataList = list;
-                if (list != null && list.size() > 0) {
-                    if (list.size() >= mListPageInfo.getNumPerPage()) {
-                        data.hasMore = true;
-                    } else {
-                        data.hasMore = false;
-                    }
-                } else {
-                    data.hasMore = false;
-                    list = new ArrayList<>();
-                }
-                setRequestResult(data.dataList, data.hasMore);
-
-                EventCenter.getInstance().post(list);
-            }
-            @Override
-            public void onError(String errorCode, String message) {
-                setRequestFail();
-                EventCenter.getInstance().post(message);
-            }
-        });
 
     }
 
@@ -196,4 +165,5 @@ public class GoodsDataModel extends PagedListDataModel<Goods> {
         code = GET_COUNT_SUCCESS;
         Api.getProductsCount(key, listener);
     }
+
 }

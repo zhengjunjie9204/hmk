@@ -6,7 +6,48 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:background="@color/appBG"
               android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="horizontal">
 
+        <EditText
+            android:id="@+id/et_text"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/ser_et_height"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:background="@mipmap/search_bg"
+            android:drawableRight="@mipmap/search"
+            android:hint="@string/goods_list_search_hint2"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:singleLine="true"
+            android:textColor="@color/edite_color"
+            android:textColorHint="@color/edite_color"
+            android:textCursorDrawable="@null"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="right"
+        android:padding="10dp"
+        android:singleLine="true"
+        android:text="共0种商品"
+        android:textColor="@color/gray"
+        android:textSize="12sp" />
     <in.srain.cube.views.loadmore.LoadMoreListViewContainer
         android:id="@+id/load_more_list_view_container"
         android:layout_width="match_parent"
@@ -16,7 +57,6 @@
             android:id="@+id/lv_data"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:cacheColorHint="#0000"
             android:divider="@color/line_color"
             android:dividerHeight="0.5dp"
