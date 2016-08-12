@@ -1,10 +1,12 @@
 package com.xgx.syzj.ui;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.xgx.syzj.R;
 import com.xgx.syzj.adapter.OrderDetailItemAdapter;
+import com.xgx.syzj.app.Constants;
 import com.xgx.syzj.base.BaseActivity;
 import com.xgx.syzj.bean.OrderList;
 import com.xgx.syzj.bean.Product;
@@ -41,11 +43,13 @@ public class SaleDetailActivity extends BaseActivity {
     private List<Product> mProList;
     //数据
     private OrderList orderList;
+    private SaleListRecordModel mDataModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sale_detail);
         setTitleText("销售详情");
+        setSubmit("作废");
         initView();
         setData();
         mItemAdapter = new OrderDetailItemAdapter(this,mItemList,null,0);
@@ -68,6 +72,7 @@ public class SaleDetailActivity extends BaseActivity {
         mProList = new ArrayList<>();
         orderList = (OrderList) getIntent().getSerializableExtra("order");
         EventCenter.getInstance().register(eventHandler);
+        mDataModel = new SaleListRecordModel(Constants.LOAD_COUNT);
         SaleListRecordModel.getOrderDetail(orderList.getId());
         tv_name.setText(orderList.getName());
         tv_mobile.setText(orderList.getMobile());
@@ -96,4 +101,11 @@ public class SaleDetailActivity extends BaseActivity {
             showShortToast(errorStr);
         }
     };
+
+    @Override
+    public void onSubmit(View view)
+    {
+        super.onSubmit(view);
+        mDataModel.setOrderCancel(String.valueOf(orderList.getId()));
+    }
 }
