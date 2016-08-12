@@ -134,6 +134,8 @@ public class GoodsListActivity extends BaseActivity  {
         public void onEvent(List<Goods> list) {
             loadMoreListViewContainer.loadMoreFinish(mDataModel.getListPageInfo().isEmpty(), mDataModel.getListPageInfo().hasMore());
             mAdapter.appendList(list);
+            mAdapter.notifyDataSetChanged();
+            tv_count.setText("共"+mAdapter.getCount()+"种商品");
         }
 
         public void onEvent(Result result) {
@@ -144,15 +146,13 @@ public class GoodsListActivity extends BaseActivity  {
                 goods.remove(g);
                 deleteIndex = -1;
                 mAdapter.notifyDataSetChanged();
+                tv_count.setText("共"+mAdapter.getCount()+"种商品");
             }else if(result.geteCode() == GoodsDataModel.DELETE_SUCCESS_TWO){
                 showShortToast("删除成功");
                 Goods g = goods.get(deleteIndex);
                 goods.remove(g);
                 mAdapter.notifyDataSetChanged();
-            } else if(result.geteCode() == GoodsDataModel.GET_COUNT_SUCCESS) {
-                JSONObject obj = JSON.parseObject(result.getResult());
-                int count = obj.getIntValue("count");
-                tv_count.setText("共"+count+"种商品");
+                tv_count.setText("共"+mAdapter.getCount()+"种商品");
             }
 
 

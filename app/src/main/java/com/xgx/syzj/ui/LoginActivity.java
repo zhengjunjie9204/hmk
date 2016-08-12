@@ -158,6 +158,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     private void login(){
         showLoadingDialog(R.string.dialog_log_ing_text);
+//        gotoActivity(MainActivity.class);
         UserDataModel.login(username, password);
     }
 

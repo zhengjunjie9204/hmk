@@ -193,6 +193,7 @@ public class MemberListActivity extends BaseActivity  {
             if (list == null || list.size() == 0) return;
             sourceDateList.addAll(list);
             adapter.notifyDataSetChanged();
+            tv_count.setText("共"+adapter.getCount()+"位会员");
         }
 
         public void onEvent(Result result) {
@@ -202,11 +203,8 @@ public class MemberListActivity extends BaseActivity  {
                 if (deleteIndex == -1) return;
                 sourceDateList.remove(deleteIndex);
                 adapter.notifyDataSetChanged();
+                tv_count.setText("共"+adapter.getCount()+"位会员");
                 deleteIndex = -1;
-            } else if(result.geteCode() == MemberDataModel.COUNT_MEMBER) {
-                JSONObject obj = JSON.parseObject(result.getResult());
-                int count = obj.getIntValue("count");
-                tv_count.setText("共"+count+"位会员");
             }
         }
 
