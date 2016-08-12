@@ -26,6 +26,7 @@ public class MemberDataModel extends PagedListDataModel<Member> {
     public static final byte DELETE_MEMBER = 0x12;
     public static final byte UPDATE_MEMBER = 0x13;
     public static final byte COUNT_MEMBER = 0x14;
+    public static final byte BASE_INFO = 0x16;
 
     private static byte code;
     private String key;
@@ -108,6 +109,12 @@ public class MemberDataModel extends PagedListDataModel<Member> {
     public static void updateMember(long id, String name, String carNumber, String telephone, String carType, String cardNumber) {
         code = UPDATE_MEMBER;
         Api.updateAssociator(id, name, carNumber, telephone, carType, cardNumber, listener);
+    }
+
+    //获取基础信息
+    public static void getMemberBaseInfo(int memberId) {
+        code = BASE_INFO;
+        Api.getMemberBaseInfo(memberId, listener);
     }
 
     //获取会员总数量

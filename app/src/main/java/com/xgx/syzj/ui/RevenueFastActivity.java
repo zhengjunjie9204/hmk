@@ -207,7 +207,7 @@ public class RevenueFastActivity extends BaseActivity {
                         JSONObject json = new JSONObject(result.getResult());
                         int memberId = json.optInt("memberId", 0);
                         List<CountItemsBean> countItemsList = FastJsonUtil.json2List(json.getString("items"), CountItemsBean.class);
-                        toSellActivity(memberId, countItemsList);
+                        toSellActivity(memberId, countItemsList,true);
                     } else if (result.getStatus() == 300) {
                         CustomAlertDialog.showRemindDialog(RevenueFastActivity.this, "温馨提示", "该车辆非会员，是否进行散客开单？", new CustomAlertDialog.IAlertDialogListener() {
                             @Override
@@ -230,11 +230,15 @@ public class RevenueFastActivity extends BaseActivity {
         });
     }
 
-    private void toSellActivity(int memberId,List<CountItemsBean> countItemsList)
+    /**
+     * @param isMember 是否是会员
+     * */
+    private void toSellActivity(int memberId,List<CountItemsBean> countItemsList,boolean isMember)
     {
         Intent intent = new Intent(this,RevenuseSellFinishActivity.class);
         intent.putExtra("carNumber",carNumber);
         intent.putExtra("memberId",memberId);
+        intent.putExtra("isMember",isMember);
         if(null != countItemsList){
             intent.putExtra("countItemsList", (Serializable) countItemsList);
         }
@@ -251,7 +255,7 @@ public class RevenueFastActivity extends BaseActivity {
                     if (result.getStatus() == 200) {
                         JSONObject json = new JSONObject(result.getResult());
                         int memberId = json.optInt("memberId", 0);
-                        toSellActivity(memberId,null);
+                        toSellActivity(memberId,null,false);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

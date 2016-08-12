@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by Administrator on 2016/8/8 0008.
  */
-public class Storeitem implements Serializable{
+public class StoreItem implements Serializable{
     private String name;
     private long Price;
     private int id;

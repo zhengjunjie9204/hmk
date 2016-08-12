@@ -1088,7 +1088,7 @@ public class Api extends BaseRequest {
     /**
      * 3.5.15.	查询会员基本信息
      */
-    public static StringRequest getMemberBaseInfo(String memberId, OnRequestListener listener)
+    public static StringRequest getMemberBaseInfo(int memberId, OnRequestListener listener)
     {
         Map<String, String> params = null;
         try {

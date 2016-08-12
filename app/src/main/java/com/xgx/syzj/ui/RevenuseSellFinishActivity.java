@@ -69,7 +69,11 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
             carNumber = getIntent().getStringExtra("carNumber");
             memberId = getIntent().getIntExtra("memberId", 0);
             countItemsList = (List<CountItemsBean>) getIntent().getSerializableExtra("countItemsList");
+            boolean isMember = getIntent().getBooleanExtra("isMember", false);
             setTitleText(carNumber);
+            if (isMember) {
+                setSubmit("会员");
+            }
         } else {
             setTitleText(order.getCarNumber());
         }
@@ -77,7 +81,6 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
 
     private void initView()
     {
-        setSubmit("会员");
         mSellListView = (ListViewExtend) findViewById(R.id.sell_listview);
         lv_project = (ListViewExtend) findViewById(R.id.lv_project);
         lv_data = (ListViewExtend) findViewById(R.id.lv_data);
@@ -103,13 +106,13 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
         switch (view.getId()) {
             case R.id.btn_sure:
                 try {
-                    if(null != order){
+                    if (null != order) {
                         orderPayItem(order.getId(), 0, 3);
-                    }else{
+                    } else {
                         if (mGood.size() == 0 && mProject.size() == 0) {
                             showShortToast("请选择商品或者项目");
                             return;
-                        } else{
+                        } else {
                             JSONArray productList = new JSONArray();
                             JSONArray itemList = new JSONArray();
                             for (Goods goods : mGood) {
@@ -120,15 +123,18 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
                             }
                             for (Project project : mProject) {
                                 JSONObject json = new JSONObject();
-                                json.put("itemId ", project.getId());
+                                json.put("itemId", project.getId());
                                 json.put("amount", project.getLaborTime());
                                 itemList.put(json);
                             }
                             showLoadingDialog(R.string.loading_date);
                             if (mGood.size() > 0 && mProject.size() == 0) {//只含商品
                                 orderPayProduct(0, 3, String.valueOf(allmoney), null, productList);
-                            }else if (mGood.size() > 0 &&mProject.size() > 0 ){//包含商品和项目
-                                orderCreate(String.valueOf(allmoney),3, productList, itemList);
+                            } else {//包含商品和项目
+                                if (productList.length() ==  0) {
+                                    productList = null;
+                                }
+                                orderCreate(String.valueOf(allmoney), 3, productList, itemList);
                             }
                         }
                     }
@@ -253,7 +259,9 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
     public void onSubmit(View view)
     {
         super.onSubmit(view);
-        gotoActivity(RevenueMemberActivity.class);
+        Intent intent = new Intent(this, RevenueMemberActivity.class);
+        intent.putExtra("memberId", memberId);
+        startActivity(intent);
     }
 
     private void toFinish()
@@ -289,7 +297,7 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
     }
 
     //创建含项目订单(7.2)
-    private void orderCreate(String fee,int payType, JSONArray productList, JSONArray itemList)
+    private void orderCreate(String fee, int payType, JSONArray productList, JSONArray itemList)
     {
         Api.orderCreate(memberId, fee, payType, productList, itemList, new BaseRequest.OnRequestListener() {
             @Override

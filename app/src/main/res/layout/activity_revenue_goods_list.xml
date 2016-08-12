@@ -24,7 +24,7 @@
             android:layout_weight="1"
             android:background="@mipmap/search_bg"
             android:drawableRight="@mipmap/search"
-            android:hint="@string/project_list_search_hint"
+            android:hint="@string/good_list_search_hint"
             android:imeOptions="actionSearch"
             android:inputType="text"
             android:paddingLeft="10dp"
