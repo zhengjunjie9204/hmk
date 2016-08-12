@@ -19,6 +19,7 @@ import com.xgx.syzj.bean.Goods;
 import com.xgx.syzj.datamodel.GoodsDataModel;
 import com.xgx.syzj.event.EventCenter;
 import com.xgx.syzj.event.SimpleEventHandler;
+import com.xgx.syzj.utils.CacheUtil;
 import com.xgx.syzj.utils.Utils;
 
 import java.util.ArrayList;
@@ -70,6 +71,7 @@ public class RevenueGoodsListActivity extends BaseActivity {
         EventCenter.bindContainerAndHandler(this, eventHandler);
         EventBus.getDefault().registerSticky(eventHandler);
         mDataModel = new GoodsDataModel(Constants.LOAD_COUNT);
+        mDataModel.setStoreId(CacheUtil.getmInstance().getUser().getStoreId());
         loadMoreListViewContainer = (LoadMoreListViewContainer) findViewById(R.id.load_more_list_view_container);
         loadMoreListViewContainer.useDefaultFooter();
         loadMoreListViewContainer.setShowLoadingForFirstPage(true);

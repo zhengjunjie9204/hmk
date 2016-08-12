@@ -15,7 +15,7 @@ import com.xgx.syzj.base.BaseRequest;
 import com.xgx.syzj.bean.Combo;
 import com.xgx.syzj.bean.Member;
 import com.xgx.syzj.bean.Result;
-import com.xgx.syzj.bean.Storeitem;
+import com.xgx.syzj.bean.StoreItem;
 import com.xgx.syzj.datamodel.RechargeDataModel;
 import com.xgx.syzj.event.EventCenter;
 import com.xgx.syzj.event.SimpleEventHandler;
@@ -50,7 +50,7 @@ public class MemberAddCountActivity extends BaseActivity implements View.OnClick
     private String money, count, remark;
     private Member member;
     private Combo combo;
-    private Storeitem storeItem;
+    private StoreItem storeItem;
 
 
     @Override
@@ -135,7 +135,7 @@ public class MemberAddCountActivity extends BaseActivity implements View.OnClick
         super.submit();
         Bundle bundle = new Bundle();
         bundle.putParcelable("member", member);
-        gotoActivity(MemberMoneyRecordActivity.class, bundle);
+        gotoActivity(MemberCountRecodesActivity.class, bundle);
     }
 
     @Override
@@ -231,7 +231,7 @@ public class MemberAddCountActivity extends BaseActivity implements View.OnClick
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != RESULT_OK) return;
         if (requestCode == 2005) {
-            storeItem = (Storeitem) data.getSerializableExtra("store");
+            storeItem = (StoreItem) data.getSerializableExtra("store");
             combo = (Combo) data.getSerializableExtra("combo");
             if (storeItem != null) {
                 tv_count.setDesc(storeItem.getName());

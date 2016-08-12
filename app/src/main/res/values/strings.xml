@@ -226,6 +226,7 @@
     <string name="good_list_search_hint">请输入商品名称…</string>
     <string name="project_list">项目列表</string>
     <string name="goods_list">商品列表</string>
+    <string name="add_count_recodes">冲次记录</string>
 
     <!-- 会员 -->
     <string name="member_add_title">新会员办理</string>
@@ -359,5 +360,14 @@
     <string name="loading_modify_stoore">正在修店铺信息...</string>
     <string name="loading_update_password">正在修改密码...</string>
     <string name="loading_add_employee">正在添加员工信息...</string>
+
+    <array name="pay_type">
+        <item></item>
+        <item>微信支付</item>
+        <item>余额支付</item>
+        <item>现金支付</item>
+        <item>银行卡支付</item>
+        <item>支付宝支付</item>
+    </array>
 
 </resources>
