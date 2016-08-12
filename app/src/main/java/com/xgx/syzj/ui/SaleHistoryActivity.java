@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,7 +18,6 @@ import com.xgx.syzj.R;
 import com.xgx.syzj.adapter.OrderListAdapter;
 import com.xgx.syzj.app.Constants;
 import com.xgx.syzj.base.BaseActivity;
-import com.xgx.syzj.bean.Goods;
 import com.xgx.syzj.bean.OrderList;
 import com.xgx.syzj.bean.Result;
 import com.xgx.syzj.datamodel.SaleListRecordModel;
@@ -27,7 +25,6 @@ import com.xgx.syzj.event.EventCenter;
 import com.xgx.syzj.event.SimpleEventHandler;
 import com.xgx.syzj.utils.Utils;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -157,7 +154,6 @@ public class SaleHistoryActivity extends BaseActivity {
         super.onSubmit(view);
         Bundle bundle = new Bundle();
         gotoActivityForResult(SaleHistoryFilterActivity.class,bundle,2003);
-
     }
 
     @Override

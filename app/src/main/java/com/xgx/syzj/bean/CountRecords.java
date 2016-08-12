@@ -15,6 +15,18 @@ public class CountRecords {
     private int payType;
     private String payTime;
     private String name;
+    private String fee;
+
+
+    public String getFee()
+    {
+        return fee;
+    }
+
+    public void setFee(String fee)
+    {
+        this.fee = fee;
+    }
 
     public int getAmount()
     {

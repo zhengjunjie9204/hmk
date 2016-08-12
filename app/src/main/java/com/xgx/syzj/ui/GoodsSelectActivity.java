@@ -1,11 +1,6 @@
 package com.xgx.syzj.ui;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -16,19 +11,13 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.xgx.syzj.R;
-import com.xgx.syzj.adapter.GoodsListAdapter;
 import com.xgx.syzj.adapter.GoodsSelectAdapter;
 import com.xgx.syzj.base.BaseActivity;
 import com.xgx.syzj.bean.Goods;
-import com.xgx.syzj.bean.Result;
 import com.xgx.syzj.datamodel.GoodAddModel;
-import com.xgx.syzj.datamodel.GoodsDataModel;
 import com.xgx.syzj.event.EventCenter;
 import com.xgx.syzj.event.SimpleEventHandler;
-import com.xgx.syzj.utils.FastJsonUtil;
 import com.xgx.syzj.utils.Utils;
 
 import java.util.ArrayList;
@@ -44,17 +33,14 @@ import in.srain.cube.views.loadmore.LoadMoreListViewContainer;
  * 商品门店管理
  */
 public class GoodsSelectActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
-
-
     private ListView lv_products;
     private GoodsSelectAdapter mAdapter = null;
     private LoadMoreListViewContainer loadMoreListViewContainer;
     private ArrayList<Goods> products = new ArrayList<>();
     private EditText et_text;
     private Button btn_sure;
-    private GoodAddModel mDataModel;;
-    private List  mList=new ArrayList<Goods>();;
-
+    private GoodAddModel mDataModel;
+    private List  mList=new ArrayList<Goods>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +59,6 @@ public class GoodsSelectActivity extends BaseActivity implements View.OnClickLis
                 mDataModel.queryNextPage();
             }
         });
-
         mDataModel.queryNextPage();
         dialog.show();
         mDataModel.addProductByStore(new Goods().getStoreId());
@@ -82,7 +67,6 @@ public class GoodsSelectActivity extends BaseActivity implements View.OnClickLis
         lv_products.setOnItemClickListener(this);
         setListener();
         btn_sure.setOnClickListener(this);
-        Log.v("zjj","123444444444444444");
     }
 
     private void initView() {

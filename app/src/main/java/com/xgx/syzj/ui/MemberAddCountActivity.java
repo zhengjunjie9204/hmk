@@ -114,12 +114,16 @@ public class MemberAddCountActivity extends BaseActivity implements View.OnClick
         public void onEvent(Result result)
         {
             hideLoadingDialog();
-            showShortToast("充值成功");
-            Intent data = new Intent();
-            data.setAction(Constants.Broadcast.RECEIVER_ADD_RECHARGE);
-            data.putExtra("member", member);
-            sendBroadcast(data);
-            defaultFinish();
+            if (result.getStatus() == 200) {
+                showShortToast("充值成功");
+                Intent data = new Intent();
+                data.setAction(Constants.Broadcast.RECEIVER_ADD_RECHARGE);
+                data.putExtra("member", member);
+                sendBroadcast(data);
+                defaultFinish();
+            }else{
+                showShortToast(result.getMessage());
+            }
         }
 
         public void onEvent(String error)

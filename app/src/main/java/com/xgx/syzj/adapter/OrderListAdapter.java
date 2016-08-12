@@ -18,7 +18,6 @@ import java.util.List;
 public class OrderListAdapter extends BaseAdapter {
     private Context mContext;
     private List<OrderList> mDataList;
-
     public OrderListAdapter(Context mContext, List<OrderList> mDataList)
     {
         this.mContext = mContext;
@@ -44,7 +43,7 @@ public class OrderListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent)
+    public View getView(final int position, View convertView, ViewGroup parent)
     {
         if (convertView == null) {
             View view = LayoutInflater.from(mContext).inflate(R.layout.adapter_order_list, null);
