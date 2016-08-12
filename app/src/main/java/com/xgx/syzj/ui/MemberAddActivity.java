@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.ImageLoader;
 import com.xgx.syzj.R;
 import com.xgx.syzj.adapter.ViewPagerAdapter;
 import com.xgx.syzj.app.Url;
@@ -23,6 +24,7 @@ import com.xgx.syzj.datamodel.CardDataModel;
 import com.xgx.syzj.datamodel.MemberDataModel;
 import com.xgx.syzj.event.EventCenter;
 import com.xgx.syzj.event.SimpleEventHandler;
+import com.xgx.syzj.utils.BitmapUtil;
 import com.xgx.syzj.utils.CacheUtil;
 import com.xgx.syzj.utils.FastJsonUtil;
 import com.xgx.syzj.utils.StrUtil;
@@ -57,11 +59,10 @@ public class MemberAddActivity extends BaseActivity{
         setTitleText(getString(R.string.member_add_title));
         setSubmit(getString(R.string.app_button_sure));
         String Pic = CacheUtil.getmInstance().getUser().getStorePic();
-        String replace = Pic.replace("", "");
-         String  storePic=Url.HOST_URL+replace;
+        String s = Pic.replaceAll("\\\\", "/");
+        String  storePic=Url.HOST_URL+s;
         initView();
         initData(storePic);
-
         EventCenter.bindContainerAndHandler(this, eventHandler);
     }
 
@@ -174,21 +175,19 @@ public class MemberAddActivity extends BaseActivity{
      * @param url
      * @return
      */
-    public Bitmap getHttpBitmap(String url){
+    public static Bitmap getHttpBitmap(String url){
         URL myFileURL;
         Bitmap bitmap=null;
         try{
             myFileURL = new URL(url);
             //获得连接
-            HttpURLConnection conn=(HttpURLConnection)myFileURL.openConnection();
+            HttpURLConnection conn=(HttpURLConnection) myFileURL.openConnection();
             //设置超时时间为6000毫秒，conn.setConnectionTiem(0);表示没有时间限制
             conn.setConnectTimeout(6000);
             //连接设置获得数据流
             conn.setDoInput(true);
             //不使用缓存
             conn.setUseCaches(false);
-            //这句可有可无，没有影响
-            //conn.connect();
             //得到数据流
             InputStream is = conn.getInputStream();
             //解析得到图片
@@ -202,4 +201,5 @@ public class MemberAddActivity extends BaseActivity{
         return bitmap;
 
     }
+
 }
