@@ -1,16 +1,21 @@
 package com.xgx.syzj.ui;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.xgx.syzj.R;
 import com.xgx.syzj.adapter.ViewPagerAdapter;
+import com.xgx.syzj.app.Url;
 import com.xgx.syzj.base.BaseActivity;
 import com.xgx.syzj.bean.CardType;
 import com.xgx.syzj.bean.Result;
@@ -18,9 +23,13 @@ import com.xgx.syzj.datamodel.CardDataModel;
 import com.xgx.syzj.datamodel.MemberDataModel;
 import com.xgx.syzj.event.EventCenter;
 import com.xgx.syzj.event.SimpleEventHandler;
+import com.xgx.syzj.utils.CacheUtil;
 import com.xgx.syzj.utils.FastJsonUtil;
 import com.xgx.syzj.utils.StrUtil;
 
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +47,7 @@ public class MemberAddActivity extends BaseActivity{
     private ArrayList<View> views = new ArrayList<>();
     private ArrayList<CardType> cards = new ArrayList<>();
     private EditText et_num, et_name, et_phone, et_carnumber, et_cartype;
+    private ImageView iv_code;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,16 +56,28 @@ public class MemberAddActivity extends BaseActivity{
 
         setTitleText(getString(R.string.member_add_title));
         setSubmit(getString(R.string.app_button_sure));
+        String Pic = CacheUtil.getmInstance().getUser().getStorePic();
+        String replace = Pic.replace("", "");
+         String  storePic=Url.HOST_URL+replace;
+        initView();
+        initData(storePic);
 
+        EventCenter.bindContainerAndHandler(this, eventHandler);
+    }
+
+    private void initView() {
         viewPager = (ViewPager) findViewById(R.id.viewpager);
-
+        iv_code= (ImageView)findViewById(R.id.iv_code);
         et_num = (EditText) findViewById(R.id.et_num);
         et_name = (EditText) findViewById(R.id.et_name);
         et_phone = (EditText) findViewById(R.id.et_phone);
         et_carnumber = (EditText) findViewById(R.id.et_carNumber);
         et_cartype = (EditText) findViewById(R.id.et_carType);
+    }
 
-        EventCenter.bindContainerAndHandler(this, eventHandler);
+    private void initData(String storePic) {
+        Bitmap httpBitmap = getHttpBitmap(storePic);
+        iv_code.setImageBitmap(httpBitmap);
     }
 
     private SimpleEventHandler eventHandler = new SimpleEventHandler() {
@@ -147,5 +169,37 @@ public class MemberAddActivity extends BaseActivity{
         showLoadingDialog(R.string.loading_add_member);
         MemberDataModel.addMember(strName,strCarNumber,strPhone,strCarType,strNum);
     }
+    /**
+     * 获取网落图片资源
+     * @param url
+     * @return
+     */
+    public Bitmap getHttpBitmap(String url){
+        URL myFileURL;
+        Bitmap bitmap=null;
+        try{
+            myFileURL = new URL(url);
+            //获得连接
+            HttpURLConnection conn=(HttpURLConnection)myFileURL.openConnection();
+            //设置超时时间为6000毫秒，conn.setConnectionTiem(0);表示没有时间限制
+            conn.setConnectTimeout(6000);
+            //连接设置获得数据流
+            conn.setDoInput(true);
+            //不使用缓存
+            conn.setUseCaches(false);
+            //这句可有可无，没有影响
+            //conn.connect();
+            //得到数据流
+            InputStream is = conn.getInputStream();
+            //解析得到图片
+            bitmap = BitmapFactory.decodeStream(is);
+            //关闭数据流
+            is.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
 
+        return bitmap;
+
+    }
 }

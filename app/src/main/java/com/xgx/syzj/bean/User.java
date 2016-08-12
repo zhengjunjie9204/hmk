@@ -11,6 +11,9 @@ public class User implements Serializable {
     private int employeeId;
     private String userPhone;//永固
     private String userName;//登陆账号
+    private String storePic;//门店二维码
+
+
 
     public int getEmployeeId()
     {
@@ -60,5 +63,13 @@ public class User implements Serializable {
 
     public void setUserPhone(String userPhone) {
         this.userPhone = userPhone;
+    }
+
+    public String getStorePic() {
+        return storePic;
+    }
+
+    public void setStorePic(String storePic) {
+        this.storePic = storePic;
     }
 }

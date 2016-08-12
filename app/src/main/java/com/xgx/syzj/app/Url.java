@@ -37,7 +37,6 @@ public class Url {
     public static final String ADD_PRODUCTS_BY_STORE=HOST_URL+"qcmr/product_findByNoStore.action";//添加未存在商品
     public static final String ADD_PRODUCT_TO_STORE=HOST_URL+"qcmr/product_addProductToStore.action";//添加新商品到门店
     //订单
-    public static final String FILTER_ORDER=HOST_URL+"qcmr/payOrder_filterOrder.action";//3.7.8订单刷选
 
     //项目
     public static final String PROJECT_EXT_LIST=HOST_URL+"qcmr/item_findStoreItemByKey.action";//项目列表
@@ -140,9 +139,8 @@ public class Url {
     public static final String ORDER_PAY_ITEM = HOST_URL + "qcmr/memberStore_payItemOrder.action";//3.7.6.	支付含项目订单
     public static final String ORDER_CANCEL = HOST_URL + "qcmr/memberStore_cancelOrder.action";//3.7.7.	作废订单
     public static final String ORDER_DETAILS = HOST_URL + "qcmr/payOrder_orderDetail.action";//3.7.8.	订单详情
-    public static final String ORDER_FILTER_LIST = HOST_URL + "qcmr/payOrder_ filterOrder.action";//3.7.9.	订单筛选
+    public static final String ORDER_FILTER_LIST = HOST_URL + "qcmr/payOrder_filterOrder.action";//3.7.9.	订单筛选,订单列表
     public static final String SEND_MSG = HOST_URL + "qcmr/payOrder_sendSMS.action";//发送短信(7.9)
-    public static final String ORDER_LIST = HOST_URL + "qcmr/payOrder_findOkOrder.action";//订单列表(7.10)
 
     public static final String MONEY_REPORT = HOST_URL + "qcmr/statistics_moneyReport.action";//3.8.1.	资金流水
     public static final String SALE_REPORT = HOST_URL + "qcmr/statistics_saleReport.action";//3.8.2.	销售分析

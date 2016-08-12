@@ -62,6 +62,7 @@ public class SaleHistoryActivity extends BaseActivity {
         initListener();
         EventCenter.bindContainerAndHandler(this, eventHandler);
         mDataModel = new SaleListRecordModel(Constants.LOAD_COUNT);
+        mDataModel.payOrder("","","","","");
         mDataModel.queryFirstPage();
     }
 
@@ -182,6 +183,7 @@ public class SaleHistoryActivity extends BaseActivity {
             String minTime = data.getStringExtra("minTime");
             String minmoney = data.getStringExtra("minmoney");
             String maxmoney = data.getStringExtra("maxmoney");
+            mDataModel.payOrder("",minmoney,maxmoney,minTime,maxTime);
             mAdapter.notifyDataSetChanged();
         }
     }

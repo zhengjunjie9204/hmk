@@ -100,7 +100,6 @@ public class SaleHistoryFilterActivity extends BaseActivity implements DatePicke
         final String mintime = btn_mintime.getText().toString();
         final String maxtime = btn_maxtime.getText().toString();
 
-        mDataModel.getFilterOrder((long)user.getStoreId(),businessname,product,back,mintime,maxtime,minmoney,maxmoney);
 
     }
 

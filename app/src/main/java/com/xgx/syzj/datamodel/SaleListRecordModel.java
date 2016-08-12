@@ -53,7 +53,10 @@ public class SaleListRecordModel extends PagedListDataModel<OrderList> {
     @Override
     protected void doQueryData()
     {
-        Api.getOrderList(mListPageInfo.getPage(), mListPageInfo.getNumPerPage(), new BaseRequest.OnRequestListener() {
+
+    }
+    public void  payOrder(String key,String minMoney,String maxMoney,String startTime,String endTime){
+        Api.getOrderFilter(key,minMoney,maxMoney,startTime,endTime,mListPageInfo.getPage(), mListPageInfo.getNumPerPage(), new BaseRequest.OnRequestListener() {
             @Override
             public void onSuccess(Result result)
             {
@@ -135,30 +138,5 @@ public class SaleListRecordModel extends PagedListDataModel<OrderList> {
             EventCenter.getInstance().post(message);
         }
     };
-    public static void getFilterOrder(long storeId,String businessname,String product,String back,String mintime,String maxtime,String minMoney,String maxMoney){
-
-        Api.filterOrder(storeId, businessname, product, back, mintime, maxtime, minMoney, maxMoney, new BaseRequest.OnRequestListener() {
-            @Override
-            public void onSuccess(Result result) {
-                JSONObject object= JSON.parseObject(result.getResult());//stockRecordHistory
-                List<OrderList> list;
-                if(result.getStatus()==200) {
-                    list = FastJsonUtil.json2List(object.getString("payOrders"), OrderList.class);
-                }else {
-                    list=new ArrayList<>();
-                }
-
-                EventCenter.getInstance().post(list);
-
-            }
-
-            @Override
-            public void onError(String errorCode, String message) {
-                EventCenter.getInstance().post(message);
-
-            }
-        });
-
-    }
 
 }

@@ -603,40 +603,7 @@ public class Api extends BaseRequest {
         }
         return getRequest(Url.PROJECT_EXT_LIST, params, getHeader(), listener);
     }
-    /**
-     * 订单筛选
-     */
-    public static StringRequest filterOrder(Long StoreId,String carNumber,String itemName,String productName,String startTime,String endTime,String minMoney,String maxMoney, OnRequestListener listener)
-    {
-        Map<String, String> params = null;
-        Map<String, Object> info;
-        try {
-            params = new HashMap<>();
-            info = new HashMap<>();
-            if (!TextUtils.isEmpty(startTime)) {
-                info.put("startTime", startTime);
-            } if (!TextUtils.isEmpty(endTime)) {
-                info.put("endTime", endTime);
-            } if (!TextUtils.isEmpty(carNumber)) {
-                info.put("carNumber", carNumber);
-            } if (!TextUtils.isEmpty(itemName)) {
-                info.put("itemName", itemName);
-            } if (!TextUtils.isEmpty(productName)) {
-                info.put("productName", productName);
-            }if (!TextUtils.isEmpty(minMoney)) {
-                info.put("minMoney", minMoney);
-            }if (!TextUtils.isEmpty(maxMoney)) {
-                info.put("maxMoney", maxMoney);
-            }
-            info.put("StoreId", StoreId);
-            String json = FastJsonUtil.bean2Json(info);
-            json = Base64Util.encode(json.getBytes("UTF-8"));
-            params.put("info", json);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return getRequest(Url.FILTER_ORDER, params, getHeader(), listener);
-    }
+
 
     /**
      * 3.5.11.	查询会员项目计次余次
@@ -1006,20 +973,20 @@ public class Api extends BaseRequest {
     }
 
     /**
-     * 3.7.9.	订单筛选
+     * 3.7.9.	订单筛选,订单列表
      */
-    public static StringRequest getOrderFilter(String carNumber, String itemName, String productName, String startTime, String endTime, int pageNo, int pageSize, OnRequestListener listener)
+    public static StringRequest getOrderFilter(String key,String minMoney,String maxMoney, String startTime, String endTime, int pageNo, int pageSize, OnRequestListener listener)
     {
         Map<String, String> params = null;
         try {
             params = new HashMap<>();
             JSONObject info = new JSONObject();
+            info.put("key",key);
             info.put("storeId", CacheUtil.getmInstance().getUser().getStoreId());
-            info.put("carNumber", carNumber);
-            info.put("itemName", itemName);
-            info.put("productName", productName);
             info.put("startTime", startTime);
             info.put("endTime", endTime);
+            info.put("minMoney",minMoney);
+            info.put("maxMoney",maxMoney);
             info.put("pageNo", pageNo);
             info.put("pageSize", pageSize);
             String json = Base64Util.encode(info.toString().getBytes("UTF-8"));
@@ -1789,29 +1756,6 @@ public class Api extends BaseRequest {
         return getRequest(Url.BILL_GETEXTCOUNT, params, getHeader(), listener);
     }
 
-    /**
-     * 订单列表(7.10)
-     *
-     * @param pageNo
-     * @param pageSize
-     * @param listener
-     * @return
-     */
-    public static StringRequest getOrderList(int pageNo, int pageSize, OnRequestListener listener)
-    {
-        Map<String, String> params = null;
-        try {
-            params = new HashMap<>();
-            JSONObject info = new JSONObject();
-            info.put("storeId", CacheUtil.getmInstance().getUser().getStoreId());
-            info.put("pageNo", pageNo);
-            info.put("pageSize", pageSize);
-            params.put("info", Base64Util.encode(info.toString().getBytes("UTF-8")));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return getRequest(Url.ORDER_LIST, params, getHeader(), listener);
-    }
 
 
     /**
