@@ -178,10 +178,10 @@ public class SaleHistoryActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != RESULT_OK) return;
         if (requestCode == 2003) {
-            ArrayList<OrderList> list = (ArrayList<OrderList>) data.getSerializableExtra("list");
-            if (list.size()==0) return;
-            mDataList.clear();
-            mDataList.addAll(list);
+            String maxTime = data.getStringExtra("maxTime");
+            String minTime = data.getStringExtra("minTime");
+            String minmoney = data.getStringExtra("minmoney");
+            String maxmoney = data.getStringExtra("maxmoney");
             mAdapter.notifyDataSetChanged();
         }
     }

@@ -102,8 +102,6 @@ public class SaleHistoryFilterActivity extends BaseActivity implements DatePicke
 
         mDataModel.getFilterOrder((long)user.getStoreId(),businessname,product,back,mintime,maxtime,minmoney,maxmoney);
 
-        gotoActivity(SaleHistoryActivity.class);
-        finish();
     }
 
 
@@ -127,9 +125,10 @@ public class SaleHistoryFilterActivity extends BaseActivity implements DatePicke
             hideLoadingDialog();
             showShortToast("删除成功");
             Intent intent = new Intent();
-            Bundle bu = new Bundle();
-            bu.putSerializable("list",data);
-            intent.putExtras(bu);
+            intent.putExtra("maxTime",maxTime);
+            intent.putExtra("minTime",minTime);
+            intent.putExtra("minmoney",minmoney);
+            intent.putExtra("maxmoney",maxmoney);
             setResult(RESULT_OK, intent);
             defaultFinish();
         }
