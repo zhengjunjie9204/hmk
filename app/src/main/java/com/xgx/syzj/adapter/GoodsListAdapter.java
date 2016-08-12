@@ -2,7 +2,6 @@ package com.xgx.syzj.adapter;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,7 +58,7 @@ public class GoodsListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         final Goods goods = mList.get(position);
         if (convertView == null) {
             hold = new HoldClass();
@@ -80,9 +79,6 @@ public class GoodsListAdapter extends BaseAdapter {
         hold.tv_name.setText(goods.getProductName());
         hold.tv_count.setText("库存："+goods.getQuantity()+"件");
         hold.tv_money.setText("¥ "+goods.getSellingPrice());
-
-
-
         return convertView;
     }
 

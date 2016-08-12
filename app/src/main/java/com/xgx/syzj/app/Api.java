@@ -685,6 +685,26 @@ public class Api extends BaseRequest {
         }
         return getRequest(Url.SEARCH_EXT_COUNT, params, getHeader(), listener);
     }
+    /**
+     * 编辑已完成的订单(7.11)
+     * @param listener
+     * @return
+     */
+    public static StringRequest editOrder(int payOrderId,JSONArray itemList,JSONArray productList,OnRequestListener listener)
+    {
+        Map<String, String> params = null;
+        try {
+            params = new HashMap<>();
+            JSONObject json = new JSONObject();
+            json.put("payOrderId",payOrderId);
+            json.put("itemList",itemList);
+            json.put("productList",productList);
+            params.put("info", Base64Util.encode(json.toString().getBytes("UTF-8")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getRequest(Url.EDIT_ORDER, params, getHeader(), listener);
+    }
 
 
     /**

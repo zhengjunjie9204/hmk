@@ -143,6 +143,7 @@ public class Url {
     public static final String ORDER_FILTER_LIST = HOST_URL + "qcmr/payOrder_ filterOrder.action";//3.7.9.	订单筛选
     public static final String SEND_MSG = HOST_URL + "qcmr/payOrder_sendSMS.action";//发送短信(7.9)
     public static final String ORDER_LIST = HOST_URL + "qcmr/payOrder_findOkOrder.action";//订单列表(7.10)
+    public static final String EDIT_ORDER = HOST_URL + "qcmr/memberStore_editOrder.action";//订单列表(7.10)
 
     public static final String MONEY_REPORT = HOST_URL + "qcmr/statistics_moneyReport.action";//3.8.1.	资金流水
     public static final String SALE_REPORT = HOST_URL + "qcmr/statistics_saleReport.action";//3.8.2.	销售分析

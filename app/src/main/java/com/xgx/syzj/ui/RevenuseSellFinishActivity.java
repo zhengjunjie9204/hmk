@@ -106,27 +106,37 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
         switch (view.getId()) {
             case R.id.btn_sure:
                 try {
+                    JSONArray productList = new JSONArray();
+                    JSONArray itemList = new JSONArray();
+                    for (Goods goods : mGood) {
+                        JSONObject json = new JSONObject();
+                        json.put("productId", goods.getProductId());
+                        json.put("amount", goods.getQuantity());
+                        productList.put(json);
+                    }
+                    for (Project project : mProject) {
+                        JSONObject json = new JSONObject();
+                        json.put("itemId", project.getId());
+                        json.put("amount", project.getLaborTime());
+                        itemList.put(json);
+                    }
                     if (null != order) {
-                        orderPayItem(order.getId(), 0, 3);
+                        if (mGood.size() == 0 && mProject.size() == 0) {
+                            orderPayItem(order.getId(), 0, 3);
+                        }else if (mProject.size() == 0){
+                            showShortToast("请选择项目");
+                        }else{
+                            if (productList.length() ==  0) {
+                                productList = null;
+                            }
+                            showLoadingDialog(R.string.loading_date);
+                            editOrder(order.getId(),itemList,productList);
+                        }
                     } else {
                         if (mGood.size() == 0 && mProject.size() == 0) {
                             showShortToast("请选择商品或者项目");
                             return;
                         } else {
-                            JSONArray productList = new JSONArray();
-                            JSONArray itemList = new JSONArray();
-                            for (Goods goods : mGood) {
-                                JSONObject json = new JSONObject();
-                                json.put("productId", goods.getProductId());
-                                json.put("amount", goods.getQuantity());
-                                productList.put(json);
-                            }
-                            for (Project project : mProject) {
-                                JSONObject json = new JSONObject();
-                                json.put("itemId", project.getId());
-                                json.put("amount", project.getLaborTime());
-                                itemList.put(json);
-                            }
                             showLoadingDialog(R.string.loading_date);
                             if (mGood.size() > 0 && mProject.size() == 0) {//只含商品
                                 orderPayProduct(0, 3, String.valueOf(allmoney), null, productList);
@@ -304,7 +314,8 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
             public void onSuccess(Result result)
             {
                 if (result.getStatus() == 200) {
-                    toFinish();
+                    showShortToast("挂单成功");
+                    finish();
                 } else {
                     showShortToast("" + result.getMessage());
                 }
@@ -330,6 +341,28 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
                     toFinish();
                 } else {
                     showShortToast("" + result.getMessage());
+                }
+                hideLoadingDialog();
+            }
+
+            @Override
+            public void onError(String errorCode, String message)
+            {
+                hideLoadingDialog();
+            }
+        });
+    }
+
+    //编辑已完成的订单(7.11)
+    private void editOrder(int payOrderId,JSONArray itemList,JSONArray productList)
+    {
+        Api.editOrder(payOrderId, itemList, productList, new BaseRequest.OnRequestListener() {
+            @Override
+            public void onSuccess(Result result)
+            {
+                if (result.getStatus() == 200) {
+                    showShortToast("编辑成功");
+                    finish();
                 }
                 hideLoadingDialog();
             }

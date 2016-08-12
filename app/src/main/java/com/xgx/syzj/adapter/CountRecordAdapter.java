@@ -58,7 +58,7 @@ public class CountRecordAdapter extends BaseAdapter {
         holder.mTvTime.setText(records.getPayTime());
         holder.mTvType.setText(""+payType[records.getPayType()]);
         holder.mTvName.setText(records.getName());
-//        holder.mTvMoney.setText(records.getPayTime());
+        holder.mTvMoney.setText("￥"+records.getFee());
         return convertView;
     }
 
