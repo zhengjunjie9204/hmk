@@ -66,9 +66,10 @@ public class StoreRecordAdapter extends BaseAdapter {
         } else {
             hold = (HoldClass) convertView.getTag();
         }
-        if(!TextUtils.isEmpty(record.getPayOrder())){
-            hold.tv_time.setText(DateUtil.getStringByFormat(record.getPayOrder(), DateUtil.dateFormatYMDHMS));
-        }
+//        if(!TextUtils.isEmpty(record.getPayOrder())){
+//            hold.tv_time.setText(DateUtil.getStringByFormat(record.getPayOrder(), DateUtil.dateFormatYMDHMS));
+//        }
+        hold.tv_time.setText(record.getPayTime());
         hold.tv_add.setText("¥ " + record.getFee());
         hold.tv_count.setText("¥ " + record.getStoredMoney());
         return convertView;

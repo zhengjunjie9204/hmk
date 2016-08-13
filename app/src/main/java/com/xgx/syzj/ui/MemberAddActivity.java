@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.squareup.picasso.Picasso;
 import com.xgx.syzj.R;
 import com.xgx.syzj.adapter.ViewPagerAdapter;
 import com.xgx.syzj.app.Url;
@@ -63,6 +64,7 @@ public class MemberAddActivity extends BaseActivity{
         String  storePic=Url.HOST_URL+s;
         initView();
         initData(storePic);
+
         EventCenter.bindContainerAndHandler(this, eventHandler);
     }
 
@@ -77,8 +79,7 @@ public class MemberAddActivity extends BaseActivity{
     }
 
     private void initData(String storePic) {
-        Bitmap httpBitmap = getHttpBitmap(storePic);
-        iv_code.setImageBitmap(httpBitmap);
+        Picasso.with(this).load(storePic).into(iv_code);
     }
 
     private SimpleEventHandler eventHandler = new SimpleEventHandler() {

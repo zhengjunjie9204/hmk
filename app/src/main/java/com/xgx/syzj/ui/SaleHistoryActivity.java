@@ -175,6 +175,9 @@ public class SaleHistoryActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != RESULT_OK) return;
         if (requestCode == 2003) {
+            mDataList.clear();
+
+            mAdapter.notifyDataSetChanged();
             String maxTime = data.getStringExtra("maxTime");
             String minTime = data.getStringExtra("minTime");
             String minmoney = data.getStringExtra("minmoney");

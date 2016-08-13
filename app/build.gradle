@@ -47,4 +47,6 @@ dependencies {
     compile files('libs/core.jar')
     compile project(':logger')
     compile files('VPayPrintLib_v1.0.12.jar')
+    compile 'com.squareup.picasso:picasso-parent:2.5.2'
+    compile files('picasso-2.5.2.jar')
 }

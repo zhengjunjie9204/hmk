@@ -5,7 +5,10 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ScrollView;
 
 import com.xgx.syzj.R;
@@ -31,8 +34,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-public class RevenuseSellFinishActivity extends BaseActivity implements View.OnClickListener {
+public class RevenuseSellFinishActivity extends BaseActivity implements View.OnClickListener,RevenueCountItemAdapter.CountItems {
     private ListViewExtend mSellListView;
     private ListViewExtend lv_project;
     private ListViewExtend lv_data;
@@ -50,6 +54,7 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
     private String carNumber;
     private List<CountItemsBean> countItemsList;
     private RevenueCountItemAdapter mCountAdapter;
+    private Map<Integer, CountItemsBean> mdata;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -76,6 +81,8 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
             }
         } else {
             setTitleText(order.getCarNumber());
+            //显示
+
         }
     }
 
@@ -95,9 +102,10 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
         btn_sure.setText("结账");
         btn_cancel.setText(String.format("合计金额：￥%s", allmoney));
         if (null != countItemsList) {
-            mCountAdapter = new RevenueCountItemAdapter(this, countItemsList);
+            mCountAdapter = new RevenueCountItemAdapter(this, countItemsList,this);
             mSellListView.setAdapter(mCountAdapter);
         }
+
     }
 
     @Override
@@ -120,6 +128,10 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
                         json.put("amount", project.getLaborTime());
                         itemList.put(json);
                     }
+                    for(Map.Entry entry :mdata.entrySet()){
+                        CountItemsBean value = (CountItemsBean)entry.getValue();
+
+                    }
                     if (null != order) {
                         if (mGood.size() == 0 && mProject.size() == 0) {
                             orderPayItem(order.getId(), 0, 3);
@@ -133,12 +145,12 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
                             editOrder(order.getId(),itemList,productList);
                         }
                     } else {
-                        if (mGood.size() == 0 && mProject.size() == 0) {
+                        if (mGood.size() == 0 && mProject.size() == 0&&mdata.size() == 0) {
                             showShortToast("请选择商品或者项目");
                             return;
                         } else {
                             showLoadingDialog(R.string.loading_date);
-                            if (mGood.size() > 0 && mProject.size() == 0) {//只含商品
+                            if (mGood.size() > 0 && mProject.size() == 0&&mdata.size()==0) {//只含商品
                                 orderPayProduct(0, 3, String.valueOf(allmoney), null, productList);
                             } else {//包含商品和项目
                                 if (productList.length() ==  0) {
@@ -375,4 +387,16 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
         });
     }
 
+
+
+    @Override
+    public void getCountItems(Map<Integer, CountItemsBean> data, int position) {
+        mdata=data;
+        if(mdata.size()>0){
+            btn_sure.setText("挂单");
+
+        }else{
+            btn_sure.setText("结账");
+        }
+    }
 }

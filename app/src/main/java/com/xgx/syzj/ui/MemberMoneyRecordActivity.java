@@ -33,7 +33,7 @@ import in.srain.cube.views.loadmore.LoadMoreListViewContainer;
  * @created 2015年08月31日 15:45
  */
 
-public class MemberMoneyRecordActivity extends BaseActivity {
+public class   MemberMoneyRecordActivity extends BaseActivity {
     private TextView tv_count, tv_used, tv_add;
     private ListView lv_history;
     private StoreRecordAdapter mAdapter;

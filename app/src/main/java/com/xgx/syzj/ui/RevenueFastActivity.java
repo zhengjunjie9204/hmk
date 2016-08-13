@@ -519,7 +519,7 @@ public class RevenueFastActivity extends BaseActivity {
                 break;
             case "K":
                 if (text.length() < 6) {
-                    text = text + "k";
+                    text = text + "K";
                     et_car_number.setText(text);
                     et_car_number.setSelection(text.length());
                 }

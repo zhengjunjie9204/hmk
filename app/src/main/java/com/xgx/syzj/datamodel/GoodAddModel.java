@@ -48,6 +48,7 @@ public class GoodAddModel extends PagedListDataModel<Goods> {
     @Override
     protected void doQueryData() {
 
+
     }
     public static void addProductByStore(long storeId){
         Api.addProductByStore(storeId, new BaseRequest.OnRequestListener() {

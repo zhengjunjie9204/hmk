@@ -55,6 +55,8 @@ public class SaleHistoryFilterActivity extends BaseActivity implements DatePicke
     private User user;
     private SaleListRecordModel mDataModel;
     private ArrayList<OrderList> data=new ArrayList<>();
+    private String min;
+    private String max;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +72,7 @@ public class SaleHistoryFilterActivity extends BaseActivity implements DatePicke
 
     private void initData() {
 
-        minmoney = et_minmoney.getText().toString();
-        maxmoney = et_maxmoney.getText().toString();
+
     }
 
     private void initView() {
@@ -98,8 +99,12 @@ public class SaleHistoryFilterActivity extends BaseActivity implements DatePicke
     //确定按钮
     public void onAddSure(View v){
         final String mintime = btn_mintime.getText().toString();
+         min = mintime.replace("年", "-").replace("月", "-").replace("日", "");
         final String maxtime = btn_maxtime.getText().toString();
-
+         max = maxtime.replace("年", "-").replace("月", "-").replace("日", "");
+        minmoney = et_minmoney.getText().toString();
+        maxmoney = et_maxmoney.getText().toString();
+        mDataModel.payOrder("",minmoney,maxmoney,min,max);
 
     }
 
@@ -122,10 +127,10 @@ public class SaleHistoryFilterActivity extends BaseActivity implements DatePicke
         public void onEvent(List list){
             data.addAll(list);
             hideLoadingDialog();
-            showShortToast("删除成功");
+            showShortToast("查询成功");
             Intent intent = new Intent();
-            intent.putExtra("maxTime",maxTime);
-            intent.putExtra("minTime",minTime);
+            intent.putExtra("maxTime",max);
+            intent.putExtra("minTime",min);
             intent.putExtra("minmoney",minmoney);
             intent.putExtra("maxmoney",maxmoney);
             setResult(RESULT_OK, intent);

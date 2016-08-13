@@ -81,6 +81,7 @@ public class GoodsrechargeAdapter extends BaseAdapter {
                     hold.cb_wash.setChecked(true);
                     int c = Integer.parseInt(s.toString());
                     hold.tv_money.setText((item.getPrice() * c) + "");
+                    item.setLaborTime(s);
                 }
             }
 
