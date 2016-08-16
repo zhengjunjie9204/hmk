@@ -2,6 +2,7 @@ package com.xgx.syzj.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
@@ -33,8 +34,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class RevenuseSellFinishActivity extends BaseActivity implements View.OnClickListener,RevenueCountItemAdapter.CountItems {
     private ListViewExtend mSellListView;
@@ -54,7 +58,7 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
     private String carNumber;
     private List<CountItemsBean> countItemsList;
     private RevenueCountItemAdapter mCountAdapter;
-    private Map<Integer, CountItemsBean> mdata;
+    private Map<Integer, CountItemsBean> mdata=new HashMap<Integer, CountItemsBean>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -122,16 +126,18 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
                         json.put("amount", goods.getQuantity());
                         productList.put(json);
                     }
+                    if(mProject.size()>0){
                     for (Project project : mProject) {
                         JSONObject json = new JSONObject();
                         json.put("itemId", project.getId());
                         json.put("amount", project.getLaborTime());
                         itemList.put(json);
-                    }
+                    }}
+                    if(mdata.size()>0){
                     for(Map.Entry entry :mdata.entrySet()){
                         CountItemsBean value = (CountItemsBean)entry.getValue();
 
-                    }
+                    }}
                     if (null != order) {
                         if (mGood.size() == 0 && mProject.size() == 0) {
                             orderPayItem(order.getId(), 0, 3);

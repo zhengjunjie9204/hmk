@@ -31,7 +31,9 @@ import com.xgx.syzj.bean.Result;
 import com.xgx.syzj.datamodel.MemberDataModel;
 import com.xgx.syzj.event.EventCenter;
 import com.xgx.syzj.event.SimpleEventHandler;
+import com.xgx.syzj.utils.CacheUtil;
 import com.xgx.syzj.utils.Utils;
+import com.xgx.syzj.widget.CustomAlertDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,8 +96,19 @@ public class MemberListActivity extends BaseActivity  {
         });
         sortListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
-            public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
-                deleteItem(position);
+            public boolean onMenuItemClick(final int position, SwipeMenu menu, int index) {
+                CustomAlertDialog.showRemindDialog(MemberListActivity.this, "温馨提示", "是否删除", new CustomAlertDialog.IAlertDialogListener() {
+
+                    @Override
+                    public void onSure(Object obj) {
+                        if(CacheUtil.getmInstance().getUser().getRoles()==3){
+                            showShortToast("您的权限不足");
+                            return;
+                        }
+                        deleteItem(position);
+                    }
+                });
+
                 return false;
             }
         });

@@ -397,6 +397,30 @@ public class Api extends BaseRequest {
 
         return getRequest(Url.ADD_PRODUCT_TO_STORE, params, getHeader(), listener);
     }
+    /**
+     * 3.1.7.	老板查询所有商品
+     *
+     * @param
+     * @param listener
+     * @return
+     */
+    public static StringRequest findAllProduct(int pageNo, int pageSize, OnRequestListener listener)
+    {
+        Map<String, String> params = null;
+        try {
+            params = new HashMap<>();
+            params.put("pageNo", pageNo+"");
+            params.put("pageSize", pageSize+"");
+            String json = FastJsonUtil.bean2Json(params);
+            String info = Base64Util.encode(json.getBytes("UTF-8"));
+            params.clear();
+            params.put("info", info);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return getRequest(Url.find_All_PRODUCT, params, getHeader(), listener);
+    }
 
     /**
      * 删除商品

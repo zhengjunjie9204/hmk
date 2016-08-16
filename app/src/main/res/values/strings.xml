@@ -153,9 +153,9 @@
     <string name="goods_add_info_input_money">进价</string>
     <string name="goods_add_info_sell_money">售价</string>
     <string name="goods_add_info_input_count">数量</string>
-    <string name="goods_add_info_kucun_count">库存</string>
+    <string name="goods_add_info_kucun_count">单位</string>
     <string name="goods_add_info_format">规格</string>
-    <string name="goods_add_info_unit">单位</string>
+    <string name="goods_add_info_unit">VIP价</string>
     <string name="goods_add_pic_title">上传图片</string>
 
     <string name="goods_list_title">商品列表</string>

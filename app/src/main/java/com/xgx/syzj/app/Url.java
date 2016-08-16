@@ -36,6 +36,8 @@ public class Url {
     public static final String STOCK_RECORD=HOST_URL+"qcmr/stockRecord_stockRecordHistory.action";//库存历史
     public static final String ADD_PRODUCTS_BY_STORE=HOST_URL+"qcmr/product_findByNoStore.action";//添加未存在商品
     public static final String ADD_PRODUCT_TO_STORE=HOST_URL+"qcmr/product_addProductToStore.action";//添加新商品到门店
+    public static final String find_All_PRODUCT=HOST_URL+"qcmr/product_findAll.action";//查询所有商品
+
     //订单
     public static final String FILTER_ORDER=HOST_URL+"qcmr/payOrder_filterOrder.action";//3.7.8订单刷选
 

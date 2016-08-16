@@ -357,11 +357,10 @@
                     android:background="#c1c1c1" />
 
                 <TextView
-                    android:id="@+id/tv_title3"
+                    android:id="@+id/tv_title4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@mipmap/afive"
-                    android:drawableRight="@mipmap/bitian"
                     android:drawablePadding="6dp"
                     android:paddingBottom="12dp"
                     android:paddingTop="12dp"
@@ -370,11 +369,11 @@
                     android:textSize="14sp" />
 
                 <EditText
-                    android:id="@+id/et_input_count"
+                    android:id="@+id/et_unit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@id/line2"
-                    android:layout_toRightOf="@id/tv_title3"
+                    android:layout_toRightOf="@id/tv_title4"
                     android:background="@null"
                     android:gravity="right"
                     android:selectAllOnFocus="true"
@@ -387,12 +386,13 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/tv_title4"
+                    android:id="@+id/tv_title3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/line2"
                     android:drawableLeft="@mipmap/guige"
                     android:drawablePadding="6dp"
+                    android:drawableRight="@mipmap/bitian"
                     android:gravity="left"
                     android:paddingBottom="12dp"
                     android:paddingLeft="10dp"
@@ -402,11 +402,11 @@
                     android:textSize="14sp" />
 
                 <EditText
-                    android:id="@+id/et_unit"
+                    android:id="@+id/et_vip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_toRightOf="@id/tv_title4"
+                    android:layout_toRightOf="@id/tv_title3"
                     android:background="@null"
                     android:gravity="right"
                     android:selectAllOnFocus="true"

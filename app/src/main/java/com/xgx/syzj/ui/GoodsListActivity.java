@@ -78,9 +78,10 @@ public class GoodsListActivity extends BaseActivity  {
         Bundle bundle=getIntent().getExtras();
         //获取商品信息
 //        String type=bundle.getString("type");
-
-
         et_text = (EditText) findViewById(R.id.et_text);
+        if(CacheUtil.getmInstance().getUser().getRoles()==1){
+            et_text.setVisibility(View.GONE);
+        }
         tv_count = (TextView) findViewById(R.id.tv_count);
         et_text.setOnEditorActionListener(onEditorActionListener);
         lv_goods = (SwipeMenuListView) findViewById(R.id.lv_goods);
@@ -124,9 +125,13 @@ public class GoodsListActivity extends BaseActivity  {
 
         mDataModel.queryNextPage();
 
-        flag = getIntent().getStringExtra(FLAG);
 
-//        GoodsDataModel.getProductsCount("");
+        flag = getIntent().getStringExtra(FLAG);
+        if(CacheUtil.getmInstance().getUser().getRoles()==1){
+            mDataModel.getAllProduct();
+        }else {
+            mDataModel.getProductsList();
+        }
     }
 
     private SimpleEventHandler eventHandler = new SimpleEventHandler() {
@@ -193,8 +198,12 @@ public class GoodsListActivity extends BaseActivity  {
                 //根据key
                 mDataModel.setKey(text);
                 //根据品牌
+                int storeId = CacheUtil.getmInstance().getUser().getStoreId();
+                mDataModel.setStoreId(storeId);
                 mDataModel.setBrand(text);
+                mDataModel.getProductsList();
                 mDataModel.queryNextPage();
+                mDataModel.getProductsList();
                 Utils.hideSoftInput(GoodsListActivity.this);
             }
             return false;

@@ -61,7 +61,7 @@ public class MemberAddActivity extends BaseActivity{
         setSubmit(getString(R.string.app_button_sure));
         String Pic = CacheUtil.getmInstance().getUser().getStorePic();
         String s = Pic.replaceAll("\\\\", "/");
-        String  storePic=Url.HOST_URL+s;
+        String  storePic=Url.HOST_URL+"qcmr/upload/wechatImg/"+s;
         initView();
         initData(storePic);
 

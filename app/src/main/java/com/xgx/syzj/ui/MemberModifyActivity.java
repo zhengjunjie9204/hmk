@@ -92,6 +92,7 @@ public class MemberModifyActivity extends BaseActivity implements View.OnClickLi
                     data.setAction(Constants.Broadcast.RECEIVER_UPDATE_MEMBER);
                     data.putExtra("member", member);
                     sendBroadcast(data);
+
                 }
             }
         }
@@ -142,5 +143,7 @@ public class MemberModifyActivity extends BaseActivity implements View.OnClickLi
         showLoadingDialog(R.string.loading_update_member);
         System.out.println(member.getId());
         MemberDataModel.updateMember(member.getId(), strName, strCarNumber,strPhone,strCarType,strNum);
+        gotoActivity(MemberDetailActivity.class);
+        finish();
     }
 }

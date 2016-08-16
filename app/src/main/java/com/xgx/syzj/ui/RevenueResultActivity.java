@@ -31,7 +31,7 @@ public class RevenueResultActivity extends BaseActivity implements View.OnClickL
         setSubmit(getString(R.string.revenue_result_button_continue));
         tv_money = (TextView) findViewById(R.id.tv_money);
         findViewById(R.id.btn_continue).setOnClickListener(this);
-
+        findViewById(R.id.btn_send).setOnClickListener(this);
         Bundle bundle = getIntent().getExtras();
         String money = bundle.getString("money");
         if (!TextUtils.isEmpty(money)){
@@ -43,6 +43,8 @@ public class RevenueResultActivity extends BaseActivity implements View.OnClickL
     @Override
     protected void submit() {
         super.submit();
+        gotoActivity(RevenueFastActivity.class);
+        finish();
     }
 
     @Override
@@ -51,6 +53,10 @@ public class RevenueResultActivity extends BaseActivity implements View.OnClickL
             case R.id.btn_continue:
                 AppManager.getAppManager().returnToActivity(RevenueActivity.class);
                 ((RevenueActivity)(AppManager.getAppManager().currentActivity())).clean();
+                break;
+            case R.id.btn_send:
+                gotoActivity(SaleHistoryActivity.class);
+                finish();
                 break;
         }
     }
