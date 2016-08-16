@@ -881,6 +881,13 @@ public class Api extends BaseRequest {
         }
         return getRequest(Url.ORDER_SET_DONE, params, getHeader(), listener);
     }
+    /**
+     * 3.7.5.	设项目订单未支付已完成
+     */
+    public static StringRequest getAllStore(OnRequestListener listener)
+    {
+        return getRequest(Url.FIND_ALL_STORE, null, getHeader(), listener);
+    }
 
     /**
      * 3.7.2.	支付只含商品的订单

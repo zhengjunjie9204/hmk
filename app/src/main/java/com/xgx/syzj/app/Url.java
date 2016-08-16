@@ -147,6 +147,7 @@ public class Url {
 
     public static final String MONEY_REPORT = HOST_URL + "qcmr/statistics_moneyReport.action";//3.8.1.	资金流水
     public static final String SALE_REPORT = HOST_URL + "qcmr/statistics_saleReport.action";//3.8.2.	销售分析
+    public static final String FIND_ALL_STORE = HOST_URL + "qcmr/store_findAllStore.action";//查询所有门店(8.3)
 
     //未完成接口
     //消费历史、兑换积分、储值记录、销售列表、销售详情、退货原因、考勤列表、设置考勤位置、考勤、修改店铺信息
