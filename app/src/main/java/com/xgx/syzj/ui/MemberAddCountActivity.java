@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.xgx.syzj.R;
 import com.xgx.syzj.app.Api;
-import com.xgx.syzj.app.Constants;
 import com.xgx.syzj.base.BaseActivity;
 import com.xgx.syzj.base.BaseRequest;
 import com.xgx.syzj.bean.Combo;
@@ -27,13 +26,6 @@ import com.xgx.syzj.widget.TextItemView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-/**
- * 会员充次
- *
- * @author zajo
- * @created 2015年10月10日 15:20
- */
 
 /**
  * 会员充次
@@ -97,14 +89,14 @@ public class MemberAddCountActivity extends BaseActivity implements View.OnClick
         public void onEvent(JSONObject json)
         {
             try {
-                tv_user.setText(json.optInt("length", 0) + "次");
+                tv_total.setText(json.optInt("length", 0) + "个");
                 JSONArray memberItems = json.optJSONArray("memberItems");
                 if (null != memberItems || memberItems.length() > 0) {
                     int count = 0;
                     for (int i = 0; i < memberItems.length(); i++) {
                         count += memberItems.getJSONObject(i).optInt("itemCount", 0);
                     }
-                    tv_total.setText(count + "个");
+                    tv_user.setText(count + "次");
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -116,12 +108,9 @@ public class MemberAddCountActivity extends BaseActivity implements View.OnClick
             hideLoadingDialog();
             if (result.getStatus() == 200) {
                 showShortToast("充值成功");
-                Intent data = new Intent();
-                data.setAction(Constants.Broadcast.RECEIVER_ADD_RECHARGE);
-                data.putExtra("member", member);
-                sendBroadcast(data);
+                setResult(RESULT_OK);
                 defaultFinish();
-            }else{
+            } else {
                 showShortToast(result.getMessage());
             }
         }
@@ -157,7 +146,7 @@ public class MemberAddCountActivity extends BaseActivity implements View.OnClick
                     try {
                         JSONArray storeList = null;
                         if (storeItem != null) {
-                            money = "" + storeItem.getPrice();
+                            money = "" + storeItem.getPrice() * storeItem.getLaborTime();
                             storeList = new JSONArray();
                             JSONObject params = new JSONObject();
                             params.put("itemId", storeItem.getId());
@@ -239,7 +228,7 @@ public class MemberAddCountActivity extends BaseActivity implements View.OnClick
             combo = (Combo) data.getSerializableExtra("combo");
             if (storeItem != null) {
                 tv_count.setDesc(storeItem.getName());
-                et_money.setText(storeItem.getPrice() + "");
+                et_money.setText(String.valueOf(storeItem.getPrice() * storeItem.getLaborTime()));
             } else if (combo != null) {
                 tv_count.setDesc(combo.getName());
                 et_money.setText(combo.getPrice() + "");

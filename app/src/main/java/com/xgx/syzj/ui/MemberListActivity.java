@@ -16,8 +16,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
@@ -132,7 +130,7 @@ public class MemberListActivity extends BaseActivity  {
         System.out.println(sourceDateList);
         adapter = new MemberListAdapter(MemberListActivity.this, sourceDateList);
         sortListView.setAdapter(adapter);
-        mDataModel.queryNextPage();
+        mDataModel.queryFirstPage();
 
         registerReceiver();
 

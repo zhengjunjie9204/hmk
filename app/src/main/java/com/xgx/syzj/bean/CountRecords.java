@@ -15,15 +15,15 @@ public class CountRecords {
     private int payType;
     private String payTime;
     private String name;
-    private String fee;
+    private double fee;
 
 
-    public String getFee()
+    public double getFee()
     {
         return fee;
     }
 
-    public void setFee(String fee)
+    public void setFee(double fee)
     {
         this.fee = fee;
     }

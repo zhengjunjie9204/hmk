@@ -20,6 +20,7 @@ public class CountRecordAdapter extends BaseAdapter {
     private Context mContext;
     private ArrayList<CountRecords> mList;
     private String[] payType;
+
     public CountRecordAdapter(Context mContext, ArrayList<CountRecords> mList)
     {
         this.mContext = mContext;
@@ -56,9 +57,9 @@ public class CountRecordAdapter extends BaseAdapter {
         ViewHolder holder = (ViewHolder) convertView.getTag();
         CountRecords records = mList.get(position);
         holder.mTvTime.setText(records.getPayTime());
-        holder.mTvType.setText(""+payType[records.getPayType()]);
+        holder.mTvType.setText("" + payType[records.getPayType()]);
         holder.mTvName.setText(records.getName());
-        holder.mTvMoney.setText("￥"+records.getFee());
+        holder.mTvMoney.setText("￥" + records.getFee());
         return convertView;
     }
 

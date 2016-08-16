@@ -82,7 +82,8 @@ public class ProjectDataModel extends PagedListDataModel<Project> {
     public static void getStoreItem()
     {
         code = STORE_ITEM;
-        Api.getStoreItem(0,Constants.LOAD_COUNT, listener);
+//        Api.getStoreItem(0,Constants.LOAD_COUNT, listener);
+        Api.getProjectList(null,0,Constants.LOAD_COUNT, listener);
     }
 
     private static OnRequestListener listener = new OnRequestListener() {

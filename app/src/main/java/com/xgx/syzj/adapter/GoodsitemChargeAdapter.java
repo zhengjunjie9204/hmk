@@ -1,6 +1,7 @@
 package com.xgx.syzj.adapter;
 
 import android.content.Context;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.xgx.syzj.R;
 import com.xgx.syzj.bean.Combo;
+import com.xgx.syzj.ui.MemberSelectProjectActivity;
 
 import java.util.HashMap;
 import java.util.List;
@@ -22,11 +24,12 @@ public class GoodsitemChargeAdapter extends BaseExpandableListAdapter {
     private Context mContext;
     private List<Combo> mDataList;
     private Map<Integer, Combo> comboMap;
-
-    public GoodsitemChargeAdapter(Context context, List<Combo> mDataList)
+    private Handler mHandler;
+    public GoodsitemChargeAdapter(Context context, List<Combo> mDataList,Handler mHandler)
     {
         this.mContext = context;
         this.mDataList = mDataList;
+        this.mHandler = mHandler;
         comboMap = new HashMap<>();
     }
 
@@ -122,6 +125,7 @@ public class GoodsitemChargeAdapter extends BaseExpandableListAdapter {
                 comboMap.clear();
                 comboMap.put(combo.getId(),combo);
             }
+            mHandler.sendEmptyMessage(MemberSelectProjectActivity.STATUS_ITEM);
             notifyDataSetChanged();
         }
     }
@@ -160,14 +164,5 @@ public class GoodsitemChargeAdapter extends BaseExpandableListAdapter {
     public class HoldClass {
         public TextView tv_meal, tv_item, tv_count, tv_money2;
         public CheckBox cb_wash2;
-    }
-
-    private SignledListener mListener;
-    public interface SignledListener{
-        public void onComboClick(Combo combo);
-    }
-
-    public void setSignledClick(SignledListener mListener){
-        this.mListener = mListener;
     }
 }

@@ -1,14 +1,10 @@
 package com.xgx.syzj.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.xgx.syzj.R;
@@ -77,7 +73,7 @@ public class MemberListAdapter extends BaseAdapter/* implements SectionIndexer *
 		viewHolder.tv_name.setText(member.getName());
 		viewHolder.tv_phone.setText(member.getPhone());
 
-		viewHolder.tv_jifen.setText(member.getConsumeRecord()+"");
+		viewHolder.tv_jifen.setText(member.getMemberItemAmount()+"");
 		viewHolder.tv_money.setText(member.getStoredMoney()+"");
 		viewHolder.tv_carNum.setText(member.getCarNumber());
 

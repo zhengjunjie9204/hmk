@@ -21,6 +21,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
+                android:background="@color/white"
                 android:drawableRight="@mipmap/black_bottom_tw"
                 android:gravity="center_vertical"
                 android:paddingLeft="30dp"
@@ -30,20 +31,16 @@
             <include
                 layout="@layout/layout_line"
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginLeft="40dp"/>
+                android:layout_height="0.5dp"/>
 
             <com.xgx.syzj.widget.ListViewExtend
                 android:id="@+id/lv_count"
+                android:layout_marginLeft="42dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
-            <include
-                layout="@layout/layout_line"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"/>
-
             <TextView
+                android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:drawableRight="@mipmap/black_bottom_tw"
@@ -55,18 +52,13 @@
             <include
                 layout="@layout/layout_line"
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginLeft="40dp"/>
+                android:layout_height="0.5dp"/>
 
             <com.xgx.syzj.widget.ExpandableListViewExtend
                 android:id="@+id/exp_lv_package"
+                android:layout_marginLeft="42dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-
-            <include
-                layout="@layout/layout_line"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"/>
         </LinearLayout>
     </ScrollView>
 

@@ -11,7 +11,6 @@
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
             android:maxWidth="100dp"
             android:paddingBottom="20dp"
             android:paddingTop="20dp"
@@ -40,15 +39,17 @@
             android:textSize="16sp" />
 
         <CheckBox
+            android:button="@null"
+            android:layout_width="24dp"
+            android:background="@drawable/checkbox_light"
+            android:layout_height="24dp"
             android:id="@+id/cb_wash"
             style="@style/checkbox_sell"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="12dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="12dp"
             android:focusable="false"
             android:checked="false"/>
 
@@ -62,7 +63,7 @@
             android:layout_toLeftOf="@+id/cb_wash"
             android:text="次"/>
 
-        <EditText
+        <TextView
             android:id="@+id/et_count"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
