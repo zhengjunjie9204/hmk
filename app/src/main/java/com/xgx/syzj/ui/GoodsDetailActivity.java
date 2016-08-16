@@ -32,8 +32,8 @@ public class GoodsDetailActivity extends BaseActivity {
     private Button btn_modify;
     private ImageView iv_one;
     private Goods goods;
-    private TextView tv_code,tv_name,tv_type,tv_guige,tv_money,tv_sell,tv_count,tv_unit,tv_brand;
-
+    private TextView tv_code,tv_name,tv_type,tv_guige,tv_money,tv_sell,tv_unit,tv_brand;
+    private TextView tv_vip;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,9 +45,10 @@ public class GoodsDetailActivity extends BaseActivity {
         tv_name = ((TextView) findViewById(R.id.tv_name));
         tv_type = ((TextView) findViewById(R.id.tv_type));
         tv_guige = ((TextView) findViewById(R.id.tv_guige));
-        tv_money = ((TextView) findViewById(R.id.tv_money));
-        tv_sell = ((TextView) findViewById(R.id.tv_sell));
-        tv_count = ((TextView) findViewById(R.id.tv_count));
+
+        tv_money = ((TextView) findViewById(R.id.tv_input_money));
+        tv_sell = ((TextView) findViewById(R.id.tv_sell_money));
+        tv_vip = ((TextView) findViewById(R.id.tv_vip));
         tv_unit = ((TextView) findViewById(R.id.tv_unit));
         tv_brand= (TextView) findViewById(R.id.tv_brand);
 
@@ -83,8 +84,12 @@ public class GoodsDetailActivity extends BaseActivity {
         tv_guige.setText(goods.getSpecification());
         tv_money.setText("￥" + goods.getInputPrice());
         tv_sell.setText("￥" + goods.getSellingPrice());
-        tv_count.setText(goods.getQuantity() + "");
+        tv_vip.setText(goods.getVip_price() + "");
         tv_unit.setText(goods.getSupplier());
+
+
+
+
         tv_brand.setText(goods.getBrand());
         iv_one.setTag(1);
         if(!TextUtils.isEmpty(goods.getImage())){

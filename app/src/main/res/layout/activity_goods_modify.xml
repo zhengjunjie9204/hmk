@@ -258,7 +258,7 @@
                     android:background="#c1c1c1" />
 
                 <TextView
-                    android:id="@+id/tv_title1"
+                    android:id="@+id/tv_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@mipmap/athree"
@@ -274,7 +274,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@id/line1"
-                    android:layout_toRightOf="@id/tv_title1"
+                    android:layout_toRightOf="@id/tv_title"
                     android:background="@null"
                     android:gravity="right"
                     android:selectAllOnFocus="true"
@@ -346,7 +346,7 @@
                     android:textSize="14sp" />
 
                 <EditText
-                    android:id="@+id/et_input_count"
+                    android:id="@+id/et_unit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@id/line2"
@@ -378,7 +378,7 @@
                     android:textSize="14sp" />
 
                 <EditText
-                    android:id="@+id/et_unit"
+                    android:id="@+id/et_input_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"

@@ -157,9 +157,9 @@ public class GoodsDataModel extends PagedListDataModel<Goods> {
     }
 
 
-    public static void addGoods(String barcode, String productName, String categoryId, String inputPrice, String sellingPrice, String quantity, String specification, String brand,String unitid,String image) {
+    public static void addGoods(String barcode, String productName, String categoryId, String inputPrice, String sellingPrice, String vip_price, String specification, String brand,String unitid,String image) {
         code = ADD_SUCCESS;
-        Api.addProducts(barcode, productName, categoryId, inputPrice, sellingPrice, quantity, specification, brand,unitid,image, listener);
+        Api.addProducts(barcode, productName, categoryId, inputPrice, sellingPrice, vip_price, specification, brand,unitid,image, listener);
     }
 
     public static void queryhistoryData(int productId){
@@ -190,9 +190,9 @@ public class GoodsDataModel extends PagedListDataModel<Goods> {
     }
 
 
-    public static void modifyGoods(int productId, String barcode, String productName, String categoryId, String inputPrice, String sellingPrice, String quantity, String specification,String brand, String unitid,String image) {
+    public static void modifyGoods(int productId, String barcode, String productName, String categoryId, String inputPrice, String sellingPrice, String vip_price, String specification,String brand, String unitid,String image) {
         code = MODIFY_SUCCESS;
-        Api.updateProducts(productId, barcode, productName, categoryId, inputPrice, sellingPrice, quantity, specification, brand,unitid,image, listener);
+        Api.updateProducts(productId, barcode, productName, categoryId, inputPrice, sellingPrice, vip_price, specification, brand,unitid,image, listener);
     }
 
     public static void inAndOutGoods(int flag, int productId, int stockCount, String description) {

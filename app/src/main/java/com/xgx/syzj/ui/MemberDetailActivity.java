@@ -94,6 +94,9 @@ public class MemberDetailActivity extends BaseActivity {
 //                tv_money.setText("储值：¥ " + member.getStrCardValue());
 //                tv_count.setText("计次卡：" + member.getCardCount() + "张");
             }
+            if(action.equals(Constants.Broadcast.RECEIVER_UPDATE_MEMBER)){
+                member = intent.getParcelableExtra("member");
+            }
 //            else if (action.equals(Constants.Broadcast.RECEIVER_DELETE_MEMBER)) {
 //                //删除响应
 //                MemberDetailActivity.this.defaultFinish();
@@ -163,7 +166,9 @@ public class MemberDetailActivity extends BaseActivity {
     {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK){
-            getMemberDetails();
+
+                getMemberDetails();
+
         }
     }
 
@@ -175,12 +180,12 @@ public class MemberDetailActivity extends BaseActivity {
                 if (result.getStatus() == 200) {
                     try {
                         JSONObject json = new JSONObject(result.getResult());
-                        member = FastJsonUtil.json2Bean(json.getString("memberInfo"),Member.class);
-                        initDate();
+                        Member memberInfo = FastJsonUtil.json2Bean(json.getString("memberInfo"), Member.class);
                         Intent data = new Intent();
                         data.setAction(Constants.Broadcast.RECEIVER_UPDATE_MEMBER);
-                        data.putExtra("member", member);
+                        data.putExtra("member", memberInfo);
                         sendBroadcast(data);
+                        initDate();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -200,4 +205,6 @@ public class MemberDetailActivity extends BaseActivity {
         super.onDestroy();
         unregisterReceiver(myReceiver);
     }
+
+
 }

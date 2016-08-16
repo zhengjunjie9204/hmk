@@ -32,7 +32,7 @@ public class Goods implements Parcelable {
 
     private int storeId;
 
-    private int quantity;
+    private int vip_price;
 
     private String barcode;
 
@@ -58,7 +58,25 @@ public class Goods implements Parcelable {
 
     private String specification;
 
+    private int quantity;
+
     private int revenueCount;//销售时统计数量
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public int getVip_price() {
+        return vip_price;
+    }
+
+    public void setVip_price(int vip_price) {
+        this.vip_price = vip_price;
+    }
 
     public int getProductId() {
         return productId;
@@ -82,14 +100,6 @@ public class Goods implements Parcelable {
 
     public void setStoreId(int storeId) {
         this.storeId = storeId;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
     }
 
     public String getBarcode() {
@@ -227,7 +237,7 @@ public class Goods implements Parcelable {
         dest.writeInt(this.productId);
         dest.writeString(this.productName);
         dest.writeInt(this.storeId);
-        dest.writeInt(this.quantity);
+        dest.writeInt(this.vip_price);
         dest.writeString(this.barcode);
         dest.writeString(this.specification);
         dest.writeString(this.brand);
@@ -245,7 +255,7 @@ public class Goods implements Parcelable {
         this.productId = in.readInt();
         this.productName = in.readString();
         this.storeId = in.readInt();
-        this.quantity = in.readInt();
+        this.vip_price = in.readInt();
         this.barcode = in.readString();
         this.specification = in.readString();
         this.brand=in.readString();

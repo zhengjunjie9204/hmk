@@ -88,7 +88,7 @@ public class GoodsModifyActivity extends BaseActivity implements UploadPictureVi
         et_brand.setText(goods.getBrand());
         et_input_money.setText(goods.getInputPrice() + "");
         et_sell_money.setText(goods.getSellingPrice() + "");
-        et_input_count.setText(goods.getQuantity() + "");
+        et_input_count.setText(goods.getVip_price()+ "");
         et_guige.setText(goods.getSpecification());
     }
 
@@ -202,7 +202,7 @@ public class GoodsModifyActivity extends BaseActivity implements UploadPictureVi
         }
         if (strType.equals(goods.getCategoryId())&&strCode.equals(goods.getBarcode()) && strName.equals(goods.getProductName())
                 && strInputMoney.equals(goods.getInputPrice() + "") && strSellMoney.equals(goods.getSellingPrice() + "")
-                && strInputCount.equals(goods.getQuantity() + "") && strGuige.equals(goods.getSpecification())) {
+                && strInputCount.equals(goods.getVip_price() + "") && strGuige.equals(goods.getSpecification())) {
             showShortToast("未做修改");
             return false;
         }

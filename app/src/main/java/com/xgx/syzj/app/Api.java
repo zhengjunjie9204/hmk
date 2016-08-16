@@ -289,7 +289,7 @@ public class Api extends BaseRequest {
     /**
      * 添加商品
      */
-    public static StringRequest addProducts(String barcode, String productName, String categoryId, String inputPrice, String sellingPrice, String quantity, String specification, String brand, String unitid, String image, OnRequestListener listener)
+    public static StringRequest addProducts(String barcode, String productName, String categoryId, String inputPrice, String sellingPrice, String vip_price, String specification, String brand, String unitid, String image, OnRequestListener listener)
     {
         Map<String, String> params = null;
         try {
@@ -300,7 +300,7 @@ public class Api extends BaseRequest {
             params.put("inputPrice", inputPrice);
             params.put("sellingPrice", sellingPrice);
             params.put("brand", brand);
-            params.put("quantity", quantity);
+            params.put("vip_price", vip_price);
             params.put("specification", specification);
             params.put("unitid", unitid);
             String json = FastJsonUtil.bean2Json(params);
@@ -321,7 +321,7 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest updateProducts(int productId, String barcode, String productName, String categoryId, String inputPrice, String sellingPrice, String quantity, String specification, String brand, String unitid, String image, OnRequestListener listener)
+    public static StringRequest updateProducts(int productId, String barcode, String productName, String categoryId, String inputPrice, String sellingPrice, String vip_price, String specification, String brand, String unitid, String image, OnRequestListener listener)
     {
         Map<String, String> params = null;
         try {
@@ -333,10 +333,9 @@ public class Api extends BaseRequest {
             params.put("inputPrice", inputPrice);
             params.put("sellingPrice", sellingPrice);
             params.put("brand", brand);
-            params.put("quantity", quantity);
+            params.put("vip_price", vip_price);
             params.put("specification", specification);
             params.put("unitid", unitid);
-            Log.e("zjj", params.toString());
             String json = FastJsonUtil.bean2Json(params);
             String info = Base64Util.encode(json.getBytes("UTF-8"));
             params.clear();
