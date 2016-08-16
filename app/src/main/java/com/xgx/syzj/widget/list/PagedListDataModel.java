@@ -6,7 +6,7 @@ public abstract class PagedListDataModel<T> {
 
     protected abstract void doQueryData();
 
-    protected ListPageInfo<T> mListPageInfo;
+    protected  ListPageInfo<T> mListPageInfo;
 
     private PagedListDataHandler mPagedListDataHandler;
 
@@ -51,11 +51,11 @@ public abstract class PagedListDataModel<T> {
         }
     }
 
-    protected void setRequestFail() {
+    protected  void setRequestFail() {
         mListPageInfo.rollbackOnFail();
     }
 
-    protected void setRequestResult(List<T> list, boolean hasMore) {
+    protected  void setRequestResult(List<T> list, boolean hasMore) {
         mListPageInfo.updateListInfo(list, hasMore);
         if (null != mPagedListDataHandler) {
             mPagedListDataHandler.onPageDataLoaded(mListPageInfo);

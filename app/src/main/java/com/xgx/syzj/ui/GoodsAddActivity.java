@@ -39,12 +39,14 @@ public class GoodsAddActivity extends BaseActivity implements UploadPictureView.
 
     private UploadPictureView upv_one, upv_two;
     private TextView tv_code;
-    private EditText et_name, et_brand, et_type, et_input_money, et_sell_money, et_input_count, et_guige, et_unit;
-    private String strCode, strName, strType, strBrand, strInputMoney, strSellMoney, strInputCount, strGuige, strUnit;
+    private EditText et_name, et_brand, et_type, et_input_money, et_sell_money, et_guige, et_unit;
+    private String strCode, strName, strType, strBrand, strInputMoney, strSellMoney, strGuige, strUnit;
     private String image;
     private Map<String, String> paths = new HashMap<>();
     private GoodsCategory type;
     private boolean cancel = false;
+    private EditText et_vip;
+    private String Strvip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +65,7 @@ public class GoodsAddActivity extends BaseActivity implements UploadPictureView.
         et_brand = (EditText) findViewById(R.id.et_brand);
         et_input_money = (EditText) findViewById(R.id.et_input_money);
         et_sell_money = (EditText) findViewById(R.id.et_sell_money);
-        et_input_count = (EditText) findViewById(R.id.et_input_count);
+        et_vip = (EditText) findViewById(R.id.et_vip);
         et_guige = (EditText) findViewById(R.id.et_guige);
         et_unit = (EditText) findViewById(R.id.et_unit);
         upv_one = (UploadPictureView) findViewById(R.id.upv_one);
@@ -88,7 +90,7 @@ public class GoodsAddActivity extends BaseActivity implements UploadPictureView.
                         et_brand.setText("");
                         et_input_money.setText("");
                         et_sell_money.setText("");
-                        et_input_count.setText("");
+                        et_vip.setText("");
                         et_guige.setText("");
                     }
                 } else {
@@ -135,7 +137,7 @@ public class GoodsAddActivity extends BaseActivity implements UploadPictureView.
     public void onAddCancel(View view) {
         if (checkInput()) {
             showLoadingDialog(R.string.loading_add_goods);
-            GoodsDataModel.addGoods(strCode, strName, strType, strInputMoney, strSellMoney, strInputCount, strGuige, strBrand, "1", image);
+            GoodsDataModel.addGoods(strCode, strName, strType, strInputMoney, strSellMoney, Strvip, strGuige, strBrand, "1", image);
         }
     }
 
@@ -143,7 +145,7 @@ public class GoodsAddActivity extends BaseActivity implements UploadPictureView.
         if (checkInput()) {
             cancel = true;
             showLoadingDialog(R.string.loading_add_goods);
-            GoodsDataModel.addGoods(strCode, strName, strType, strInputMoney, strSellMoney, strInputCount, strGuige, strBrand, "1", image);
+            GoodsDataModel.addGoods(strCode, strName, strType, strInputMoney, strSellMoney, Strvip, strGuige, strBrand, "1", image);
         }
     }
 
@@ -156,7 +158,7 @@ public class GoodsAddActivity extends BaseActivity implements UploadPictureView.
         strType = et_type.getText().toString().trim();
         strInputMoney = et_input_money.getText().toString().trim();
         strSellMoney = et_sell_money.getText().toString().trim();
-        strInputCount = et_input_count.getText().toString().trim();
+        Strvip = et_vip.getText().toString().trim();
         strUnit = et_unit.getText().toString().trim();
 //        if (TextUtils.isEmpty(strInputCount))
 //            strInputCount = "0";
@@ -179,8 +181,8 @@ public class GoodsAddActivity extends BaseActivity implements UploadPictureView.
             msg = "进价";
         } else if (TextUtils.isEmpty(strSellMoney)) {
             msg = "售价";
-        } else if (TextUtils.isEmpty(strInputCount)) {
-            msg = "数量";
+        } else if (TextUtils.isEmpty(Strvip)) {
+            msg = "Vip价";
         }
 //        else if (TextUtils.isEmpty(strGuige)) {
 //            msg = "规格";

@@ -289,7 +289,7 @@ public class Api extends BaseRequest {
     /**
      * 添加商品
      */
-    public static StringRequest addProducts(String barcode, String productName, String categoryId, String inputPrice, String sellingPrice, String quantity, String specification, String brand, String unitid, String image, OnRequestListener listener)
+    public static StringRequest addProducts(String barcode, String productName, String categoryId, String inputPrice, String sellingPrice, String vip_price, String specification, String brand, String unitid, String image, OnRequestListener listener)
     {
         Map<String, String> params = null;
         try {
@@ -300,7 +300,7 @@ public class Api extends BaseRequest {
             params.put("inputPrice", inputPrice);
             params.put("sellingPrice", sellingPrice);
             params.put("brand", brand);
-            params.put("quantity", quantity);
+            params.put("vip_price", vip_price);
             params.put("specification", specification);
             params.put("unitid", unitid);
             String json = FastJsonUtil.bean2Json(params);
@@ -321,7 +321,7 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest updateProducts(int productId, String barcode, String productName, String categoryId, String inputPrice, String sellingPrice, String quantity, String specification, String brand, String unitid, String image, OnRequestListener listener)
+    public static StringRequest updateProducts(int productId, String barcode, String productName, String categoryId, String inputPrice, String sellingPrice, String vip_price, String specification, String brand, String unitid, String image, OnRequestListener listener)
     {
         Map<String, String> params = null;
         try {
@@ -333,10 +333,9 @@ public class Api extends BaseRequest {
             params.put("inputPrice", inputPrice);
             params.put("sellingPrice", sellingPrice);
             params.put("brand", brand);
-            params.put("quantity", quantity);
+            params.put("vip_price", vip_price);
             params.put("specification", specification);
             params.put("unitid", unitid);
-            Log.e("zjj", params.toString());
             String json = FastJsonUtil.bean2Json(params);
             String info = Base64Util.encode(json.getBytes("UTF-8"));
             params.clear();
@@ -396,6 +395,30 @@ public class Api extends BaseRequest {
         }
 
         return getRequest(Url.ADD_PRODUCT_TO_STORE, params, getHeader(), listener);
+    }
+    /**
+     * 3.1.7.	老板查询所有商品
+     *
+     * @param
+     * @param listener
+     * @return
+     */
+    public static StringRequest findAllProduct(int pageNo, int pageSize, OnRequestListener listener)
+    {
+        Map<String, String> params = null;
+        try {
+            params = new HashMap<>();
+            params.put("pageNo", pageNo+"");
+            params.put("pageSize", pageSize+"");
+            String json = FastJsonUtil.bean2Json(params);
+            String info = Base64Util.encode(json.getBytes("UTF-8"));
+            params.clear();
+            params.put("info", info);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return getRequest(Url.find_All_PRODUCT, params, getHeader(), listener);
     }
 
     /**

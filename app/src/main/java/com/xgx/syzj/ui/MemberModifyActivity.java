@@ -35,7 +35,6 @@ public class MemberModifyActivity extends BaseActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member_add);
-
         member = getIntent().getParcelableExtra("member");
         if (member == null) {
             defaultFinish();
@@ -61,7 +60,6 @@ public class MemberModifyActivity extends BaseActivity implements View.OnClickLi
         btn_delete.setOnClickListener(this);
         findViewById(R.id.iv_code).setVisibility(View.GONE);
 
-
         et_num.setText(member.getCardNumber());
         et_name.setText(member.getName());
         et_phone.setText(member.getPhone());
@@ -80,6 +78,7 @@ public class MemberModifyActivity extends BaseActivity implements View.OnClickLi
                 data.putExtra("member", member);
                 sendBroadcast(data);
                 AppManager.getAppManager().returnToActivity(MemberListActivity.class);
+                finish();
             } else if (result.geteCode() == MemberDataModel.UPDATE_MEMBER) {
                 if(result.getStatus()==200) {
                     showShortToast("会员信息更新成功");
@@ -92,6 +91,10 @@ public class MemberModifyActivity extends BaseActivity implements View.OnClickLi
                     data.setAction(Constants.Broadcast.RECEIVER_UPDATE_MEMBER);
                     data.putExtra("member", member);
                     sendBroadcast(data);
+                    setResult(RESULT_OK);
+                    AppManager.getAppManager().returnToActivity(MemberListActivity.class);
+                    finish();
+
                 }
             }
         }
@@ -140,7 +143,12 @@ public class MemberModifyActivity extends BaseActivity implements View.OnClickLi
             return;
         }
         showLoadingDialog(R.string.loading_update_member);
-        System.out.println(member.getId());
         MemberDataModel.updateMember(member.getId(), strName, strCarNumber,strPhone,strCarType,strNum);
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

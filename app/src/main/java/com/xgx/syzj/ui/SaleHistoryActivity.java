@@ -23,7 +23,9 @@ import com.xgx.syzj.bean.Result;
 import com.xgx.syzj.datamodel.SaleListRecordModel;
 import com.xgx.syzj.event.EventCenter;
 import com.xgx.syzj.event.SimpleEventHandler;
+import com.xgx.syzj.utils.CacheUtil;
 import com.xgx.syzj.utils.Utils;
+import com.xgx.syzj.widget.CustomAlertDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,11 +107,18 @@ public class SaleHistoryActivity extends BaseActivity {
         });
         lv_data.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
-            public boolean onMenuItemClick(int position, SwipeMenu menu, int index)
+            public boolean onMenuItemClick(final int position, SwipeMenu menu, int index)
             {
-                showLoadingDialog(R.string.loading_date);
-                cancelPosition = position;
-                mDataModel.setOrderCancel(String.valueOf(mDataList.get(position).getId()));
+                CustomAlertDialog.showRemindDialog(SaleHistoryActivity.this, "温馨提示", "是否删除", new CustomAlertDialog.IAlertDialogListener() {
+                    @Override
+                    public void onSure(Object obj) {
+
+                        showLoadingDialog(R.string.loading_date);
+                        cancelPosition = position;
+                        mDataModel.setOrderCancel(String.valueOf(mDataList.get(position).getId()));
+
+                    }
+                });
                 return true;
             }
         });

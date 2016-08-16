@@ -11,6 +11,7 @@ import com.xgx.syzj.bean.Result;
 import com.xgx.syzj.bean.stockRecordHistory;
 import com.xgx.syzj.event.EventCenter;
 import com.xgx.syzj.event.GoodsListDataEvent;
+import com.xgx.syzj.utils.CacheUtil;
 import com.xgx.syzj.utils.FastJsonUtil;
 import com.xgx.syzj.widget.list.ListPageInfo;
 import com.xgx.syzj.widget.list.PagedListDataModel;
@@ -34,10 +35,10 @@ public class GoodsDataModel extends PagedListDataModel<Goods> {
     public static final byte ADD_BYSTORE=0x17;
 
     private static byte code;
-    private String key;
+    private  String key;
     private String brand;
-    private long storeId;
-    private GoodsListDataEvent data = new GoodsListDataEvent();
+    private  long storeId;
+    private  GoodsListDataEvent data = new GoodsListDataEvent();
 
     public GoodsDataModel(int num) {
         mListPageInfo = new ListPageInfo<>(num);
@@ -65,8 +66,27 @@ public class GoodsDataModel extends PagedListDataModel<Goods> {
 
     @Override
     protected void doQueryData() {
-        Api.getProductsList(key, storeId, mListPageInfo.getPage(), mListPageInfo.getNumPerPage(), new OnRequestListener() {
 
+
+    }
+
+    private static OnRequestListener listener = new OnRequestListener() {
+
+        @Override
+        public void onSuccess(Result result) {
+            result.seteCode(code);
+            EventCenter.getInstance().post(result);
+
+        }
+
+        @Override
+        public void onError(String errorCode, String message) {
+            EventCenter.getInstance().post(message);
+        }
+    };
+
+    public void getAllProduct(){
+        Api.findAllProduct(mListPageInfo.getPage(), mListPageInfo.getNumPerPage(), new OnRequestListener() {
             @Override
             public void onSuccess(Result result) {
                 JSONObject object= JSON.parseObject(result.getResult());
@@ -75,6 +95,41 @@ public class GoodsDataModel extends PagedListDataModel<Goods> {
                     list = FastJsonUtil.json2List(object.getString("products"), Goods.class);
                 }else {
                     list=new ArrayList<>();
+                }
+                data.dataList = list;
+                if (list != null && list.size() > 0) {
+                    if (list.size() >= mListPageInfo.getNumPerPage()) {
+                        data.hasMore = true;
+                    } else {
+                        data.hasMore = false;
+                    }
+                } else {
+                    data.hasMore = false;
+                    list = new ArrayList<>();
+                }
+                setRequestResult(data.dataList, data.hasMore);
+                EventCenter.getInstance().post(list);
+            }
+
+            @Override
+            public void onError(String errorCode, String message) {
+                setRequestFail();
+                EventCenter.getInstance().post(message);
+            }
+        });
+    }
+
+    public void getProductsList(){
+        Api.getProductsList(key, storeId, mListPageInfo.getPage(), mListPageInfo.getNumPerPage(), new OnRequestListener() {
+
+            @Override
+            public void onSuccess(Result result) {
+                JSONObject object = JSON.parseObject(result.getResult());
+                List<Goods> list;
+                if (result.getStatus() == 200) {
+                    list = FastJsonUtil.json2List(object.getString("products"), Goods.class);
+                } else {
+                    list = new ArrayList<>();
                 }
                 data.dataList = list;
                 if (list != null && list.size() > 0) {
@@ -99,28 +154,12 @@ public class GoodsDataModel extends PagedListDataModel<Goods> {
                 EventCenter.getInstance().post(message);
             }
         });
-
-
     }
 
-    private static OnRequestListener listener = new OnRequestListener() {
 
-        @Override
-        public void onSuccess(Result result) {
-            result.seteCode(code);
-            EventCenter.getInstance().post(result);
-
-        }
-
-        @Override
-        public void onError(String errorCode, String message) {
-            EventCenter.getInstance().post(message);
-        }
-    };
-
-    public static void addGoods(String barcode, String productName, String categoryId, String inputPrice, String sellingPrice, String quantity, String specification, String brand,String unitid,String image) {
+    public static void addGoods(String barcode, String productName, String categoryId, String inputPrice, String sellingPrice, String vip_price, String specification, String brand,String unitid,String image) {
         code = ADD_SUCCESS;
-        Api.addProducts(barcode, productName, categoryId, inputPrice, sellingPrice, quantity, specification, brand,unitid,image, listener);
+        Api.addProducts(barcode, productName, categoryId, inputPrice, sellingPrice, vip_price, specification, brand,unitid,image, listener);
     }
 
     public static void queryhistoryData(int productId){
@@ -151,9 +190,9 @@ public class GoodsDataModel extends PagedListDataModel<Goods> {
     }
 
 
-    public static void modifyGoods(int productId, String barcode, String productName, String categoryId, String inputPrice, String sellingPrice, String quantity, String specification,String brand, String unitid,String image) {
+    public static void modifyGoods(int productId, String barcode, String productName, String categoryId, String inputPrice, String sellingPrice, String vip_price, String specification,String brand, String unitid,String image) {
         code = MODIFY_SUCCESS;
-        Api.updateProducts(productId, barcode, productName, categoryId, inputPrice, sellingPrice, quantity, specification, brand,unitid,image, listener);
+        Api.updateProducts(productId, barcode, productName, categoryId, inputPrice, sellingPrice, vip_price, specification, brand,unitid,image, listener);
     }
 
     public static void inAndOutGoods(int flag, int productId, int stockCount, String description) {

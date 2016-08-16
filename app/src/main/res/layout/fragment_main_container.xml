@@ -147,7 +147,7 @@
                     android:background="@mipmap/tool_sales_management"/>
 
                 <TextView
-                    android:id="@+id/tv_title1"
+                    android:id="@+id/tv_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/iv_bt1"
@@ -161,7 +161,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/iv_bt1"
-                    android:layout_below="@id/tv_title1"
+                    android:layout_below="@id/tv_title"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="5dp"
                     android:text="@string/main_manage_goods_message"
