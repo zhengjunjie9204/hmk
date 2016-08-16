@@ -98,7 +98,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:text="机卡次:0张"
+                        android:text="计次卡:0张"
                         android:textColor="@color/top_bar_color"
                         android:textSize="10sp" />
                 </LinearLayout>

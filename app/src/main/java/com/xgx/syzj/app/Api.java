@@ -613,13 +613,10 @@ public class Api extends BaseRequest {
             if (!TextUtils.isEmpty(key)) {
                 info.put("key", key);
             }
-
             info.put("pageNo", page);
             info.put("pageSize", pageSize);
-            //CacheUtil.getmInstance().getUser().getStoreId()  id
-            info.put("storeId", 1);
+            info.put("storeId", CacheUtil.getmInstance().getUser().getStoreId());
             String json = FastJsonUtil.bean2Json(info);
-            Log.e("json:", json);
             json = Base64Util.encode(json.getBytes("UTF-8"));
             params.put("info", json);
         } catch (Exception e) {
@@ -873,7 +870,7 @@ public class Api extends BaseRequest {
     /**
      * 获取未支付的订单
      */
-    public static StringRequest getUnpayOrder(int pageNo, int paegSize, OnRequestListener listener)
+    public static StringRequest getUnpayOrder(int pageNo, int pageSize, OnRequestListener listener)
     {
         Map<String, String> params = null;
         try {
@@ -881,7 +878,7 @@ public class Api extends BaseRequest {
             JSONObject info = new JSONObject();
             info.put("storeId", CacheUtil.getmInstance().getUser().getStoreId());
             info.put("pageNo", pageNo);
-            info.put("paegSize", paegSize);
+            info.put("pageSize", pageSize);
             String json = Base64Util.encode(info.toString().getBytes("UTF-8"));
             params.put("info", json);
         } catch (Exception e) {
@@ -1343,7 +1340,7 @@ public class Api extends BaseRequest {
     }
 
     /**
-     * 删除会员
+     * 获取会员详情
      *
      * @param memberId
      * @param listener

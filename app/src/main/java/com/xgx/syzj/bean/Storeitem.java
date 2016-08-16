@@ -9,13 +9,13 @@ public class StoreItem implements Serializable{
     private String name;
     private long Price;
     private int id;
-    private String LaborTime;
+    private int LaborTime;
 
-    public String getLaborTime() {
+    public int getLaborTime() {
         return LaborTime;
     }
 
-    public void setLaborTime(String laborTime) {
+    public void setLaborTime(int laborTime) {
         LaborTime = laborTime;
     }
 

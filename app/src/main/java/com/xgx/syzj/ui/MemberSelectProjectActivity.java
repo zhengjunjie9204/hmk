@@ -2,6 +2,8 @@ package com.xgx.syzj.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 
@@ -30,7 +32,9 @@ import java.util.Map;
 /**
  * 充值计次项目
  */
-public class MemberSelectProjectActivity extends BaseActivity implements View.OnClickListener, GoodsrechargeAdapter.SignledListener, GoodsitemChargeAdapter.SignledListener {
+public class MemberSelectProjectActivity extends BaseActivity implements View.OnClickListener{
+    public static final int STATUS_RECHARGE = 0x101;
+    public static final int STATUS_ITEM = 0x102;
     private ComboDataModel mDataModel;
     private ListViewExtend lv_count;
     private ExpandableListViewExtend exp_lv_package;
@@ -39,6 +43,22 @@ public class MemberSelectProjectActivity extends BaseActivity implements View.On
     private ArrayList<StoreItem> mStoreList;
     private ArrayList<Combo> mComboList;
     private Button mBtnOk;
+
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg)
+        {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0x101:
+                    comboAdapter.cleanMap();
+                    break;
+                case 0x102:
+                    proAdapter.cleanMap();
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -61,9 +81,9 @@ public class MemberSelectProjectActivity extends BaseActivity implements View.On
         mBtnOk.setOnClickListener(this);
         lv_count = (ListViewExtend) findViewById(R.id.lv_count);
         exp_lv_package = (ExpandableListViewExtend) findViewById(R.id.exp_lv_package);
-        proAdapter = new GoodsrechargeAdapter(this, mStoreList);
+        proAdapter = new GoodsrechargeAdapter(this, mStoreList,mHandler);
         lv_count.setAdapter(proAdapter);
-        comboAdapter = new GoodsitemChargeAdapter(this, mComboList);
+        comboAdapter = new GoodsitemChargeAdapter(this, mComboList,mHandler);
         exp_lv_package.setAdapter(comboAdapter);
     }
 
@@ -111,17 +131,5 @@ public class MemberSelectProjectActivity extends BaseActivity implements View.On
             setResult(RESULT_OK,data);
             defaultFinish();
         }
-    }
-
-    @Override
-    public void onStoreClick(StoreItem item)
-    {
-        comboAdapter.cleanMap();
-    }
-
-    @Override
-    public void onComboClick(Combo combo)
-    {
-        proAdapter.cleanMap();
     }
 }

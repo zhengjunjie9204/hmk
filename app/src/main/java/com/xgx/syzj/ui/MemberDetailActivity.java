@@ -5,19 +5,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
 import com.xgx.syzj.R;
+import com.xgx.syzj.app.Api;
 import com.xgx.syzj.app.Constants;
 import com.xgx.syzj.base.BaseActivity;
+import com.xgx.syzj.base.BaseRequest;
 import com.xgx.syzj.bean.Member;
 import com.xgx.syzj.bean.Result;
 import com.xgx.syzj.datamodel.MemberDataModel;
 import com.xgx.syzj.event.EventCenter;
 import com.xgx.syzj.event.SimpleEventHandler;
+import com.xgx.syzj.utils.FastJsonUtil;
 import com.xgx.syzj.widget.CustomAlertDialog;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * 会员详情
@@ -26,7 +31,6 @@ import com.xgx.syzj.widget.CustomAlertDialog;
  * @created 2015年08月31日 11:06
  */
 public class MemberDetailActivity extends BaseActivity {
-
     private TextView tv_name, tv_card, tv_money, tv_count, tv_phone, tv_number, tv_type, tv_all_pay;
     private Member member;
 
@@ -34,7 +38,6 @@ public class MemberDetailActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member_detail);
-
         initView();
         member = getIntent().getParcelableExtra("member");
         if (member == null) {
@@ -65,11 +68,7 @@ public class MemberDetailActivity extends BaseActivity {
         tv_name.setText(member.getName());
         tv_card.setText("NO:" + member.getCardNumber());
         tv_money.setText("储值：¥ " + member.getStoredMoney());
-        String status="0";
-        if(!TextUtils.isEmpty(member.getStatus())){
-            status=member.getStatus();
-        }
-        tv_count.setText("计次卡：" + status+ "张");
+        tv_count.setText("计次卡：" + member.getMemberItemAmount()+ "张");
         tv_all_pay.setText("¥ " + member.getStoredMoney() + "\n累计消费");
         tv_phone.setText(member.getPhone());
         tv_type.setText(member.getCarType());
@@ -99,11 +98,6 @@ public class MemberDetailActivity extends BaseActivity {
 //                //删除响应
 //                MemberDetailActivity.this.defaultFinish();
 //            }
-            else if (action.equals(Constants.Broadcast.RECEIVER_UPDATE_MEMBER)) {
-                //更新会员信息
-                member = intent.getParcelableExtra("member");
-                initDate();
-            }
         }
     };
 
@@ -162,6 +156,43 @@ public class MemberDetailActivity extends BaseActivity {
         Bundle bundle = new Bundle();
         bundle.putParcelable("member", member);
         gotoActivity(MemberModifyActivity.class, bundle);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK){
+            getMemberDetails();
+        }
+    }
+
+    private void getMemberDetails(){
+        Api.getMenberDetails(member.getId(), new BaseRequest.OnRequestListener() {
+            @Override
+            public void onSuccess(Result result)
+            {
+                if (result.getStatus() == 200) {
+                    try {
+                        JSONObject json = new JSONObject(result.getResult());
+                        member = FastJsonUtil.json2Bean(json.getString("memberInfo"),Member.class);
+                        initDate();
+                        Intent data = new Intent();
+                        data.setAction(Constants.Broadcast.RECEIVER_UPDATE_MEMBER);
+                        data.putExtra("member", member);
+                        sendBroadcast(data);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onError(String errorCode, String message)
+            {
+
+            }
+        });
     }
 
     @Override

@@ -51,22 +51,23 @@ public class RevenueFastAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_car_history, null);
             hold.tv_result = (TextView) convertView.findViewById(R.id.tv_result);
             hold.tv_name = (TextView) convertView.findViewById(R.id.tv_carNum);
+            hold.mTvProName = (TextView) convertView.findViewById(R.id.item_tv_product_name);
             convertView.setTag(hold);
         } else {
             hold = (HoldClass) convertView.getTag();
         }
         OrderList orderList = mList.get(position);
-
         hold.tv_name.setText(orderList.getCarNumber());
         if (orderList.getPayStatus() == 0) {
             hold.tv_result.setText("未完成");
         }else if(orderList.getPayStatus() == 3){
             hold.tv_result.setText("已完成");
         }
+//        hold.mTvProName.setText(orderList.);
         return convertView;
     }
 
     class HoldClass{
-        TextView tv_name,tv_number,tv_jifen,tv_result;
+        TextView tv_name,tv_number,tv_jifen,tv_result,mTvProName;
     }
 }

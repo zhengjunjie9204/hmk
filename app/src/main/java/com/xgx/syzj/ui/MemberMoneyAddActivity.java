@@ -1,6 +1,5 @@
 package com.xgx.syzj.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -9,7 +8,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.xgx.syzj.R;
-import com.xgx.syzj.app.Constants;
 import com.xgx.syzj.base.BaseActivity;
 import com.xgx.syzj.bean.Member;
 import com.xgx.syzj.bean.Result;
@@ -94,9 +92,7 @@ public class MemberMoneyAddActivity extends BaseActivity implements View.OnClick
                     showShortToast(result.getMessage());
                 }
                 if(result.getStatus() == 200){
-                    Intent data = new Intent(Constants.Broadcast.RECEIVER_ADD_RECHARGE);
-                    data.putExtra("member", member);
-                    sendBroadcast(data);
+                    setResult(RESULT_OK);
                     defaultFinish();
                 }
             }

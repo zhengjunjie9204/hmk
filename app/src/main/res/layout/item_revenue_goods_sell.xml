@@ -51,7 +51,7 @@
         <!--android:layout_marginLeft="10dp"-->
         <!--android:background="@mipmap/delete_classify" />-->
 
-    <EditText
+    <TextView
         android:id="@+id/et_time"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
@@ -62,8 +62,6 @@
         android:selectAllOnFocus="true"
         android:background="@mipmap/meetting_edittext_bg"
         android:gravity="center"
-        android:inputType="numberDecimal"
-        android:maxLength="4"
         android:padding="5dp"
         android:text="1"
         android:textColor="@color/title_3_color" />

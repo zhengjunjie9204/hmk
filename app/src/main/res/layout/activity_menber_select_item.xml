@@ -1,65 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-       >
+        android:layout_height="48dp">
+
         <TextView
+            android:layout_marginLeft="24dp"
             android:id="@+id/tv_meal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
             android:maxWidth="100dp"
-            android:paddingBottom="20dp"
-            android:paddingTop="20dp"
             android:text="计次A套餐"
-            android:textColor="@color/light_blue" />
+            android:textColor="@color/light_blue"/>
 
         <CheckBox
+            android:button="@null"
             android:id="@+id/cb_wash2"
-            style="@style/checkbox_sell"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
+            android:layout_width="24dp"
+            android:background="@drawable/checkbox_light"
+            android:layout_height="24dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
             android:focusable="false"/>
 
         <TextView
             android:id="@+id/tv_money2"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:maxWidth="80dp"
+            android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/cb_wash2"
+            android:gravity="center_vertical"
+            android:maxWidth="80dp"
             android:text="3500.00"
             android:textColor="@color/red"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/tv_money2"
+            android:gravity="center_vertical"
             android:text="￥"
             android:textColor="@color/red"
-            android:textSize="16sp" />
-
-
+            android:textSize="16sp"/>
     </RelativeLayout>
 
-    <include layout="@layout/layout_line"
+    <include
+        layout="@layout/layout_line"
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_marginLeft="40dp"/>
-
-
+        android:layout_height="0.5dp"/>
 
 </LinearLayout>

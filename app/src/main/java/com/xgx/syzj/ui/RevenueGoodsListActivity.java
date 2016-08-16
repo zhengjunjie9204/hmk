@@ -2,7 +2,6 @@ package com.xgx.syzj.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -62,7 +61,7 @@ public class RevenueGoodsListActivity extends BaseActivity {
         tv_count = (TextView) findViewById(R.id.tv_count);
         et_text.setOnEditorActionListener(onEditorActionListener);
         mListView = (ListView) findViewById(R.id.lv_goods);
-        mAdapter = new RevenueGoodListAdapter(this, mList, deleteItemCount, textChange);
+        mAdapter = new RevenueGoodListAdapter(this, mList, null);
         mListView.setAdapter(mAdapter);
     }
 
@@ -109,33 +108,6 @@ public class RevenueGoodsListActivity extends BaseActivity {
         {
             showShortToast(error);
             loadMoreListViewContainer.loadMoreError(0, error);
-        }
-    };
-
-    private RevenueGoodListAdapter.IDeleteItemCount deleteItemCount = new RevenueGoodListAdapter.IDeleteItemCount() {
-        @Override
-        public void onItemDelete(int position)
-        {
-            Goods project = mList.get(position);
-            int count = project.getQuantity();
-            if (count == 0) {
-                mList.remove(position);
-            } else {
-                project.setQuantity(count - 1);
-            }
-            mAdapter.notifyDataSetChanged();
-        }
-    };
-
-    private RevenueGoodListAdapter.ITextChange textChange = new RevenueGoodListAdapter.ITextChange() {
-        @Override
-        public void onTextChange(int position, String s)
-        {
-            if (!TextUtils.isEmpty(s)) {
-                Goods goods = mList.get(position);
-                int count = Integer.parseInt(s);
-                goods.setQuantity(count);
-            }
         }
     };
 

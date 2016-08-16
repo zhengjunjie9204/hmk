@@ -2,7 +2,6 @@ package com.xgx.syzj.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -15,7 +14,6 @@ import com.xgx.syzj.R;
 import com.xgx.syzj.adapter.ProjectListAdapter;
 import com.xgx.syzj.app.Constants;
 import com.xgx.syzj.base.BaseActivity;
-import com.xgx.syzj.bean.Goods;
 import com.xgx.syzj.bean.Project;
 import com.xgx.syzj.datamodel.ProjectDataModel;
 import com.xgx.syzj.event.EventCenter;
@@ -73,14 +71,10 @@ public class ProjectListActivity extends BaseActivity implements AdapterView.OnI
                 mDataModel.queryNextPage();
             }
         });
-
-        mAdapter = new ProjectListAdapter(this, mList,deleteItemCount,textChange);
+        mAdapter = new ProjectListAdapter(this, mList,null);
         lv_project.setAdapter(mAdapter);
         lv_project.setOnItemClickListener(this);
-
-        mDataModel.queryNextPage();
-
-
+        mDataModel.queryFirstPage();
     }
 
     private SimpleEventHandler eventHandler = new SimpleEventHandler() {
@@ -95,33 +89,7 @@ public class ProjectListActivity extends BaseActivity implements AdapterView.OnI
             showShortToast(error);
             loadMoreListViewContainer.loadMoreError(0, error);
         }
-        //资金流水和报表加上选门店
-    };
 
-
-    private ProjectListAdapter.IDeleteItemCount deleteItemCount = new ProjectListAdapter.IDeleteItemCount() {
-        @Override
-        public void onItemDelete(int position) {
-            Project project = mList.get(position);
-            double count = project.getLaborTime();
-            if (count == 0.5) {
-                mList.remove(position);
-            } else {
-                project.setLaborTime(count - 0.5);
-            }
-            mAdapter.notifyDataSetChanged();
-        }
-    };
-
-    private ProjectListAdapter.ITextChange textChange = new ProjectListAdapter.ITextChange() {
-        @Override
-        public void onTextChange(int position, String s) {
-            if (!TextUtils.isEmpty(s)) {
-                Project project = mList.get(position);
-                double count = Double.parseDouble(s);
-                project.setLaborTime(count);
-            }
-        }
     };
 
     private TextView.OnEditorActionListener onEditorActionListener = new TextView.OnEditorActionListener() {
@@ -139,7 +107,6 @@ public class ProjectListActivity extends BaseActivity implements AdapterView.OnI
             return false;
         }
     };
-
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

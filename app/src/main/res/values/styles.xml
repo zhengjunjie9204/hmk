@@ -80,6 +80,9 @@
     <style name="checkbox_menu" parent="@android:style/Widget.CompoundButton.CheckBox">
         <item name="android:button">@drawable/checkbox_menu</item>
     </style>
+    <style name="checkbox_light" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/checkbox_light</item>
+    </style>
     <style name="checkbox_sell" parent="@android:style/Widget.CompoundButton.CheckBox">
         <item name="android:button">@drawable/checkbox_sell</item>
     </style>

@@ -196,6 +196,32 @@ public class RevenueFastActivity extends BaseActivity {
         getCarNumber();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK){
+            mDataList.clear();
+            mAdapter.notifyDataSetChanged();
+            mDataModel.queryFirstPage();
+        }
+    }
+
+    /**
+     * @param isMember 是否是会员
+     * */
+    private void toSellActivity(int memberId,List<CountItemsBean> countItemsList,boolean isMember)
+    {
+        Intent intent = new Intent(this,RevenuseSellFinishActivity.class);
+        intent.putExtra("carNumber",carNumber);
+        intent.putExtra("memberId",memberId);
+        intent.putExtra("isMember",isMember);
+        if(null != countItemsList){
+            intent.putExtra("countItemsList", (Serializable) countItemsList);
+        }
+        startActivityForResult(intent,0x101);
+    }
+
     private void getCarNumber()
     {
         Api.getCarNumber(carNumber, new BaseRequest.OnRequestListener() {
@@ -228,21 +254,6 @@ public class RevenueFastActivity extends BaseActivity {
 
             }
         });
-    }
-
-    /**
-     * @param isMember 是否是会员
-     * */
-    private void toSellActivity(int memberId,List<CountItemsBean> countItemsList,boolean isMember)
-    {
-        Intent intent = new Intent(this,RevenuseSellFinishActivity.class);
-        intent.putExtra("carNumber",carNumber);
-        intent.putExtra("memberId",memberId);
-        intent.putExtra("isMember",isMember);
-        if(null != countItemsList){
-            intent.putExtra("countItemsList", (Serializable) countItemsList);
-        }
-        startActivity(intent);
     }
 
     private void addOtherMember()

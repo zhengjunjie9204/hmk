@@ -2,14 +2,12 @@ package com.xgx.syzj.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.text.TextUtils;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ScrollView;
 
 import com.xgx.syzj.R;
@@ -34,13 +32,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-public class RevenuseSellFinishActivity extends BaseActivity implements View.OnClickListener,RevenueCountItemAdapter.CountItems {
+public class RevenuseSellFinishActivity extends BaseActivity implements View.OnClickListener, RevenueCountItemAdapter.CountItems {
+    public static final int HANDLER_MONEY = 0x101;
     private ListViewExtend mSellListView;
     private ListViewExtend lv_project;
     private ListViewExtend lv_data;
@@ -58,8 +55,17 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
     private String carNumber;
     private List<CountItemsBean> countItemsList;
     private RevenueCountItemAdapter mCountAdapter;
-    private Map<Integer, CountItemsBean> mdata=new HashMap<Integer, CountItemsBean>();
-
+    private Map<Integer, CountItemsBean> mdata;
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg)
+        {
+            super.handleMessage(msg);
+            if (msg.what == 0x101) {
+                setAllMoney();
+            }
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -86,7 +92,7 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
         } else {
             setTitleText(order.getCarNumber());
             //显示
-
+            getOrderDetails();
         }
     }
 
@@ -99,17 +105,48 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
         btn_cancel = (Button) findViewById(R.id.btn_cancel);
         btn_sure = (Button) findViewById(R.id.btn_sure);
         btn_sure.setOnClickListener(this);
-        projectAdapter = new ProjectListAdapter(this, mProject, deleteItemCount, textChange);
+        projectAdapter = new ProjectListAdapter(this, mProject,mHandler);
         lv_project.setAdapter(projectAdapter);
-        mAdapter = new RevenueGoodListAdapter(this, mGood, deleteItemCountTwo, textChangeTwo);
+        mAdapter = new RevenueGoodListAdapter(this, mGood, mHandler);
         lv_data.setAdapter(mAdapter);
+        lv_project.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                final Project project = mProject.get(position);
+                CustomAlertDialog.editTextDialog(RevenuseSellFinishActivity.this, String.valueOf(project.getPrice()), "请输入单价", new CustomAlertDialog.IAlertDialogListener() {
+                    @Override
+                    public void onSure(Object obj)
+                    {
+                        project.setPrice((int) obj);
+                        projectAdapter.notifyDataSetChanged();
+                        setAllMoney();
+                    }
+                });
+            }
+        });
+        lv_data.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                final Goods goods = mGood.get(position);
+                CustomAlertDialog.editTextDialog(RevenuseSellFinishActivity.this, String.valueOf(goods.getSellingPrice()), "请输入单价", new CustomAlertDialog.IAlertDialogListener() {
+                    @Override
+                    public void onSure(Object obj)
+                    {
+                        goods.setSellingPrice((int) obj);
+                        mAdapter.notifyDataSetChanged();
+                        setAllMoney();
+                    }
+                });
+            }
+        });
         btn_sure.setText("结账");
         btn_cancel.setText(String.format("合计金额：￥%s", allmoney));
         if (null != countItemsList) {
-            mCountAdapter = new RevenueCountItemAdapter(this, countItemsList,this);
+            mCountAdapter = new RevenueCountItemAdapter(this, countItemsList, this);
             mSellListView.setAdapter(mCountAdapter);
         }
-
     }
 
     @Override
@@ -126,40 +163,43 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
                         json.put("amount", goods.getQuantity());
                         productList.put(json);
                     }
-                    if(mProject.size()>0){
                     for (Project project : mProject) {
                         JSONObject json = new JSONObject();
                         json.put("itemId", project.getId());
                         json.put("amount", project.getLaborTime());
                         itemList.put(json);
-                    }}
-                    if(mdata.size()>0){
-                    for(Map.Entry entry :mdata.entrySet()){
-                        CountItemsBean value = (CountItemsBean)entry.getValue();
-
-                    }}
+                    }
+                    if (null != mdata) {
+                        for (Map.Entry entry : mdata.entrySet()) {
+                            CountItemsBean value = (CountItemsBean) entry.getValue();
+                            JSONObject json = new JSONObject();
+                            json.put("itemId", value.getItemId());
+                            json.put("amount", value.getCount());
+                            itemList.put(json);
+                        }
+                    }
                     if (null != order) {
                         if (mGood.size() == 0 && mProject.size() == 0) {
                             orderPayItem(order.getId(), 0, 3);
-                        }else if (mProject.size() == 0){
+                        } else if (mProject.size() == 0) {
                             showShortToast("请选择项目");
-                        }else{
-                            if (productList.length() ==  0) {
+                        } else {
+                            if (productList.length() == 0) {
                                 productList = null;
                             }
                             showLoadingDialog(R.string.loading_date);
-                            editOrder(order.getId(),itemList,productList);
+                            editOrder(order.getId(), itemList, productList);
                         }
                     } else {
-                        if (mGood.size() == 0 && mProject.size() == 0&&mdata.size() == 0) {
+                        if (mGood.size() == 0 && mProject.size() == 0 && (null == mdata || mdata.size() == 0)) {
                             showShortToast("请选择商品或者项目");
                             return;
                         } else {
                             showLoadingDialog(R.string.loading_date);
-                            if (mGood.size() > 0 && mProject.size() == 0&&mdata.size()==0) {//只含商品
+                            if (mGood.size() > 0 && mProject.size() == 0 && (null == mdata || mdata.size() == 0)) {//只含商品
                                 orderPayProduct(0, 3, String.valueOf(allmoney), null, productList);
                             } else {//包含商品和项目
-                                if (productList.length() ==  0) {
+                                if (productList.length() == 0) {
                                     productList = null;
                                 }
                                 orderCreate(String.valueOf(allmoney), 3, productList, itemList);
@@ -182,70 +222,6 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
     {
         gotoActivityForResult(RevenueGoodsListActivity.class, null, 2003);
     }
-
-    private ProjectListAdapter.IDeleteItemCount deleteItemCount = new ProjectListAdapter.IDeleteItemCount() {
-        @Override
-        public void onItemDelete(int position)
-        {
-            Project project = mProject.get(position);
-            double count = project.getLaborTime();
-            if (count == 1) {
-                mProject.remove(position);
-            } else {
-                project.setLaborTime(count - 0.5);
-            }
-            allmoney -= project.getPrice();
-            btn_cancel.setText(String.format("合计金额：￥%s", allmoney));
-            projectAdapter.notifyDataSetChanged();
-        }
-    };
-
-    private ProjectListAdapter.ITextChange textChange = new ProjectListAdapter.ITextChange() {
-        @Override
-        public void onTextChange(int position, String s)
-        {
-            if (!TextUtils.isEmpty(s)) {
-                Project project = mProject.get(position);
-                double count = project.getLaborTime();
-                allmoney -= project.getPrice() * count;
-                count = Double.parseDouble(s);
-                project.setLaborTime(count);
-                allmoney += project.getPrice() * count;
-                btn_cancel.setText(String.format("合计金额：￥%s", allmoney));
-            }
-        }
-    };
-
-    private RevenueGoodListAdapter.IDeleteItemCount deleteItemCountTwo = new RevenueGoodListAdapter.IDeleteItemCount() {
-        @Override
-        public void onItemDelete(int position)
-        {
-            Goods goods = mGood.get(position);
-            double count = goods.getQuantity();
-            if (count == 1) {
-                mGood.remove(position);
-            }
-            allmoney -= goods.getSellingPrice();
-            btn_cancel.setText(String.format("合计金额：￥%s", allmoney));
-            mAdapter.notifyDataSetChanged();
-        }
-    };
-
-    private RevenueGoodListAdapter.ITextChange textChangeTwo = new RevenueGoodListAdapter.ITextChange() {
-        @Override
-        public void onTextChange(int position, String s)
-        {
-            if (!TextUtils.isEmpty(s)) {
-                Goods goods = mGood.get(position);
-                int count = goods.getQuantity();
-                allmoney -= goods.getSellingPrice() * count;
-                count = Integer.parseInt(s);
-                goods.setQuantity(count);
-                allmoney += goods.getSellingPrice() * count;
-                btn_cancel.setText(String.format("合计金额：￥%s", allmoney));
-            }
-        }
-    };
 
     //支付按钮
     public void onAddSure(View view)
@@ -270,15 +246,41 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
         if (resultCode != RESULT_OK) return;
         if (requestCode == 2002) {
             Project project = data.getParcelableExtra("project");
-            allmoney += project.getPrice() * project.getLaborTime();
+            Iterator<Project> proIterator = mProject.iterator();
+            while (proIterator.hasNext()) {
+                Project project1 = proIterator.next();
+                if (project1.getId() == project.getId()) {
+                    proIterator.remove();
+                    break;
+                }
+            }
             mProject.add(project);
             btn_sure.setText("挂单");
             projectAdapter.notifyDataSetChanged();
         } else if (requestCode == 2003) {
             Goods goods = data.getParcelableExtra("good");
-            allmoney += goods.getQuantity() * goods.getSellingPrice();
+            Iterator<Goods> goodIterator = mGood.iterator();
+            while (goodIterator.hasNext()) {
+                Goods goods1 = goodIterator.next();
+                if (goods1.getUid() == goods.getUid()) {
+                    goodIterator.remove();
+                    break;
+                }
+            }
             mGood.add(goods);
             mAdapter.notifyDataSetChanged();
+        }
+        setAllMoney();
+    }
+
+    private void setAllMoney()
+    {
+        allmoney = 0;
+        for (Project project : mProject) {
+            allmoney += project.getPrice() * project.getLaborTime();
+        }
+        for (Goods goods : mGood) {
+            allmoney += goods.getQuantity() * goods.getSellingPrice();
         }
         btn_cancel.setText(String.format("合计金额：￥%s", allmoney));
     }
@@ -333,6 +335,7 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
             {
                 if (result.getStatus() == 200) {
                     showShortToast("挂单成功");
+                    setResult(RESULT_OK);
                     finish();
                 } else {
                     showShortToast("" + result.getMessage());
@@ -372,7 +375,7 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
     }
 
     //编辑已完成的订单(7.11)
-    private void editOrder(int payOrderId,JSONArray itemList,JSONArray productList)
+    private void editOrder(int payOrderId, JSONArray itemList, JSONArray productList)
     {
         Api.editOrder(payOrderId, itemList, productList, new BaseRequest.OnRequestListener() {
             @Override
@@ -393,15 +396,31 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
         });
     }
 
+    private void getOrderDetails()
+    {
+        Api.getOrderDetail(order.getId(), new BaseRequest.OnRequestListener() {
+            @Override
+            public void onSuccess(Result result)
+            {
+
+            }
+
+            @Override
+            public void onError(String errorCode, String message)
+            {
+
+            }
+        });
+    }
 
 
     @Override
-    public void getCountItems(Map<Integer, CountItemsBean> data, int position) {
-        mdata=data;
-        if(mdata.size()>0){
+    public void getCountItems(Map<Integer, CountItemsBean> data, int position)
+    {
+        mdata = data;
+        if (mdata.size() > 0) {
             btn_sure.setText("挂单");
-
-        }else{
+        } else {
             btn_sure.setText("结账");
         }
     }

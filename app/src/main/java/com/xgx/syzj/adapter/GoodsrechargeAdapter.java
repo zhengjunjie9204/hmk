@@ -1,19 +1,18 @@
 package com.xgx.syzj.adapter;
 
 import android.content.Context;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.xgx.syzj.R;
 import com.xgx.syzj.bean.StoreItem;
+import com.xgx.syzj.ui.MemberSelectProjectActivity;
+import com.xgx.syzj.widget.CustomAlertDialog;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,18 +25,23 @@ public class GoodsrechargeAdapter extends BaseAdapter {
     Context mContext;
     List<StoreItem> mList;
     private Map<Integer, StoreItem> selectMap;
-    public GoodsrechargeAdapter(Context context, List<StoreItem> mList)
+    private Handler mHandler;
+
+    public GoodsrechargeAdapter(Context context, List<StoreItem> mList, Handler mHandler)
     {
         this.mContext = context;
         this.mList = mList;
+        this.mHandler = mHandler;
         selectMap = new HashMap<>();
     }
 
-    public Map<Integer, StoreItem> getSlectMap(){
+    public Map<Integer, StoreItem> getSlectMap()
+    {
         return selectMap;
     }
 
-    public void cleanMap(){
+    public void cleanMap()
+    {
         selectMap.clear();
         notifyDataSetChanged();
     }
@@ -49,7 +53,7 @@ public class GoodsrechargeAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup viewGroup)
+    public View getView(final int position, View convertView, ViewGroup viewGroup)
     {
         final HoldClass hold;
         if (convertView == null) {
@@ -57,7 +61,7 @@ public class GoodsrechargeAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.activity_count_menber, null);
             hold.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
             hold.tv_money = (TextView) convertView.findViewById(R.id.tv_money);
-            hold.et_count = (EditText) convertView.findViewById(R.id.et_count);
+            hold.et_count = (TextView) convertView.findViewById(R.id.et_count);
             hold.cb_wash = (CheckBox) convertView.findViewById(R.id.cb_wash);
             convertView.setTag(hold);
         } else {
@@ -65,61 +69,65 @@ public class GoodsrechargeAdapter extends BaseAdapter {
         }
         final StoreItem item = mList.get(position);
         hold.tv_name.setText(item.getName());
-        hold.tv_money.setText(item.getPrice() + "");
-        hold.et_count.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2)
-            {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
-            {
-                String s = hold.et_count.getText().toString();
-                if (!TextUtils.isEmpty(s)) {
-                    hold.cb_wash.setChecked(true);
-                    int c = Integer.parseInt(s.toString());
-                    hold.tv_money.setText((item.getPrice() * c) + "");
-                    item.setLaborTime(s);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable)
-            {
-
-            }
-        });
+        if (item.getLaborTime() == 0) {
+            item.setLaborTime(1);
+        }
+        hold.tv_money.setText(String.valueOf(item.getPrice() * item.getLaborTime()));
+        hold.et_count.setText(String.valueOf(item.getLaborTime()));
+        hold.et_count.setOnClickListener(new MyClickListener(item, true));
         if (selectMap.containsKey(item.getId())) {
             hold.cb_wash.setChecked(true);
         } else {
             hold.cb_wash.setChecked(false);
         }
-        hold.cb_wash.setOnClickListener(new MyClickListener(item));
+        hold.cb_wash.setOnClickListener(new MyClickListener(item, false));
         return convertView;
     }
 
     class MyClickListener implements View.OnClickListener {
-        StoreItem item;
+        private StoreItem item;
+        private boolean isAlert;
 
-        MyClickListener(StoreItem item)
+        MyClickListener(StoreItem item, boolean isAlert)
         {
             this.item = item;
+            this.isAlert = isAlert;
         }
 
         @Override
         public void onClick(View v)
         {
-            if (selectMap.containsKey(item.getId())) {
-                selectMap.clear();
+            if(isAlert){
+                CustomAlertDialog.editTextDialog(mContext, String.valueOf(item.getLaborTime()),"请输入充值次数", new MyIAlertDialogListener(item));
             }else{
-                selectMap.clear();
-                selectMap.put(item.getId(),item);
+                if (selectMap.containsKey(item.getId())) {
+                    selectMap.clear();
+                } else {
+                    selectMap.clear();
+                    selectMap.put(item.getId(), item);
+                }
+                mHandler.sendEmptyMessage(MemberSelectProjectActivity.STATUS_RECHARGE);
+                notifyDataSetChanged();
             }
+        }
+    }
+
+    class MyIAlertDialogListener implements CustomAlertDialog.IAlertDialogListener{
+        private StoreItem item;
+        MyIAlertDialogListener(StoreItem item){
+            this.item = item;
+        }
+        @Override
+        public void onSure(Object obj)
+        {
+            item.setLaborTime((Integer) obj);
+            selectMap.clear();
+            selectMap.put(item.getId(), item);
             notifyDataSetChanged();
         }
     }
+
+
 
     @Override
     public Object getItem(int position)
@@ -136,18 +144,7 @@ public class GoodsrechargeAdapter extends BaseAdapter {
     public class HoldClass {
         TextView tv_name;
         TextView tv_money;
-        EditText et_count;
+        TextView et_count;
         CheckBox cb_wash;
     }
-
-
-    private SignledListener mListener;
-    public interface SignledListener{
-        public void onStoreClick(StoreItem item);
-    }
-
-    public void setSignledClick(SignledListener mListener){
-        this.mListener = mListener;
-    }
-
 }
