@@ -19,14 +19,18 @@ import java.util.List;
  * @author zajo
  * @created 2015年09月23日 10:31
  */
-public class OutInHistoryAdapter extends BaseAdapter {
+public class InHistoryAdapter extends BaseAdapter {
+    private  String mflag="0";
     private Context mContext;
     private List<stockRecordHistory> mDataList = new ArrayList<>();
 
-    public OutInHistoryAdapter(Context context, List<stockRecordHistory> mDataList){
+
+    public InHistoryAdapter(Context context, List<stockRecordHistory> mDataList){
         this.mContext = context;
         this.mDataList = mDataList;
+
     }
+
 
     @Override
     public int getCount() {
@@ -35,6 +39,7 @@ public class OutInHistoryAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
+
         return mDataList.get(position);
     }
 
@@ -46,6 +51,7 @@ public class OutInHistoryAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         HoldClass hold;
+        stockRecordHistory data = mDataList.get(position);
         if (convertView == null){
             hold = new HoldClass();
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_in_out, null);
@@ -55,8 +61,10 @@ public class OutInHistoryAdapter extends BaseAdapter {
         } else {
             hold = (HoldClass) convertView.getTag();
         }
-        hold.tv_time.setText(mDataList.get(position).getCreateTime());
-        hold.tv_count.setText(mDataList.get(position).getStock_count()+"次");
+
+            hold.tv_time.setText(data.getCreateTime());
+            hold.tv_count.setText( data.getStock_count()+ "次");
+
         return convertView;
     }
 
