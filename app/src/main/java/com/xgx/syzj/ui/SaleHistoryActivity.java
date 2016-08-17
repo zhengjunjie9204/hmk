@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -174,7 +175,18 @@ public class SaleHistoryActivity extends BaseActivity {
     private TextView.OnEditorActionListener onEditorActionListener= new TextView.OnEditorActionListener(){
 
         @Override
-        public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+        public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                mDataList.clear();
+                mAdapter.notifyDataSetChanged();
+                String text = mSearch.getText().toString().trim();
+                //根据key
+                mDataModel.payOrder(text,"","","","");
+                mAdapter.notifyDataSetChanged();
+                Utils.hideSoftInput(SaleHistoryActivity.this);
+            }
+
+
             return false;
         }
     };
@@ -185,7 +197,6 @@ public class SaleHistoryActivity extends BaseActivity {
         if (resultCode != RESULT_OK) return;
         if (requestCode == 2003) {
             mDataList.clear();
-
             mAdapter.notifyDataSetChanged();
             String maxTime = data.getStringExtra("maxTime");
             String minTime = data.getStringExtra("minTime");

@@ -27,7 +27,7 @@ public class FeedBackActivity extends BaseActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_feedback);
-setTitleText(getString(R.string.feedback_title));
+        setTitleText(getString(R.string.feedback_title));
         cb = (CheckBox) findViewById(R.id.cb);
         et_phone = (EditText) findViewById(R.id.et_phone);
         //绑定监听器

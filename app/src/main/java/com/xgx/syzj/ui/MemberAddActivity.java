@@ -59,13 +59,17 @@ public class MemberAddActivity extends BaseActivity{
 
         setTitleText(getString(R.string.member_add_title));
         setSubmit(getString(R.string.app_button_sure));
+
+        initView();
+        initPic();
+        EventCenter.bindContainerAndHandler(this, eventHandler);
+    }
+
+    private void initPic() {
         String Pic = CacheUtil.getmInstance().getUser().getStorePic();
         String s = Pic.replaceAll("\\\\", "/");
-        String  storePic=Url.HOST_URL+"qcmr/upload/wechatImg/"+s;
-        initView();
-        initData(storePic);
-
-        EventCenter.bindContainerAndHandler(this, eventHandler);
+        String storePic = Url.HOST_URL + "qcmr/upload/wechatImg/" + s;
+        Picasso.with(this).load(storePic).into(iv_code);
     }
 
     private void initView() {
@@ -79,7 +83,7 @@ public class MemberAddActivity extends BaseActivity{
     }
 
     private void initData(String storePic) {
-        Picasso.with(this).load(storePic).into(iv_code);
+
     }
 
     private SimpleEventHandler eventHandler = new SimpleEventHandler() {

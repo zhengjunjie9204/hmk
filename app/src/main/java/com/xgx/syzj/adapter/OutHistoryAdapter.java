@@ -57,7 +57,7 @@ public class OutHistoryAdapter extends BaseAdapter {
         }
 
         hold.tv_time.setText(data.getCreateTime());
-        hold.tv_count.setText( data.getStock_count()+ "次");
+        hold.tv_count.setText( data.getStock_count()+ "个");
 
         return convertView;
     }
