@@ -102,7 +102,8 @@ public class MemberAddActivity extends BaseActivity{
                     et_cartype.setText("");
                     gotoActivity(MemberListActivity.class);
                 }else{
-                    showShortToast("新增会员失败");
+                    String message = result.getMessage();
+                    showShortToast(message);
                 }
             }
         }

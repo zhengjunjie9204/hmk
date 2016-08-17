@@ -129,14 +129,14 @@
             android:gravity="center"
             android:text="@string/log_button"/>
 
-        <Button
-            android:id="@+id/btn_reg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dip"
-            android:textColor="@color/gray_bg"
-            android:background="@mipmap/login_reg_bg"
-            android:text="@string/log_reg_button"/>
+        <!--<Button-->
+            <!--android:id="@+id/btn_reg"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="20dip"-->
+            <!--android:textColor="@color/gray_bg"-->
+            <!--android:background="@mipmap/login_reg_bg"-->
+            <!--android:text="@string/log_reg_button"/>-->
 
     </LinearLayout>
 

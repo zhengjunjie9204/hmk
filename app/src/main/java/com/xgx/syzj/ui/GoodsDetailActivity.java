@@ -87,9 +87,6 @@ public class GoodsDetailActivity extends BaseActivity {
         tv_vip.setText(goods.getVip_price() + "");
         tv_unit.setText(goods.getSupplier());
 
-
-
-
         tv_brand.setText(goods.getBrand());
         iv_one.setTag(1);
         if(!TextUtils.isEmpty(goods.getImage())){

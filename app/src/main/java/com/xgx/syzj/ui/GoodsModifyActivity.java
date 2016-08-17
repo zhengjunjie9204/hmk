@@ -101,7 +101,7 @@ public class GoodsModifyActivity extends BaseActivity implements UploadPictureVi
                 JSONObject obj = JSON.parseObject(result.getResult());
                 goods = FastJsonUtil.json2Bean(obj.toJSONString(), Goods.class);
                 EventBus.getDefault().postSticky(goods);
-                AppManager.getAppManager().returnToActivity(GoodsListActivity.class);
+               gotoActivity(GoodsListActivity.class);
             } else {
                 showShortToast(result.getMessage());
             }

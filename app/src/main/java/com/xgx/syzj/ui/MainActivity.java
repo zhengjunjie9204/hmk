@@ -126,7 +126,16 @@ public class MainActivity extends FragmentActivity implements IMainMenuListItemC
 
     //我的微店
     public void onMyStore(View view) {
-        gotoActivity(OrderFormActivity.class);
+
+        CustomAlertDialog.showRemindDialog2(MainActivity.this, "温馨提示", "请联系服务商开通微信预约功能\n4008-328-728", new CustomAlertDialog.IAlertDialogListener() {
+            @Override
+            public void onSure(Object obj) {
+            return;
+            }
+        });
+        //        gotoActivity(OrderFormActivity.class);
+
+
 //        gotoActivity();
     }
 
