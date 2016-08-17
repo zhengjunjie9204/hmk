@@ -6,20 +6,26 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.xgx.syzj.R;
+import com.xgx.syzj.app.Api;
 import com.xgx.syzj.base.BaseActivity;
+import com.xgx.syzj.base.BaseRequest;
 import com.xgx.syzj.bean.Result;
+import com.xgx.syzj.bean.Store;
 import com.xgx.syzj.datamodel.BusinessSaleAnalyModel;
 import com.xgx.syzj.event.EventCenter;
 import com.xgx.syzj.event.SimpleEventHandler;
+import com.xgx.syzj.utils.CacheUtil;
 import com.xgx.syzj.utils.DateUtil;
+import com.xgx.syzj.utils.FastJsonUtil;
 import com.xgx.syzj.widget.AnalysisTabBar;
-import com.xgx.syzj.widget.ConsumptionPopupWindowUtil;
+import com.xgx.syzj.widget.StorePopupWindowUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import de.greenrobot.event.EventBus;
 
@@ -36,19 +42,18 @@ public class AnalysismoneyActivity extends BaseActivity implements View.OnClickL
     private String currentTime, startTime;
     private int selectData = -1;
     private TextView mTvAlipay, mTvRemain, mTvWechat, mTvCash, mTvCard;
-
+    private int storeId;
+    private List<Store> storeList;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_analysis_money);
         initView();
-
-
-
+        storeId = CacheUtil.getmInstance().getUser().getStoreId();
         selectBillpay();
         EventCenter.bindContainerAndHandler(this, eventHandler);
-        BusinessSaleAnalyModel.getMoneyReport(startTime, currentTime);
+        BusinessSaleAnalyModel.getMoneyReport(storeId,startTime, currentTime);
     }
 
     private void initView()
@@ -109,7 +114,7 @@ public class AnalysismoneyActivity extends BaseActivity implements View.OnClickL
         }
         selectBillpay();
         showLoadingDialog(R.string.loading_date);
-        BusinessSaleAnalyModel.getMoneyReport(startTime, currentTime);
+        BusinessSaleAnalyModel.getMoneyReport(storeId,startTime, currentTime);
     }
 
     private void changeTabBar(AnalysisTabBar bar)
@@ -125,32 +130,25 @@ public class AnalysismoneyActivity extends BaseActivity implements View.OnClickL
             atbE.setStateColor(R.color.title_6_color);
     }
 
-    private ConsumptionPopupWindowUtil.IPopupWindowCallListener ipopCallListener = new ConsumptionPopupWindowUtil.IPopupWindowCallListener() {
+    private StorePopupWindowUtil.IPopupWindowCallListener ipopCallListener = new StorePopupWindowUtil.IPopupWindowCallListener() {
 
         @Override
-        public void onItemClick(int index)
+        public void onItemClick(int index,Store store)
         {
-            if (index == 1) {
-                btn_store.setText("门店1");
-                selectData = -30;
-                selectBillpay();
-            } else if (index == 2) {
-                btn_store.setText("门店2");
-                selectData = -90;
-                selectBillpay();
-            } else if (index == 3) {
-                btn_store.setText("门店3");
-                selectData = -365;
-                selectBillpay();
-            }
+            btn_store.setText(store.getName());
+            storeId = store.getId();
+            BusinessSaleAnalyModel.getMoneyReport(storeId, startTime, currentTime);
         }
     };
 
     @Override
     protected void submit()
     {
-        new ConsumptionPopupWindowUtil<Object>(this, ipopCallListener)
-                .showActionWindow(btn_store);
+        if(null == storeList || storeList.size()==0){
+            getAllStore();
+        }else{
+            new StorePopupWindowUtil(AnalysismoneyActivity.this, ipopCallListener).showActionWindow(btn_store, storeList);
+        }
     }
 
     private SimpleEventHandler eventHandler = new SimpleEventHandler() {
@@ -177,6 +175,31 @@ public class AnalysismoneyActivity extends BaseActivity implements View.OnClickL
             hideLoadingDialog();
         }
     };
+
+    private void getAllStore(){
+        Api.getAllStore(new BaseRequest.OnRequestListener() {
+            @Override
+            public void onSuccess(Result result)
+            {
+                if (result.getStatus() == 200) {
+                    try {
+                        JSONObject json = new JSONObject(result.getResult());
+                        List<Store> storeList = FastJsonUtil.json2List(json.getString("storeList"), Store.class);
+                        new StorePopupWindowUtil(AnalysismoneyActivity.this, ipopCallListener)
+                                .showActionWindow(btn_store,storeList);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onError(String errorCode, String message)
+            {
+
+            }
+        });
+    }
 
     @Override
     protected void onDestroy()

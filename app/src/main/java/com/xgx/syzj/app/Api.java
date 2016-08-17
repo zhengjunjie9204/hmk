@@ -904,6 +904,13 @@ public class Api extends BaseRequest {
         }
         return getRequest(Url.ORDER_SET_DONE, params, getHeader(), listener);
     }
+    /**
+     * 3.7.5.	设项目订单未支付已完成
+     */
+    public static StringRequest getAllStore(OnRequestListener listener)
+    {
+        return getRequest(Url.FIND_ALL_STORE, null, getHeader(), listener);
+    }
 
     /**
      * 3.7.2.	支付只含商品的订单
@@ -1370,7 +1377,7 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest getMoneyReport(String startTime, String endTime, OnRequestListener listener)
+    public static StringRequest getMoneyReport(int storeId,String startTime, String endTime, OnRequestListener listener)
     {
         Map<String, String> params = null;
         Map<String, Object> info;
@@ -1379,7 +1386,7 @@ public class Api extends BaseRequest {
             info = new HashMap<>();
             info.put("startTime", startTime);
             info.put("endTime", endTime);
-            info.put("storeId", CacheUtil.getmInstance().getUser().getStoreId());
+            info.put("storeId", storeId);
             String json = FastJsonUtil.bean2Json(info);
             json = Base64Util.encode(json.getBytes("UTF-8"));
             params.put("info", json);
@@ -1397,7 +1404,7 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest getSaleReport(String startTime, String endTime, OnRequestListener listener)
+    public static StringRequest getSaleReport(int storeId,String startTime, String endTime, OnRequestListener listener)
     {
         Map<String, String> params = null;
         Map<String, Object> info;
@@ -1406,7 +1413,7 @@ public class Api extends BaseRequest {
             info = new HashMap<>();
             info.put("startTime", startTime);
             info.put("endTime", endTime);
-            info.put("storeId", CacheUtil.getmInstance().getUser().getStoreId());
+            info.put("storeId", storeId);
             String json = FastJsonUtil.bean2Json(info);
             json = Base64Util.encode(json.getBytes("UTF-8"));
             params.put("info", json);

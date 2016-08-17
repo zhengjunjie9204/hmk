@@ -56,6 +56,7 @@ public class RevenueGoodListAdapter extends BaseAdapter{
             hold = new HoldClass();
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_revenue_goods_sell, null);
             hold.tv_money = (TextView) convertView.findViewById(R.id.tv_money);
+            hold.mTvUnit = (TextView) convertView.findViewById(R.id.item_tv_unit);
             hold.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
             hold.et_time = (TextView) convertView.findViewById(R.id.et_time);
 //            hold.iv_delete = (ImageView) convertView.findViewById(R.id.iv_delete);
@@ -63,13 +64,22 @@ public class RevenueGoodListAdapter extends BaseAdapter{
         } else {
             hold = (HoldClass) convertView.getTag();
         }
+        hold.mTvUnit.setText("数量");
         Goods goods = mList.get(position);
         hold.tv_name.setText(goods.getProductName());
-        hold.et_time.setText(goods.getQuantity() + "");
+        if(goods.getCount() > 0) {
+            hold.tv_money.setText("" + goods.getSellingPrice() * goods.getCount());
+            hold.et_time.setText(goods.getCount() + "");
+        }else{
+            if(goods.getQuantity() == 0){
+                goods.setQuantity(1);
+            }
+            hold.tv_money.setText("" + goods.getSellingPrice() * goods.getQuantity());
+            hold.et_time.setText(goods.getQuantity() + "");
+        }
         if (mHandler == null) {
             hold.et_time.setOnClickListener(new MyClickListener(goods));
         }
-        hold.tv_money.setText("" + goods.getSellingPrice() * goods.getQuantity());
         return convertView;
     }
 
@@ -99,7 +109,7 @@ public class RevenueGoodListAdapter extends BaseAdapter{
         @Override
         public void onSure(Object obj)
         {
-            goods.setQuantity((int) obj);
+            goods.setCount((int) obj);
             if (null != mHandler) {
                 mHandler.sendEmptyMessage(RevenuseSellFinishActivity.HANDLER_MONEY);
             }
@@ -109,6 +119,6 @@ public class RevenueGoodListAdapter extends BaseAdapter{
 
     class HoldClass {
         TextView tv_name, tv_money;
-        TextView et_time;
+        TextView et_time,mTvUnit;
     }
 }

@@ -63,7 +63,7 @@ public class RevenueFastAdapter extends BaseAdapter {
         }else if(orderList.getPayStatus() == 3){
             hold.tv_result.setText("已完成");
         }
-//        hold.mTvProName.setText(orderList.);
+        hold.mTvProName.setText(orderList.getItemName());
         return convertView;
     }
 
