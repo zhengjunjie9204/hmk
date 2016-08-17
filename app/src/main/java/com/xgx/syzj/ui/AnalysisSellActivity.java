@@ -13,14 +13,19 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.xgx.syzj.R;
+import com.xgx.syzj.app.Api;
 import com.xgx.syzj.base.BaseActivity;
+import com.xgx.syzj.base.BaseRequest;
 import com.xgx.syzj.bean.Result;
+import com.xgx.syzj.bean.Store;
 import com.xgx.syzj.datamodel.BusinessSaleAnalyModel;
 import com.xgx.syzj.event.EventCenter;
 import com.xgx.syzj.event.SimpleEventHandler;
+import com.xgx.syzj.utils.CacheUtil;
 import com.xgx.syzj.utils.DateUtil;
+import com.xgx.syzj.utils.FastJsonUtil;
 import com.xgx.syzj.widget.AnalysisTabBar;
-import com.xgx.syzj.widget.ConsumptionPopupWindowUtil;
+import com.xgx.syzj.widget.StorePopupWindowUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,6 +33,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import de.greenrobot.event.EventBus;
 
@@ -49,7 +55,8 @@ public class AnalysisSellActivity extends BaseActivity implements View.OnClickLi
     private HorizontalBarChart mChart;
     private String[] mTimes = new String[]{"0:00", "1:00", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00", "10:00", "11:00"
             , "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"};
-
+    private int storeId;
+    private List<Store> storeList;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -67,10 +74,11 @@ public class AnalysisSellActivity extends BaseActivity implements View.OnClickLi
         btn_store = (Button) findViewById(R.id.btn_submit);
         initTabBar();
         initChart();
+        storeId = CacheUtil.getmInstance().getUser().getStoreId();
         changeTabBar(atbA);
         selectBillpay();
         EventCenter.bindContainerAndHandler(this, eventHandler);
-        BusinessSaleAnalyModel.getSaleReport(startTime, currentTime);
+        BusinessSaleAnalyModel.getSaleReport(storeId,startTime, currentTime);
     }
 
     private void initTabBar()
@@ -123,24 +131,14 @@ public class AnalysisSellActivity extends BaseActivity implements View.OnClickLi
         startTime = DateUtil.getStringByOffset(curDate, DateUtil.dateFormatYMDHMS, Calendar.DATE, selectData);
     }
 
-    private ConsumptionPopupWindowUtil.IPopupWindowCallListener ipopCallListener = new ConsumptionPopupWindowUtil.IPopupWindowCallListener() {
+    private StorePopupWindowUtil.IPopupWindowCallListener ipopCallListener = new StorePopupWindowUtil.IPopupWindowCallListener() {
 
         @Override
-        public void onItemClick(int index)
+        public void onItemClick(int index,Store store)
         {
-            if (index == 1) {
-                btn_store.setText("门店1");
-                selectData = -30;
-                selectBillpay();
-            } else if (index == 2) {
-                btn_store.setText("门店2");
-                selectData = -90;
-                selectBillpay();
-            } else if (index == 3) {
-                btn_store.setText("门店3");
-                selectData = -365;
-                selectBillpay();
-            }
+            btn_store.setText(store.getName());
+            storeId = store.getId();
+            BusinessSaleAnalyModel.getMoneyReport(storeId, startTime, currentTime);
         }
     };
 
@@ -171,14 +169,17 @@ public class AnalysisSellActivity extends BaseActivity implements View.OnClickLi
         }
         selectBillpay();
         showLoadingDialog(R.string.loading_date);
-        BusinessSaleAnalyModel.getSaleReport(startTime, currentTime);
+        BusinessSaleAnalyModel.getSaleReport(storeId,startTime, currentTime);
     }
 
     @Override
     protected void submit()
     {
-        new ConsumptionPopupWindowUtil<Object>(this, ipopCallListener)
-                .showActionWindow(btn_store);
+        if(null == storeList || storeList.size()==0){
+            getAllStore();
+        }else{
+            new StorePopupWindowUtil(AnalysisSellActivity.this, ipopCallListener).showActionWindow(btn_store, storeList);
+        }
     }
 
     private SimpleEventHandler eventHandler = new SimpleEventHandler() {
@@ -251,6 +252,30 @@ public class AnalysisSellActivity extends BaseActivity implements View.OnClickLi
         l.setPosition(Legend.LegendPosition.BELOW_CHART_LEFT);
         l.setFormSize(8f);
         l.setXEntrySpace(4f);
+    }
+
+    private void getAllStore(){
+        Api.getAllStore(new BaseRequest.OnRequestListener() {
+            @Override
+            public void onSuccess(Result result)
+            {
+                if (result.getStatus() == 200) {
+                    try {
+                        JSONObject json = new JSONObject(result.getResult());
+                        storeList = FastJsonUtil.json2List(json.getString("storeList"), Store.class);
+                        new StorePopupWindowUtil(AnalysisSellActivity.this, ipopCallListener).showActionWindow(btn_store, storeList);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onError(String errorCode, String message)
+            {
+
+            }
+        });
     }
 
     @Override

@@ -1,7 +1,5 @@
 package com.xgx.syzj.datamodel;
 
-import android.util.Log;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.xgx.syzj.app.Api;
@@ -11,7 +9,6 @@ import com.xgx.syzj.bean.Result;
 import com.xgx.syzj.bean.stockRecordHistory;
 import com.xgx.syzj.event.EventCenter;
 import com.xgx.syzj.event.GoodsListDataEvent;
-import com.xgx.syzj.utils.CacheUtil;
 import com.xgx.syzj.utils.FastJsonUtil;
 import com.xgx.syzj.widget.list.ListPageInfo;
 import com.xgx.syzj.widget.list.PagedListDataModel;
@@ -66,8 +63,40 @@ public class GoodsDataModel extends PagedListDataModel<Goods> {
 
     @Override
     protected void doQueryData() {
+        Api.getProductsList(key, storeId, mListPageInfo.getPage(), mListPageInfo.getNumPerPage(), new OnRequestListener() {
+
+            @Override
+            public void onSuccess(Result result) {
+                JSONObject object= JSON.parseObject(result.getResult());
+                List<Goods> list;
+                if(result.getStatus()==200) {
+                    list = FastJsonUtil.json2List(object.getString("products"), Goods.class);
+                }else {
+                    list=new ArrayList<>();
+                }
+                data.dataList = list;
+                if (list != null && list.size() > 0) {
+                    if (list.size() >= mListPageInfo.getNumPerPage()) {
+                        data.hasMore = true;
+                    } else {
+                        data.hasMore = false;
+                    }
+                } else {
+                    data.hasMore = false;
+                    list = new ArrayList<>();
+                }
+                setRequestResult(data.dataList, data.hasMore);
+
+                EventCenter.getInstance().post(list);
+            }
 
 
+            @Override
+            public void onError(String errorCode, String message) {
+                setRequestFail();
+                EventCenter.getInstance().post(message);
+            }
+        });
     }
 
     private static OnRequestListener listener = new OnRequestListener() {

@@ -11,51 +11,31 @@ public class Project implements Parcelable{
     private String name;
     private double price;
     private double laborTime;
+    private double totalPrice;
+    private String status;
     private String type;
 
     public Project(){}
 
-    public Project(int id, String name, double price, double laborTime, String type) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.laborTime = laborTime;
-        this.type = type;
+    public double getTotalPrice()
+    {
+        return totalPrice;
     }
 
-    protected Project(Parcel in) {
-        id = in.readInt();
-        name = in.readString();
-        price = in.readDouble();
-        laborTime = in.readDouble();
-        type = in.readString();
+    public void setTotalPrice(double totalPrice)
+    {
+        this.totalPrice = totalPrice;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
-        dest.writeString(name);
-        dest.writeDouble(price);
-        dest.writeDouble(laborTime);
-        dest.writeString(type);
+    public String getStatus()
+    {
+        return status;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public void setStatus(String status)
+    {
+        this.status = status;
     }
-
-    public static final Creator<Project> CREATOR = new Creator<Project>() {
-        @Override
-        public Project createFromParcel(Parcel in) {
-            return new Project(in);
-        }
-
-        @Override
-        public Project[] newArray(int size) {
-            return new Project[size];
-        }
-    };
 
     public int getId() {
         return id;
@@ -96,4 +76,47 @@ public class Project implements Parcelable{
     public void setType(String type) {
         this.type = type;
     }
+
+    @Override
+    public int describeContents()
+    {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags)
+    {
+        dest.writeInt(this.id);
+        dest.writeString(this.name);
+        dest.writeDouble(this.price);
+        dest.writeDouble(this.laborTime);
+        dest.writeDouble(this.totalPrice);
+        dest.writeString(this.status);
+        dest.writeString(this.type);
+    }
+
+    protected Project(Parcel in)
+    {
+        this.id = in.readInt();
+        this.name = in.readString();
+        this.price = in.readDouble();
+        this.laborTime = in.readDouble();
+        this.totalPrice = in.readDouble();
+        this.status = in.readString();
+        this.type = in.readString();
+    }
+
+    public static final Creator<Project> CREATOR = new Creator<Project>() {
+        @Override
+        public Project createFromParcel(Parcel source)
+        {
+            return new Project(source);
+        }
+
+        @Override
+        public Project[] newArray(int size)
+        {
+            return new Project[size];
+        }
+    };
 }

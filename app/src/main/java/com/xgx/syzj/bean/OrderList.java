@@ -11,12 +11,44 @@ public class OrderList implements Serializable {
     private String createTime;
     private String name;
     private String mobile;
-    private String orderNum;
     private int employeeId;
+    private String count;
+    private String orderNum;
     /*0:未支付未完成,3:未支付已完成*/
     private int payStatus;
     private String carNumber;
+    private int itemId;
+    private String itemName;
 
+    public String getCount()
+    {
+        return count;
+    }
+
+    public void setCount(String count)
+    {
+        this.count = count;
+    }
+
+    public int getItemId()
+    {
+        return itemId;
+    }
+
+    public void setItemId(int itemId)
+    {
+        this.itemId = itemId;
+    }
+
+    public String getItemName()
+    {
+        return itemName;
+    }
+
+    public void setItemName(String itemName)
+    {
+        this.itemName = itemName;
+    }
 
     public int getId()
     {

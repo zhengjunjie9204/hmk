@@ -67,6 +67,7 @@
         android:textColor="@color/title_3_color" />
 
     <TextView
+        android:id="@+id/item_tv_unit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

@@ -1377,7 +1377,7 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest getMoneyReport(String startTime, String endTime, OnRequestListener listener)
+    public static StringRequest getMoneyReport(int storeId,String startTime, String endTime, OnRequestListener listener)
     {
         Map<String, String> params = null;
         Map<String, Object> info;
@@ -1386,7 +1386,7 @@ public class Api extends BaseRequest {
             info = new HashMap<>();
             info.put("startTime", startTime);
             info.put("endTime", endTime);
-            info.put("storeId", CacheUtil.getmInstance().getUser().getStoreId());
+            info.put("storeId", storeId);
             String json = FastJsonUtil.bean2Json(info);
             json = Base64Util.encode(json.getBytes("UTF-8"));
             params.put("info", json);
@@ -1404,7 +1404,7 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest getSaleReport(String startTime, String endTime, OnRequestListener listener)
+    public static StringRequest getSaleReport(int storeId,String startTime, String endTime, OnRequestListener listener)
     {
         Map<String, String> params = null;
         Map<String, Object> info;
@@ -1413,7 +1413,7 @@ public class Api extends BaseRequest {
             info = new HashMap<>();
             info.put("startTime", startTime);
             info.put("endTime", endTime);
-            info.put("storeId", CacheUtil.getmInstance().getUser().getStoreId());
+            info.put("storeId", storeId);
             String json = FastJsonUtil.bean2Json(info);
             json = Base64Util.encode(json.getBytes("UTF-8"));
             params.put("info", json);

@@ -23,6 +23,7 @@ import com.xgx.syzj.bean.Member;
 import com.xgx.syzj.bean.OrderList;
 import com.xgx.syzj.bean.Project;
 import com.xgx.syzj.bean.Result;
+import com.xgx.syzj.utils.FastJsonUtil;
 import com.xgx.syzj.utils.Utils;
 import com.xgx.syzj.widget.CustomAlertDialog;
 import com.xgx.syzj.widget.ListViewExtend;
@@ -56,7 +57,7 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
     private List<CountItemsBean> countItemsList;
     private RevenueCountItemAdapter mCountAdapter;
     private Map<Integer, CountItemsBean> mdata;
-    private Handler mHandler = new Handler(){
+    private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg)
         {
@@ -66,6 +67,7 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
             }
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -105,7 +107,7 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
         btn_cancel = (Button) findViewById(R.id.btn_cancel);
         btn_sure = (Button) findViewById(R.id.btn_sure);
         btn_sure.setOnClickListener(this);
-        projectAdapter = new ProjectListAdapter(this, mProject,mHandler);
+        projectAdapter = new ProjectListAdapter(this, mProject, mHandler);
         lv_project.setAdapter(projectAdapter);
         mAdapter = new RevenueGoodListAdapter(this, mGood, mHandler);
         lv_data.setAdapter(mAdapter);
@@ -158,16 +160,20 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
                     JSONArray productList = new JSONArray();
                     JSONArray itemList = new JSONArray();
                     for (Goods goods : mGood) {
-                        JSONObject json = new JSONObject();
-                        json.put("productId", goods.getProductId());
-                        json.put("amount", goods.getQuantity());
-                        productList.put(json);
+                        if(goods.getUid() > 0){
+                            JSONObject json = new JSONObject();
+                            json.put("productId", goods.getProductId());
+                            json.put("amount", goods.getCount());
+                            productList.put(json);
+                        }
                     }
                     for (Project project : mProject) {
-                        JSONObject json = new JSONObject();
-                        json.put("itemId", project.getId());
-                        json.put("amount", project.getLaborTime());
-                        itemList.put(json);
+                        if(project.getId() >0){
+                            JSONObject json = new JSONObject();
+                            json.put("itemId", project.getId());
+                            json.put("amount", project.getLaborTime());
+                            itemList.put(json);
+                        }
                     }
                     if (null != mdata) {
                         for (Map.Entry entry : mdata.entrySet()) {
@@ -179,9 +185,9 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
                         }
                     }
                     if (null != order) {
-                        if (mGood.size() == 0 && mProject.size() == 0) {
+                        if (mGood.size() > 0 && mProject.size() > 0 && itemList.length() == 0 && productList.length() == 0) {
                             orderPayItem(order.getId(), 0, 3);
-                        } else if (mProject.size() == 0) {
+                        } else if (itemList.length() == 0) {
                             showShortToast("请选择项目");
                         } else {
                             if (productList.length() == 0) {
@@ -280,7 +286,7 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
             allmoney += project.getPrice() * project.getLaborTime();
         }
         for (Goods goods : mGood) {
-            allmoney += goods.getQuantity() * goods.getSellingPrice();
+            allmoney += goods.getCount() * goods.getSellingPrice();
         }
         btn_cancel.setText(String.format("合计金额：￥%s", allmoney));
     }
@@ -384,6 +390,8 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
                 if (result.getStatus() == 200) {
                     showShortToast("编辑成功");
                     finish();
+                }else{
+                    showShortToast(result.getMessage());
                 }
                 hideLoadingDialog();
             }
@@ -402,7 +410,25 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
             @Override
             public void onSuccess(Result result)
             {
+                try {
+                    if (result.getStatus() == 200) {
+                        JSONObject json = new JSONObject(result.getResult());
+                        List<Project> proList = FastJsonUtil.json2List(json.getString("items"), Project.class);
+                        if(null != proList && proList.size() >0){
+                            mProject.addAll(proList);
+                            projectAdapter.notifyDataSetChanged();
 
+                        }
+                        List<Goods> goodList = FastJsonUtil.json2List(json.getString("products"), Goods.class);
+                        if(null != goodList && goodList.size() >0){
+                            mGood.addAll(goodList);
+                            mAdapter.notifyDataSetChanged();
+                        }
+                        setAllMoney();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override

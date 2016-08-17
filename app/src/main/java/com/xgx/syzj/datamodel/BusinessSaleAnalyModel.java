@@ -25,14 +25,14 @@ public class BusinessSaleAnalyModel extends BaseDataModel{
     public static final byte MONEY_REPORT = 0x10;
     public static final byte SALE_REPORT = 0x11;
 
-    public static void getMoneyReport(String startTime,String endTime){
+    public static void getMoneyReport(int storeId,String startTime,String endTime){
         code = MONEY_REPORT;
-        Api.getMoneyReport(startTime,endTime, listener);
+        Api.getMoneyReport(storeId,startTime,endTime, listener);
     }
 
-    public static void getSaleReport(String startTime,String endTime){
+    public static void getSaleReport(int storeId,String startTime,String endTime){
         code = SALE_REPORT;
-        Api.getSaleReport(startTime,endTime, listener);
+        Api.getSaleReport(storeId,startTime,endTime, listener);
     }
 
     //报表分析：销售分析 毛利总额
