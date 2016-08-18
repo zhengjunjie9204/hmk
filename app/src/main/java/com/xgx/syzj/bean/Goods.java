@@ -12,19 +12,22 @@ import java.text.DecimalFormat;
  * @created 2015年08月20日 11:33
  */
 public class Goods implements Parcelable {
-//            "quantity": 5,
-//            "productId": 69,
+//             productId": 101,
 //            "unitName": "件",
-//            "specification": "50*50cm",
-//            "storeId": 1,
-//            "inputPrice": 20,
-//            "productName": "AAAAAA",
-//            "uid": 7,
-//            "sellingPrice": 50,
+//            "specification": "",
+//            "inputPrice": 58,
+//            "productName": "辉腾",
+//            "sellingPrice": 198,
+//            "pic1": "http://qcmr.junrenwl.com/qcmr/upload/enterprice/product/201681720254832.jpg",
 //            "unitid": 1,
-//            "barcode": "0000000000",
-//            "brand": "宝马",
+//            "pic2": "http://qcmr.junrenwl.com/qcmr/upload/enterprice/product/201681720251621.jpg",
+//            "barcode": "101",
+//            "brand": "",
+//            "pic3": "http://qcmr.junrenwl.com/qcmr/upload/enterprice/product/201681720251220.jpg",
+
+
 //            "categoryId": "1"
+//
 
     private int productId;
     private String productName;
@@ -46,7 +49,9 @@ public class Goods implements Parcelable {
     private int revenueCount;//销售时统计数量
     private int count;
     private double totalPrice;
-
+    private String pic1;
+    private String pic2;
+    private String pic3;
     public Goods() {
     }
 
@@ -177,7 +182,29 @@ public class Goods implements Parcelable {
             return "0";
         }
     }
+    public String getPic1() {
+        return pic1;
+    }
 
+    public void setPic1(String pic1) {
+        this.pic1 = pic1;
+    }
+
+    public String getPic2() {
+        return pic2;
+    }
+
+    public void setPic2(String pic2) {
+        this.pic2 = pic2;
+    }
+
+    public String getPic3() {
+        return pic3;
+    }
+
+    public void setPic3(String pic3) {
+        this.pic3 = pic3;
+    }
     public void setInputPrice(double inputPrice) {
         this.inputPrice = inputPrice;
     }
@@ -261,6 +288,9 @@ public class Goods implements Parcelable {
         dest.writeInt(this.revenueCount);
         dest.writeInt(this.count);
         dest.writeDouble(this.totalPrice);
+        dest.writeString(this.pic1);
+        dest.writeString(this.pic2);
+        dest.writeString(this.pic3);
     }
 
     protected Goods(Parcel in)
@@ -285,6 +315,9 @@ public class Goods implements Parcelable {
         this.revenueCount = in.readInt();
         this.count = in.readInt();
         this.totalPrice = in.readDouble();
+        this.pic1=in.readString();
+        this.pic2=in.readString();
+        this.pic3=in.readString();
     }
 
     public static final Creator<Goods> CREATOR = new Creator<Goods>() {

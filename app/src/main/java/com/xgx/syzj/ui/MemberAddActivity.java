@@ -67,9 +67,9 @@ public class MemberAddActivity extends BaseActivity{
 
     private void initPic() {
         String Pic = CacheUtil.getmInstance().getUser().getStorePic();
-        String s = Pic.replaceAll("\\\\", "/");
-        String storePic = Url.HOST_URL + "qcmr/upload/wechatImg/" + s;
-        Picasso.with(this).load(storePic).into(iv_code);
+//        String s = Pic.replaceAll("\\\\", "/");
+//        String storePic = Url.HOST_URL + "qcmr/upload/wechatImg/" + s;
+        Picasso.with(this).load(Pic).into(iv_code);
     }
 
     private void initView() {
@@ -158,10 +158,7 @@ public class MemberAddActivity extends BaseActivity{
             showShortToast("卡号不能为空");
             return;
         }
-        if (TextUtils.isEmpty(strName)) {
-            showShortToast("姓名不能为空");
-            return;
-        }
+
         if (TextUtils.isEmpty(strPhone)) {
             showShortToast("号码不能为空");
             return;

@@ -144,7 +144,6 @@ public class MemberListActivity extends BaseActivity  {
         adapter = new MemberListAdapter(MemberListActivity.this, sourceDateList);
         sortListView.setAdapter(adapter);
         mDataModel.queryFirstPage();
-
         registerReceiver();
 
         //MemberDataModel.getMemberCount();

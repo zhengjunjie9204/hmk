@@ -2,6 +2,7 @@ package com.xgx.syzj.ui;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.Image;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -25,7 +26,9 @@ import com.xgx.syzj.utils.photos.PhotoReadyHandler;
 import com.xgx.syzj.utils.photos.SelectPhotoManager;
 import com.xgx.syzj.widget.UploadPictureView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import de.greenrobot.event.EventBus;
@@ -51,6 +54,7 @@ public class GoodsModifyActivity extends BaseActivity implements UploadPictureVi
     //    private GoodsCategory type;
     private boolean cancel = false;
     private Goods goods;
+    private List images=new ArrayList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,12 +136,16 @@ public class GoodsModifyActivity extends BaseActivity implements UploadPictureVi
                     upv_three.setAddViewClickable(true);
                     upv_three.setAddViewBackground(R.mipmap.add_picture);
                 } else if (index == 2) {
+
                     upv_three.setImageViewPic(bitmap);
                     upv_three.setAddViewClickable(false);
                 }
                 index++;
+
+
             }
         });
+        images.add(paths.get(index));
         CropOption cropOption = new CropOption();
         cropOption.outputX = 200;
         cropOption.outputY = 200;
@@ -156,7 +164,7 @@ public class GoodsModifyActivity extends BaseActivity implements UploadPictureVi
         if (checkInput()) {
             showLoadingDialog(R.string.loading_modify_goods);
             GoodsDataModel.modifyGoods(goods.getProductId(), strCode,
-                    strName, strType, strInputMoney, strSellMoney, strInputCount, strGuige, strBrand, "1", image);
+                    strName, strType, strInputMoney, strSellMoney, strInputCount, strGuige, strBrand, "1", images);
         }
     }
 

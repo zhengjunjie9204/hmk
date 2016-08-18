@@ -54,7 +54,7 @@ public class MemberItemAdapter extends BaseAdapter {
         ViewHolder holder = (ViewHolder) convertView.getTag();
         CountItemsBean bean = items.get(position);
         holder.mTvName.setText(bean.getName());
-        holder.mTvCount.setText(bean.getCount());
+        holder.mTvCount.setText(bean.getCount()+"");
         return convertView;
     }
 

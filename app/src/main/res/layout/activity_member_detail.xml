@@ -43,32 +43,23 @@
                 android:paddingTop="5dp">
 
                 <TextView
-                    android:id="@+id/tv_name"
+                    android:id="@+id/tv_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="安宁"
+                    android:text="粤C123456"
                     android:textColor="@color/white"
                     android:textSize="18sp" />
 
-                <TextView
-                    android:id="@+id/tv_member_type"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_name"
-                    android:layout_marginTop="8dp"
-                    android:text="普通会员"
-                    android:textColor="@color/white"
-                    android:textSize="14sp" />
+
 
                 <TextView
-                    android:id="@+id/tv_card"
+                    android:id="@+id/tv_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_name"
-                    android:layout_toRightOf="@id/tv_member_type"
+                    android:layout_below="@id/tv_number"
                     android:layout_marginTop="8dp"
                     android:layout_marginLeft="5dp"
-                    android:text="NO:001068"
+                    android:text="本田 奥德赛 2015款 2.4L 尊享版"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
 
@@ -76,7 +67,7 @@
                     android:id="@+id/ll_contant"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_card"
+                    android:layout_below="@id/tv_type"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/button_reg_bg"
                     android:orientation="horizontal"
@@ -90,8 +81,6 @@
                         android:text="储值：¥ 10.00"
                         android:textColor="@color/top_bar_color"
                         android:textSize="10sp" />
-
-
                     <TextView
                         android:id="@+id/tv_count"
                         android:layout_width="wrap_content"
@@ -101,19 +90,21 @@
                         android:text="计次卡:0张"
                         android:textColor="@color/top_bar_color"
                         android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/tv_all_pay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:gravity="right"
+                        android:maxLines="2"
+                        android:text="¥ 100"
+                        android:textColor="@color/white"
+                        android:textSize="10sp" />
+
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tv_all_pay"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
-                    android:gravity="right"
-                    android:maxLines="2"
-                    android:text="¥ 100\n累计消费"
-                    android:textColor="@color/white"
-                    android:textSize="14sp" />
 
             </RelativeLayout>
 
@@ -189,7 +180,6 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:layout_marginTop="20dp"
-                android:paddingBottom="5dp"
                 android:paddingTop="5dp">
 
                 <TextView
@@ -223,7 +213,6 @@
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingBottom="5dp"
                 android:paddingTop="5dp">
 
                 <TextView
@@ -232,12 +221,12 @@
                     android:layout_marginBottom="10dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
-                    android:text="@string/member_add_car_number"
+                    android:text="车主名"
                     android:textColor="@color/gray"
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/tv_number"
+                    android:id="@+id/tv_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -258,7 +247,6 @@
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingBottom="5dp"
                 android:paddingTop="5dp">
 
                 <TextView
@@ -272,10 +260,108 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/tv_type"
+                    android:id="@+id/tv_time1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:gravity="right"
+                    android:paddingRight="10dp"
+                    android:text="" />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#EFEFEF" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:text="下次回访时间"
+                    android:textColor="@color/gray"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_time2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:paddingRight="10dp"
+                    android:text="" />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#EFEFEF" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:text="下次保险时间"
+                    android:textColor="@color/gray"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_time3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:paddingRight="10dp"
+                    android:text="" />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#EFEFEF" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:text="备注"
+                    android:textColor="@color/gray"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_beizhu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:singleLine="true"
                     android:gravity="right"
                     android:paddingRight="10dp"
                     android:text="" />

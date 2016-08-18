@@ -289,9 +289,10 @@ public class Api extends BaseRequest {
     /**
      * 添加商品
      */
-    public static StringRequest addProducts(String barcode, String productName, String categoryId, String inputPrice, String sellingPrice, String vip_price, String specification, String brand, String unitid, String image, OnRequestListener listener)
+    public static StringRequest addProducts(String barcode, String productName, String categoryId, String inputPrice, String sellingPrice, String vip_price, String specification, String brand, String unitid, List images, OnRequestListener listener)
     {
         Map<String, String> params = null;
+        Map<String,Object> infos;
         try {
             params = new HashMap<>();
             params.put("barcode", barcode);
@@ -303,11 +304,12 @@ public class Api extends BaseRequest {
             params.put("vip_price", vip_price);
             params.put("specification", specification);
             params.put("unitid", unitid);
+            params.put("images", images.toString());
             String json = FastJsonUtil.bean2Json(params);
             String info = new String(Base64.encode(json.getBytes("UTF-8"), Base64.DEFAULT));
             params.clear();
             params.put("info", info);
-            params.put("image", image);
+
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -321,7 +323,7 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest updateProducts(int productId, String barcode, String productName, String categoryId, String inputPrice, String sellingPrice, String vip_price, String specification, String brand, String unitid, String image, OnRequestListener listener)
+    public static StringRequest updateProducts(int productId, String barcode, String productName, String categoryId, String inputPrice, String sellingPrice, String vip_price, String specification, String brand, String unitid, List images, OnRequestListener listener)
     {
         Map<String, String> params = null;
         try {
@@ -336,11 +338,12 @@ public class Api extends BaseRequest {
             params.put("vip_price", vip_price);
             params.put("specification", specification);
             params.put("unitid", unitid);
+            params.put("images", images.toString());
             String json = FastJsonUtil.bean2Json(params);
             String info = Base64Util.encode(json.getBytes("UTF-8"));
             params.clear();
             params.put("info", info);
-            params.put("image", image);
+
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -68,7 +68,7 @@ public class SaleHistoryActivity extends BaseActivity {
     private void initView()
     {
         setTitleText("单据列表");
-        setSubmit("门店");
+        setSubmit("筛选");
         mDataList = new ArrayList<>();
         mSearch = (EditText)findViewById(R.id.et_text);
         mSearch.setOnEditorActionListener(onEditorActionListener);

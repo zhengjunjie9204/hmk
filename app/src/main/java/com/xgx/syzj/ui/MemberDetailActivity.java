@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ import com.xgx.syzj.datamodel.MemberDataModel;
 import com.xgx.syzj.event.EventCenter;
 import com.xgx.syzj.event.SimpleEventHandler;
 import com.xgx.syzj.utils.FastJsonUtil;
+import com.xgx.syzj.utils.StrUtil;
 import com.xgx.syzj.widget.CustomAlertDialog;
 
 import org.json.JSONException;
@@ -31,8 +33,11 @@ import org.json.JSONObject;
  * @created 2015年08月31日 11:06
  */
 public class MemberDetailActivity extends BaseActivity {
-    private TextView tv_name, tv_card, tv_money, tv_count, tv_phone, tv_number, tv_type, tv_all_pay;
+    private TextView tv_name, tv_money, tv_count, tv_phone, tv_number, tv_type, tv_all_pay;
     private Member member;
+    private TextView tv_time1,tv_time2,tv_time3;
+    private TextView tv_beizhu;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,27 +56,32 @@ public class MemberDetailActivity extends BaseActivity {
         setTitleText(getString(R.string.member_detail_title));
         setSubmit(getString(R.string.app_button_edit));
         tv_name = (TextView) findViewById(R.id.tv_name);
-        tv_card = (TextView) findViewById(R.id.tv_card);
         tv_money = (TextView) findViewById(R.id.tv_money);
         tv_all_pay = (TextView) findViewById(R.id.tv_all_pay);
         tv_count = (TextView) findViewById(R.id.tv_count);
         tv_phone = (TextView) findViewById(R.id.tv_phone);
         tv_type= (TextView) findViewById(R.id.tv_type);
         tv_number= (TextView) findViewById(R.id.tv_number);
-
+        tv_time1 =(TextView) findViewById(R.id.tv_time1);
+        tv_time2 =(TextView) findViewById(R.id.tv_time2);
+        tv_time3 =(TextView) findViewById(R.id.tv_time3);
+        tv_beizhu =(TextView) findViewById(R.id.tv_beizhu);
 
         EventCenter.bindContainerAndHandler(this, eventHandler);
         registerReceiver();
     }
 
     private void initDate() {
-        tv_name.setText(member.getName());
-        tv_card.setText("NO:" + member.getCardNumber());
+        if(!TextUtils.isEmpty(member.getName()) ) {
+            tv_name.setText(member.getName());
+        }
         tv_money.setText("储值：¥ " + member.getStoredMoney());
         tv_count.setText("计次卡：" + member.getMemberItemAmount()+ "张");
-        tv_all_pay.setText("¥ " + member.getStoredMoney() + "\n累计消费");
+        tv_all_pay.setText("¥ " + member.getStoredMoney() +"累计消费");
         tv_phone.setText(member.getPhone());
-        tv_type.setText(member.getCarType());
+        if(!TextUtils.isEmpty(member.getCarType()) ) {
+            tv_type.setText(member.getCarType());
+        }
         tv_number.setText(member.getCarNumber());
     }
     //注册接受者

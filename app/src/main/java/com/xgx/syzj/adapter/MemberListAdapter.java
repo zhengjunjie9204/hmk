@@ -61,18 +61,17 @@ public class MemberListAdapter extends BaseAdapter/* implements SectionIndexer *
 		if (view == null) {
 			viewHolder = new ViewHolder();
 			view = LayoutInflater.from(mContext).inflate(R.layout.item_member_list,null);
-			viewHolder.tv_name = (TextView) view.findViewById(R.id.tv_name);
 			viewHolder.tv_phone = (TextView) view.findViewById(R.id.tv_phone);
 			viewHolder.tv_jifen = (TextView) view.findViewById(R.id.tv_jifen);
 			viewHolder.tv_money = (TextView) view.findViewById(R.id.tv_money);
 			viewHolder.tv_carNum= (TextView) view.findViewById(R.id.tv_carNum);
+			viewHolder.tv_carType = (TextView) view.findViewById(R.id.tv_carType);
 			view.setTag(viewHolder);
 		} else {
 			viewHolder = (ViewHolder) view.getTag();
 		}
-		viewHolder.tv_name.setText(member.getName());
 		viewHolder.tv_phone.setText(member.getPhone());
-
+		viewHolder.tv_carType.setText(member.getCarType());
 		viewHolder.tv_jifen.setText(member.getMemberItemAmount()+"");
 		viewHolder.tv_money.setText(member.getStoredMoney()+"");
 		viewHolder.tv_carNum.setText(member.getCarNumber());
@@ -81,6 +80,6 @@ public class MemberListAdapter extends BaseAdapter/* implements SectionIndexer *
 	}
 
 	final static class ViewHolder {
-		TextView tvLetter,tv_name,tv_phone,tv_jifen,tv_money,tv_carNum;
+		TextView tvLetter,tv_phone,tv_jifen,tv_money,tv_carNum,tv_carType;
 	}
 }

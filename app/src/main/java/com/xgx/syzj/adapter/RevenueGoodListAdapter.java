@@ -15,6 +15,7 @@ import com.squareup.picasso.Picasso;
 import com.xgx.syzj.R;
 import com.xgx.syzj.bean.Goods;
 import com.xgx.syzj.ui.RevenuseSellFinishActivity;
+import com.xgx.syzj.utils.StrUtil;
 import com.xgx.syzj.widget.CustomAlertDialog;
 import com.xgx.syzj.widget.PhotoViewPagerDialog;
 
@@ -79,7 +80,11 @@ public class RevenueGoodListAdapter extends BaseAdapter {
         } else {
             hold.tv_money.setText("" + (goods.getSellingPrice() * 1));
         }
-        Picasso.with(mContext).load(goods.getImage()).centerCrop().into(hold.mImg);
+        if(!StrUtil.isEmpty(goods.getImage())){
+            Picasso.with(mContext).load(goods.getImage()).centerCrop().into(hold.mImg);
+
+        }
+
         if (mHandler == null) {
             hold.et_time.setOnClickListener(new MyClickListener(goods, 0));
             hold.mImg.setOnClickListener(new MyClickListener(goods, 1));

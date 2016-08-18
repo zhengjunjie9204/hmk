@@ -2,6 +2,7 @@ package com.xgx.syzj.adapter;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.xgx.syzj.R;
 import com.xgx.syzj.app.Api;
 import com.xgx.syzj.bean.AddGoods;
@@ -72,9 +74,10 @@ public class GoodsListAdapter extends BaseAdapter {
             hold = (HoldClass) convertView.getTag();
         }
         hold.iv_goods.setTag(position);
-        if(!TextUtils.isEmpty(goods.getImage())){
-            String path=goods.getImage().replace("\\","");
-            Api.loadBitmap(hold.iv_goods,path,position);
+        if(!TextUtils.isEmpty(goods.getPic1())){
+            String pic1 = goods.getPic1();
+            Log.e("zjj",pic1);
+            Picasso.with(mContext).load(pic1).into( hold.iv_goods);
         }
         hold.tv_name.setText(goods.getProductName());
         hold.tv_count.setText("库存："+goods.getQuantity()+"件");
