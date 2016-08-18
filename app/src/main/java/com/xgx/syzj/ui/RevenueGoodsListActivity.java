@@ -86,10 +86,14 @@ public class RevenueGoodsListActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
                 Goods goods = mList.get(position);
-                Intent intent = new Intent();
-                intent.putExtra("good", goods);
-                setResult(RESULT_OK, intent);
-                defaultFinish();
+                if(goods.getCount() > 0){
+                    Intent intent = new Intent();
+                    intent.putExtra("good", goods);
+                    setResult(RESULT_OK, intent);
+                    defaultFinish();
+                }else{
+                    showShortToast("请输入购买数量");
+                }
             }
         });
     }

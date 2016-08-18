@@ -9,7 +9,13 @@ public class CountItemsBean implements Serializable {
     private int itemId;
     private String name;
     private int count;
+    public CountItemsBean(){}
 
+    public CountItemsBean(int itemId,String name,int count){
+        this.itemId = itemId;
+        this.name = name;
+        this.count = count;
+    }
     public int getItemId()
     {
         return itemId;

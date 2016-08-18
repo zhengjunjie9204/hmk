@@ -24,7 +24,7 @@ public class RevenueCountItemAdapter extends BaseAdapter {
     private List<CountItemsBean> countItemsList;
     private Map<Integer, CountItemsBean> data = new HashMap<>();
     private CountItems countItems;
-
+    private boolean unCheck = false;
     public RevenueCountItemAdapter(Context mContext, List<CountItemsBean> countItemsList, CountItems countItems)
     {
         this.mContext = mContext;
@@ -32,6 +32,9 @@ public class RevenueCountItemAdapter extends BaseAdapter {
         this.countItems = countItems;
     }
 
+    public void setUnCheck(){
+        unCheck = true;
+    }
 
     @Override
     public int getCount()
@@ -63,6 +66,9 @@ public class RevenueCountItemAdapter extends BaseAdapter {
         final CountItemsBean bean = countItemsList.get(position);
         holder.mTvName.setText(bean.getName());
         holder.mTvNum.setText("" + bean.getCount());
+        if(unCheck){
+            holder.mCheckBox.setVisibility(View.INVISIBLE);
+        }
         holder.mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b)

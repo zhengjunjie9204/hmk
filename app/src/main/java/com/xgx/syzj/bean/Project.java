@@ -13,9 +13,20 @@ public class Project implements Parcelable{
     private double laborTime;
     private double totalPrice;
     private String status;
+    private int payType;
     private String type;
 
     public Project(){}
+
+    public int getPayType()
+    {
+        return payType;
+    }
+
+    public void setPayType(int payType)
+    {
+        this.payType = payType;
+    }
 
     public double getTotalPrice()
     {
@@ -92,6 +103,7 @@ public class Project implements Parcelable{
         dest.writeDouble(this.laborTime);
         dest.writeDouble(this.totalPrice);
         dest.writeString(this.status);
+        dest.writeInt(this.payType);
         dest.writeString(this.type);
     }
 
@@ -103,6 +115,7 @@ public class Project implements Parcelable{
         this.laborTime = in.readDouble();
         this.totalPrice = in.readDouble();
         this.status = in.readString();
+        this.payType = in.readInt();
         this.type = in.readString();
     }
 

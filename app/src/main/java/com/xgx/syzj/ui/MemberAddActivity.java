@@ -7,13 +7,11 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.ImageLoader;
 import com.squareup.picasso.Picasso;
 import com.xgx.syzj.R;
 import com.xgx.syzj.adapter.ViewPagerAdapter;
@@ -25,7 +23,6 @@ import com.xgx.syzj.datamodel.CardDataModel;
 import com.xgx.syzj.datamodel.MemberDataModel;
 import com.xgx.syzj.event.EventCenter;
 import com.xgx.syzj.event.SimpleEventHandler;
-import com.xgx.syzj.utils.BitmapUtil;
 import com.xgx.syzj.utils.CacheUtil;
 import com.xgx.syzj.utils.FastJsonUtil;
 import com.xgx.syzj.utils.StrUtil;
@@ -102,7 +99,7 @@ public class MemberAddActivity extends BaseActivity{
                     et_cartype.setText("");
                     gotoActivity(MemberListActivity.class);
                 }else{
-                    showShortToast("新增会员失败");
+                    showShortToast(result.getMessage());
                 }
             }
         }

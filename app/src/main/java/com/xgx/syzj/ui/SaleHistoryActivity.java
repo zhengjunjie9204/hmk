@@ -23,7 +23,6 @@ import com.xgx.syzj.bean.Result;
 import com.xgx.syzj.datamodel.SaleListRecordModel;
 import com.xgx.syzj.event.EventCenter;
 import com.xgx.syzj.event.SimpleEventHandler;
-import com.xgx.syzj.utils.CacheUtil;
 import com.xgx.syzj.utils.Utils;
 import com.xgx.syzj.widget.CustomAlertDialog;
 
@@ -68,7 +67,7 @@ public class SaleHistoryActivity extends BaseActivity {
     private void initView()
     {
         setTitleText("单据列表");
-        setSubmit("筛选");
+        setSubmit("门店");
         mDataList = new ArrayList<>();
         mSearch = (EditText)findViewById(R.id.et_text);
         mSearch.setOnEditorActionListener(onEditorActionListener);

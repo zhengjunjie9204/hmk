@@ -59,7 +59,9 @@ public class AnalysismoneyActivity extends BaseActivity implements View.OnClickL
     private void initView()
     {
         setTitleText(getString(R.string.main_add_revenue));
-        setSubmit("门店");
+        if (CacheUtil.getmInstance().getUser().getRoles() == 1) {
+            setSubmit("门店");
+        }
         initTabBar();
         changeTabBar(atbA);
         btn_store = (Button) findViewById(R.id.btn_submit);

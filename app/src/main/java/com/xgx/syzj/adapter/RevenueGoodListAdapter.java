@@ -2,26 +2,32 @@ package com.xgx.syzj.adapter;
 
 import android.content.Context;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
 import com.xgx.syzj.R;
 import com.xgx.syzj.bean.Goods;
 import com.xgx.syzj.ui.RevenuseSellFinishActivity;
 import com.xgx.syzj.widget.CustomAlertDialog;
+import com.xgx.syzj.widget.PhotoViewPagerDialog;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class RevenueGoodListAdapter extends BaseAdapter{
+public class RevenueGoodListAdapter extends BaseAdapter {
 
     private Context mContext;
     private List<Goods> mList = new ArrayList<>();
-    Handler mHandler;
+    private Handler mHandler;
+    private PhotoViewPagerDialog mDialog;
 
     public RevenueGoodListAdapter(Context context, List<Goods> list, Handler mHandler)
     {
@@ -59,7 +65,7 @@ public class RevenueGoodListAdapter extends BaseAdapter{
             hold.mTvUnit = (TextView) convertView.findViewById(R.id.item_tv_unit);
             hold.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
             hold.et_time = (TextView) convertView.findViewById(R.id.et_time);
-//            hold.iv_delete = (ImageView) convertView.findViewById(R.id.iv_delete);
+            hold.mImg = (ImageView) convertView.findViewById(R.id.item_img);
             convertView.setTag(hold);
         } else {
             hold = (HoldClass) convertView.getTag();
@@ -67,34 +73,47 @@ public class RevenueGoodListAdapter extends BaseAdapter{
         hold.mTvUnit.setText("数量");
         Goods goods = mList.get(position);
         hold.tv_name.setText(goods.getProductName());
-        if(goods.getCount() > 0) {
+        hold.et_time.setText(goods.getCount() + "");
+        if (goods.getCount() > 0) {
             hold.tv_money.setText("" + goods.getSellingPrice() * goods.getCount());
-            hold.et_time.setText(goods.getCount() + "");
-        }else{
-            if(goods.getQuantity() == 0){
-                goods.setQuantity(1);
-            }
-            hold.tv_money.setText("" + goods.getSellingPrice() * goods.getQuantity());
-            hold.et_time.setText(goods.getQuantity() + "");
+        } else {
+            hold.tv_money.setText("" + (goods.getSellingPrice() * 1));
         }
+        Picasso.with(mContext).load(goods.getImage()).centerCrop().into(hold.mImg);
         if (mHandler == null) {
-            hold.et_time.setOnClickListener(new MyClickListener(goods));
+            hold.et_time.setOnClickListener(new MyClickListener(goods, 0));
+            hold.mImg.setOnClickListener(new MyClickListener(goods, 1));
         }
         return convertView;
     }
 
     class MyClickListener implements View.OnClickListener {
         private Goods goods;
+        private int isDialog;//0不需要弹出view框 1是需要弹框
 
-        MyClickListener(Goods goods)
+        MyClickListener(Goods goods, int isDialog)
         {
             this.goods = goods;
+            this.isDialog = isDialog;
         }
 
         @Override
         public void onClick(View v)
         {
-            CustomAlertDialog.editTextDialog(mContext,String.valueOf(goods.getQuantity()),"请输入", new MyIAlertDialogListener(goods));
+            if (isDialog == 0) {
+                CustomAlertDialog.editTextDialog(mContext, String.valueOf(goods.getQuantity()), "请输入", new MyIAlertDialogListener(goods));
+            } else if (isDialog == 1) {
+                if (mDialog == null) {
+                    List<String> list = new ArrayList<>();
+                    for (Goods goods1 : mList) {
+                        if (!TextUtils.isEmpty(goods1.getImage())) {
+                            list.add(goods1.getImage());
+                        }
+                    }
+                    mDialog = new PhotoViewPagerDialog(mContext, list);
+                }
+                mDialog.show();
+            }
         }
     }
 
@@ -109,16 +128,22 @@ public class RevenueGoodListAdapter extends BaseAdapter{
         @Override
         public void onSure(Object obj)
         {
-            goods.setCount((int) obj);
-            if (null != mHandler) {
-                mHandler.sendEmptyMessage(RevenuseSellFinishActivity.HANDLER_MONEY);
+            int count = (int) obj;
+            if (count > goods.getQuantity()) {
+                Toast.makeText(mContext, "数量不能大于库存", Toast.LENGTH_SHORT).show();
+            } else {
+                goods.setCount((int) obj);
+                if (null != mHandler) {
+                    mHandler.sendEmptyMessage(RevenuseSellFinishActivity.HANDLER_MONEY);
+                }
+                notifyDataSetChanged();
             }
-            notifyDataSetChanged();
         }
     }
 
     class HoldClass {
         TextView tv_name, tv_money;
-        TextView et_time,mTvUnit;
+        TextView et_time, mTvUnit;
+        ImageView mImg;
     }
 }

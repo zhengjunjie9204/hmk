@@ -76,8 +76,7 @@
 
             <include layout="@layout/layout_line"
                 android:layout_width="match_parent"
-                android:layout_height="0.3dp"
-                android:layout_marginLeft="30dp"/>
+                android:layout_height="0.3dp"/>
 
             <com.xgx.syzj.widget.ListViewExtend
                 android:id="@+id/lv_project"
@@ -85,7 +84,7 @@
                 android:layout_height="match_parent"
                 android:cacheColorHint="#00000000"
                 android:background="@color/white"
-                android:divider="@null"
+                android:paddingLeft="30dp"
                 android:listSelector="@drawable/button_selector_bg"
                 tools:listitem="@layout/item_revenue_goods_sell"/>
 
@@ -96,6 +95,8 @@
 
             <com.xgx.syzj.widget.ListViewExtend
                 android:id="@+id/sell_listview"
+                android:paddingLeft="30dp"
+                android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -130,19 +131,17 @@
 
             <include layout="@layout/layout_line"
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginLeft="30dp"/>
+                android:layout_height="0.5dp"/>
 
             <com.xgx.syzj.widget.ListViewExtend
                 android:id="@+id/lv_data"
+                android:paddingLeft="30dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:cacheColorHint="#00000000"
                 android:background="@color/white"
-                android:divider="@null"
                 android:listSelector="@drawable/button_selector_bg"
                 tools:listitem="@layout/item_revenue_goods_sell"/>
-
         </LinearLayout>
     </ScrollView>
 
