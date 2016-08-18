@@ -127,7 +127,6 @@ public class SaleHistoryFilterActivity extends BaseActivity implements DatePicke
         public void onEvent(List list){
             data.addAll(list);
             hideLoadingDialog();
-            showShortToast("查询成功");
             Intent intent = new Intent();
             intent.putExtra("maxTime",max);
             intent.putExtra("minTime",min);

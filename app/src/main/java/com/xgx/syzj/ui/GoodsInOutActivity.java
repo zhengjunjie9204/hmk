@@ -13,7 +13,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.xgx.syzj.R;
-import com.xgx.syzj.adapter.OutInHistoryAdapter;
+import com.xgx.syzj.adapter.InHistoryAdapter;
+import com.xgx.syzj.adapter.OutHistoryAdapter;
 import com.xgx.syzj.base.BaseActivity;
 import com.xgx.syzj.bean.Goods;
 import com.xgx.syzj.bean.Result;
@@ -44,8 +45,11 @@ public class GoodsInOutActivity extends BaseActivity implements View.OnClickList
     private int flag = 0;//0入库、1出库
     private Goods goods;
     private ListView lv_data;
-    private List<stockRecordHistory> mDataList = new ArrayList<>();
-    private OutInHistoryAdapter mAdapter;
+    private List<stockRecordHistory> mInDataList = new ArrayList<>();
+    private List<stockRecordHistory> mdata = new ArrayList<>();
+    private List<stockRecordHistory> mOutDataList = new ArrayList<>();
+    private InHistoryAdapter mInAdapter;
+    private OutHistoryAdapter mOutAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,11 +61,13 @@ public class GoodsInOutActivity extends BaseActivity implements View.OnClickList
             defaultFinish();
             return;
         }
-        initView();
-        initListener();
-        tv_count.setText(goods.getQuantity() + "");
         EventCenter.bindContainerAndHandler(this, eventHandler);
         GoodsDataModel.queryhistoryData(goods.getProductId());
+        initView();
+        initListener();
+
+        tv_count.setText(goods.getQuantity() + "");
+
     }
 
     private void initView() {
@@ -78,8 +84,9 @@ public class GoodsInOutActivity extends BaseActivity implements View.OnClickList
         btn_add = (Button) findViewById(R.id.btn_add);
         btn_cut = (Button) findViewById(R.id.btn_cut);
         et_count = (EditText) findViewById(R.id.et_count);
-        mAdapter = new OutInHistoryAdapter(GoodsInOutActivity.this, mDataList);
-        lv_data.setAdapter(mAdapter);
+        mInAdapter = new InHistoryAdapter(GoodsInOutActivity.this,mInDataList);
+        mOutAdapter = new OutHistoryAdapter(GoodsInOutActivity.this, mOutDataList);
+
     }
 
     private void initListener()
@@ -88,43 +95,51 @@ public class GoodsInOutActivity extends BaseActivity implements View.OnClickList
         ll_out.setOnClickListener(this);
         btn_add.setOnClickListener(this);
         btn_cut.setOnClickListener(this);
-        et_count.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after)
-            {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count)
-            {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s)
-            {
-                String str = s.toString().trim();
-                if (str.equals("0")) {
-                    et_count.setText("");
-                    return;
-                }
-                if (flag == 1 && !TextUtils.isEmpty(str)) {
-                    int num = Integer.parseInt(str);
-                    if (num > goods.getQuantity()) {
-                        et_count.setText(goods.getQuantity() + "");
-                    }
-                }
-            }
-        });
+//        et_count.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+//            {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count)
+//            {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s)
+//            {
+//                String str = s.toString().trim();
+//                if (str.equals("0")) {
+//                    et_count.setText("");
+//                    return;
+//                }
+//                if (flag == 1 && !TextUtils.isEmpty(str)) {
+//                    int num = Integer.parseInt(str);
+//                    if (num > goods.getQuantity()) {
+//                        et_count.setText(goods.getQuantity() + "");
+//                    }
+//                }
+//            }
+//        });
     }
 
     private SimpleEventHandler eventHandler = new SimpleEventHandler() {
 
         public void onEvent(List<stockRecordHistory> list){
-            mDataList.clear();
-            mDataList.addAll(list);
-            mAdapter.notifyDataSetChanged();
+            mInDataList.clear();
+            mOutDataList.clear();
+            for (stockRecordHistory data : list) {
+                if("0".equals(data.getFlag())){
+                    mInDataList.add(data);
+                }else if("1".equals(data.getFlag())){
+                    mOutDataList.add(data);
+                }
+            }
+            lv_data.setAdapter(mInAdapter);
+            mInAdapter.notifyDataSetChanged();
         }
 
         public void onEvent(Result result) {
@@ -160,12 +175,21 @@ public class GoodsInOutActivity extends BaseActivity implements View.OnClickList
                 computer(false);
                 break;
             case R.id.ll_in:
-                setButtonBackground(0);
+                incheck();
+
                 break;
             case R.id.ll_out:
+                lv_data.setAdapter(mOutAdapter);
+                mOutAdapter.notifyDataSetChanged();
                 setButtonBackground(1);
                 break;
         }
+    }
+
+    private void incheck() {
+        lv_data.setAdapter(mInAdapter);
+        mInAdapter.notifyDataSetChanged();
+        setButtonBackground(0);
     }
 
     private void setButtonBackground(int flag) {
@@ -201,11 +225,11 @@ public class GoodsInOutActivity extends BaseActivity implements View.OnClickList
             et_count.setHint(getString(R.string.goods_kucun_out_hint));
             et_count.setSelection(0);
             String strNum = et_count.getText().toString().trim();
-            if (TextUtils.isEmpty(strNum)) return;
-            int num = Integer.parseInt(strNum);
-            if (num > goods.getQuantity()) {
-                et_count.setText(goods.getQuantity() + "");
-            }
+//            if (TextUtils.isEmpty(strNum)) return;
+//            int num = Integer.parseInt(strNum);
+//            if (num > goods.getQuantity()) {
+//                et_count.setText(goods.getQuantity() + "");
+//            }
         }
 
     }
@@ -250,10 +274,12 @@ public class GoodsInOutActivity extends BaseActivity implements View.OnClickList
             return;
         }
         int num = Integer.parseInt(strNum);
-        if (flag == 1)
+        if (flag == 1) {
             num = 0 - num;
+        }
         showLoadingDialog(R.string.loading_date);
         //TODO:出入库
         GoodsDataModel.inAndOutGoods(flag, goods.getProductId(), num, "描述");
+
     }
 }

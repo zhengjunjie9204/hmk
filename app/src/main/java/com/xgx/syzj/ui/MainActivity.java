@@ -1,8 +1,11 @@
 package com.xgx.syzj.ui;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SlidingPaneLayout;
@@ -19,8 +22,10 @@ import com.baidu.location.Poi;
 import com.xgx.syzj.R;
 import com.xgx.syzj.app.AppManager;
 import com.xgx.syzj.app.Constants;
+import com.xgx.syzj.base.BaseActivity;
 import com.xgx.syzj.utils.CacheUtil;
 import com.xgx.syzj.widget.CustomAlertDialog;
+import com.xgx.syzj.widget.CustomProgressDialog;
 
 import java.util.List;
 import java.util.Timer;
@@ -31,6 +36,19 @@ public class MainActivity extends FragmentActivity implements IMainMenuListItemC
     public static final int RESULT_SHORTCUT_MENU = 1000;
 
     private SlidingPaneLayout mSlidingPanel;
+    private Handler hanler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            CustomAlertDialog.showRemindDialog2(MainActivity.this, "温馨提示", "该版本已经最新", new CustomAlertDialog.IAlertDialogListener() {
+                @Override
+                public void onSure(Object obj) {
+                    return;
+                }
+            });
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,7 +144,16 @@ public class MainActivity extends FragmentActivity implements IMainMenuListItemC
 
     //我的微店
     public void onMyStore(View view) {
-        gotoActivity(OrderFormActivity.class);
+
+        CustomAlertDialog.showRemindDialog2(MainActivity.this, "温馨提示", "请联系服务商开通微信预约功能\n4008-328-728", new CustomAlertDialog.IAlertDialogListener() {
+            @Override
+            public void onSure(Object obj) {
+            return;
+            }
+        });
+        //        gotoActivity(OrderFormActivity.class);
+
+
 //        gotoActivity();
     }
 
@@ -186,12 +213,21 @@ public class MainActivity extends FragmentActivity implements IMainMenuListItemC
                 gotoActivity(ShopInfoActivity.class);
                 //gotoActivity(WebViewActivity.class, WebViewActivity.VIEW_TYPE_KEY, WebViewActivity.VIEW_TYPE_HELP);
                 break;
-//            case 2:
-//                gotoActivity(FeedBackActivity.class);
-//                break;
-//            case 3:
-//                //share
-//                break;
+            case 2:
+                gotoActivity(FeedBackActivity.class);
+                break;
+            case 3:
+                final CustomProgressDialog Dialog = CustomProgressDialog.createDialog(this).setMessage("加载中...");
+                Dialog.show();
+                new Timer().schedule(new TimerTask(){
+                   @Override
+                   public void run() {
+                       Dialog.dismiss();
+                       hanler.sendMessage( new Message());
+                   }
+               },2000);
+
+                break;
 //            case 4:
 //                gotoActivity(SettingActivity.class);
 //                break;

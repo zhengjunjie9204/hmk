@@ -31,7 +31,7 @@ import com.xgx.syzj.utils.FastJsonUtil;
  */
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
-    private Button btn_log,btn_reg,btn_forget;
+    private Button btn_log,btn_forget;
     private EditText et_username,et_password;
     private String username,password;
     private TextView btn_demo;
@@ -57,7 +57,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private void initView() {
         hideTopBar();
         btn_log = (Button) findViewById(R.id.btn_log);
-        btn_reg = (Button) findViewById(R.id.btn_reg);
+//        btn_reg = (Button) findViewById(R.id.btn_reg);
         btn_forget = (Button) findViewById(R.id.btn_forget);
         btn_demo = (TextView) findViewById(R.id.btn_demo);
         et_username = (EditText) findViewById(R.id.et_username);
@@ -66,7 +66,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     private void initListener() {
         btn_log.setOnClickListener(this);
-        btn_reg.setOnClickListener(this);
+//        btn_reg.setOnClickListener(this);
         btn_forget.setOnClickListener(this);
         btn_demo.setOnClickListener(this);
     }
@@ -127,9 +127,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     login();
                 }
                 break;
-            case R.id.btn_reg:
-                gotoActivity(RegisterActivity.class);
-                break;
+//            case R.id.btn_reg:
+//                gotoActivity(RegisterActivity.class);
+//                break;
             case R.id.btn_forget:
                 gotoActivity(ForgetOneAcetivity.class);
                 break;

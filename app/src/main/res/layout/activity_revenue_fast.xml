@@ -67,7 +67,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="等待付款"
+        android:text="施工中车辆"
         android:textColor="@color/gray"
         android:padding="10dp"
         android:layout_marginLeft="20dp"/>

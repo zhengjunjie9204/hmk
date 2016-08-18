@@ -1259,6 +1259,7 @@ public class Api extends BaseRequest {
             params = new HashMap<>();
             info.put("storeId", CacheUtil.getmInstance().getUser().getStoreId());
             info.put("name", name);
+            info.put("storeId",CacheUtil.getmInstance().getUser().getStoreId());
             info.put("carNumber", carNumber);
             info.put("phone", telephone);
             info.put("carType", carType);

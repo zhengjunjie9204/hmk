@@ -7,11 +7,13 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.ImageLoader;
 import com.squareup.picasso.Picasso;
 import com.xgx.syzj.R;
 import com.xgx.syzj.adapter.ViewPagerAdapter;
@@ -23,6 +25,7 @@ import com.xgx.syzj.datamodel.CardDataModel;
 import com.xgx.syzj.datamodel.MemberDataModel;
 import com.xgx.syzj.event.EventCenter;
 import com.xgx.syzj.event.SimpleEventHandler;
+import com.xgx.syzj.utils.BitmapUtil;
 import com.xgx.syzj.utils.CacheUtil;
 import com.xgx.syzj.utils.FastJsonUtil;
 import com.xgx.syzj.utils.StrUtil;
@@ -56,13 +59,17 @@ public class MemberAddActivity extends BaseActivity{
 
         setTitleText(getString(R.string.member_add_title));
         setSubmit(getString(R.string.app_button_sure));
+
+        initView();
+        initPic();
+        EventCenter.bindContainerAndHandler(this, eventHandler);
+    }
+
+    private void initPic() {
         String Pic = CacheUtil.getmInstance().getUser().getStorePic();
         String s = Pic.replaceAll("\\\\", "/");
-        String  storePic=Url.HOST_URL+"qcmr/upload/wechatImg/"+s;
-        initView();
-        initData(storePic);
-
-        EventCenter.bindContainerAndHandler(this, eventHandler);
+        String storePic = Url.HOST_URL + "qcmr/upload/wechatImg/" + s;
+        Picasso.with(this).load(storePic).into(iv_code);
     }
 
     private void initView() {
@@ -76,7 +83,7 @@ public class MemberAddActivity extends BaseActivity{
     }
 
     private void initData(String storePic) {
-        Picasso.with(this).load(storePic).into(iv_code);
+
     }
 
     private SimpleEventHandler eventHandler = new SimpleEventHandler() {
@@ -99,7 +106,8 @@ public class MemberAddActivity extends BaseActivity{
                     et_cartype.setText("");
                     gotoActivity(MemberListActivity.class);
                 }else{
-                    showShortToast(result.getMessage());
+                    String message = result.getMessage();
+                    showShortToast(message);
                 }
             }
         }

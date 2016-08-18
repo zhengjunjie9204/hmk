@@ -216,6 +216,39 @@ public class CustomAlertDialog {
         dialog.show();
         dialog.setCanceledOnTouchOutside(true);
     }
+    /**
+     * 单选显示提醒框
+     *
+     * @param context
+     * @param title
+     * @param msg
+     * @param listener
+     */
+    public static void showRemindDialog2(Context context, String title, String msg, final IAlertDialogListener listener)
+    {
+        final Dialog dialog = new Dialog(context, R.style.MyDialog);
+        dialog.setContentView(R.layout.dialog_message_two);
+        TextView tvTitle = (TextView) dialog.findViewById(R.id.tv_title);
+        if (TextUtils.isEmpty(title)) {
+            tvTitle.setVisibility(View.GONE);
+        } else {
+            tvTitle.setText(title);
+        }
+        ((TextView) dialog.findViewById(R.id.tv_message)).setText(msg);
+        dialog.findViewById(R.id.ll_bottom).setVisibility(View.GONE);
+        dialog.findViewById(R.id.btn_left).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                if (listener != null)
+                    listener.onSure(null);
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+        dialog.setCanceledOnTouchOutside(true);
+    }
 
     public static void showListDialog(Context context, String title, String[] items, final IAlertListDialogItemClickListener listener)
     {
