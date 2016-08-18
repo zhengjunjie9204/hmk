@@ -17,7 +17,7 @@ public class Url {
     //基础请求
     public static final String USER_REGISTER = HOST_URL + "user/register";//注册
     public static final String USER_LOGIN = HOST_URL + "qcmr/login_loginByUserName.action";//登录
-    public static final String USER_LOGIB_BY_TKEN=HOST_URL+"qcmr/login_loginByToken.action";//token登录
+    public static final String USER_LOGIB_BY_TKEN = HOST_URL + "qcmr/login_loginByToken.action";//token登录
     public static final String REFRESH_ACCESSTOKEN = HOST_URL + "token/refreshToken";//重新获取Token
     public static final String USER_ADD_STAFF = HOST_URL + "employee/add";//添加员工
     public static final String USER_DELETE_STAFF = HOST_URL + "employee/delete";//删除员工
@@ -32,17 +32,14 @@ public class Url {
     public static final String UPDATE_PRODUCTS = HOST_URL + "qcmr/product_update.action";//更新商品
     public static final String DELETE_PRODUCTS = HOST_URL + "qcmr/product_removeProductFromStore.action";//删除商品
     public static final String INTO_OUT_PRODUCTS = HOST_URL + "qcmr/stockRecord_add.action";//商品出入库
-    public static final String DELETE_PRODUCTS_TWO=HOST_URL+"qcmr/product_removeProducyFromStore.action";//删除商品2
-    public static final String STOCK_RECORD=HOST_URL+"qcmr/stockRecord_stockRecordHistory.action";//库存历史
-    public static final String ADD_PRODUCTS_BY_STORE=HOST_URL+"qcmr/product_findByNoStore.action";//添加未存在商品
-    public static final String ADD_PRODUCT_TO_STORE=HOST_URL+"qcmr/product_addProductToStore.action";//添加新商品到门店
-    public static final String find_All_PRODUCT=HOST_URL+"qcmr/product_findAll.action";//查询所有商品
-
-    //订单
-    public static final String FILTER_ORDER=HOST_URL+"qcmr/payOrder_filterOrder.action";//3.7.8订单刷选
+    public static final String DELETE_PRODUCTS_TWO = HOST_URL + "qcmr/product_removeProducyFromStore.action";//删除商品2
+    public static final String STOCK_RECORD = HOST_URL + "qcmr/stockRecord_stockRecordHistory.action";//库存历史
+    public static final String ADD_PRODUCTS_BY_STORE = HOST_URL + "qcmr/product_findByNoStore.action";//添加未存在商品
+    public static final String ADD_PRODUCT_TO_STORE = HOST_URL + "qcmr/product_addProductToStore.action";//添加新商品到门店
+    public static final String find_All_PRODUCT = HOST_URL + "qcmr/product_findAll.action";//查询所有商品
 
     //项目
-    public static final String PROJECT_EXT_LIST=HOST_URL+"qcmr/item_findStoreItemByKey.action";//项目列表
+    public static final String PROJECT_EXT_LIST = HOST_URL + "qcmr/item_findStoreItemByKey.action";//项目列表
     //会员
     public static final String ASSOCIATOR_ADD = HOST_URL + "qcmr/member_add.action";//添加会员
     public static final String ASSOCIATOR_EXT_LIST = HOST_URL + "qcmr/member_findAll.action";//列表会员（搜索）扩展
@@ -92,7 +89,6 @@ public class Url {
     public static final String BILL_GETORDERDETAILS = HOST_URL + "order/getorderdetails";//获取订单详细列表
 
 
-
     //购物车
     public static final String CART_ADD = HOST_URL + "cart/add";//增加购物车
     public static final String CART_UPDATE = HOST_URL + "cart/update";//更新购物车
@@ -102,13 +98,13 @@ public class Url {
     public static final String BILL_SALES_RETURN = HOST_URL + "bill/salesreturn";//退货
 
     //报表分析
-    public static final String  ANALY_SALE_TOTAL = HOST_URL + "analysis/salestotal";//销售合计
-    public static final String  ANALY_SALE_GROSS_PROFIT = HOST_URL + "analysis/salesgrossprofit";//销售毛利润
-    public static final String  ANALY_SALE_GROSSSALES = HOST_URL + "analysis/grosssales";//销售总额
-    public static final String  ANALY_SALE_TTOTAL_CONSUMPTION = HOST_URL + "analysis/totalconsumption";//消费统计
-    public static final String  ANALY_SALE_SALESCOUNT = HOST_URL + "analysis/salescount";//销售总量
-    public static final String  ANALY_SALE_GROSSPROFIT = HOST_URL + "analysis/grossprofit";// 利润总额
-    public static final String  ANALY_SALE_COUNT = HOST_URL + "analysis/salescount";// 利润总额
+    public static final String ANALY_SALE_TOTAL = HOST_URL + "analysis/salestotal";//销售合计
+    public static final String ANALY_SALE_GROSS_PROFIT = HOST_URL + "analysis/salesgrossprofit";//销售毛利润
+    public static final String ANALY_SALE_GROSSSALES = HOST_URL + "analysis/grosssales";//销售总额
+    public static final String ANALY_SALE_TTOTAL_CONSUMPTION = HOST_URL + "analysis/totalconsumption";//消费统计
+    public static final String ANALY_SALE_SALESCOUNT = HOST_URL + "analysis/salescount";//销售总量
+    public static final String ANALY_SALE_GROSSPROFIT = HOST_URL + "analysis/grossprofit";// 利润总额
+    public static final String ANALY_SALE_COUNT = HOST_URL + "analysis/salescount";// 利润总额
     //门店管理
     public static final String USER_INFO = HOST_URL + "qcmr/user_userInfo.action";//3.9.1账号信息
     public static final String STORE_INFO = HOST_URL + "qcmr/store_storeInfo.action";//3.9.2门店信息

@@ -86,7 +86,9 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
             carNumber = getIntent().getStringExtra("carNumber");
             memberId = getIntent().getIntExtra("memberId", 0);
             List<CountItemsBean> list = (List<CountItemsBean>) getIntent().getSerializableExtra("countItemsList");
-            countItemsList.addAll(list);
+            if(null != list && list.size() >0 ){
+                countItemsList.addAll(list);
+            }
             boolean isMember = getIntent().getBooleanExtra("isMember", false);
             setTitleText(carNumber);
             if (isMember) {

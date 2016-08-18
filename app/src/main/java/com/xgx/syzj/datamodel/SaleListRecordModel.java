@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.xgx.syzj.app.Api;
 import com.xgx.syzj.base.BaseRequest;
-import com.xgx.syzj.bean.Goods;
 import com.xgx.syzj.bean.OrderList;
 import com.xgx.syzj.bean.Result;
 import com.xgx.syzj.event.EventCenter;
@@ -27,7 +26,11 @@ public class SaleListRecordModel extends PagedListDataModel<OrderList> {
     private static byte code;
     private String TYPE = "";//请求类型，全部、会员、散客
     private OrderListDataEvent data = new OrderListDataEvent();
-
+    private String key;
+    private String minMoney;
+    private String maxMoney;
+    private String startTime;
+    private String endTime;
 
     public SaleListRecordModel(int num)
     {
@@ -50,11 +53,56 @@ public class SaleListRecordModel extends PagedListDataModel<OrderList> {
         mListPageInfo = new ListPageInfo<>(mListPageInfo.getNumPerPage());
     }
 
+    public void setKey(String key,String minMoney,String maxMoney,String startTime,String endTime)
+    {
+        this.key = key;
+        this.minMoney = minMoney;
+        this.maxMoney = maxMoney;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        data.dataList = null;
+        data.hasMore = false;
+        mListPageInfo = new ListPageInfo<>(mListPageInfo.getNumPerPage());
+    }
+
     @Override
     protected void doQueryData()
     {
+        Api.getOrderFilter(key,minMoney,maxMoney,startTime,endTime,mListPageInfo.getPage(), mListPageInfo.getNumPerPage(), new BaseRequest.OnRequestListener() {
+            @Override
+            public void onSuccess(Result result)
+            {
+                JSONObject object = JSON.parseObject(result.getResult());
+                List<OrderList> list;
+                if (result.getStatus() == 200) {
+                    list = FastJsonUtil.json2List(object.getString("payOrders"), OrderList.class);
+                } else {
+                    list = new ArrayList<>();
+                }
+                data.dataList = list;
+                if (list != null && list.size() > 0) {
+                    if (list.size() >= mListPageInfo.getNumPerPage()) {
+                        data.hasMore = true;
+                    } else {
+                        data.hasMore = false;
+                    }
+                } else {
+                    data.hasMore = false;
+                    list = new ArrayList<>();
+                }
+                setRequestResult(data.dataList, data.hasMore);
+                EventCenter.getInstance().post(list);
+            }
 
+            @Override
+            public void onError(String errorCode, String message)
+            {
+                setRequestFail();
+                EventBus.getDefault().post(message);
+            }
+        });
     }
+
     public void  payOrder(String key,String minMoney,String maxMoney,String startTime,String endTime){
         Api.getOrderFilter(key,minMoney,maxMoney,startTime,endTime,mListPageInfo.getPage(), mListPageInfo.getNumPerPage(), new BaseRequest.OnRequestListener() {
             @Override

@@ -1,5 +1,6 @@
 package com.xgx.syzj.ui;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -7,13 +8,11 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.ImageLoader;
 import com.squareup.picasso.Picasso;
 import com.xgx.syzj.R;
 import com.xgx.syzj.adapter.ViewPagerAdapter;
@@ -25,7 +24,6 @@ import com.xgx.syzj.datamodel.CardDataModel;
 import com.xgx.syzj.datamodel.MemberDataModel;
 import com.xgx.syzj.event.EventCenter;
 import com.xgx.syzj.event.SimpleEventHandler;
-import com.xgx.syzj.utils.BitmapUtil;
 import com.xgx.syzj.utils.CacheUtil;
 import com.xgx.syzj.utils.FastJsonUtil;
 import com.xgx.syzj.utils.StrUtil;
@@ -42,18 +40,20 @@ import java.util.List;
  * @author zajo
  * @created 2015年08月28日 11:25
  */
-public class MemberAddActivity extends BaseActivity{
+public class MemberAddActivity extends BaseActivity {
 
     private static final int LOAD_CARD_LIST = 0;
 
     private ViewPager viewPager;
     private ArrayList<View> views = new ArrayList<>();
     private ArrayList<CardType> cards = new ArrayList<>();
-    private EditText et_num, et_name, et_phone, et_carnumber, et_cartype;
+    private EditText et_name, et_phone, et_carnumber, et_cartype;
     private ImageView iv_code;
+    private TextView et_num;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member_add);
 
@@ -65,30 +65,42 @@ public class MemberAddActivity extends BaseActivity{
         EventCenter.bindContainerAndHandler(this, eventHandler);
     }
 
-    private void initPic() {
+    private void initPic()
+    {
         String Pic = CacheUtil.getmInstance().getUser().getStorePic();
         String s = Pic.replaceAll("\\\\", "/");
         String storePic = Url.HOST_URL + "qcmr/upload/wechatImg/" + s;
         Picasso.with(this).load(storePic).into(iv_code);
     }
 
-    private void initView() {
+    private void initView()
+    {
         viewPager = (ViewPager) findViewById(R.id.viewpager);
-        iv_code= (ImageView)findViewById(R.id.iv_code);
-        et_num = (EditText) findViewById(R.id.et_num);
+        iv_code = (ImageView) findViewById(R.id.iv_code);
+        et_num = (TextView) findViewById(R.id.et_num);
         et_name = (EditText) findViewById(R.id.et_name);
         et_phone = (EditText) findViewById(R.id.et_phone);
         et_carnumber = (EditText) findViewById(R.id.et_carNumber);
         et_cartype = (EditText) findViewById(R.id.et_carType);
+        et_num.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(MemberAddActivity.this, MipcaActivityCapture.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivityForResult(intent, 0x101);
+            }
+        });
     }
 
-    private void initData(String storePic) {
-
+    private void initData(String storePic)
+    {
     }
 
     private SimpleEventHandler eventHandler = new SimpleEventHandler() {
 
-        public void onEvent(Result result) {
+        public void onEvent(Result result)
+        {
             hideLoadingDialog();
             if (result.geteCode() == CardDataModel.LOAD_CARD_LIST) {
                 List<CardType> list = FastJsonUtil.json2List(result.getResult(), CardType.class);
@@ -96,8 +108,8 @@ public class MemberAddActivity extends BaseActivity{
                     cards.addAll(list);
                 }
                 mHandler.sendEmptyMessage(LOAD_CARD_LIST);
-            } else if(result.geteCode() == MemberDataModel.ADD_MEMBER) {
-                if("添加成功".equals(result.getMessage())) {
+            } else if (result.geteCode() == MemberDataModel.ADD_MEMBER) {
+                if ("添加成功".equals(result.getMessage())) {
                     showShortToast("新增会员成功");
                     et_num.setText("");
                     et_name.setText("");
@@ -105,23 +117,24 @@ public class MemberAddActivity extends BaseActivity{
                     et_carnumber.setText("");
                     et_cartype.setText("");
                     gotoActivity(MemberListActivity.class);
-                }else{
+                } else {
                     String message = result.getMessage();
                     showShortToast(message);
                 }
             }
         }
 
-        public void onEvent(String error) {
+        public void onEvent(String error)
+        {
             hideLoadingDialog();
             showShortToast(error);
         }
-
     };
 
     private Handler mHandler = new Handler() {
         @Override
-        public void handleMessage(Message msg) {
+        public void handleMessage(Message msg)
+        {
             super.handleMessage(msg);
             switch (msg.what) {
                 case LOAD_CARD_LIST:
@@ -145,9 +158,9 @@ public class MemberAddActivity extends BaseActivity{
         }
     };
 
-
     @Override
-    protected void submit() {
+    protected void submit()
+    {
         super.submit();
         String strNum = et_num.getText().toString().trim();
         String strName = et_name.getText().toString().trim();
@@ -170,24 +183,34 @@ public class MemberAddActivity extends BaseActivity{
             showShortToast("号码格式不正确");
             return;
         }
-
-
-
         showLoadingDialog(R.string.loading_add_member);
-        MemberDataModel.addMember(strName,strCarNumber,strPhone,strCarType,strNum);
+        MemberDataModel.addMember(strName, strCarNumber, strPhone, strCarType, strNum);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            Bundle bundle = data.getExtras();
+            et_num.setText("" + bundle.getString("result"));
+        }
+    }
+
     /**
      * 获取网落图片资源
+     *
      * @param url
      * @return
      */
-    public static Bitmap getHttpBitmap(String url){
+    public static Bitmap getHttpBitmap(String url)
+    {
         URL myFileURL;
-        Bitmap bitmap=null;
-        try{
+        Bitmap bitmap = null;
+        try {
             myFileURL = new URL(url);
             //获得连接
-            HttpURLConnection conn=(HttpURLConnection) myFileURL.openConnection();
+            HttpURLConnection conn = (HttpURLConnection) myFileURL.openConnection();
             //设置超时时间为6000毫秒，conn.setConnectionTiem(0);表示没有时间限制
             conn.setConnectTimeout(6000);
             //连接设置获得数据流
@@ -200,7 +223,7 @@ public class MemberAddActivity extends BaseActivity{
             bitmap = BitmapFactory.decodeStream(is);
             //关闭数据流
             is.close();
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

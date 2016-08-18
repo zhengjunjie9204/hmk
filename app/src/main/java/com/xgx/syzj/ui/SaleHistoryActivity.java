@@ -61,7 +61,7 @@ public class SaleHistoryActivity extends BaseActivity {
         initListener();
         EventCenter.bindContainerAndHandler(this, eventHandler);
         mDataModel = new SaleListRecordModel(Constants.LOAD_COUNT);
-        mDataModel.payOrder("","","","","");
+        mDataModel.setKey(null, null, null, null, null);
         mDataModel.queryFirstPage();
     }
 
@@ -103,6 +103,7 @@ public class SaleHistoryActivity extends BaseActivity {
                 Intent intent = new Intent(SaleHistoryActivity.this,SaleDetailActivity.class);
                 intent.putExtra("order",mDataList.get(position));
                 startActivity(intent);
+
             }
         });
         lv_data.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
@@ -176,16 +177,13 @@ public class SaleHistoryActivity extends BaseActivity {
         @Override
         public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                String text = mSearch.getText().toString().trim();
+                mDataModel.setKey(text, null, null, null, null);
                 mDataList.clear();
                 mAdapter.notifyDataSetChanged();
-                String text = mSearch.getText().toString().trim();
-                //根据key
-                mDataModel.payOrder(text,"","","","");
-                mAdapter.notifyDataSetChanged();
+                mDataModel.queryFirstPage();
                 Utils.hideSoftInput(SaleHistoryActivity.this);
             }
-
-
             return false;
         }
     };

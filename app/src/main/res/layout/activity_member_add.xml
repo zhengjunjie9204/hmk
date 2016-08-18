@@ -35,33 +35,35 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="42dp"
+            android:layout_marginTop="16dp"
             android:background="@color/white"
             android:gravity="center_vertical"
-            android:layout_marginTop="15dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_height="match_parent"
                 android:drawableLeft="@mipmap/card_no"
                 android:drawablePadding="5dp"
+                android:gravity="center_vertical"
                 android:text="@string/member_add_card_no"
                 android:textColor="@color/title_3_color"
                 android:textSize="14sp"/>
 
-            <EditText
+            <TextView
                 android:id="@+id/et_num"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="24dp"
                 android:layout_weight="1"
                 android:background="@null"
-                android:gravity="right"
+                android:drawablePadding="8dp"
+                android:drawableRight="@mipmap/icon_camera"
+                android:gravity="right|center_vertical"
                 android:hint="@string/member_add_card_hint"
-                android:inputType="number"
-                android:padding="12dp"
                 android:singleLine="true"
                 android:textColor="@color/title_6_color"
                 android:textSize="14sp"/>
