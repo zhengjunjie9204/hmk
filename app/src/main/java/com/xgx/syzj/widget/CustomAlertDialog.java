@@ -217,6 +217,10 @@ public class CustomAlertDialog {
         dialog.setCanceledOnTouchOutside(true);
     }
     /**
+     * 图片框
+     */
+
+    /**
      * 单选显示提醒框
      *
      * @param context

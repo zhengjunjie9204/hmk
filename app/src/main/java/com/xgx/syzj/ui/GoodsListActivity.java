@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -201,7 +202,6 @@ public class GoodsListActivity extends BaseActivity  {
                 int storeId = CacheUtil.getmInstance().getUser().getStoreId();
                 mDataModel.setStoreId(storeId);
                 mDataModel.setBrand(text);
-                mDataModel.getProductsList();
                 mDataModel.queryNextPage();
                 mDataModel.getProductsList();
                 Utils.hideSoftInput(GoodsListActivity.this);
@@ -210,10 +210,18 @@ public class GoodsListActivity extends BaseActivity  {
         }
     };
 
+    private View.OnClickListener OnClickListener=new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+        }
+    };
     private AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            ImageView image = (ImageView) view.findViewById(R.id.iv_good);
 
+            image.setOnClickListener(OnClickListener);
             if (!TextUtils.isEmpty(flag) && flag.equals(FLAG_EXC_JIFEN)) {
                 Intent dataIntent = new Intent();
                 dataIntent.putExtra("goods", (Goods) mAdapter.getItem(position));
@@ -226,6 +234,7 @@ public class GoodsListActivity extends BaseActivity  {
             }
         }
     };
+
 
     @Override
     protected void submit() {

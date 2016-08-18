@@ -59,8 +59,10 @@ public class MemberModifyActivity extends BaseActivity implements View.OnClickLi
         btn_delete.setVisibility(View.VISIBLE);
         btn_delete.setOnClickListener(this);
         findViewById(R.id.iv_code).setVisibility(View.GONE);
-
-        et_num.setText(member.getCardNumber());
+        if(!StrUtil.isEmpty(member.getCardNumber())) {
+            et_num.setText(member.getCardNumber());
+            et_num.setFocusable(false);
+        }
         et_name.setText(member.getName());
         et_phone.setText(member.getPhone());
         et_carNumber.setText(member.getCarNumber());

@@ -12,8 +12,15 @@ public class User implements Serializable {
     private String userPhone;//永固
     private String userName;//登陆账号
     private String storePic;//门店二维码
+    private String storeLogo;//门店logo
 
+    public String getStoreLogo() {
+        return storeLogo;
+    }
 
+    public void setStoreLogo(String storeLogo) {
+        this.storeLogo = storeLogo;
+    }
 
     public int getEmployeeId()
     {

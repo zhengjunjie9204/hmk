@@ -10,10 +10,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.xgx.syzj.R;
 import com.xgx.syzj.adapter.MainMenuListAdapter;
 import com.xgx.syzj.app.Api;
+import com.xgx.syzj.bean.User;
+import com.xgx.syzj.utils.CacheUtil;
 import com.xgx.syzj.widget.CircleImageView;
 
 /**
@@ -33,6 +37,8 @@ public class MainMenuListFragment extends Fragment implements View.OnClickListen
     private String[] MenuTitles;
     private MainMenuListAdapter mAdapter;
     private IMainMenuListItemClick iMainMenuListItemClick;
+    private User user;
+    private TextView tv_name;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,12 +68,33 @@ public class MainMenuListFragment extends Fragment implements View.OnClickListen
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_menu_list, container, false);
+        user = CacheUtil.getmInstance().getUser();
         initListView(view);
+        initData();
+
         return view;
+    }
+
+    private void initData() {
+        String storeLogo = user.getStoreLogo();
+        Picasso.with(getContext()).load(user.getStoreLogo()).into(iv_logo);
+        switch (user.getRoles()) {
+            case  1:
+                tv_name.setText(user.getUserName()+"(老板)");
+                break;
+            case  2:
+                tv_name.setText(user.getUserName()+"(店长)");
+                break;
+            case  3:
+                tv_name.setText(user.getUserName()+"(员工)");
+                break;
+
+        }
     }
 
     // 初始化listview
     public void initListView(View view) {
+        tv_name =(TextView)view.findViewById(R.id.tv_name);
         rl_header = (RelativeLayout) view.findViewById(R.id.rl_header);
         iv_logo = (CircleImageView) view.findViewById(R.id.iv_logo);
         mMenuList = (ListView) view.findViewById(R.id.lv_menu);
@@ -76,7 +103,7 @@ public class MainMenuListFragment extends Fragment implements View.OnClickListen
         mMenuList.setOnItemClickListener(this);
         rl_header.setOnClickListener(this);
 
-        Api.getImageLoader().get("http://image.photophoto.cn/nm-6/018/030/0180300244.jpg", iv_logo);
+
     }
 
     @Override

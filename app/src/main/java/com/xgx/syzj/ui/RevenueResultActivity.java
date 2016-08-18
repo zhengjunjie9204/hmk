@@ -1,5 +1,6 @@
 package com.xgx.syzj.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -51,12 +52,16 @@ public class RevenueResultActivity extends BaseActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_continue:
-                AppManager.getAppManager().returnToActivity(RevenueActivity.class);
-                ((RevenueActivity)(AppManager.getAppManager().currentActivity())).clean();
+                gotoActivity(RevenueActivity.class);
+//                AppManager.getAppManager().returnToActivity(RevenueActivity.class);
+//                ((RevenueActivity)(AppManager.getAppManager().currentActivity())).clean();
                 break;
             case R.id.btn_send:
-                gotoActivity(SaleHistoryActivity.class);
-                finish();
+                Intent intent = new Intent(this, SaleHistoryActivity.class);
+//                gotoActivity(SaleHistoryActivity.class);
+                intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                defaultFinish();
                 break;
         }
     }
@@ -74,5 +79,12 @@ public class RevenueResultActivity extends BaseActivity implements View.OnClickL
     public void goBack(View view) {
         super.goBack(view);
         AppManager.getAppManager().returnToActivity(MainActivity.class);
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
     }
 }

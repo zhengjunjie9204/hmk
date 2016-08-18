@@ -24,7 +24,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="8dp"
-                android:layout_toRightOf="@id/tv_member_type"
                 android:text="张勇"
                 android:textColor="@color/white"
                 android:textSize="14sp"/>

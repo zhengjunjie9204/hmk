@@ -24,6 +24,7 @@ import com.xgx.syzj.widget.UploadPictureView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -46,7 +47,9 @@ public class GoodsAddActivity extends BaseActivity implements UploadPictureView.
     private GoodsCategory type;
     private boolean cancel = false;
     private EditText et_vip;
+    public int index;
     private String Strvip;
+    private List images=new ArrayList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,12 +110,13 @@ public class GoodsAddActivity extends BaseActivity implements UploadPictureView.
 
     public void onAddPic(View view) {
         SelectPhotoManager.getInstance().setPhotoReadyHandler(new PhotoReadyHandler() {
+
+
             @Override
             public void onPhotoReady(int from, String imgPath) {
-                paths.put(0 + "", imgPath);
+                paths.put(index + "", imgPath);
                 Bitmap bitmap = BitmapUtil.scaleBitmap(GoodsAddActivity.this, imgPath, 200);
                 image = BitmapUtil.convertIconToString(bitmap);
-
                 upv_one.setImageViewPic(bitmap);
                 upv_one.setAddViewClickable(false);
                 upv_two.setAddViewClickable(true);
@@ -120,6 +124,7 @@ public class GoodsAddActivity extends BaseActivity implements UploadPictureView.
 
             }
         });
+        images.add(paths.get(index));
         CropOption cropOption = new CropOption();
         cropOption.outputX = 200;
         cropOption.outputY = 200;
@@ -137,7 +142,7 @@ public class GoodsAddActivity extends BaseActivity implements UploadPictureView.
     public void onAddCancel(View view) {
         if (checkInput()) {
             showLoadingDialog(R.string.loading_add_goods);
-            GoodsDataModel.addGoods(strCode, strName, strType, strInputMoney, strSellMoney, Strvip, strGuige, strBrand, "1", image);
+            GoodsDataModel.addGoods(strCode, strName, strType, strInputMoney, strSellMoney, Strvip, strGuige, strBrand, "1", images);
         }
     }
 
@@ -145,7 +150,7 @@ public class GoodsAddActivity extends BaseActivity implements UploadPictureView.
         if (checkInput()) {
             cancel = true;
             showLoadingDialog(R.string.loading_add_goods);
-            GoodsDataModel.addGoods(strCode, strName, strType, strInputMoney, strSellMoney, Strvip, strGuige, strBrand, "1", image);
+            GoodsDataModel.addGoods(strCode, strName, strType, strInputMoney, strSellMoney, Strvip, strGuige, strBrand, "1", images);
         }
     }
 

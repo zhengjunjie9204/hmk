@@ -129,9 +129,9 @@
     <string name="feedback_input_hint">手机号码/邮箱</string>
     <string name="feedback_sub_title1">您也可以通过以下联系方式联系我们</string>
     <string name="feedback_sub_title2">所有意见我们都会妥善处理后进行人工回复</string>
-    <string name="feedback_qq_contact">QQ客服：4006006816</string>
-    <string name="feedback_phone_contact">或者拨打人工客服：440-600-6815</string>
-    <string name="feedback_phone_text">440-600-6815</string>
+    <string name="feedback_qq_contact">QQ客服：2181856577</string>
+    <string name="feedback_phone_contact">或者拨打人工客服：4008-328-728</string>
+    <string name="feedback_phone_text">4008-328-728</string>
 
     <!--  系统设置 -->
     <string name="setting_title">设置</string>
