@@ -63,7 +63,9 @@ public class AnalysisSellActivity extends BaseActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_analysis_sell);
         setTitleText("报表分析");
-        setSubmit("门店");
+        if (CacheUtil.getmInstance().getUser().getRoles() == 1) {
+            setSubmit("门店");
+        }
         mChart = (HorizontalBarChart) findViewById(R.id.chart);
         tv_all_money = (TextView) findViewById(R.id.tv_all_money);
         tvAllCount = (TextView) findViewById(R.id.tv_all_money_count);

@@ -35,8 +35,6 @@ import in.srain.cube.views.loadmore.LoadMoreListViewContainer;
  * @created 2015年08月19日 17:44
  */
 public class ProjectListActivity extends BaseActivity implements AdapterView.OnItemClickListener{
-
-
     private LoadMoreListViewContainer loadMoreListViewContainer;
     private ProjectListAdapter mAdapter;
     private ArrayList<Project> mList = new ArrayList<>();
@@ -47,12 +45,8 @@ public class ProjectListActivity extends BaseActivity implements AdapterView.OnI
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_project_list);
-
         setTitleText(getString(R.string.project_list));
-
-
         et_text = (EditText) findViewById(R.id.et_text);
         tv_count = (TextView) findViewById(R.id.tv_count);
         et_text.setOnEditorActionListener(onEditorActionListener);

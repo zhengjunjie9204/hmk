@@ -54,7 +54,7 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
     private OrderList order;
     private int memberId;
     private String carNumber;
-    private List<CountItemsBean> countItemsList;
+    private List<CountItemsBean> countItemsList = new ArrayList<>();
     private RevenueCountItemAdapter mCountAdapter;
     private Map<Integer, CountItemsBean> mdata;
     private Handler mHandler = new Handler() {
@@ -85,7 +85,8 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
         if (null == order) {
             carNumber = getIntent().getStringExtra("carNumber");
             memberId = getIntent().getIntExtra("memberId", 0);
-            countItemsList = (List<CountItemsBean>) getIntent().getSerializableExtra("countItemsList");
+            List<CountItemsBean> list = (List<CountItemsBean>) getIntent().getSerializableExtra("countItemsList");
+            countItemsList.addAll(list);
             boolean isMember = getIntent().getBooleanExtra("isMember", false);
             setTitleText(carNumber);
             if (isMember) {
@@ -111,6 +112,8 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
         lv_project.setAdapter(projectAdapter);
         mAdapter = new RevenueGoodListAdapter(this, mGood, mHandler);
         lv_data.setAdapter(mAdapter);
+        mCountAdapter = new RevenueCountItemAdapter(this, countItemsList, this);
+        mSellListView.setAdapter(mCountAdapter);
         lv_project.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
@@ -145,10 +148,6 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
         });
         btn_sure.setText("结账");
         btn_cancel.setText(String.format("合计金额：￥%s", allmoney));
-        if (null != countItemsList) {
-            mCountAdapter = new RevenueCountItemAdapter(this, countItemsList, this);
-            mSellListView.setAdapter(mCountAdapter);
-        }
     }
 
     @Override
@@ -160,7 +159,7 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
                     JSONArray productList = new JSONArray();
                     JSONArray itemList = new JSONArray();
                     for (Goods goods : mGood) {
-                        if(goods.getUid() > 0){
+                        if (goods.getUid() > 0) {
                             JSONObject json = new JSONObject();
                             json.put("productId", goods.getProductId());
                             json.put("amount", goods.getCount());
@@ -168,7 +167,7 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
                         }
                     }
                     for (Project project : mProject) {
-                        if(project.getId() >0){
+                        if (project.getId() > 0) {
                             JSONObject json = new JSONObject();
                             json.put("itemId", project.getId());
                             json.put("amount", project.getLaborTime());
@@ -185,7 +184,7 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
                         }
                     }
                     if (null != order) {
-                        if (mGood.size() > 0 && mProject.size() > 0 && itemList.length() == 0 && productList.length() == 0) {
+                        if (itemList.length() == 0 && productList.length() == 0) {
                             orderPayItem(order.getId(), 0, 3);
                         } else if (itemList.length() == 0) {
                             showShortToast("请选择项目");
@@ -390,7 +389,7 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
                 if (result.getStatus() == 200) {
                     showShortToast("编辑成功");
                     finish();
-                }else{
+                } else {
                     showShortToast(result.getMessage());
                 }
                 hideLoadingDialog();
@@ -414,13 +413,20 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
                     if (result.getStatus() == 200) {
                         JSONObject json = new JSONObject(result.getResult());
                         List<Project> proList = FastJsonUtil.json2List(json.getString("items"), Project.class);
-                        if(null != proList && proList.size() >0){
-                            mProject.addAll(proList);
+                        if (null != proList && proList.size() > 0) {
+                            for (Project project : proList) {
+                                if (project.getPayType() == 8) {
+                                    countItemsList.add(new CountItemsBean(project.getId(),project.getName(),(int)project.getLaborTime()));
+                                }else{
+                                    mProject.add(project);
+                                }
+                            }
                             projectAdapter.notifyDataSetChanged();
-
+                            mCountAdapter.setUnCheck();
+                            mCountAdapter.notifyDataSetChanged();
                         }
                         List<Goods> goodList = FastJsonUtil.json2List(json.getString("products"), Goods.class);
-                        if(null != goodList && goodList.size() >0){
+                        if (null != goodList && goodList.size() > 0) {
                             mGood.addAll(goodList);
                             mAdapter.notifyDataSetChanged();
                         }
