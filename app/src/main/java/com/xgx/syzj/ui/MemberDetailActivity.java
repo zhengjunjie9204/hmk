@@ -50,6 +50,7 @@ public class MemberDetailActivity extends BaseActivity {
             return;
         }
         initDate();
+
     }
 
     private void initView() {
