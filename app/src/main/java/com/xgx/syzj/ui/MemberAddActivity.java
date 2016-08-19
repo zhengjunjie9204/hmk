@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.xgx.syzj.R;
 import com.xgx.syzj.adapter.ViewPagerAdapter;
-import com.xgx.syzj.app.Url;
 import com.xgx.syzj.base.BaseActivity;
 import com.xgx.syzj.bean.CardType;
 import com.xgx.syzj.bean.Result;
@@ -47,9 +46,8 @@ public class MemberAddActivity extends BaseActivity {
     private ViewPager viewPager;
     private ArrayList<View> views = new ArrayList<>();
     private ArrayList<CardType> cards = new ArrayList<>();
-    private EditText et_name, et_phone, et_carnumber, et_cartype;
-    private ImageView iv_code;
-    private TextView et_num;
+    private EditText et_num,et_name, et_phone, et_carnumber, et_cartype;
+    private ImageView iv_code,img_mipca;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -77,12 +75,13 @@ public class MemberAddActivity extends BaseActivity {
     {
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         iv_code = (ImageView) findViewById(R.id.iv_code);
-        et_num = (TextView) findViewById(R.id.et_num);
+        img_mipca = (ImageView) findViewById(R.id.img_mipca);
+        et_num = (EditText) findViewById(R.id.et_num);
         et_name = (EditText) findViewById(R.id.et_name);
         et_phone = (EditText) findViewById(R.id.et_phone);
         et_carnumber = (EditText) findViewById(R.id.et_carNumber);
         et_cartype = (EditText) findViewById(R.id.et_carType);
-        et_num.setOnClickListener(new View.OnClickListener() {
+        img_mipca.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {

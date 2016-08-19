@@ -4,15 +4,27 @@ import java.io.Serializable;
 
 
 public class User implements Serializable {
-
-    private String token;//token
-    private int roles;//用户角色（1：老板；2：店长；3：店员）
     private int storeId;
-    private int employeeId;
-    private String userPhone;//永固
-    private String userName;//登陆账号
+    private String storeName;
     private String storePic;//门店二维码
     private String storeLogo;//门店logo
+    private String token;//token
+    private int employeeId;
+    private int roles;//用户角色（1：老板；2：店长；3：店员）
+    private String userPhone;//永固
+    private String userName;//登陆账号
+
+
+
+    public String getStoreName()
+    {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName)
+    {
+        this.storeName = storeName;
+    }
 
     public String getStoreLogo() {
         return storeLogo;

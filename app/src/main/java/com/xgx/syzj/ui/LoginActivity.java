@@ -2,7 +2,6 @@ package com.xgx.syzj.ui;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -21,7 +20,6 @@ import com.xgx.syzj.datamodel.UserDataModel;
 import com.xgx.syzj.event.EventCenter;
 import com.xgx.syzj.event.SimpleEventHandler;
 import com.xgx.syzj.utils.CacheUtil;
-import com.xgx.syzj.utils.FastJsonUtil;
 
 /**
  * 登录
@@ -77,14 +75,25 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             hideLoadingDialog();
             JSONObject object= JSON.parseObject(result.getResult());
             if(result.getStatus()==200&&"登录成功".equals(result.getMessage())) {
-                String userinfo=object.getString("userInfo").replace("[","").replace("]","");
-                User user=FastJsonUtil.json2Bean(userinfo,User.class);
+//                String userinfo=object.getString("userInfo").replace("[","").replace("]","");
+                JSONObject userInfo = object.getJSONObject("userInfo");
+                User user = new User();
+                user.setStoreId(userInfo.getIntValue("storeId"));
+                user.setStorePic(userInfo.getString("storePic"));
+                user.setStoreName(userInfo.getString("storeName"));
+                user.setStoreLogo(userInfo.getString("storeLogo"));
+                user.setUserName(userInfo.getString("userName"));
+                user.setToken(userInfo.getString("token"));
+                user.setEmployeeId(userInfo.getIntValue("employeeId"));
+                for (int i = 0; i < userInfo.getJSONArray("roles").size(); i++) {
+                    user.setRoles(userInfo.getJSONArray("roles").getIntValue(i));
+                }
                 CacheUtil.getmInstance().setUser(user);
                 SYZJApplication.getInstance().getSpUtil().addString(Constants.SharedPreferencesClass.SP_PHONE, username);
                 SYZJApplication.getInstance().getSpUtil().addString(Constants.SharedPreferencesClass.SP_PSW, password);
                 SYZJApplication.getInstance().getSpUtil().addString(Constants.SharedPreferencesClass.SP_TOKEN, user.getToken());
-                SYZJApplication.getInstance().getSpUtil().addInt(Constants.SharedPreferencesClass.SP_ROLES,user.getRoles());
-                SYZJApplication.getInstance().getSpUtil().addInt(Constants.SharedPreferencesClass.SP_STORE_ID,user.getStoreId());
+                SYZJApplication.getInstance().getSpUtil().addInt(Constants.SharedPreferencesClass.SP_ROLES, user.getRoles());
+                SYZJApplication.getInstance().getSpUtil().addInt(Constants.SharedPreferencesClass.SP_STORE_ID, user.getStoreId());
                 gotoActivity(MainActivity.class);
                 defaultFinish();
             }else {

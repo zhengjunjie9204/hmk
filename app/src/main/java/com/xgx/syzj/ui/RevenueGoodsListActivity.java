@@ -51,7 +51,7 @@ public class RevenueGoodsListActivity extends BaseActivity {
         setContentView(R.layout.activity_revenue_goods_list);
         initView();
         initListener();
-        mDataModel.queryFirstPage();
+        mDataModel.getAllProduct();
     }
 
     private void initView()
