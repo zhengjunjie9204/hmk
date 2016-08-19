@@ -132,4 +132,5 @@ public class MemberSelectProjectActivity extends BaseActivity implements View.On
             defaultFinish();
         }
     }
+
 }

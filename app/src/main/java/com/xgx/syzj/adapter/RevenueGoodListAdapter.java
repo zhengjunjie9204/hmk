@@ -81,7 +81,7 @@ public class RevenueGoodListAdapter extends BaseAdapter {
             hold.tv_money.setText("" + (goods.getSellingPrice() * 1));
         }
         if(!StrUtil.isEmpty(goods.getImage())){
-            Picasso.with(mContext).load(goods.getImage()).centerCrop().into(hold.mImg);
+            Picasso.with(mContext).load(goods.getImage()).into(hold.mImg);
 
         }
 

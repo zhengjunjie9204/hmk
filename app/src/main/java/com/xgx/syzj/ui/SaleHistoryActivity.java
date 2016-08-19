@@ -203,4 +203,14 @@ public class SaleHistoryActivity extends BaseActivity {
             mAdapter.notifyDataSetChanged();
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = getIntent();
+        int flags = intent.getFlags();
+        if(flags==3000){
+            gotoActivity(MainActivity.class);
+        }
+    }
 }

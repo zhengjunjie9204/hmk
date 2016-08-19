@@ -59,7 +59,7 @@ public class RevenueResultActivity extends BaseActivity implements View.OnClickL
             case R.id.btn_send:
                 Intent intent = new Intent(this, SaleHistoryActivity.class);
 //                gotoActivity(SaleHistoryActivity.class);
-                intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.setFlags(3000);
                 startActivity(intent);
                 defaultFinish();
                 break;
