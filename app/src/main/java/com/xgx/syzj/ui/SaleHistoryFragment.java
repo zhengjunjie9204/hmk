@@ -1,107 +1,97 @@
 package com.xgx.syzj.ui;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
-import android.widget.Toast;
+import android.widget.EditText;
+import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.xgx.syzj.R;
-import com.xgx.syzj.adapter.SaleDetailAdapter;
-import com.xgx.syzj.adapter.SaleHistroyAdapter;
+import com.xgx.syzj.adapter.OrderListAdapter;
 import com.xgx.syzj.app.Constants;
-import com.xgx.syzj.bean.BillListItemBean;
+import com.xgx.syzj.base.BaseFragment;
+import com.xgx.syzj.bean.OrderList;
 import com.xgx.syzj.bean.Result;
 import com.xgx.syzj.datamodel.SaleListRecordModel;
-import com.xgx.syzj.event.BillEventPostData;
-import com.xgx.syzj.utils.DateUtil;
+import com.xgx.syzj.event.EventCenter;
+import com.xgx.syzj.event.SimpleEventHandler;
+import com.xgx.syzj.utils.FastJsonUtil;
 import com.xgx.syzj.utils.Utils;
+import com.xgx.syzj.widget.CustomAlertDialog;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import de.greenrobot.event.EventBus;
 import in.srain.cube.views.loadmore.LoadMoreContainer;
 import in.srain.cube.views.loadmore.LoadMoreHandler;
 import in.srain.cube.views.loadmore.LoadMoreListViewContainer;
 
 /**
- * @author zajo
- * @created 2015年11月24日 15:49
+ * 收银记录
+ *
+ * @author sam
+ * @created 2015年09月24日 14:22
  */
-@SuppressLint("ValidFragment")
-public class SaleHistoryFragment extends Fragment/* implements SaleHistoryInterfaces*/{
-
-
-    private  boolean complete;//标示是否完成订单
-    private String mFlag = "";
-    private SwipeMenuListView lv_data;
-    private SaleHistroyAdapter mAdapter;
-    private SaleDetailAdapter saleDetailAdapter;
-    private List<BillListItemBean> mList = new ArrayList<>();
-    private int deleteIndex = -1;
-    private ISaleHistoryItemClick iSaleHistoryItemClick;
+public class SaleHistoryFragment extends BaseFragment {
+    public static final String SALE_MEMBER = "MEMBER";
+    public static final String SALE_BILL_ITEM = "BIllITEMDETAIL";
     private LoadMoreListViewContainer loadMoreListViewContainer;
+    private SwipeMenuListView lv_data;
     private SaleListRecordModel mDataModel;
-    private int returnId = -1;
-    private Context mContext;
+    private OrderListAdapter mAdapter;
+    private List<OrderList> mDataList;
+    private int cancelPosition;
+    private EditText mSearch;
+    private int type;
 
-
-
-    @SuppressLint("ValidFragment")
-    public SaleHistoryFragment(Context context ,String flag) {
-        super();
-        this.mContext = context;
-        this.mFlag = flag;
-    }
-    @SuppressLint("ValidFragment")
-    public SaleHistoryFragment(boolean flag) {
-        super();
-        this.complete = flag;
+    public SaleHistoryFragment(int type){
+        this.type=type;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-        EventBus.getDefault().register(this);
-
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        if (!(activity instanceof ISaleHistoryItemClick)){
-            throw new ClassCastException();
-        }
-        iSaleHistoryItemClick = (ISaleHistoryItemClick) activity;
-        super.onAttach(activity);
-    }
-
-    @Nullable
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_sale_history, null);
+        View view = inflater.inflate(R.layout.activity_sale_history, null);
         initView(view);
+        initListener();
+        EventCenter.bindContainerAndHandler(this, eventHandler);
+        mDataModel = new SaleListRecordModel(Constants.LOAD_COUNT);
+        mDataModel.setKey(null, type,null, null, null, null);
+        mDataModel.queryFirstPage();
         return view;
     }
 
-    private void initView(View view) {
+    private void initView(View view)
+    {
+        mDataList = new ArrayList<>();
+        mSearch = (EditText)view.findViewById(R.id.et_text);
+        mSearch.setOnEditorActionListener(onEditorActionListener);
         lv_data = (SwipeMenuListView) view.findViewById(R.id.lv_data);
+        loadMoreListViewContainer = (LoadMoreListViewContainer) view.findViewById(R.id.load_more_list_view_container);
+        loadMoreListViewContainer.useDefaultFooter();
+        loadMoreListViewContainer.setShowLoadingForFirstPage(true);
         SwipeMenuCreator creator = new SwipeMenuCreator() {
-
             @Override
-            public void create(SwipeMenu menu) {
+            public void create(SwipeMenu menu)
+            {
                 SwipeMenuItem deleteItem = new SwipeMenuItem(getActivity());
                 deleteItem.setBackground(new ColorDrawable(Color.rgb(0xF9, 0x3F, 0x25)));
                 deleteItem.setWidth(Utils.dp2px(getActivity(), 90));
@@ -112,145 +102,113 @@ public class SaleHistoryFragment extends Fragment/* implements SaleHistoryInterf
             }
         };
         lv_data.setMenuCreator(creator);
+        mAdapter = new OrderListAdapter(getActivity(), mDataList);
+        lv_data.setAdapter(mAdapter);
+    }
+
+    private void initListener()
+    {
         lv_data.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (iSaleHistoryItemClick != null)
-                    iSaleHistoryItemClick.onItemClick(mList.get(position));
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                Intent intent = new Intent(getActivity(),SaleDetailActivity.class);
+                intent.putExtra("order",mDataList.get(position));
+                startActivity(intent);
+
             }
         });
         lv_data.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
-            public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
-                deleteItemBill(position);
-                return false;
+            public boolean onMenuItemClick(final int position, SwipeMenu menu, int index) {
+                CustomAlertDialog.showRemindDialog(getActivity(), "温馨提示", "是否删除", new CustomAlertDialog.IAlertDialogListener() {
+                    @Override
+                    public void onSure(Object obj) {
+
+                        showLoadingDialog(getActivity(), R.string.loading_date);
+                        cancelPosition = position;
+                        mDataModel.setOrderCancel(String.valueOf(mDataList.get(position).getId()));
+
+                    }
+                });
+                return true;
             }
         });
-        mDataModel = new SaleListRecordModel(Constants.LOAD_COUNT,mFlag);
-        mDataModel.setTime(DateUtil.getStringByFormat(System.currentTimeMillis()-864000001, "yyyy-MM-dd"),
-                DateUtil.getStringByFormat(System.currentTimeMillis(), "yyyy-MM-dd"));
-
-        loadMoreListViewContainer = (LoadMoreListViewContainer)
-                view.findViewById(R.id.load_more_list_view_container);
-        loadMoreListViewContainer.useDefaultFooter();
-        loadMoreListViewContainer.setShowLoadingForFirstPage(true);
         loadMoreListViewContainer.setLoadMoreHandler(new LoadMoreHandler() {
             @Override
             public void onLoadMore(LoadMoreContainer loadMoreContainer) {
                 mDataModel.queryNextPage();
             }
         });
-        initData();
-        mAdapter = new SaleHistroyAdapter(getActivity(),mFlag,mList);
-        saleDetailAdapter = new SaleDetailAdapter(getActivity());
-        lv_data.setAdapter(mAdapter);
-        mDataModel.queryNextPage();
     }
 
-    private void initData() {
-        for(int i=0;i<10;i++){
-            BillListItemBean shy=new BillListItemBean();
-            List<BillListItemBean.BillDetailsEntity> list=new ArrayList<>();
-            for(int j=0;j<3;j++){
-                BillListItemBean.BillDetailsEntity bde=new BillListItemBean.BillDetailsEntity();
-                bde.setProductName(mFlag+"水壶"+i);
-                bde.setQuantity(j);
-                bde.setTotalValue(j+0.2);
-                bde.setStoreId(j);
-                bde.setBillDetailsId(j);
-                bde.setBillId(j);
-                bde.setSellingPrice(2.3+j);
-                list.add(bde);
-            }
-            shy.setBillDetails(list);
-            shy.setCustomerType(1);
-            shy.setBillDatetime(System.currentTimeMillis());
-            shy.setAssociatorId(1);
-            shy.setFlag(1);
-            shy.setBillId(i);
-            shy.setModeOfPay(2);
-            shy.setAssociatorName("这样"+i);
-            shy.setPaidValue(20.2+i);
-            shy.setReceivableValue(i);
-            shy.setDescription("sd"+i);
-            shy.setReturnValue(i);
-            shy.setStoreId(i);
-            mList.add(shy);
-        }
-    }
+    private SimpleEventHandler eventHandler = new SimpleEventHandler() {
 
-    public void onEventMainThread(BillEventPostData<BillListItemBean> billData){
-
-        if(billData.str.equals(mFlag)){
-            loadMoreListViewContainer.loadMoreFinish(mDataModel.getListPageInfo().isEmpty(),
-                    mDataModel.getListPageInfo().hasMore());
-            if(mList.size() > 0 ){
-                if(mList.get(0).getBillDatetime() != billData.dataList.get(0).getBillDatetime()){
-                    mAdapter.appendList(mList);
-                }
-            }else {
-                mAdapter.appendList(billData.dataList);
-            }
+        public void onEvent(List<OrderList> list)
+        {
+            mDataList.addAll(list);
             mAdapter.notifyDataSetChanged();
         }
 
-    }
-
-    public void onEventMainThread(Bundle bundle){
-        if(bundle != null){
-            mList.clear();
-            mDataModel.setCustomerType(mFlag);
-            mDataModel.setTime(bundle.getString("startTime"),bundle.getString("currentTime"));
-            mDataModel.queryNextPage();
-            mAdapter.notifyDataSetChanged();
-        }
-    }
-
-
-
-    public void onEventMainThread(Map map){
-        if(map != null)
-            for(BillListItemBean bim : mList){
-                for (int i = 0 ;i<bim.getBillDetails().size();i++){
-                    int reId = Integer.parseInt(map.get("returnId").toString());
-                    if(reId == bim.getBillDetails().get(i).getBillDetailsId()){
-                       bim.getBillDetails().remove(bim.getBillDetails().get(i));
+        public void onEvent(Result result)
+        {
+            hideLoadingDialog();
+            if (result.getStatus() == 200) {
+                if(SaleListRecordModel.DELETE_SALE_RECORD==result.geteCode()) {
+                    if (mDataList.size() > cancelPosition) {
+                        mDataList.remove(cancelPosition);
+                        mAdapter.notifyDataSetChanged();
                     }
                 }
-                if(bim.getBillDetails().size() == 0){
-                    mList.remove(bim);
+                if(SaleListRecordModel.ORDER_LIST_SUCCESS==result.geteCode()&&type==result.getOrderType()){
+                    JSONObject object = JSON.parseObject(result.getResult());
+                    List<OrderList> list = FastJsonUtil.json2List(object.getString("payOrders"), OrderList.class);
+                    mDataList.addAll(list);
+                    mAdapter.notifyDataSetChanged();
                 }
             }
-        mAdapter.notifyDataSetChanged();
-    }
+        }
+
+        public void onEvent(String error)
+        {
+            hideLoadingDialog();
+            showShortToast(error);
+            loadMoreListViewContainer.loadMoreError(0, error);
+        }
+    };
 
 
-    public void onEventMainThread(Result result){
-     if(result.geteCode() == mDataModel.DELETE_SALE_RECORD){
-         mList.remove(mList.get(deleteIndex));
-         Toast.makeText(mContext,"取消该订单成功",Toast.LENGTH_SHORT);
-     }
-        mAdapter.notifyDataSetChanged();
-    }
+    private TextView.OnEditorActionListener onEditorActionListener= new TextView.OnEditorActionListener(){
 
-
-    private void deleteItemBill(int position) {
-        deleteIndex = position;
-        SaleListRecordModel.doRequst(mList.get(position).getBillId());
-    }
-//
-//    @Override
-//    public void notifyChangeData(int id) {
-//
-//    }
-
-    public interface ISaleHistoryItemClick {
-        void onItemClick(BillListItemBean shy);
-    }
+        @Override
+        public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                String text = mSearch.getText().toString().trim();
+                mDataModel.setKey(text,type ,null, null, null, null);
+                mDataList.clear();
+                mAdapter.notifyDataSetChanged();
+                mDataModel.queryFirstPage();
+                Utils.hideSoftInput(getActivity());
+            }
+            return false;
+        }
+    };
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != Activity.RESULT_OK) return;
+        if (requestCode == 2003) {
+            mDataList.clear();
+            mAdapter.notifyDataSetChanged();
+            String maxTime = data.getStringExtra("maxTime");
+            String minTime = data.getStringExtra("minTime");
+            String minmoney = data.getStringExtra("minmoney");
+            String maxmoney = data.getStringExtra("maxmoney");
+            mDataModel.payOrder("",type,minmoney,maxmoney,minTime,maxTime);
+            mAdapter.notifyDataSetChanged();
+        }
     }
+
+
 }

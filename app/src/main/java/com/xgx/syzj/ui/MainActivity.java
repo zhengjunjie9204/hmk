@@ -1,7 +1,6 @@
 package com.xgx.syzj.ui;
 
 import android.app.Activity;
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,7 +21,6 @@ import com.baidu.location.Poi;
 import com.xgx.syzj.R;
 import com.xgx.syzj.app.AppManager;
 import com.xgx.syzj.app.Constants;
-import com.xgx.syzj.base.BaseActivity;
 import com.xgx.syzj.utils.CacheUtil;
 import com.xgx.syzj.widget.CustomAlertDialog;
 import com.xgx.syzj.widget.CustomProgressDialog;
@@ -135,7 +133,7 @@ public class MainActivity extends FragmentActivity implements IMainMenuListItemC
 
     //单据列表
     public void onCheckSell(View view) {
-        gotoActivity(SaleHistoryActivity.class);
+        gotoActivity(HistoryActivity.class);
     }
 
     //报表分析
@@ -151,7 +149,7 @@ public class MainActivity extends FragmentActivity implements IMainMenuListItemC
             return;
             }
         });
-        //        gotoActivity(OrderFormActivity.class);
+                gotoActivity(OrderFormActivity.class);
 
 
 //        gotoActivity();

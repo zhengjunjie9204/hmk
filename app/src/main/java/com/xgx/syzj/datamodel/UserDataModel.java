@@ -11,6 +11,9 @@ public class UserDataModel extends BaseDataModel {
     public static final byte LOGIN_SUCCESS = 0x10;
     public static final byte REGISTER_SUCCESS = 0x11;
     public static final byte REGISTER_STAFF_SUCCESS = 0x12;
+    public static final byte GET_CODENUM=0x14;
+    public static final byte CHECK_CODENUM=0x15;
+    public static final byte FORGET_PASSWORD=0x16;
 
     public static void loginByToken(String token){
         code = LOGIN_SUCCESS;
@@ -30,5 +33,21 @@ public class UserDataModel extends BaseDataModel {
     public static void registerStaff(String phoneStr, String pswStr, String nameStr, int authority, int storeId){
         code = REGISTER_STAFF_SUCCESS;
         Api.registerStaff(phoneStr, pswStr, nameStr, authority, storeId, listener);
+    }
+
+
+    public static void getCode(String inputValue){
+        code = GET_CODENUM;
+        Api.getCode(inputValue, listener);
+    }
+
+    public static void checkCodenum(String phone,String codenum){
+        code=CHECK_CODENUM;
+        Api.checkCodenum(phone, codenum, listener);
+    }
+
+    public static void forgetPsw(String mobilephone,String codenum, String newpassword){
+        code=FORGET_PASSWORD;
+        Api.forgetPassWord(mobilephone, codenum, newpassword, listener);
     }
 }

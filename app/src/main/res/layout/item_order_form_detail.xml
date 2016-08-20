@@ -13,7 +13,7 @@
         android:layout_marginLeft="10dp"
         android:textColor="@color/title_3_color"
         android:textSize="14sp"
-        android:text="商品名"/>
+        android:text="项目名"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,7 +30,7 @@
             android:layout_weight="1"
             android:textColor="@color/title_6_color"
             android:textSize="12sp"
-            android:text="规格："/>
+            android:text="价格："/>
 
         <TextView
             android:id="@+id/tv_sell_money"
@@ -39,7 +39,7 @@
             android:layout_weight="1"
             android:textColor="@color/title_6_color"
             android:textSize="12sp"
-            android:text="售价："/>
+            android:text="工时："/>
 
         <TextView
             android:id="@+id/tv_count"
@@ -48,7 +48,7 @@
             android:layout_weight="1"
             android:textColor="@color/title_6_color"
             android:textSize="12sp"
-            android:text="数量："/>
+            android:text="小计："/>
     </LinearLayout>
 
     <View

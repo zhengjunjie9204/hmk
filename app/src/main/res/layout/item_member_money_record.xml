@@ -25,7 +25,8 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@id/mark"
-        android:singleLine="true"
+        android:gravity="center"
+        android:text="2016-08-08\n16:15:25"
         android:textColor="@color/gray" />
 
     <TextView

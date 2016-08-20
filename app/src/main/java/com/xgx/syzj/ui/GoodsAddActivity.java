@@ -124,7 +124,7 @@ public class GoodsAddActivity extends BaseActivity implements UploadPictureView.
 
             }
         });
-        images.add(paths.get(index));
+        images.add(image);
         CropOption cropOption = new CropOption();
         cropOption.outputX = 200;
         cropOption.outputY = 200;

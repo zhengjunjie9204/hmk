@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.TextView;
@@ -42,7 +43,7 @@ public class BaseActivity extends FragmentActivity implements IComponentContaine
         actionBar.setCustomView(R.layout.layout_top_bar);
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         actionBar.setDisplayShowCustomEnabled(true);
-
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         dialog = CustomProgressDialog.createDialog(this).setMessage("加载中...");
         AppManager.getAppManager().addActivity(this); //将activity推入管理栈
         AppConfig.init(this);

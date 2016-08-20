@@ -12,7 +12,6 @@ import com.xgx.syzj.secret.Base64Util;
 import com.xgx.syzj.secret.RSAManager;
 import com.xgx.syzj.utils.CacheUtil;
 import com.xgx.syzj.utils.FastJsonUtil;
-import com.xgx.syzj.utils.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -210,6 +209,68 @@ public class Api extends BaseRequest {
     }
 
     /**
+     * 获取验证码
+     * @param listener
+     * @return
+     */
+    public static StringRequest getCode(String inputValue, OnRequestListener listener)
+    {
+        Map<String, String> params = null;
+        String info = null;
+        try {
+            params = new HashMap<>();
+            params.put("inputValue", inputValue);
+            String json = FastJsonUtil.bean2Json(params);
+            info = Base64Util.encode(json.getBytes("UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        params.clear();
+        params.put("info", info);
+        return getRequest(Url.USER_FORGOT_PASSWORD_ONE, params, getHeader(), listener);
+    }
+
+    /**
+     * 核对验证码
+     */
+    public static StringRequest checkCodenum(String phone, String codeNum, OnRequestListener listener) {
+        Map<String, String> params = null;
+        try {
+            params = new HashMap<>();
+            params.put("inputValue", phone);
+            params.put("checkCode", codeNum);
+            String json = FastJsonUtil.bean2Json(params);
+            String info = Base64Util.encode(json.getBytes("UTF-8"));
+            params.clear();
+            params.put("info", info);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getRequest(Url.USER_CHECK_CODE, params, getHeader(), listener);
+    }
+
+
+    /**
+     * 忘记密码
+     */
+    public static StringRequest forgetPassWord(String mobilephone, String codenum, String newpassword, final OnRequestListener listener) {
+        Map<String, String> params = new HashMap<String, String>();
+        try {
+            params.put("inputValue", mobilephone);
+            params.put("checkCode", codenum);
+            params.put("password", newpassword);
+            String json = FastJsonUtil.bean2Json(params);
+            String info = Base64Util.encode(json.getBytes("UTF-8"));
+            params.clear();
+            params.put("info", info);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return getRequest(Url.USER_FORGETPASS, params, listener);
+    }
+
+
+    /**
      * 删除员工
      *
      * @param accountId
@@ -309,12 +370,12 @@ public class Api extends BaseRequest {
             for (String image : images) {
                 imageArray = new JSONArray();
                 JSONObject imgjson = new JSONObject();
-                imgjson.put("base64FileString", Utils.GetImageBase64Str(image));
+                imgjson.put("base64FileString",images);
                 imgjson.put("filaName", image.substring(image.trim().lastIndexOf("\\") + 1));
-                imageArray.put(json);
+                imageArray.put(imgjson);
             }
             json.put("images", imageArray);
-            String info = new String(Base64.encode(params.toString().getBytes("UTF-8"), Base64.DEFAULT));
+            String info = new String(Base64.encode(json.toString().getBytes("UTF-8"), Base64.DEFAULT));
             params.put("info", info);
         } catch (Exception e) {
             e.printStackTrace();
@@ -329,25 +390,35 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest updateProducts(int productId, String barcode, String productName, String categoryId, String inputPrice, String sellingPrice, String vip_price, String specification, String brand, String unitid, List images, OnRequestListener listener)
+    public static StringRequest updateProducts(int productId, String barcode, String productName, String categoryId, String inputPrice, String sellingPrice, String vip_price, String specification, String brand, String unitid, List<String> images, OnRequestListener listener)
     {
         Map<String, String> params = null;
         try {
             params = new HashMap<>();
-            params.put("productId", productId + "");
-            params.put("barcode", barcode);
-            params.put("productName", productName);
-            params.put("categoryId", categoryId);
-            params.put("inputPrice", inputPrice);
-            params.put("sellingPrice", sellingPrice);
-            params.put("brand", brand);
-            params.put("vip_price", vip_price);
-            params.put("specification", specification);
-            params.put("unitid", unitid);
-            params.put("images", images.toString());
-            String json = FastJsonUtil.bean2Json(params);
-            String info = Base64Util.encode(json.getBytes("UTF-8"));
-            params.clear();
+            JSONObject json = new JSONObject();
+            json.put("productId", productId + "");
+            json.put("barcode", barcode);
+            json.put("productName", productName);
+            json.put("categoryId", categoryId);
+            json.put("inputPrice", inputPrice);
+            json.put("sellingPrice", sellingPrice);
+            json.put("brand", brand);
+            json.put("vip_price", vip_price);
+            json.put("specification", specification);
+            json.put("unitid", unitid);
+            JSONArray jsonArray=null;
+            for ( String image :images){
+                jsonArray = new JSONArray();
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("base64FileString",image);
+//                jsonObject.put("fileName", image.substring(image.trim().lastIndexOf("\\") + 1));
+                jsonArray.put(jsonObject);
+            }
+            json.put("images", jsonArray);
+            String info = new String(Base64.encode(json.toString().getBytes("UTF-8"), Base64.DEFAULT));
+
+//            String json = FastJsonUtil.bean2Json(params);
+//            String info = Base64Util.encode(json.getBytes("UTF-8"));
             params.put("info", info);
 
         } catch (Exception e) {
@@ -1031,13 +1102,14 @@ public class Api extends BaseRequest {
     /**
      * 3.7.9.	订单筛选,订单列表
      */
-    public static StringRequest getOrderFilter(String key,String minMoney,String maxMoney, String startTime, String endTime, int pageNo, int pageSize, OnRequestListener listener)
+    public static StringRequest getOrderFilter(String key,int ordertype,String minMoney,String maxMoney, String startTime, String endTime, int pageNo, int pageSize, OnRequestListener listener)
     {
         Map<String, String> params = null;
         try {
             params = new HashMap<>();
             JSONObject info = new JSONObject();
             info.put("key",key);
+            info.put("orderType",ordertype+"");
             info.put("storeId", CacheUtil.getmInstance().getUser().getStoreId());
             info.put("startTime", startTime);
             info.put("endTime", endTime);

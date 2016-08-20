@@ -23,6 +23,7 @@ import de.greenrobot.event.EventBus;
 public class SaleListRecordModel extends PagedListDataModel<OrderList> {
     public static final byte DELETE_SALE_RECORD = 0x11;
     public static final byte ORDER_DETAILS = 0x12;
+    public  static final byte ORDER_LIST_SUCCESS=0x13;
     private static byte code;
     private String TYPE = "";//请求类型，全部、会员、散客
     private OrderListDataEvent data = new OrderListDataEvent();
@@ -31,6 +32,7 @@ public class SaleListRecordModel extends PagedListDataModel<OrderList> {
     private String maxMoney;
     private String startTime;
     private String endTime;
+    private int ordertype;
 
     public SaleListRecordModel(int num)
     {
@@ -53,9 +55,10 @@ public class SaleListRecordModel extends PagedListDataModel<OrderList> {
         mListPageInfo = new ListPageInfo<>(mListPageInfo.getNumPerPage());
     }
 
-    public void setKey(String key,String minMoney,String maxMoney,String startTime,String endTime)
+    public void setKey(String key,int ordertype,String minMoney,String maxMoney,String startTime,String endTime)
     {
         this.key = key;
+        this.ordertype=ordertype;
         this.minMoney = minMoney;
         this.maxMoney = maxMoney;
         this.startTime = startTime;
@@ -68,7 +71,7 @@ public class SaleListRecordModel extends PagedListDataModel<OrderList> {
     @Override
     protected void doQueryData()
     {
-        Api.getOrderFilter(key,minMoney,maxMoney,startTime,endTime,mListPageInfo.getPage(), mListPageInfo.getNumPerPage(), new BaseRequest.OnRequestListener() {
+        Api.getOrderFilter(key,ordertype,minMoney,maxMoney,startTime,endTime,mListPageInfo.getPage(), mListPageInfo.getNumPerPage(), new BaseRequest.OnRequestListener() {
             @Override
             public void onSuccess(Result result)
             {
@@ -91,6 +94,7 @@ public class SaleListRecordModel extends PagedListDataModel<OrderList> {
                     list = new ArrayList<>();
                 }
                 setRequestResult(data.dataList, data.hasMore);
+                result.seteCode(ORDER_LIST_SUCCESS);
                 EventCenter.getInstance().post(list);
             }
 
@@ -103,8 +107,8 @@ public class SaleListRecordModel extends PagedListDataModel<OrderList> {
         });
     }
 
-    public void  payOrder(String key,String minMoney,String maxMoney,String startTime,String endTime){
-        Api.getOrderFilter(key,minMoney,maxMoney,startTime,endTime,mListPageInfo.getPage(), mListPageInfo.getNumPerPage(), new BaseRequest.OnRequestListener() {
+    public void  payOrder(String key, final int ordertype,String minMoney,String maxMoney,String startTime,String endTime){
+        Api.getOrderFilter(key,ordertype,minMoney,maxMoney,startTime,endTime,mListPageInfo.getPage(), mListPageInfo.getNumPerPage(), new BaseRequest.OnRequestListener() {
             @Override
             public void onSuccess(Result result)
             {
@@ -127,7 +131,8 @@ public class SaleListRecordModel extends PagedListDataModel<OrderList> {
                     list = new ArrayList<>();
                 }
                 setRequestResult(data.dataList, data.hasMore);
-                EventCenter.getInstance().post(list);
+                result.setOrderType(ordertype);
+                EventCenter.getInstance().post(result);
             }
 
             @Override
@@ -142,7 +147,7 @@ public class SaleListRecordModel extends PagedListDataModel<OrderList> {
     //作废订单
     public void setOrderCancel(String orderId)
     {
-        this.code = DELETE_SALE_RECORD;
+        code = DELETE_SALE_RECORD;
         Api.setOrderCancel(orderId, listener);
     }
 

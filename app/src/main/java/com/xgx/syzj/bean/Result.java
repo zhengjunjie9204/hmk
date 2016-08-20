@@ -11,6 +11,7 @@ public class Result {
     private String result = "";//接口返回的主数据
     private String message = "";//接口返回的描述
     private int status;
+    private int orderType;//单据列表的类型
     private long time = 0l;//接口返回时间
 
     private byte eCode = 0x0;
@@ -100,5 +101,13 @@ public class Result {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public int getOrderType() {
+        return orderType;
+    }
+
+    public void setOrderType(int orderType) {
+        this.orderType = orderType;
     }
 }

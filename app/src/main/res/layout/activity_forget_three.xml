@@ -1,83 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_psw"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_title"
-        android:text="@string/forget_psw_three_input_new"
-        android:textSize="16sp"
-        android:textColor="@color/black"
-        android:layout_marginTop="40dp"
-        android:layout_marginLeft="20dp"/>
-
-    <EditText
-        android:id="@+id/et_psw"
-        android:layout_below="@id/tv_psw"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/et_height"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/edittext_bg"
-        android:inputType="textPassword"
-        android:paddingLeft="10dp"
-        android:singleLine="true"
-        android:textColor="@color/edite_color"
-        android:textColorHint="@color/edite_color"
-        android:textCursorDrawable="@null"
-        android:textSize="14sp" />
-
-    <TextView
-        android:id="@+id/tv_re_psw"
-        android:layout_below="@id/et_psw"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/forget_psw_three_re_input_new"
-        android:textSize="16sp"
-        android:textColor="@color/black"
-        android:layout_marginTop="40dp"
-        android:layout_marginLeft="20dp"/>
-
-    <EditText
-        android:id="@+id/et_re_psw"
-        android:layout_below="@id/tv_re_psw"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/et_height"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/edittext_bg"
-        android:inputType="textPassword"
-        android:paddingLeft="10dp"
-        android:singleLine="true"
-        android:textColor="@color/edite_color"
-        android:textColorHint="@color/edite_color"
-        android:textCursorDrawable="@null"
-        android:textSize="14sp" />
-
-    <Button
-        android:id="@+id/btn_submit"
-        android:layout_below="@id/et_re_psw"
+    <LinearLayout
+        android:id="@+id/ll_forget"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:background="@drawable/button_login_bg"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
-        android:text="@string/app_button_sure"
-        android:textColor="@color/white" />
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/tv_psw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="40dp"
+            android:text="@string/forget_psw_three_input_new"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/et_psw"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/et_height"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edittext_bg"
+            android:inputType="textPassword"
+            android:paddingLeft="10dp"
+            android:singleLine="true"
+            android:textColor="@color/edite_color"
+            android:textColorHint="@color/edite_color"
+            android:textCursorDrawable="@null"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_re_psw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="40dp"
+            android:text="@string/forget_psw_three_re_input_new"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/et_re_psw"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/et_height"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edittext_bg"
+            android:inputType="textPassword"
+            android:paddingLeft="10dp"
+            android:singleLine="true"
+            android:textColor="@color/edite_color"
+            android:textColorHint="@color/edite_color"
+            android:textCursorDrawable="@null"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btn_sure"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:background="@drawable/button_login_bg"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/app_button_sure"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_log"
-        android:layout_below="@id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_horizontal"
         android:background="@color/white"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
         android:visibility="gone">
 
@@ -85,29 +89,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
-            android:background="@mipmap/success"/>
+            android:background="@mipmap/success" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:gravity="center"
-            android:textSize="16sp"
             android:lineSpacingMultiplier="2"
+            android:text="@string/forget_psw_reset_success"
             android:textColor="@color/black"
-            android:text="@string/forget_psw_reset_success"/>
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/btn_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:layout_marginTop="20dp"
             android:background="@drawable/button_login_bg"
-            android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:layout_marginTop="20dp"
-            android:text="@string/forget_psw_re_login"/>
+            android:paddingTop="10dp"
+            android:text="@string/forget_psw_re_login"
+            android:textColor="@color/white" />
     </LinearLayout>
-</RelativeLayout>
+</LinearLayout>

@@ -40,7 +40,7 @@ public class GoodsSelectActivity extends BaseActivity implements View.OnClickLis
     private EditText et_text;
     private Button btn_sure;
     private GoodAddModel mDataModel;
-    private List  mList=new ArrayList<Goods>();
+    private List  mList=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

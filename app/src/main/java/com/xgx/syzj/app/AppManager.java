@@ -1,11 +1,13 @@
 
 package com.xgx.syzj.app;
 
-import java.util.Stack;
-
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
+
+import com.xgx.syzj.ui.MainActivity;
+
+import java.util.Stack;
 
 public class AppManager {
     private static Stack<Activity> activityStack;
@@ -98,6 +100,14 @@ public class AppManager {
     public void finishActivity(Class<?> cls) {
         for (Activity activity : activityStack) {
             if (activity.getClass().equals(cls)) {
+                finishActivity(activity);
+            }
+        }
+    }
+
+    public void finishActivityNotMain(){
+        for (Activity activity : activityStack) {
+            if (!activity.getClass().equals(MainActivity.class)) {
                 finishActivity(activity);
             }
         }

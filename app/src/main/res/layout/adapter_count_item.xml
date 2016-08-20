@@ -12,10 +12,9 @@
 
         <TextView
             android:id="@+id/item_count_name"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
-            android:minWidth="98dp"
             android:gravity="center_vertical"
             android:text="普洗"
             android:textColor="@color/title_3_color"/>
@@ -24,35 +23,38 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="30dp"
             android:minWidth="80dp"
-            android:text="计次剩余"
+            android:text="可用次数"
             android:textColor="@color/light_blue"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="X"
+            android:layout_gravity="center_vertical"
+            android:text="×"
             android:textColor="@color/title_3_color"
             android:textSize="16sp"/>
 
         <TextView
             android:id="@+id/item_count_num"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:minWidth="50dp"
+            android:layout_gravity="center_vertical"
             android:text="10"
             android:textColor="@color/red"
             android:textSize="16sp"/>
 
         <CheckBox
             android:id="@+id/item_count_check"
-            style="@style/checkbox_sell"
+            style="@style/checkbox_light"
             android:focusableInTouchMode="false"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="5dp"
+            android:layout_gravity="center_vertical"
             android:focusable="false"
             android:gravity="right"/>
 
