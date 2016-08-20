@@ -71,7 +71,7 @@ public class RevenueGoodListAdapter extends BaseAdapter {
         } else {
             hold = (HoldClass) convertView.getTag();
         }
-        hold.mTvUnit.setText("数量");
+        hold.mTvUnit.setText("购买数量");
         Goods goods = mList.get(position);
         hold.tv_name.setText(goods.getProductName());
         hold.et_time.setText(goods.getCount() + "");

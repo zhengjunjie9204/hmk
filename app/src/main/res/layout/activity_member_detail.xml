@@ -105,6 +105,28 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="3dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true">
+
+                    <TextView
+                        android:id="@+id/tv_distance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="111km"
+                        android:textColor="@color/white"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="里程数"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+
 
             </RelativeLayout>
 
@@ -332,40 +354,40 @@
                     android:paddingRight="10dp"
                     android:text="" />
             </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="#EFEFEF" />
+            <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="0.5dp"-->
+                <!--android:background="#EFEFEF" />-->
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp">
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:background="@color/white"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:paddingBottom="5dp"-->
+                <!--android:paddingTop="5dp">-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
-                    android:text="备注"
-                    android:textColor="@color/gray"
-                    android:textSize="14sp" />
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginBottom="10dp"-->
+                    <!--android:layout_marginLeft="20dp"-->
+                    <!--android:layout_marginTop="10dp"-->
+                    <!--android:text="备注"-->
+                    <!--android:textColor="@color/gray"-->
+                    <!--android:textSize="14sp" />-->
 
-                <TextView
-                    android:id="@+id/tv_beizhu"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:singleLine="true"
-                    android:gravity="right"
-                    android:paddingRight="10dp"
-                    android:text="" />
-            </LinearLayout>
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_beizhu"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:singleLine="true"-->
+                    <!--android:gravity="right"-->
+                    <!--android:paddingRight="10dp"-->
+                    <!--android:text="" />-->
+            <!--</LinearLayout>-->
 
             <View
                 android:layout_width="match_parent"

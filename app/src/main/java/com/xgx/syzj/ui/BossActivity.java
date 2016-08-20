@@ -1,7 +1,6 @@
 package com.xgx.syzj.ui;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -57,12 +56,11 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class BossActivity extends FragmentActivity implements IBossMainMenuListItemClick  {
+public class BossActivity extends FragmentActivity implements IMainMenuListItemClick, View.OnClickListener {
 
     public static final int RESULT_SHORTCUT_MENU = 1000;
 
     private SlidingPaneLayout mSlidingPanel;
-    private CustomProgressDialog Dialog;
     private Handler hanler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -76,6 +74,21 @@ public class BossActivity extends FragmentActivity implements IBossMainMenuListI
 
         }
     };
+    private AnalysisTabBar atbA, atbB, atbC, atbD, atbE;
+    private String currentTime, startTime;
+    private Date curDate;
+    private int selectData = -1;
+    private TextView tv_all_money, tvAllCount, tvProMoney, tvGoodMoney, tvCardMoney, tvCountMoney;
+    private Button btn_store;
+    private byte mFlag;
+    private HorizontalBarChart mChart;
+    private String[] mTimes = new String[]{"0:00", "1:00", "2:00", "3:00", "4:00", "5:00", "6:00", "7:00", "8:00", "9:00", "10:00", "11:00"
+            , "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"};
+    private int storeId;
+    private List<Store> storeList;
+    private CustomProgressDialog dialog;
+    private ImageView menu;
+    private IMainMenuListItemClick iMainMenuListItemClick;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,14 +96,229 @@ public class BossActivity extends FragmentActivity implements IBossMainMenuListI
         getActionBar().hide();
         AppManager.getAppManager().addActivity(this); //将activity推入管理栈
         setContentView(R.layout.activity_boss);
+
         mSlidingPanel = (SlidingPaneLayout) findViewById(R.id.SlidingPanel);
         mSlidingPanel.setParallaxDistance(200);
         mSlidingPanel.setSliderFadeColor(getResources().getColor(R.color.transparent));
+        mChart = (HorizontalBarChart) findViewById(R.id.chart);
+        menu =(ImageView)findViewById(R.id.iv_menu);
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mSlidingPanel.openPane();
+            }
+        });
+        tv_all_money = (TextView) findViewById(R.id.tv_all_money);
+        tvAllCount = (TextView) findViewById(R.id.tv_all_money_count);
+        tvProMoney = (TextView) findViewById(R.id.tv_project_money);
+        tvGoodMoney = (TextView) findViewById(R.id.tv_goods_money);
+        tvCardMoney = (TextView) findViewById(R.id.tv_card_money);
+        tvCountMoney = (TextView) findViewById(R.id.tv_count_money);
+        btn_store = (Button) findViewById(R.id.btn_submit);
+        initTabBar();
+        initChart();
+        dialog = CustomProgressDialog.createDialog(this).setMessage("加载中...");
+        storeId = CacheUtil.getmInstance().getUser().getStoreId();
+        changeTabBar(atbA);
+        selectBillpay();
+        EventCenter.bindContainerAndHandler(this, eventHandler);
+        BusinessSaleAnalyModel.getSaleReport(storeId,startTime, currentTime);
+        //location();
+    }
+    private void initTabBar()
+    {
+        atbA = (AnalysisTabBar) findViewById(R.id.atb_a);
+        atbB = (AnalysisTabBar) findViewById(R.id.atb_b);
+        atbC = (AnalysisTabBar) findViewById(R.id.atb_c);
+        atbD = (AnalysisTabBar) findViewById(R.id.atb_d);
+        atbE = (AnalysisTabBar) findViewById(R.id.atb_e);
+
+        atbA.setOnClickListener(this);
+        atbB.setOnClickListener(this);
+        atbC.setOnClickListener(this);
+        atbD.setOnClickListener(this);
+        atbE.setOnClickListener(this);
+    }
+
+    private void initChart()
+    {
+        mChart.setDrawBarShadow(false);
+        mChart.setDrawValueAboveBar(true);
+        mChart.setDescription("");
+//        mChart.setMaxVisibleValueCount()60;
+        mChart.setPinchZoom(true);
+        mChart.setDrawGridBackground(false);
+        XAxis xl = mChart.getXAxis();
+        xl.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xl.setDrawAxisLine(true);
+        xl.setDrawGridLines(false);
+        xl.setGridLineWidth(0.3f);
+
+        mChart.getAxisLeft().setEnabled(false);
+//        YAxis yl = mChart.getAxisLeft();
+//        yl.setDrawAxisLine(true);
+//        yl.setDrawGridLines(true);
+//        yl.setGridLineWidth(0.3f);
+
+//        YAxis yr = mChart.getAxisRight();
+//        yr.setDrawAxisLine(true);
+//        yr.setDrawGridLines(false);
+//        yr.setInverted(true);
 
     }
 
+    private void selectBillpay()
+    {
+        curDate = new Date(System.currentTimeMillis());
+        currentTime = DateUtil.getStringByOffset(curDate, DateUtil.dateFormatYMDHMS, Calendar.DATE, 0);
+        startTime = DateUtil.getStringByOffset(curDate, DateUtil.dateFormatYMDHMS, Calendar.DATE, -1);
+        startTime = DateUtil.getStringByOffset(curDate, DateUtil.dateFormatYMDHMS, Calendar.DATE, selectData);
+    }
 
+    private StorePopupWindowUtil.IPopupWindowCallListener ipopCallListener = new StorePopupWindowUtil.IPopupWindowCallListener() {
 
+        @Override
+        public void onItemClick(int index,Store store)
+        {
+            btn_store.setText(store.getName());
+            storeId = store.getId();
+            BusinessSaleAnalyModel.getMoneyReport(storeId, startTime, currentTime);
+        }
+    };
+
+    @Override
+    public void onClick(View v)
+    {
+        switch (v.getId()) {
+            case R.id.atb_a:
+                changeTabBar(atbA);
+                selectData = -1;
+                break;
+            case R.id.atb_b:
+                changeTabBar(atbB);
+                selectData = -7;
+                break;
+            case R.id.atb_c:
+                changeTabBar(atbC);
+                selectData = -15;
+                break;
+            case R.id.atb_d:
+                changeTabBar(atbD);
+                selectData = -30;
+                break;
+            case R.id.atb_e:
+                changeTabBar(atbE);
+                selectData = -265;
+                break;
+        }
+        selectBillpay();
+        showLoadingDialog(R.string.loading_date);
+        BusinessSaleAnalyModel.getSaleReport(storeId,startTime, currentTime);
+    }
+
+   
+
+    private SimpleEventHandler eventHandler = new SimpleEventHandler() {
+
+        public void onEvent(Result result)
+        {
+            try {
+                if (result.getStatus() == 200) {
+                    JSONObject json = new JSONObject(result.getResult());
+                    tvAllCount.setText(json.optInt("count", 0) + "笔");
+                    tv_all_money.setText("￥" + json.optDouble("totalSale", 0.00));
+                    tvProMoney.setText("￥" + json.optDouble("productSale", 0.00));
+                    tvGoodMoney.setText("￥" + json.optDouble("itemSale", 0.00));
+                    tvCardMoney.setText("￥" + json.optDouble("storeMoneySale", 0.00));
+                    tvCountMoney.setText("￥" + json.optDouble("storeItemSale", 0.00));
+                    setData(json);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            hideLoadingDialog();
+        }
+
+        public void onEvent(String error)
+        {
+            hideLoadingDialog();
+        }
+    };
+
+    private void changeTabBar(AnalysisTabBar bar)
+    {
+        bar.setStateColor(R.color.top_bar_color);
+        if (bar != atbA)
+            atbA.setStateColor(R.color.title_6_color);
+        if (bar != atbB)
+            atbB.setStateColor(R.color.title_6_color);
+        if (bar != atbC)
+            atbC.setStateColor(R.color.title_6_color);
+        if (bar != atbD)
+            atbD.setStateColor(R.color.title_6_color);
+        if (bar != atbE)
+            atbE.setStateColor(R.color.title_6_color);
+    }
+
+    private void setData(JSONObject json)
+    {
+        ArrayList<BarEntry> yVals1 = new ArrayList<>();
+        ArrayList<String> xVals = new ArrayList<>();
+
+        for (int i = 0; i < 24; i++) {
+            xVals.add(mTimes[i % 24]);
+            yVals1.add(new BarEntry((float) json.optDouble(i + "hour", 0.00), i));
+        }
+
+        BarDataSet set1 = new BarDataSet(yVals1, "DataSet 1");
+        set1.setColor(Color.rgb(141, 209, 255));
+
+        ArrayList<BarDataSet> dataSets = new ArrayList<>();
+        dataSets.add(set1);
+
+        BarData data = new BarData(xVals, dataSets);
+        data.setValueTextSize(10f);
+        data.setValueTextColor(Color.rgb(230, 58, 106));
+//        data.setValueTypeface(tf);
+
+        mChart.setData(data);
+
+        mChart.animateY(1500);
+        Legend l = mChart.getLegend();
+        l.setPosition(Legend.LegendPosition.BELOW_CHART_LEFT);
+        l.setFormSize(8f);
+        l.setXEntrySpace(4f);
+    }
+
+    private void getAllStore(){
+        Api.getAllStore(new BaseRequest.OnRequestListener() {
+            @Override
+            public void onSuccess(Result result)
+            {
+                if (result.getStatus() == 200) {
+                    try {
+                        JSONObject json = new JSONObject(result.getResult());
+                        storeList = FastJsonUtil.json2List(json.getString("storeList"), Store.class);
+                        new StorePopupWindowUtil(BossActivity.this, ipopCallListener).showActionWindow(btn_store, storeList);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onError(String errorCode, String message)
+            {
+
+            }
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        AppManager.getAppManager().finishActivity(this);
+    }
     public void gotoActivity(Class<? extends Activity> activity) {
         Intent intent = new Intent(this, activity);
         startActivity(intent);
@@ -126,12 +354,12 @@ public class BossActivity extends FragmentActivity implements IBossMainMenuListI
         Toast.makeText(this, content, Toast.LENGTH_SHORT).show();
     }
     protected void showLoadingDialog(int res_id) {
-        Dialog.setMessage(getString(res_id));
-        Dialog.show();
+        dialog.setMessage(getString(res_id));
+        dialog.show();
     }
 
     protected void hideLoadingDialog() {
-        Dialog.dismiss();
+        dialog.dismiss();
     }
     /**
      * @param position 0-4为功能列表占有 100顶部menu 101店铺信息
@@ -201,13 +429,13 @@ public class BossActivity extends FragmentActivity implements IBossMainMenuListI
         });
     }
 
-    private IMainBossActivityClick mainContainerFragmentListener;
+    private IMainActivityClick mainContainerFragmentListener;
 
     @Override
     public void onAttachFragment(Fragment fragment) {
         super.onAttachFragment(fragment);
-        if (fragment instanceof MainBossContainerFragment) {
-            mainContainerFragmentListener = (IMainBossActivityClick) fragment;
+        if (fragment instanceof MainContainerFragment) {
+            mainContainerFragmentListener = (IMainActivityClick) fragment;
         }
     }
 
@@ -274,8 +502,6 @@ public class BossActivity extends FragmentActivity implements IBossMainMenuListI
         mLocationClient.start();
     }
 
-
-
     public class MyLocationListener implements BDLocationListener {
 
         @Override
@@ -296,16 +522,11 @@ public class BossActivity extends FragmentActivity implements IBossMainMenuListI
 
 
     //主Activity传递事件到Fragment
+    interface IMainActivityClick {
+        void onDataChange();
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        AppManager.getAppManager().finishActivity(this);
-    }
-}
-interface IMainBossActivityClick {
-    void onDataChange();
-
-    void onLocation(String msg);
+        void onLocation(String msg);
 //    void onChangeView();
+    }
+
 }

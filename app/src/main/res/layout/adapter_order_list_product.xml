@@ -50,4 +50,9 @@
             android:text="退"/>
     </LinearLayout>
 
+    <include layout="@layout/layout_line"
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:layout_marginLeft="30dp"/>
+
 </LinearLayout>

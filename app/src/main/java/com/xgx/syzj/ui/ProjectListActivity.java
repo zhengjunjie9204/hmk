@@ -38,6 +38,7 @@ public class ProjectListActivity extends BaseActivity implements AdapterView.OnI
     private LoadMoreListViewContainer loadMoreListViewContainer;
     private ProjectListAdapter mAdapter;
     private ArrayList<Project> mList = new ArrayList<>();
+    private List<Project> sellLIst=new ArrayList<>();
     private ProjectDataModel mDataModel;
     private EditText et_text;
     private TextView tv_count;

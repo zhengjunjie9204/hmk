@@ -19,6 +19,7 @@
     <string name="app_button_print_pos">打印小票</string>
     <string name="app_data_empty">数据为空</string>
 
+
     <!-- 登录 -->
     <string name="log_demo">体验账号</string>
     <string name="log_username">账号:</string>
@@ -29,6 +30,8 @@
     <string name="log_reg_button">注册</string>
     <string name="log_forget">忘记密码?</string>
     <string name="toast_log_phone_error">用户名不能为空</string>
+    <string name="code_send_success">验证码发送成功</string>
+    <string name="code_error">验证码错误</string>
 
     <!-- 注册 -->
     <string name="reg_next_step">下一步</string>

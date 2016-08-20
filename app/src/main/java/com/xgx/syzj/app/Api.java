@@ -12,7 +12,6 @@ import com.xgx.syzj.secret.Base64Util;
 import com.xgx.syzj.secret.RSAManager;
 import com.xgx.syzj.utils.CacheUtil;
 import com.xgx.syzj.utils.FastJsonUtil;
-import com.xgx.syzj.utils.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -208,6 +207,68 @@ public class Api extends BaseRequest {
         params.put("userinfo", info);
         return getRequest(Url.USER_UPDATE_STAFF, params, getHeader(), listener);
     }
+
+    /**
+     * 获取验证码
+     * @param listener
+     * @return
+     */
+    public static StringRequest getCode(String inputValue, OnRequestListener listener)
+    {
+        Map<String, String> params = null;
+        String info = null;
+        try {
+            params = new HashMap<>();
+            params.put("inputValue", inputValue);
+            String json = FastJsonUtil.bean2Json(params);
+            info = Base64Util.encode(json.getBytes("UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        params.clear();
+        params.put("info", info);
+        return getRequest(Url.USER_FORGOT_PASSWORD_ONE, params, getHeader(), listener);
+    }
+
+    /**
+     * 核对验证码
+     */
+    public static StringRequest checkCodenum(String phone, String codeNum, OnRequestListener listener) {
+        Map<String, String> params = null;
+        try {
+            params = new HashMap<>();
+            params.put("inputValue", phone);
+            params.put("checkCode", codeNum);
+            String json = FastJsonUtil.bean2Json(params);
+            String info = Base64Util.encode(json.getBytes("UTF-8"));
+            params.clear();
+            params.put("info", info);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getRequest(Url.USER_CHECK_CODE, params, getHeader(), listener);
+    }
+
+
+    /**
+     * 忘记密码
+     */
+    public static StringRequest forgetPassWord(String mobilephone, String codenum, String newpassword, final OnRequestListener listener) {
+        Map<String, String> params = new HashMap<String, String>();
+        try {
+            params.put("inputValue", mobilephone);
+            params.put("checkCode", codenum);
+            params.put("password", newpassword);
+            String json = FastJsonUtil.bean2Json(params);
+            String info = Base64Util.encode(json.getBytes("UTF-8"));
+            params.clear();
+            params.put("info", info);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return getRequest(Url.USER_FORGETPASS, params, listener);
+    }
+
 
     /**
      * 删除员工
@@ -1041,13 +1102,14 @@ public class Api extends BaseRequest {
     /**
      * 3.7.9.	订单筛选,订单列表
      */
-    public static StringRequest getOrderFilter(String key,String minMoney,String maxMoney, String startTime, String endTime, int pageNo, int pageSize, OnRequestListener listener)
+    public static StringRequest getOrderFilter(String key,int ordertype,String minMoney,String maxMoney, String startTime, String endTime, int pageNo, int pageSize, OnRequestListener listener)
     {
         Map<String, String> params = null;
         try {
             params = new HashMap<>();
             JSONObject info = new JSONObject();
             info.put("key",key);
+            info.put("orderType",ordertype+"");
             info.put("storeId", CacheUtil.getmInstance().getUser().getStoreId());
             info.put("startTime", startTime);
             info.put("endTime", endTime);

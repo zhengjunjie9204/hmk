@@ -61,7 +61,7 @@ public class SaleHistoryActivity extends BaseActivity {
         initListener();
         EventCenter.bindContainerAndHandler(this, eventHandler);
         mDataModel = new SaleListRecordModel(Constants.LOAD_COUNT);
-        mDataModel.setKey(null, null, null, null, null);
+        mDataModel.setKey(null,1 ,null, null, null, null);
         mDataModel.queryFirstPage();
     }
 
@@ -178,7 +178,7 @@ public class SaleHistoryActivity extends BaseActivity {
         public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 String text = mSearch.getText().toString().trim();
-                mDataModel.setKey(text, null, null, null, null);
+                mDataModel.setKey(text, 1,null, null, null, null);
                 mDataList.clear();
                 mAdapter.notifyDataSetChanged();
                 mDataModel.queryFirstPage();
@@ -199,7 +199,7 @@ public class SaleHistoryActivity extends BaseActivity {
             String minTime = data.getStringExtra("minTime");
             String minmoney = data.getStringExtra("minmoney");
             String maxmoney = data.getStringExtra("maxmoney");
-            mDataModel.payOrder("",minmoney,maxmoney,minTime,maxTime);
+            mDataModel.payOrder("",1,minmoney,maxmoney,minTime,maxTime);
             mAdapter.notifyDataSetChanged();
         }
     }

@@ -124,7 +124,7 @@ public class GoodsDetailActivity extends BaseActivity {
     }
 
     public void onGoodsDelete(View view) {
-        if(SYZJApplication.getInstance().getSpUtil().getInt(Constants.SharedPreferencesClass.SP_ROLES)==2) {
+        if(SYZJApplication.getInstance().getSpUtil().getInt(Constants.SharedPreferencesClass.SP_ROLES)==2&&goods.getQuantity()==0) {
             CustomAlertDialog.showRemindDialog(this, "提醒", " 确定要删除该商品吗？", new CustomAlertDialog.IAlertDialogListener() {
                 @Override
                 public void onSure(Object obj) {
@@ -133,6 +133,8 @@ public class GoodsDetailActivity extends BaseActivity {
 
                 }
             });
+        }else{
+            showShortToast("权限不足或商品库存不为0，无法删除");
         }
     }
 

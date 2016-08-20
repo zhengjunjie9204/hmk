@@ -34,9 +34,10 @@ public class SaleDetailActivity extends BaseActivity {
     private ListViewExtend mProductListView;
     private ListViewExtend mItemListView;
     private TextView tv_name;
-    private TextView tv_mobile;
     private TextView tv_time;
     private TextView tv_number;
+    private TextView tv_title1;
+    private TextView tv_title2;
     private OrderDetailItemAdapter mItemAdapter;
     private OrderDetailItemAdapter mProAdapter;
     private List<ProductItems> mItemList;
@@ -60,9 +61,10 @@ public class SaleDetailActivity extends BaseActivity {
 
     private void initView() {
         tv_name = (TextView) findViewById(R.id.tv_name);
-        tv_mobile = (TextView) findViewById(R.id.tv_mobile);
         tv_time = (TextView) findViewById(R.id.tv_time);
         tv_number= (TextView) findViewById(R.id.tv_number);
+        tv_title1= (TextView) findViewById(R.id.title1);
+        tv_title2= (TextView) findViewById(R.id.title2);
         mItemListView = (ListViewExtend) findViewById(R.id.lv_data);
         mProductListView = (ListViewExtend) findViewById(R.id.lv_data2);
     }
@@ -75,7 +77,7 @@ public class SaleDetailActivity extends BaseActivity {
         mDataModel = new SaleListRecordModel(Constants.LOAD_COUNT);
         SaleListRecordModel.getOrderDetail(orderList.getId());
         tv_name.setText(orderList.getName());
-        tv_mobile.setText(orderList.getMobile());
+
         tv_time.setText(orderList.getCreateTime());
         tv_number.setText(orderList.getCarNumber());
     }
@@ -91,6 +93,12 @@ public class SaleDetailActivity extends BaseActivity {
                     mProList.addAll(list1);
                     mItemAdapter.notifyDataSetChanged();
                     mProAdapter.notifyDataSetChanged();
+                    if (list.size()<1){
+                        tv_title1.setVisibility(View.GONE);
+                    }
+                    if (list1.size()<1){
+                        tv_title2.setVisibility(View.GONE);
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

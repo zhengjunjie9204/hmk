@@ -118,7 +118,7 @@ public class MemberAddActivity extends BaseActivity {
                     Intent intent = new Intent(MemberAddActivity.this, MemberListActivity.class);
                     intent.putExtra("huiyuan",1);
                     startActivity(intent);
-//                    finish();
+                    finish();
                 } else {
                     String message = result.getMessage();
                     showShortToast(message);

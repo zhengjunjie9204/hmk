@@ -86,6 +86,13 @@
         <activity
             android:name=".ui.ForgetOneAcetivity"
             android:screenOrientation="portrait" />
+
+        <activity android:name=".ui.ForgetActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.RegisterForgetActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.ForgetTwoAcetivity"
             android:screenOrientation="portrait" />
@@ -288,9 +295,10 @@
         <activity android:name=".ui.AccountNewEmployeeActivity" />
         <activity android:name=".ui.SaleHistoryFilterActivity" />
         <activity android:name=".ui.MemberCountRecodesActivity" />
-        <activity android:name=".ui.BossActivity"
-                android:screenOrientation="portrait"
-            ></activity>
+        <activity android:name=".ui.BossActivity"></activity>
+        <activity
+            android:name=".ui.HistoryActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

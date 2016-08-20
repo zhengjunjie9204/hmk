@@ -33,7 +33,7 @@ import org.json.JSONObject;
  * @created 2015年08月31日 11:06
  */
 public class MemberDetailActivity extends BaseActivity {
-    private TextView tv_name, tv_money, tv_count, tv_phone, tv_number, tv_type, tv_all_pay;
+    private TextView tv_name, tv_money, tv_count, tv_phone, tv_number, tv_type, tv_all_pay,tv_distance;
     private Member member;
     private TextView tv_time1,tv_time2,tv_time3;
     private TextView tv_beizhu;
@@ -66,7 +66,8 @@ public class MemberDetailActivity extends BaseActivity {
         tv_time1 =(TextView) findViewById(R.id.tv_time1);
         tv_time2 =(TextView) findViewById(R.id.tv_time2);
         tv_time3 =(TextView) findViewById(R.id.tv_time3);
-        tv_beizhu =(TextView) findViewById(R.id.tv_beizhu);
+//        tv_beizhu =(TextView) findViewById(R.id.tv_beizhu);
+        tv_distance =(TextView) findViewById(R.id.tv_distance);
 
         EventCenter.bindContainerAndHandler(this, eventHandler);
         registerReceiver();
@@ -84,6 +85,7 @@ public class MemberDetailActivity extends BaseActivity {
             tv_type.setText(member.getCarType());
         }
         tv_number.setText(member.getCarNumber());
+        tv_distance.setText(member.getDistance()+"km");
     }
     //注册接受者
     private void registerReceiver() {

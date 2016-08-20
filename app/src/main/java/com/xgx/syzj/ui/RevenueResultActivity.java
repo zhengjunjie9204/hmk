@@ -51,7 +51,7 @@ public class RevenueResultActivity extends BaseActivity implements View.OnClickL
     protected void submit() {
         super.submit();
         gotoActivity(RevenueFastActivity.class);
-        finish();
+        AppManager.getAppManager().finishActivityNotMain();
     }
 
     @Override
