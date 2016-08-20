@@ -94,7 +94,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 SYZJApplication.getInstance().getSpUtil().addString(Constants.SharedPreferencesClass.SP_TOKEN, user.getToken());
                 SYZJApplication.getInstance().getSpUtil().addInt(Constants.SharedPreferencesClass.SP_ROLES, user.getRoles());
                 SYZJApplication.getInstance().getSpUtil().addInt(Constants.SharedPreferencesClass.SP_STORE_ID, user.getStoreId());
-                gotoActivity(MainActivity.class);
+//                if(user.getRoles()==1){
+//                    gotoActivity(BossActivity.class);
+//                }else
+                 {
+                    gotoActivity(MainActivity.class);
+                }
                 defaultFinish();
             }else {
                 if (isToken) {
@@ -168,7 +173,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private void login(){
         showLoadingDialog(R.string.dialog_log_ing_text);
 //        gotoActivity(MainActivity.class);
-        UserDataModel.login(username, password);
+        gotoActivity(BossActivity.class);
+//        UserDataModel.login(username, password);
     }
 
     @Override

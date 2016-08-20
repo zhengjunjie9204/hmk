@@ -309,12 +309,12 @@ public class Api extends BaseRequest {
             for (String image : images) {
                 imageArray = new JSONArray();
                 JSONObject imgjson = new JSONObject();
-                imgjson.put("base64FileString", Utils.GetImageBase64Str(image));
+                imgjson.put("base64FileString",images);
                 imgjson.put("filaName", image.substring(image.trim().lastIndexOf("\\") + 1));
-                imageArray.put(json);
+                imageArray.put(imgjson);
             }
             json.put("images", imageArray);
-            String info = new String(Base64.encode(params.toString().getBytes("UTF-8"), Base64.DEFAULT));
+            String info = new String(Base64.encode(json.toString().getBytes("UTF-8"), Base64.DEFAULT));
             params.put("info", info);
         } catch (Exception e) {
             e.printStackTrace();
@@ -329,25 +329,35 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest updateProducts(int productId, String barcode, String productName, String categoryId, String inputPrice, String sellingPrice, String vip_price, String specification, String brand, String unitid, List images, OnRequestListener listener)
+    public static StringRequest updateProducts(int productId, String barcode, String productName, String categoryId, String inputPrice, String sellingPrice, String vip_price, String specification, String brand, String unitid, List<String> images, OnRequestListener listener)
     {
         Map<String, String> params = null;
         try {
             params = new HashMap<>();
-            params.put("productId", productId + "");
-            params.put("barcode", barcode);
-            params.put("productName", productName);
-            params.put("categoryId", categoryId);
-            params.put("inputPrice", inputPrice);
-            params.put("sellingPrice", sellingPrice);
-            params.put("brand", brand);
-            params.put("vip_price", vip_price);
-            params.put("specification", specification);
-            params.put("unitid", unitid);
-            params.put("images", images.toString());
-            String json = FastJsonUtil.bean2Json(params);
-            String info = Base64Util.encode(json.getBytes("UTF-8"));
-            params.clear();
+            JSONObject json = new JSONObject();
+            json.put("productId", productId + "");
+            json.put("barcode", barcode);
+            json.put("productName", productName);
+            json.put("categoryId", categoryId);
+            json.put("inputPrice", inputPrice);
+            json.put("sellingPrice", sellingPrice);
+            json.put("brand", brand);
+            json.put("vip_price", vip_price);
+            json.put("specification", specification);
+            json.put("unitid", unitid);
+            JSONArray jsonArray=null;
+            for ( String image :images){
+                jsonArray = new JSONArray();
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("base64FileString",image);
+//                jsonObject.put("fileName", image.substring(image.trim().lastIndexOf("\\") + 1));
+                jsonArray.put(jsonObject);
+            }
+            json.put("images", jsonArray);
+            String info = new String(Base64.encode(json.toString().getBytes("UTF-8"), Base64.DEFAULT));
+
+//            String json = FastJsonUtil.bean2Json(params);
+//            String info = Base64Util.encode(json.getBytes("UTF-8"));
             params.put("info", info);
 
         } catch (Exception e) {

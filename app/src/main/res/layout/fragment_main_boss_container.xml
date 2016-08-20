@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:atb="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/appBG"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/top_bar_height"
+        android:background="@color/top_bar_color">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/iv_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="@mipmap/menu" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.xgx.syzj.widget.AnalysisTabBar
+            android:id="@+id/atb_a"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            atb:atbText="今天" />
+
+        <com.xgx.syzj.widget.AnalysisTabBar
+            android:id="@+id/atb_b"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            atb:atbText="7天" />
+
+        <com.xgx.syzj.widget.AnalysisTabBar
+            android:id="@+id/atb_c"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            atb:atbText="15天" />
+
+        <com.xgx.syzj.widget.AnalysisTabBar
+            android:id="@+id/atb_d"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            atb:atbText="30天" />
+
+        <com.xgx.syzj.widget.AnalysisTabBar
+            android:id="@+id/atb_e"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            atb:atbText="其他" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/edittext_bg"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center_horizontal"
+                    android:layout_margin="1dp"
+                    android:padding="10dp"
+                    android:text="今日销售概况"
+                    android:textColor="@color/title_6_color"
+                    android:textSize="14sp" />
+
+                <include layout="@layout/layout_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.3dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:background="@drawable/custom_text_item_bg"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/title_6_color"
+                        android:paddingLeft="20dp"
+                        android:text="销售总额:"/>
+
+                    <TextView
+                        android:id="@+id/tv_all_money"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@color/red"
+                        android:text="￥0.00"
+                        android:textSize="15sp"/>
+
+                    <TextView
+                        android:id="@+id/tv_all_money_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="10dp"
+                        android:textColor="@color/gray"
+                        android:text="0笔"/>
+
+                </LinearLayout>
+
+                <include layout="@layout/layout_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.3dp"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp">
+
+                    <ImageView
+                        android:id="@+id/iv_project"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="25dp"
+                        android:background="@mipmap/analysis_sale_project"/>
+
+                    <TextView
+                        android:id="@+id/tv_project_money"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:singleLine="true"
+                        android:layout_toRightOf="@+id/iv_project"
+                        android:textColor="@color/title_3_color"
+                        android:text="￥0.00"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_toRightOf="@+id/iv_project"
+                        android:layout_below="@+id/tv_project_money"
+                        android:textColor="@color/title_3_color"
+                        android:text="项目销售"
+                        />
+
+                    <View
+                        android:id="@+id/line1"
+                        android:layout_width="1dp"
+                        android:layout_height="30dp"
+                        android:layout_centerInParent="true" />
+
+                    <ImageView
+                        android:id="@+id/iv_goods"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="25dp"
+                        android:layout_toRightOf="@+id/line1"
+                        android:background="@mipmap/analysis_sale_goods"/>
+
+                    <TextView
+                        android:id="@+id/tv_goods_money"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/iv_goods"
+                        android:textColor="@color/title_3_color"
+                        android:singleLine="true"
+                        android:text="￥0.00"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_toRightOf="@+id/iv_goods"
+                        android:layout_below="@+id/tv_goods_money"
+                        android:textColor="@color/title_3_color"
+                        android:text="商品销售"
+                        />
+
+                </RelativeLayout>
+
+                <include layout="@layout/layout_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.3dp"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp">
+
+                    <ImageView
+                        android:id="@+id/iv_card"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="25dp"
+                        android:background="@mipmap/analysis_sale_card"/>
+
+                    <TextView
+                        android:id="@+id/tv_card_money"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:singleLine="true"
+                        android:layout_toRightOf="@+id/iv_card"
+                        android:textColor="@color/title_3_color"
+                        android:text="￥0.00"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_toRightOf="@+id/iv_card"
+                        android:layout_below="@+id/tv_card_money"
+                        android:textColor="@color/title_3_color"
+                        android:text="储值卡销售"
+                        />
+
+                    <View
+                        android:id="@+id/line2"
+                        android:layout_width="1dp"
+                        android:layout_height="30dp"
+                        android:layout_centerInParent="true" />
+
+                    <ImageView
+                        android:id="@+id/iv_count"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="25dp"
+                        android:layout_toRightOf="@+id/line2"
+                        android:background="@mipmap/analysis_sale_count"/>
+
+                    <TextView
+                        android:id="@+id/tv_count_money"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/iv_count"
+                        android:textColor="@color/title_3_color"
+                        android:singleLine="true"
+                        android:text="￥0.00"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_toRightOf="@+id/iv_count"
+                        android:layout_below="@+id/tv_count_money"
+                        android:textColor="@color/title_3_color"
+                        android:text="计次套餐销售"
+                        />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+
+            <com.github.mikephil.charting.charts.HorizontalBarChart
+                android:id="@+id/chart"
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/transparent" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
