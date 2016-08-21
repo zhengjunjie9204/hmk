@@ -20,7 +20,6 @@ import com.xgx.syzj.datamodel.MemberDataModel;
 import com.xgx.syzj.event.EventCenter;
 import com.xgx.syzj.event.SimpleEventHandler;
 import com.xgx.syzj.utils.FastJsonUtil;
-import com.xgx.syzj.utils.StrUtil;
 import com.xgx.syzj.widget.CustomAlertDialog;
 
 import org.json.JSONException;
@@ -139,21 +138,27 @@ public class MemberDetailActivity extends BaseActivity {
 
 
     public void onMemberMoney(View view) {
+        Intent intent = new Intent(this,MemberMoneyAddActivity.class);
         Bundle bundle = new Bundle();
         bundle.putParcelable("member", member);
-        gotoActivity(MemberMoneyAddActivity.class, bundle);
+        intent.putExtras(bundle);
+        startActivityForResult(intent, 0x101);
     }
 
-    public void onMemberHistory(View view) {
+    public void onMemberHistory(View view)
+    {
         Bundle bundle = new Bundle();
         bundle.putParcelable("member", member);
         gotoActivity(MemberConsumptionActivity.class,bundle);
+
     }
 
     public void onMemberAddCount(View view) {
+        Intent intent = new Intent(this,MemberAddCountActivity.class);
         Bundle bundle = new Bundle();
         bundle.putParcelable("member", member);
-        gotoActivity(MemberAddCountActivity.class, bundle);
+        intent.putExtras(bundle);
+        startActivityForResult(intent,0x102);
     }
 
     public void onMemberDelete(View view) {

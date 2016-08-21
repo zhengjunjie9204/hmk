@@ -92,6 +92,7 @@ public class MemberMoneyAddActivity extends BaseActivity implements View.OnClick
                     showShortToast(result.getMessage());
                 }
                 if(result.getStatus() == 200){
+                    showShortToast("充值成功");
                     setResult(RESULT_OK);
                     defaultFinish();
                 }
