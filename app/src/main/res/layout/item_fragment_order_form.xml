@@ -37,7 +37,7 @@
         android:textColor="@color/title_6_color"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="10dp"
-        android:text="订单商品"/>
+        android:text="预约内容"/>
 
     <TextView
         android:id="@+id/tv_time"

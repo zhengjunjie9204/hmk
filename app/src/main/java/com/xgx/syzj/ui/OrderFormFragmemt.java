@@ -107,14 +107,14 @@ public class OrderFormFragmemt extends Fragment {
                         of.setStatus(OrderForm.STATUS.INVALID);
                     }
                 }
-                of.setUserName("雷锋" + i + j);
+                of.setUserName("粤F4432" + i + j);
                 of.setUserPhone(("132514658"+j)+i);
                 List<Goods> gs = new ArrayList<>();
                 for (int k = 0; k < 4; k++) {
                     g = new Goods();
-                    g.setProductName("棉花糖" + k);
+                    g.setProductName("抛光套餐" + k);
                     g.setSellingPrice(i * j + 1000);
-                    g.setSpecification("20个/包");
+                    g.setSpecification("200元");
                     g.setQuantity(2000);
                     gs.add(g);
                 }

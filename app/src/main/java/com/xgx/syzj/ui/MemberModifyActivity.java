@@ -132,10 +132,6 @@ public class MemberModifyActivity extends BaseActivity implements View.OnClickLi
         strPhone = et_phone.getText().toString().trim();
         strCarNumber = et_carNumber.getText().toString().trim();
         strCarType = et_carType.getText().toString().trim();
-        if (TextUtils.isEmpty(strName)) {
-            showShortToast("姓名不能为空");
-            return;
-        }
         if (TextUtils.isEmpty(strPhone)) {
             showShortToast("号码不能为空");
             return;

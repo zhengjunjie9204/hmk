@@ -3,6 +3,7 @@ package com.xgx.syzj.ui;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.xgx.syzj.R;
 import com.xgx.syzj.base.BaseActivity;
@@ -16,6 +17,7 @@ import com.xgx.syzj.base.BaseActivity;
 public class ForgetOneAcetivity extends BaseActivity implements View.OnClickListener{
 
     private Button btn_submit;
+    private EditText et_phone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +25,7 @@ public class ForgetOneAcetivity extends BaseActivity implements View.OnClickList
         setContentView(R.layout.activity_forget_one);
         setTitleText(getString(R.string.forget_psw_title));
         btn_submit = (Button) findViewById(R.id.btn_submit);
+        et_phone= (EditText) findViewById(R.id.et_phone);
         btn_submit.setOnClickListener(this);
     }
 

@@ -94,6 +94,9 @@ public class MemberSelectProjectActivity extends BaseActivity implements View.On
             if (result.getStatus() == 200) {
                 JSONObject object = JSON.parseObject(result.getResult());
                 List<StoreItem> list = FastJsonUtil.json2List(object.getString("items"), StoreItem.class);
+                for (StoreItem storeItem:list){
+                    storeItem.setLaborTime(0);
+                }
                 mStoreList.addAll(list);
                 proAdapter.notifyDataSetChanged();
             }
@@ -132,4 +135,5 @@ public class MemberSelectProjectActivity extends BaseActivity implements View.On
             defaultFinish();
         }
     }
+
 }

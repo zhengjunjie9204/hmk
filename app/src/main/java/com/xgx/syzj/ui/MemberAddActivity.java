@@ -115,7 +115,10 @@ public class MemberAddActivity extends BaseActivity {
                     et_phone.setText("");
                     et_carnumber.setText("");
                     et_cartype.setText("");
-                    gotoActivity(MemberListActivity.class);
+                    Intent intent = new Intent(MemberAddActivity.this, MemberListActivity.class);
+                    intent.putExtra("huiyuan",1);
+                    startActivity(intent);
+                    finish();
                 } else {
                     String message = result.getMessage();
                     showShortToast(message);

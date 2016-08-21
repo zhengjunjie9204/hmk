@@ -71,7 +71,7 @@ public class RevenueGoodListAdapter extends BaseAdapter {
         } else {
             hold = (HoldClass) convertView.getTag();
         }
-        hold.mTvUnit.setText("数量");
+        hold.mTvUnit.setText("购买数量");
         Goods goods = mList.get(position);
         hold.tv_name.setText(goods.getProductName());
         hold.et_time.setText(goods.getCount() + "");
@@ -81,7 +81,7 @@ public class RevenueGoodListAdapter extends BaseAdapter {
             hold.tv_money.setText("" + (goods.getSellingPrice() * 1));
         }
         if(!StrUtil.isEmpty(goods.getImage())){
-            Picasso.with(mContext).load(goods.getImage()).centerCrop().into(hold.mImg);
+            Picasso.with(mContext).load(goods.getImage()).into(hold.mImg);
 
         }
 

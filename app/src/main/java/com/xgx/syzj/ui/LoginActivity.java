@@ -2,6 +2,7 @@ package com.xgx.syzj.ui;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -74,6 +75,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         public void onEvent(Result result){
             hideLoadingDialog();
             JSONObject object= JSON.parseObject(result.getResult());
+            Log.e("=",result.getResult());
             if(result.getStatus()==200&&"登录成功".equals(result.getMessage())) {
 //                String userinfo=object.getString("userInfo").replace("[","").replace("]","");
                 JSONObject userInfo = object.getJSONObject("userInfo");
@@ -85,16 +87,21 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 user.setUserName(userInfo.getString("userName"));
                 user.setToken(userInfo.getString("token"));
                 user.setEmployeeId(userInfo.getIntValue("employeeId"));
-                for (int i = 0; i < userInfo.getJSONArray("roles").size(); i++) {
-                    user.setRoles(userInfo.getJSONArray("roles").getIntValue(i));
-                }
+//                for (int i = 0; i < userInfo.getJSONArray("roles").size(); i++) {
+//                    user.setRoles(userInfo.getJSONArray("roles").getIntValue(i));
+//                }
                 CacheUtil.getmInstance().setUser(user);
                 SYZJApplication.getInstance().getSpUtil().addString(Constants.SharedPreferencesClass.SP_PHONE, username);
                 SYZJApplication.getInstance().getSpUtil().addString(Constants.SharedPreferencesClass.SP_PSW, password);
                 SYZJApplication.getInstance().getSpUtil().addString(Constants.SharedPreferencesClass.SP_TOKEN, user.getToken());
                 SYZJApplication.getInstance().getSpUtil().addInt(Constants.SharedPreferencesClass.SP_ROLES, user.getRoles());
                 SYZJApplication.getInstance().getSpUtil().addInt(Constants.SharedPreferencesClass.SP_STORE_ID, user.getStoreId());
-                gotoActivity(MainActivity.class);
+//                if(user.getRoles()==1){
+//                    gotoActivity(BossActivity.class);
+//                }else
+                 {
+                    gotoActivity(MainActivity.class);
+                }
                 defaultFinish();
             }else {
                 if (isToken) {
@@ -140,7 +147,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 //                gotoActivity(RegisterActivity.class);
 //                break;
             case R.id.btn_forget:
-                gotoActivity(ForgetOneAcetivity.class);
+                gotoActivity(RegisterForgetActivity.class);
                 break;
             case R.id.btn_demo:
                 break;
@@ -168,7 +175,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private void login(){
         showLoadingDialog(R.string.dialog_log_ing_text);
 //        gotoActivity(MainActivity.class);
-        UserDataModel.login(username, password);
+        gotoActivity(BossActivity.class);
+//        UserDataModel.login(username, password);
     }
 
     @Override

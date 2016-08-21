@@ -6,13 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.xgx.syzj.R;
 import com.xgx.syzj.bean.Project;
 import com.xgx.syzj.ui.RevenuseSellFinishActivity;
 import com.xgx.syzj.utils.Utils;
+import com.xgx.syzj.widget.CircleImageView;
 import com.xgx.syzj.widget.CustomAlertDialog;
 import com.xgx.syzj.widget.PhotoViewPagerDialog;
 
@@ -56,7 +56,7 @@ public class ProjectListAdapter extends BaseAdapter{
             hold.tv_money = (TextView) convertView.findViewById(R.id.tv_money);
             hold.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
             hold.et_time = (TextView) convertView.findViewById(R.id.et_time);
-            hold.mImg = (ImageView) convertView.findViewById(R.id.item_img);
+            hold.mImg = (CircleImageView) convertView.findViewById(R.id.item_img);
             convertView.setTag(hold);
         } else {
             hold = (HoldClass) convertView.getTag();
@@ -126,6 +126,6 @@ public class ProjectListAdapter extends BaseAdapter{
     class HoldClass {
         TextView tv_name, tv_money;
         TextView et_time;
-        ImageView mImg;
+        CircleImageView mImg;
     }
 }

@@ -17,6 +17,9 @@ public class Url {
     //基础请求
     public static final String USER_REGISTER = HOST_URL + "user/register";//注册
     public static final String USER_LOGIN = HOST_URL + "qcmr/login_loginByUserName.action";//登录
+    public static final String USER_FORGOT_PASSWORD_ONE = HOST_URL + "qcmr/user_inputFindString.action";//忘记密码第一步
+    public static final String USER_FORGETPASS = HOST_URL + "qcmr/user_inputNewPassword.action";//忘记密码
+    public static final String USER_CHECK_CODE = HOST_URL + "qcmr/user_inputCheckCode.action";//核对验证码
     public static final String USER_LOGIB_BY_TKEN = HOST_URL + "qcmr/login_loginByToken.action";//token登录
     public static final String REFRESH_ACCESSTOKEN = HOST_URL + "token/refreshToken";//重新获取Token
     public static final String USER_ADD_STAFF = HOST_URL + "employee/add";//添加员工

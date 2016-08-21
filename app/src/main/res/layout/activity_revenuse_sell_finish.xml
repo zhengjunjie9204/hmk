@@ -49,6 +49,46 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:textSize="14sp"
+                    android:textColor="@color/gray"
+                    android:drawableLeft="@mipmap/asix"
+                    android:drawablePadding="10dp"
+                    android:text="当前里程数:"/>
+
+                <EditText
+                    android:id="@+id/et_distance"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:gravity="end"
+                    android:text="1235.2"
+                    android:textColor="@color/gray"
+                    android:background="@null"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:text="km"
+                    />
+
+            </LinearLayout>
+
+
+            <include layout="@layout/layout_line"
+                android:layout_width="match_parent"
+                android:layout_height="0.3dp"/>
             <LinearLayout
                 android:id="@+id/ll_project"
                 android:layout_width="match_parent"
@@ -61,16 +101,41 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:padding="20dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:drawableLeft="@mipmap/afive"
+                    android:drawableRight="@mipmap/right_tw"
+                    android:drawablePadding="10dp"
+                    android:textSize="14sp"
                     android:textColor="@color/gray"
                     android:text="请选择项目"/>
 
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="30dp"
-                    android:background="@mipmap/right_tw"/>
+            </LinearLayout>
+
+            <include layout="@layout/layout_line"
+                android:layout_width="match_parent"
+                android:layout_height="0.3dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingLeft="30dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:textSize="14sp"
+                    android:textColor="@color/gray"
+                    android:text="计次卡剩余次数："/>
 
             </LinearLayout>
 
@@ -116,16 +181,16 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:padding="20dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:drawableLeft="@mipmap/aone"
+                    android:drawableRight="@mipmap/right_tw"
+                    android:drawablePadding="10dp"
+                    android:textSize="14sp"
                     android:textColor="@color/gray"
                     android:text="请选择商品"/>
-
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="30dp"
-                    android:background="@mipmap/right_tw"/>
 
             </LinearLayout>
 

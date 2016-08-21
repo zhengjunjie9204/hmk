@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.media.Image;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -21,11 +22,15 @@ import com.xgx.syzj.event.EventCenter;
 import com.xgx.syzj.event.SimpleEventHandler;
 import com.xgx.syzj.utils.BitmapUtil;
 import com.xgx.syzj.utils.FastJsonUtil;
+import com.xgx.syzj.utils.Utils;
 import com.xgx.syzj.utils.photos.CropOption;
 import com.xgx.syzj.utils.photos.PhotoReadyHandler;
 import com.xgx.syzj.utils.photos.SelectPhotoManager;
 import com.xgx.syzj.widget.UploadPictureView;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -123,8 +128,12 @@ public class GoodsModifyActivity extends BaseActivity implements UploadPictureVi
             @Override
             public void onPhotoReady(int from, String imgPath) {
                 paths.put(index + "", imgPath);
+
                 Bitmap bitmap = BitmapUtil.scaleBitmap(GoodsModifyActivity.this, imgPath, 200);
                 image = BitmapUtil.convertIconToString(bitmap);
+                String image2 = Utils.GetImageBase64Str(imgPath);
+                images.add(image2);
+                Log.e("images",imgPath);
                 if (index == 0) {
                     upv_one.setImageViewPic(bitmap);
                     upv_one.setAddViewClickable(false);
@@ -145,7 +154,8 @@ public class GoodsModifyActivity extends BaseActivity implements UploadPictureVi
 
             }
         });
-        images.add(paths.get(index));
+
+
         CropOption cropOption = new CropOption();
         cropOption.outputX = 200;
         cropOption.outputY = 200;
@@ -240,4 +250,5 @@ public class GoodsModifyActivity extends BaseActivity implements UploadPictureVi
                 break;
         }
     }
+
 }

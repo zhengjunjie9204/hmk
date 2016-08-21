@@ -269,8 +269,13 @@ public class MemberListActivity extends BaseActivity  {
     }*/
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unregisterReceiver(myReceiver);
+    public void onBackPressed() {
+        Intent intent = getIntent();
+        int huiyuan = intent.getIntExtra("huiyuan", 1);
+        if(huiyuan==1){
+            gotoActivity(MainActivity.class);
+        }
+        super.onBackPressed();
+
     }
 }

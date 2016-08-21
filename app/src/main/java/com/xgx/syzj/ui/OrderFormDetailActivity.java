@@ -43,7 +43,7 @@ public class OrderFormDetailActivity extends BaseActivity implements View.OnClic
     }
 
     private void initView() {
-        setTitleText("订单详情");
+        setTitleText("预约单详情");
         setSubmit("客户到店");
         tiv_num = (TextItemView) findViewById(R.id.tiv_num);
         tiv_userName = (TextItemView) findViewById(R.id.tiv_userName);
@@ -69,9 +69,9 @@ public class OrderFormDetailActivity extends BaseActivity implements View.OnClic
             TextView tv_sell_money = (TextView) view.findViewById(R.id.tv_sell_money);
             TextView tv_count = (TextView) view.findViewById(R.id.tv_count);
             tv_name.setText(g.getProductName());
-            tv_guige.setText("规格：" + g.getSpecification());
-            tv_sell_money.setText("售价：" + g.getStrSellingPrice());
-            tv_count.setText("数量：" + g.getQuantity());
+            tv_guige.setText("价格：" + g.getSpecification());
+            tv_sell_money.setText("工时：" + g.getStrSellingPrice());
+            tv_count.setText("小计：" + g.getQuantity());
             container.addView(view);
         }
     }

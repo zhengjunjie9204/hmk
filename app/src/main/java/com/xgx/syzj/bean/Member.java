@@ -26,6 +26,7 @@ public class Member implements Parcelable {
     private String status;/*会员状态*/
     private double storedMoney;
     private String userMetering;
+    private double distance;//里程数
 
     public Member()
     {
@@ -51,6 +52,7 @@ public class Member implements Parcelable {
         status = in.readString();
         storedMoney = in.readDouble();
         userMetering = in.readString();
+        distance=in.readDouble();
     }
 
     @Override
@@ -74,6 +76,7 @@ public class Member implements Parcelable {
         dest.writeString(status);
         dest.writeDouble(storedMoney);
         dest.writeString(userMetering);
+        dest.writeDouble(distance);
     }
 
     @Override
@@ -274,5 +277,13 @@ public class Member implements Parcelable {
     public void setUserMetering(String userMetering)
     {
         this.userMetering = userMetering;
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
     }
 }

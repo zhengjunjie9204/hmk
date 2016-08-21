@@ -69,11 +69,12 @@ public class GoodsrechargeAdapter extends BaseAdapter {
         }
         final StoreItem item = mList.get(position);
         hold.tv_name.setText(item.getName());
-        if (item.getLaborTime() == 0) {
-            item.setLaborTime(1);
-        }
         hold.tv_money.setText(String.valueOf(item.getPrice() * item.getLaborTime()));
-        hold.et_count.setText(String.valueOf(item.getLaborTime()));
+        if(item.getLaborTime()==0){
+            hold.et_count.setText("");
+        }else {
+            hold.et_count.setText(String.valueOf(item.getLaborTime()));
+        }
         hold.et_count.setOnClickListener(new MyClickListener(item, true));
         if (selectMap.containsKey(item.getId())) {
             hold.cb_wash.setChecked(true);

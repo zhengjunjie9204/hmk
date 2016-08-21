@@ -19,55 +19,55 @@
             android:paddingRight="10dp">
 
             <TextView
+                android:id="@+id/tv_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="粤A56786"
+                android:textColor="@color/white"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/tv_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_number"
+                android:layout_marginTop="6dp"
+                android:text="奔驰"
+                android:textColor="@color/white"/>
+
+            <TextView
                 android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="8dp"
-                android:text="张勇"
+                android:layout_below="@+id/tv_type"
+                android:layout_marginTop="6dp"
+                android:text="店长"
                 android:textColor="@color/white"
                 android:textSize="14sp"/>
 
             <TextView
-                android:id="@+id/tv_mobile"
+                android:id="@+id/tv_pay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginLeft="20dp"
+                android:layout_below="@+id/tv_type"
                 android:layout_toRightOf="@id/tv_name"
-                android:text="13688768833"
+                android:text="支付宝支付"
                 android:textColor="@color/white"
                 android:textSize="14sp"/>
 
-            <LinearLayout
-                android:id="@+id/ll_contant"
+            <TextView
+                android:id="@+id/tv_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tv_name"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal"
-                android:padding="3dp">
-
-                <TextView
-                    android:id="@+id/tv_number"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="粤A5678"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"/>
-
-                <TextView
-                    android:id="@+id/tv_time"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:text="2015-08-19 14:33:43"
-                    android:textColor="@color/white"
-                    android:textSize="12sp"/>
-            </LinearLayout>
+                android:layout_marginTop="6dp"
+                android:gravity="right"
+                android:layout_below="@+id/tv_type"
+                android:layout_toRightOf="@+id/tv_pay"
+                android:text="2015-08-19 14:33:43"
+                android:textColor="@color/white"
+                android:textSize="14sp"/>
         </RelativeLayout>
 
         <View
@@ -88,10 +88,13 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/title1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
+                android:layout_marginLeft="10dp"
                 android:text="项目信息"
+                android:textColor="@color/gray"
                 android:textSize="16sp"/>
 
             <com.xgx.syzj.widget.ListViewExtend
@@ -105,9 +108,12 @@
                 tools:listitem="@layout/item_sale_detail"/>
 
             <TextView
+                android:id="@+id/title2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/gray"
                 android:text="商品信息"
                 android:textSize="16sp"/>
 

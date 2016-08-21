@@ -243,7 +243,6 @@ public class GoodsListActivity extends BaseActivity  {
             finish();
         }else{
             gotoActivity(GoodsSelectActivity.class);
-            finish();
         }
     }
 
