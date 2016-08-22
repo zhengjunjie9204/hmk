@@ -75,7 +75,7 @@
             android:layout_width="0dp"
             android:layout_weight="1.5"
             android:layout_height="@dimen/et_height"
-            android:background="@drawable/button_send_bg"
+            android:background="@drawable/abc_btn_borderless_material"
             android:textColor="@color/white"
             android:paddingLeft="8dp"
             android:gravity="center"
