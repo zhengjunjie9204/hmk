@@ -58,8 +58,9 @@ public class MemberConsumptionActivity extends BaseActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member_consumption);
-        initView();
         setData();
+        initView();
+
     }
 
     private void initView()
@@ -95,6 +96,7 @@ public class MemberConsumptionActivity extends BaseActivity {
 
         mAdapter = new ConsumeHistoryAdapter(MemberConsumptionActivity.this, mList);
         lv_bill_record.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
     }
 
     private void setData()
@@ -116,6 +118,7 @@ public class MemberConsumptionActivity extends BaseActivity {
         {
             loadMoreListViewContainer.loadMoreFinish(billListRecordModel.getListPageInfo().isEmpty(), billListRecordModel.getListPageInfo().hasMore());
             mAdapter.appendList(list);
+            mAdapter.notifyDataSetChanged();
         }
 
         public void onEvent(JSONObject object)

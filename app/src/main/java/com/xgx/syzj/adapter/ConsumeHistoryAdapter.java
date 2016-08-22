@@ -1,6 +1,7 @@
 package com.xgx.syzj.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +57,7 @@ public class ConsumeHistoryAdapter extends BaseAdapter {
             hold = new HoldClass();
             convertView = LayoutInflater.from(context).inflate(R.layout.item_consumption, null);
             hold.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
-            hold.tv_num = (TextView) convertView.findViewById(R.id.tv_num);
+            hold.tv_num = (TextView) convertView.findViewById(R.id.tv_num1);
             hold.tv_money = (TextView) convertView.findViewById(R.id.tv_money);
             hold.tv_time = (TextView) convertView.findViewById(R.id.tv_time);
             convertView.setTag(hold);//getStringByFormat
@@ -64,8 +65,21 @@ public class ConsumeHistoryAdapter extends BaseAdapter {
             hold = (HoldClass) convertView.getTag();
         }
         final ConsumeHistory data = mList.get(position);
-        hold.tv_name.setText(data.getName());
-        hold.tv_money.setText("￥"+data.getPayAmount());
+        Log.e("zjj",data.toString());
+        if(data.getProductList()!=null){
+            List<ConsumeHistory.ItemList> itemList = data.getItemList();
+            ConsumeHistory.ItemList item = itemList.get(0);
+            hold.tv_name.setText(item.name);
+            hold.tv_num.setText(item.amount+"");
+            hold.tv_money.setText("￥"+item.price);
+        }else if(data.getItemList()!=null){
+            List<ConsumeHistory.ItemList> itemList = data.getItemList();
+            ConsumeHistory.ItemList item = itemList.get(0);
+            hold.tv_name.setText(item.name);
+            hold.tv_num.setText(item.amount);
+            hold.tv_money.setText("￥"+item.price);
+        }
+
 //        hold.tv_num.setText(data.getQuantity()+"");
 //        hold.tv_time.setText(DateUtil.getStringByFormat(data.getPayTime(),DateUtil.dateFormatYMDHMS));
         hold.tv_time.setText(data.getPayTime());

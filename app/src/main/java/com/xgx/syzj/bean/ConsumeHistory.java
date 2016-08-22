@@ -34,8 +34,27 @@ public class ConsumeHistory {
     private int store;
     private int employee;
     private String payStatus;
-    private ItemList productList;
-    private ItemList itemList;
+
+    public List<ItemList> getProductList() {
+        return productList;
+    }
+
+    public void setProductList(List<ItemList> productList) {
+        this.productList = productList;
+    }
+
+    public List<ItemList> getItemList() {
+        return itemList;
+    }
+
+    public void setItemList(List<ItemList> itemList) {
+        this.itemList = itemList;
+    }
+
+    private List<ItemList> productList;
+    private List<ItemList> itemList;
+
+
 
     public int getPayType()
     {
@@ -148,45 +167,11 @@ public class ConsumeHistory {
     }
 
 
-    public class ItemList{
-        private int id;
-        private String name;
-        private int amount;
-        private long price;
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public int getAmount() {
-            return amount;
-        }
-
-        public void setAmount(int amount) {
-            this.amount = amount;
-        }
-
-        public long getPrice() {
-            return price;
-        }
-
-        public void setPrice(long price) {
-            this.price = price;
-        }
+    public class ItemList {
+        public int id;
+        public String name;
+        public int amount;
+        public long price;
     }
-
-
 }
 
