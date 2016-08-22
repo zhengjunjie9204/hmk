@@ -1369,6 +1369,7 @@ public class Api extends BaseRequest {
             if (!TextUtils.isEmpty(key)) {
                 info.put("condition", key);
             }
+            info.put("storeId", CacheUtil.getmInstance().getUser().getStoreId());
             info.put("pageNo", page);
             info.put("pageSize", pageSize);
             String json = FastJsonUtil.bean2Json(info);
