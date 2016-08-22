@@ -61,7 +61,7 @@ public class SaleHistoryActivity extends BaseActivity {
         initListener();
         EventCenter.bindContainerAndHandler(this, eventHandler);
         mDataModel = new SaleListRecordModel(Constants.LOAD_COUNT);
-        mDataModel.setKey(null,1 ,null, null, null, null);
+        mDataModel.payOrder("","","","","");
         mDataModel.queryFirstPage();
     }
 
@@ -89,7 +89,7 @@ public class SaleHistoryActivity extends BaseActivity {
                 menu.addMenuItem(deleteItem);
             }
         };
-        lv_data.setMenuCreator(creator);
+//        lv_data.setMenuCreator(creator);
         mAdapter = new OrderListAdapter(this, mDataList);
         lv_data.setAdapter(mAdapter);
     }
@@ -199,7 +199,7 @@ public class SaleHistoryActivity extends BaseActivity {
             String minTime = data.getStringExtra("minTime");
             String minmoney = data.getStringExtra("minmoney");
             String maxmoney = data.getStringExtra("maxmoney");
-            mDataModel.payOrder("",1,minmoney,maxmoney,minTime,maxTime);
+            mDataModel.payOrder("",minmoney,maxmoney,minTime,maxTime);
             mAdapter.notifyDataSetChanged();
         }
     }

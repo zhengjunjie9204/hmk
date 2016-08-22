@@ -21,6 +21,7 @@ import com.xgx.syzj.datamodel.UserDataModel;
 import com.xgx.syzj.event.EventCenter;
 import com.xgx.syzj.event.SimpleEventHandler;
 import com.xgx.syzj.utils.CacheUtil;
+import com.xgx.syzj.utils.FastJsonUtil;
 
 /**
  * 登录
@@ -86,6 +87,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 user.setStoreLogo(userInfo.getString("storeLogo"));
                 user.setUserName(userInfo.getString("userName"));
                 user.setToken(userInfo.getString("token"));
+                user.setRoles(userInfo.getInteger("roles"));
                 user.setEmployeeId(userInfo.getIntValue("employeeId"));
 //                for (int i = 0; i < userInfo.getJSONArray("roles").size(); i++) {
 //                    user.setRoles(userInfo.getJSONArray("roles").getIntValue(i));
@@ -96,9 +98,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 SYZJApplication.getInstance().getSpUtil().addString(Constants.SharedPreferencesClass.SP_TOKEN, user.getToken());
                 SYZJApplication.getInstance().getSpUtil().addInt(Constants.SharedPreferencesClass.SP_ROLES, user.getRoles());
                 SYZJApplication.getInstance().getSpUtil().addInt(Constants.SharedPreferencesClass.SP_STORE_ID, user.getStoreId());
-//                if(user.getRoles()==1){
-//                    gotoActivity(BossActivity.class);
-//                }else
+                if(user.getRoles()==1){
+                    gotoActivity(BossActivity.class);
+                }else
                  {
                     gotoActivity(MainActivity.class);
                 }
@@ -175,8 +177,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private void login(){
         showLoadingDialog(R.string.dialog_log_ing_text);
 //        gotoActivity(MainActivity.class);
-        gotoActivity(BossActivity.class);
-//        UserDataModel.login(username, password);
+
+        UserDataModel.login(username, password);
     }
 
     @Override

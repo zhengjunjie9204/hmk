@@ -74,4 +74,5 @@ public class BaseFragment extends Fragment implements IComponentContainer {
         Toast.makeText(getActivity(), content, Toast.LENGTH_SHORT).show();
     }
 
+
 }

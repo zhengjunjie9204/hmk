@@ -123,8 +123,9 @@ public class   MemberMoneyRecordActivity extends BaseActivity {
         count = getString(R.string.member_money_count) + "<br/><b><big>￥" + "</big></b>";
         tv_count.setText(Html.fromHtml(count) + "" + count_money);
         used = getString(R.string.member_money_used) + "<br/><b><big>￥" + "</big></b>";
-        tv_used.setText(Html.fromHtml(used) + "" + used_money);
+        tv_used.setText(Html.fromHtml(used) + "" + add_money);
         add = getString(R.string.member_money_add) + "<br/><b><big>￥" + "</big></b>";
-        tv_add.setText(Html.fromHtml(add) + "" + add_money);
+        tv_add.setText( Html.fromHtml(add) + "" + used_money);
+
     }
 }

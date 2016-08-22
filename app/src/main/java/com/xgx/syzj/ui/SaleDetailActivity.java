@@ -45,6 +45,9 @@ public class SaleDetailActivity extends BaseActivity {
     //数据
     private OrderList orderList;
     private SaleListRecordModel mDataModel;
+    private TextView tv_type;
+    private TextView tv_pay;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +66,8 @@ public class SaleDetailActivity extends BaseActivity {
         tv_name = (TextView) findViewById(R.id.tv_name);
         tv_time = (TextView) findViewById(R.id.tv_time);
         tv_number= (TextView) findViewById(R.id.tv_number);
+        tv_pay= (TextView) findViewById(R.id.tv_pay);
+        tv_type =(TextView) findViewById(R.id.tv_type);
         tv_title1= (TextView) findViewById(R.id.title1);
         tv_title2= (TextView) findViewById(R.id.title2);
         mItemListView = (ListViewExtend) findViewById(R.id.lv_data);
@@ -77,7 +82,6 @@ public class SaleDetailActivity extends BaseActivity {
         mDataModel = new SaleListRecordModel(Constants.LOAD_COUNT);
         SaleListRecordModel.getOrderDetail(orderList.getId());
         tv_name.setText(orderList.getName());
-
         tv_time.setText(orderList.getCreateTime());
         tv_number.setText(orderList.getCarNumber());
     }

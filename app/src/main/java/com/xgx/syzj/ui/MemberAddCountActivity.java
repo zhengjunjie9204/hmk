@@ -150,6 +150,7 @@ public class MemberAddCountActivity extends BaseActivity implements View.OnClick
                             storeList = new JSONArray();
                             JSONObject params = new JSONObject();
                             params.put("itemId", storeItem.getId());
+                            params.put("price",storeItem.getPrice());
                             params.put("amount", storeItem.getLaborTime());
                             storeList.put(params);
                         }
@@ -159,6 +160,7 @@ public class MemberAddCountActivity extends BaseActivity implements View.OnClick
                             comboList = new JSONArray();
                             JSONObject params = new JSONObject();
                             params.put("comboId", combo.getId());
+                            params.put("price",combo.getPrice());
                             params.put("amount", 1);
                             comboList.put(params);
                         }

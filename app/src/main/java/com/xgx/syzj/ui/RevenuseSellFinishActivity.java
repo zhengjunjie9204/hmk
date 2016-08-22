@@ -75,6 +75,7 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
         setContentView(R.layout.activity_revenuse_sell_finish);
         Utils.hideSoftInput(this);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
         initData();
         initView();
     }
@@ -165,6 +166,7 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
                             JSONObject json = new JSONObject();
                             json.put("productId", goods.getProductId());
                             json.put("amount", goods.getCount());
+                            json.put("price",goods.getSellingPrice());
                             productList.put(json);
                         }
                     }
@@ -173,6 +175,7 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
                             JSONObject json = new JSONObject();
                             json.put("itemId", project.getId());
                             json.put("amount", project.getLaborTime());
+                            json.put("price",project.getPrice());
                             itemList.put(json);
                         }
                     }

@@ -74,11 +74,15 @@ public class GoodsListAdapter extends BaseAdapter {
             hold = (HoldClass) convertView.getTag();
         }
         hold.iv_goods.setTag(position);
-        if(!TextUtils.isEmpty(goods.getPic1())){
-            String pic1 = goods.getPic1();
-            Log.e("zjj",pic1);
-            Picasso.with(mContext).load(pic1).into( hold.iv_goods);
+        List<Goods.ImagesBean> images = goods.getImages();
+        for (Goods.ImagesBean image : images) {
+            if(!TextUtils.isEmpty(image.getImage())){
+                String pic1 = image.getImage();
+                Log.e("zjj",pic1);
+                Picasso.with(mContext).load(pic1).into( hold.iv_goods);
+            }
         }
+
         hold.tv_name.setText(goods.getProductName());
         hold.tv_count.setText("库存："+goods.getQuantity()+"件");
         hold.tv_money.setText("¥ "+goods.getSellingPrice());

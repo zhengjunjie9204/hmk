@@ -242,7 +242,7 @@ public class Goods implements Parcelable {
         this.revenueCount = revenueCount;
     }
 
-    private class ImagesBean{
+    public class ImagesBean{
         int index;
         String image;
 

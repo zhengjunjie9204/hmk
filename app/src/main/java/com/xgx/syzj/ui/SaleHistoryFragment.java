@@ -1,5 +1,6 @@
 package com.xgx.syzj.ui;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -22,6 +23,7 @@ import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.xgx.syzj.R;
 import com.xgx.syzj.adapter.OrderListAdapter;
+import com.xgx.syzj.adapter.OrderListAdapter2;
 import com.xgx.syzj.app.Constants;
 import com.xgx.syzj.base.BaseFragment;
 import com.xgx.syzj.bean.OrderList;
@@ -46,6 +48,7 @@ import in.srain.cube.views.loadmore.LoadMoreListViewContainer;
  * @author sam
  * @created 2015年09月24日 14:22
  */
+@SuppressLint("ValidFragment")
 public class SaleHistoryFragment extends BaseFragment {
     public static final String SALE_MEMBER = "MEMBER";
     public static final String SALE_BILL_ITEM = "BIllITEMDETAIL";
@@ -53,10 +56,13 @@ public class SaleHistoryFragment extends BaseFragment {
     private SwipeMenuListView lv_data;
     private SaleListRecordModel mDataModel;
     private OrderListAdapter mAdapter;
+    private OrderListAdapter2 mAdapter2;
     private List<OrderList> mDataList;
+    private List<OrderList> mDataList2;
     private int cancelPosition;
     private EditText mSearch;
     private int type;
+    String orderType;
 
     public SaleHistoryFragment(int type){
         this.type=type;
@@ -76,12 +82,14 @@ public class SaleHistoryFragment extends BaseFragment {
         mDataModel = new SaleListRecordModel(Constants.LOAD_COUNT);
         mDataModel.setKey(null, type,null, null, null, null);
         mDataModel.queryFirstPage();
+        mDataModel.payOrder("","","","","");
         return view;
     }
 
     private void initView(View view)
     {
         mDataList = new ArrayList<>();
+        mDataList2 = new ArrayList<>();
         mSearch = (EditText)view.findViewById(R.id.et_text);
         mSearch.setOnEditorActionListener(onEditorActionListener);
         lv_data = (SwipeMenuListView) view.findViewById(R.id.lv_data);
@@ -101,9 +109,17 @@ public class SaleHistoryFragment extends BaseFragment {
                 menu.addMenuItem(deleteItem);
             }
         };
-        lv_data.setMenuCreator(creator);
-        mAdapter = new OrderListAdapter(getActivity(), mDataList);
-        lv_data.setAdapter(mAdapter);
+             lv_data.setMenuCreator(creator);
+            mAdapter = new OrderListAdapter(getActivity(), mDataList);
+        if(type==1) {
+            lv_data.setAdapter(mAdapter);
+
+        }
+            mAdapter2 = new OrderListAdapter2(getActivity(), mDataList2);
+        if(type==0) {
+            lv_data.setAdapter(mAdapter2);
+        }
+
     }
 
     private void initListener()
@@ -144,15 +160,25 @@ public class SaleHistoryFragment extends BaseFragment {
 
     private SimpleEventHandler eventHandler = new SimpleEventHandler() {
 
-        public void onEvent(List<OrderList> list)
+        public void onEvent(List<OrderList> List)
         {
-            mDataList.addAll(list);
-            mAdapter.notifyDataSetChanged();
+            for (OrderList  list: List) {
+                 orderType = list.getOrderType();
+                if("1".equals(orderType)){
+                    mDataList.add(list);
+                    mAdapter.notifyDataSetChanged();}
+                if("0".equals(orderType)){
+                    mDataList2.add(list);
+                    mAdapter2.notifyDataSetChanged();
+                }
+
+            }
+
+
         }
 
         public void onEvent(Result result)
         {
-            hideLoadingDialog();
             if (result.getStatus() == 200) {
                 if(SaleListRecordModel.DELETE_SALE_RECORD==result.geteCode()) {
                     if (mDataList.size() > cancelPosition) {
@@ -184,9 +210,11 @@ public class SaleHistoryFragment extends BaseFragment {
         public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 String text = mSearch.getText().toString().trim();
-                mDataModel.setKey(text,type ,null, null, null, null);
+                mDataModel.payOrder(text,"","","","");
                 mDataList.clear();
+                mDataList2.clear();
                 mAdapter.notifyDataSetChanged();
+                mAdapter2.notifyDataSetChanged();
                 mDataModel.queryFirstPage();
                 Utils.hideSoftInput(getActivity());
             }
@@ -200,13 +228,15 @@ public class SaleHistoryFragment extends BaseFragment {
         if (resultCode != Activity.RESULT_OK) return;
         if (requestCode == 2003) {
             mDataList.clear();
+            mDataList2.clear();
             mAdapter.notifyDataSetChanged();
+            mAdapter2.notifyDataSetChanged();
             String maxTime = data.getStringExtra("maxTime");
             String minTime = data.getStringExtra("minTime");
             String minmoney = data.getStringExtra("minmoney");
             String maxmoney = data.getStringExtra("maxmoney");
-            mDataModel.payOrder("",type,minmoney,maxmoney,minTime,maxTime);
-            mAdapter.notifyDataSetChanged();
+            mDataModel.payOrder("",minmoney,maxmoney,minTime,maxTime);
+
         }
     }
 

@@ -21,6 +21,7 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.xgx.syzj.R;
 import com.xgx.syzj.app.Api;
+import com.xgx.syzj.base.BaseFragment;
 import com.xgx.syzj.base.BaseRequest;
 import com.xgx.syzj.bean.Result;
 import com.xgx.syzj.bean.Store;
@@ -50,7 +51,7 @@ import de.greenrobot.event.EventBus;
  * @author zajo
  * @created 2015年08月11日 11:26
  */
-public class MainBossContainerFragment extends Fragment implements View.OnClickListener,IMainBossActivityClick{
+public class MainBossContainerFragment extends BaseFragment implements View.OnClickListener,IMainBossActivityClick{
 
     private ImageView iv_menu;
     private CustomProgressDialog Dialog;
@@ -102,7 +103,7 @@ public class MainBossContainerFragment extends Fragment implements View.OnClickL
         storeId = CacheUtil.getmInstance().getUser().getStoreId();
         changeTabBar(atbA);
         selectBillpay();
-        EventCenter.bindContainerAndHandler(getActivity(), eventHandler);
+        EventCenter.bindContainerAndHandler(this, eventHandler);
         BusinessSaleAnalyModel.getSaleReport(storeId,startTime, currentTime);
         return view;
     }
@@ -194,23 +195,13 @@ public class MainBossContainerFragment extends Fragment implements View.OnClickL
 
         }
         selectBillpay();
-        showLoadingDialog(R.string.loading_date);
+        showShortToast(R.string.loading_date);
         BusinessSaleAnalyModel.getSaleReport(storeId,startTime, currentTime);
     }
 
-    public void showShortToast(String content) {
-        Toast.makeText(getContext(), content, Toast.LENGTH_SHORT).show();
-    }
-    protected void showLoadingDialog(int res_id) {
-        Dialog.setMessage(getString(res_id));
-        Dialog.show();
-    }
-    protected void hideLoadingDialog() {
-        Dialog.dismiss();
-    }
+
 
     private SimpleEventHandler eventHandler = new SimpleEventHandler() {
-
         public void onEvent(Result result)
         {
             try {
@@ -321,6 +312,11 @@ public class MainBossContainerFragment extends Fragment implements View.OnClickL
 
     @Override
     public void onLocation(String msg) {
+
+    }
+
+    @Override
+    public void onChangeView() {
 
     }
 }

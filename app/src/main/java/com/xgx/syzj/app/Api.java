@@ -1102,14 +1102,14 @@ public class Api extends BaseRequest {
     /**
      * 3.7.9.	订单筛选,订单列表
      */
-    public static StringRequest getOrderFilter(String key,int ordertype,String minMoney,String maxMoney, String startTime, String endTime, int pageNo, int pageSize, OnRequestListener listener)
+    public static StringRequest getOrderFilter(String key,String minMoney,String maxMoney, String startTime, String endTime, int pageNo, int pageSize, OnRequestListener listener)
     {
         Map<String, String> params = null;
         try {
             params = new HashMap<>();
             JSONObject info = new JSONObject();
             info.put("key",key);
-            info.put("orderType",ordertype+"");
+//            info.put("orderType",ordertype+"");
             info.put("storeId", CacheUtil.getmInstance().getUser().getStoreId());
             info.put("startTime", startTime);
             info.put("endTime", endTime);
@@ -1199,7 +1199,7 @@ public class Api extends BaseRequest {
     }
 
     /**
-     * 删除会员
+     * 消费历史
      *
      * @param memberId
      * @param listener

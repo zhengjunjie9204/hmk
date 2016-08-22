@@ -19,6 +19,20 @@ public class OrderList implements Serializable {
     private String carNumber;
     private int itemId;
     private String itemName;
+    //1: 消费类  0: 充值类*/
+    private String orderType;
+
+
+
+    public String getOrderType() {
+        return orderType;
+    }
+
+    public void setOrderType(String orderType) {
+        this.orderType = orderType;
+    }
+
+
 
     public String getCount()
     {

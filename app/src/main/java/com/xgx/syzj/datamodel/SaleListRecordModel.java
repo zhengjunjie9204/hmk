@@ -71,44 +71,12 @@ public class SaleListRecordModel extends PagedListDataModel<OrderList> {
     @Override
     protected void doQueryData()
     {
-        Api.getOrderFilter(key,ordertype,minMoney,maxMoney,startTime,endTime,mListPageInfo.getPage(), mListPageInfo.getNumPerPage(), new BaseRequest.OnRequestListener() {
-            @Override
-            public void onSuccess(Result result)
-            {
-                JSONObject object = JSON.parseObject(result.getResult());
-                List<OrderList> list;
-                if (result.getStatus() == 200) {
-                    list = FastJsonUtil.json2List(object.getString("payOrders"), OrderList.class);
-                } else {
-                    list = new ArrayList<>();
-                }
-                data.dataList = list;
-                if (list != null && list.size() > 0) {
-                    if (list.size() >= mListPageInfo.getNumPerPage()) {
-                        data.hasMore = true;
-                    } else {
-                        data.hasMore = false;
-                    }
-                } else {
-                    data.hasMore = false;
-                    list = new ArrayList<>();
-                }
-                setRequestResult(data.dataList, data.hasMore);
-                result.seteCode(ORDER_LIST_SUCCESS);
-                EventCenter.getInstance().post(list);
-            }
 
-            @Override
-            public void onError(String errorCode, String message)
-            {
-                setRequestFail();
-                EventBus.getDefault().post(message);
-            }
-        });
+
     }
 
-    public void  payOrder(String key, final int ordertype,String minMoney,String maxMoney,String startTime,String endTime){
-        Api.getOrderFilter(key,ordertype,minMoney,maxMoney,startTime,endTime,mListPageInfo.getPage(), mListPageInfo.getNumPerPage(), new BaseRequest.OnRequestListener() {
+    public void  payOrder(String key,String minMoney,String maxMoney,String startTime,String endTime){
+        Api.getOrderFilter(key,minMoney,maxMoney,startTime,endTime,mListPageInfo.getPage(), mListPageInfo.getNumPerPage(), new BaseRequest.OnRequestListener() {
             @Override
             public void onSuccess(Result result)
             {
@@ -132,7 +100,7 @@ public class SaleListRecordModel extends PagedListDataModel<OrderList> {
                 }
                 setRequestResult(data.dataList, data.hasMore);
                 result.setOrderType(ordertype);
-                EventCenter.getInstance().post(result);
+                EventCenter.getInstance().post(list);
             }
 
             @Override

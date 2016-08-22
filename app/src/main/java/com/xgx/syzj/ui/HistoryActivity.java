@@ -21,8 +21,8 @@ import java.util.ArrayList;
  */
 public class HistoryActivity extends BaseActivity {
 
-    private SaleHistoryFragment pmoFragment = new SaleHistoryFragment(1);
-    private SaleHistoryFragment pmiFragment = new SaleHistoryFragment(0);
+    private SaleHistoryFragment pmoFragment = new SaleHistoryFragment(1);//接车单
+    private SaleHistoryFragment pmiFragment = new SaleHistoryFragment(0);//充值钱
     public static ViewPager pager = null;
 
     @Override

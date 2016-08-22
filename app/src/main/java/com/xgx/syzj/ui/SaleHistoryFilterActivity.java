@@ -92,7 +92,7 @@ public class SaleHistoryFilterActivity extends BaseActivity implements DatePicke
          max = maxtime.replace("年", "-").replace("月", "-").replace("日", "");
         minmoney = et_minmoney.getText().toString();
         maxmoney = et_maxmoney.getText().toString();
-        mDataModel.payOrder("",1,minmoney,maxmoney,min,max);
+        mDataModel.payOrder("",minmoney,maxmoney,min,max);
 
     }
 
