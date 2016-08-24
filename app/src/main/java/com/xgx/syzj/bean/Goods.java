@@ -242,7 +242,7 @@ public class Goods implements Parcelable {
         this.revenueCount = revenueCount;
     }
 
-    public class ImagesBean{
+    public static class ImagesBean implements Parcelable{
         int index;
         String image;
 
@@ -265,6 +265,37 @@ public class Goods implements Parcelable {
         {
             this.image = image;
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeInt(this.index);
+            dest.writeString(this.image);
+        }
+
+        public ImagesBean() {
+        }
+
+        protected ImagesBean(Parcel in) {
+            this.index = in.readInt();
+            this.image = in.readString();
+        }
+
+        public static final Creator<ImagesBean> CREATOR = new Creator<ImagesBean>() {
+            @Override
+            public ImagesBean createFromParcel(Parcel source) {
+                return new ImagesBean(source);
+            }
+
+            @Override
+            public ImagesBean[] newArray(int size) {
+                return new ImagesBean[size];
+            }
+        };
     }
 
 

@@ -216,6 +216,38 @@ public class CustomAlertDialog {
         dialog.show();
         dialog.setCanceledOnTouchOutside(true);
     }
+
+
+    /**
+     * 显示更新提醒框
+     *
+     * @param context
+     * @param msg
+     * @param listener
+     */
+    public static void showUpdataDialog(final Context context, String msg, final IAlertDialogListener listener) {
+        final Dialog dialog = new Dialog(context, R.style.MyDialog);
+        dialog.setContentView(R.layout.dialog_updata_apk);
+
+        ((TextView) dialog.findViewById(R.id.tv_message)).setText(msg);
+        dialog.findViewById(R.id.ll_bottom).setVisibility(View.GONE);
+        dialog.findViewById(R.id.btn_left).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null)
+                    listener.onSure(null);
+                dialog.dismiss();
+            }
+        });
+        dialog.findViewById(R.id.btn_right).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
     /**
      * 图片框
      */

@@ -42,7 +42,9 @@ public class Constants {
         public static String RECEIVER_UPDATE_CARD = "com.xgx.syzj.RECEIVER_UPDATE_CARD";//更新会员卡
         public static String RECEIVER_DELETE_CARD = "com.xgx.syzj.RECEIVER_DELETE_CARD";//删除会员卡
     }
-
+    public static class PathClass{
+        public static String APK_PATH="storage/sdcard0//hml";
+    }
     //充值类型
     public static class RechargeType {
         public static int RECHARGE_VALUE = 0;//储值

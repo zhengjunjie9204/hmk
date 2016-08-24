@@ -51,6 +51,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/ll_distance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -67,12 +68,15 @@
                     android:text="当前里程数:"/>
 
                 <EditText
+                    android:selectAllOnFocus="true"
+                    android:digits="1234567890"
                     android:id="@+id/et_distance"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="10dp"
                     android:gravity="end"
+                    android:singleLine="true"
                     android:text="1235.2"
                     android:textColor="@color/gray"
                     android:background="@null"/>
@@ -113,6 +117,19 @@
                     android:text="请选择项目"/>
 
             </LinearLayout>
+            <include layout="@layout/layout_line"
+                android:layout_width="match_parent"
+                android:layout_height="0.3dp"/>
+
+            <com.xgx.syzj.widget.ListViewExtend
+                android:id="@+id/lv_project"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:cacheColorHint="#00000000"
+                android:background="@color/white"
+                android:paddingLeft="30dp"
+                android:listSelector="@drawable/button_selector_bg"
+                tools:listitem="@layout/item_revenue_goods_sell"/>
 
             <include layout="@layout/layout_line"
                 android:layout_width="match_parent"
@@ -139,19 +156,7 @@
 
             </LinearLayout>
 
-            <include layout="@layout/layout_line"
-                android:layout_width="match_parent"
-                android:layout_height="0.3dp"/>
 
-            <com.xgx.syzj.widget.ListViewExtend
-                android:id="@+id/lv_project"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:cacheColorHint="#00000000"
-                android:background="@color/white"
-                android:paddingLeft="30dp"
-                android:listSelector="@drawable/button_selector_bg"
-                tools:listitem="@layout/item_revenue_goods_sell"/>
 
             <include layout="@layout/layout_line"
                 android:layout_width="match_parent"

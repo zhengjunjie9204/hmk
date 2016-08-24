@@ -65,8 +65,14 @@ public class OrderDetailItemAdapter extends BaseAdapter {
         ViewHolder holder = (ViewHolder) convertView.getTag();
         if (flag == 0) {
             ProductItems project = list.get(position);
+            if(project.getPayType()==8)
+            {
+                holder.mTvMoney.setText("计次卡");
+            }else{
+                holder.mTvMoney.setText("￥" + project.getTotalPrice());
+            }
             holder.mTvName.setText(project.getName());
-            holder.mTvMoney.setText("￥" + project.getTotalPrice());
+
             holder.mTvTime.setText("工时：" + project.getLaborTime());
         } else if (flag == 1) {
             Product product = mProductList.get(position);

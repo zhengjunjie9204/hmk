@@ -285,7 +285,8 @@
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote" />
-
+        <service android:name=".service.DownloadService">
+        </service>
         <meta-result
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="ZZWrLAglnp9YE2626vhn6PxvNsVLfG2L" />

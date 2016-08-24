@@ -81,8 +81,9 @@ public class MemberMoneyAddActivity extends BaseActivity implements View.OnClick
                 try {
                     JSONObject json = new JSONObject(result.getResult());
                     tv_total.setText("¥ " + json.optDouble("consumeByChuzhi", 0));
-                    tv_user.setText("¥ " + json.optDouble("storeAmount", 0));
-                    tv_profit.setText("¥ " + json.optDouble("storedMoney", 0));
+                    tv_user.setText("¥ " + json.optDouble("storedMoney", 0));
+                    tv_profit.setText("¥ " + json.optDouble("storeAmount", 0));
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

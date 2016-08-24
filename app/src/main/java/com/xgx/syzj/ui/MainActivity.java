@@ -1,6 +1,7 @@
 package com.xgx.syzj.ui;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,14 +14,28 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.android.volley.Response;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.location.Poi;
 import com.xgx.syzj.R;
+import com.xgx.syzj.app.Api;
 import com.xgx.syzj.app.AppManager;
 import com.xgx.syzj.app.Constants;
+import com.xgx.syzj.app.lifecycle.IComponentContainer;
+import com.xgx.syzj.app.lifecycle.LifeCycleComponent;
+import com.xgx.syzj.app.lifecycle.LifeCycleComponentManager;
+import com.xgx.syzj.bean.Result;
+import com.xgx.syzj.datamodel.RecordsDataModel;
+import com.xgx.syzj.datamodel.UserDataModel;
+import com.xgx.syzj.event.EventCenter;
+import com.xgx.syzj.event.SimpleEventHandler;
+import com.xgx.syzj.service.DownloadService;
+import com.xgx.syzj.utils.AppUtil;
 import com.xgx.syzj.utils.CacheUtil;
 import com.xgx.syzj.widget.CustomAlertDialog;
 import com.xgx.syzj.widget.CustomProgressDialog;
@@ -29,12 +44,14 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends FragmentActivity implements IMainMenuListItemClick {
+public class MainActivity extends FragmentActivity implements IMainMenuListItemClick ,IComponentContainer {
 
     public static final int RESULT_SHORTCUT_MENU = 1000;
-
+    private UserDataModel mDataModel;
     private SlidingPaneLayout mSlidingPanel;
-    private Handler hanler=new Handler(){
+    private  CustomProgressDialog  loadingDiaLog;
+    private LifeCycleComponentManager mComponentContainer = new LifeCycleComponentManager();
+    private Handler hanler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -48,6 +65,8 @@ public class MainActivity extends FragmentActivity implements IMainMenuListItemC
         }
     };
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,14 +74,42 @@ public class MainActivity extends FragmentActivity implements IMainMenuListItemC
         AppManager.getAppManager().addActivity(this); //将activity推入管理栈
 
         setContentView(R.layout.activity_main);
-
+        mDataModel = new UserDataModel();
         mSlidingPanel = (SlidingPaneLayout) findViewById(R.id.SlidingPanel);
         mSlidingPanel.setParallaxDistance(200);
         mSlidingPanel.setSliderFadeColor(getResources().getColor(R.color.transparent));
-
+        EventCenter.bindContainerAndHandler(this, eventHandler);
         //location();
     }
 
+    private SimpleEventHandler eventHandler = new SimpleEventHandler() {
+        public void onEvent(Result result) {
+            loadingDiaLog.dismiss();
+            if (UserDataModel.CHECK_VERSION_SUCCESS == result.geteCode()) {
+                JSONObject object = JSON.parseObject(result.getData());
+                String model = object.getString("model");
+                String code = object.getString("versioncode");
+                String information = object.getString("information");
+                final String url = object.getString("apkurl");
+                if ("hmk".equals(model) && Integer.parseInt(code) > AppUtil.getVerCode(MainActivity.this)) {
+                    CustomAlertDialog.showUpdataDialog(MainActivity.this, information, new CustomAlertDialog.IAlertDialogListener() {
+                        @Override
+                        public void onSure(Object obj) {
+                            Intent intent = new Intent(getApplicationContext(), DownloadService.class);
+                            intent.putExtra("url", url);
+                            startService(intent);
+                        }
+                    });
+                }else{
+                    hanler.sendMessage( new Message());
+                }
+            }
+        }
+        public void onEvent(String error){
+            loadingDiaLog.dismiss();
+            Toast.makeText(MainActivity.this, error, Toast.LENGTH_SHORT).show();
+        }
+    };
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -215,15 +262,18 @@ public class MainActivity extends FragmentActivity implements IMainMenuListItemC
                 gotoActivity(FeedBackActivity.class);
                 break;
             case 3:
-                final CustomProgressDialog Dialog = CustomProgressDialog.createDialog(this).setMessage("加载中...");
-                Dialog.show();
-                new Timer().schedule(new TimerTask(){
-                   @Override
-                   public void run() {
-                       Dialog.dismiss();
-                       hanler.sendMessage( new Message());
-                   }
-               },2000);
+                loadingDiaLog = CustomProgressDialog.createDialog(this).setMessage("加载中...");
+                loadingDiaLog.show();
+                mDataModel.checkVersion();
+//                new Timer().schedule(new TimerTask(){
+//                   @Override
+//                   public void run() {
+//
+//                   }
+//               },2000);
+
+
+
 
                 break;
 //            case 4:
@@ -333,6 +383,11 @@ public class MainActivity extends FragmentActivity implements IMainMenuListItemC
         option.setIsNeedLocationPoiList(true);
         mLocationClient.setLocOption(option);
         mLocationClient.start();
+    }
+
+    @Override
+    public void addComponent(LifeCycleComponent component) {
+        mComponentContainer.addComponent(component);
     }
 
     public class MyLocationListener implements BDLocationListener {

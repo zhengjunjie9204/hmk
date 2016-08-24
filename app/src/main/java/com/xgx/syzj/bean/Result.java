@@ -11,6 +11,7 @@ public class Result {
     private String result = "";//接口返回的主数据
     private String message = "";//接口返回的描述
     private int status;
+    private String data="";
     private int orderType;//单据列表的类型
     private long time = 0l;//接口返回时间
 
@@ -58,7 +59,9 @@ public class Result {
     public String getResult() {
         return result;
     }
-
+    public String getData(){
+        return data;
+    }
     public String getMessage() {
         return message;
     }

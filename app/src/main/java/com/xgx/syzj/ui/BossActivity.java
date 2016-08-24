@@ -59,7 +59,9 @@ import java.util.TimerTask;
 public class BossActivity extends FragmentActivity implements IBossMainMenuListItemClick {
 
     public static final int RESULT_SHORTCUT_MENU = 1000;
-
+    private Button btn_store;
+    private int storeId;
+    private int selectData = -1;
     private SlidingPaneLayout mSlidingPanel;
     private Handler hanler = new Handler() {
         @Override
@@ -74,20 +76,70 @@ public class BossActivity extends FragmentActivity implements IBossMainMenuListI
 
         }
     };
+    private Date curDate;
+    private String currentTime;
+    private String startTime;
+    private List<Store> storeList;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActionBar().hide();
+
+        btn_store = (Button) findViewById(R.id.btn_submit);
         AppManager.getAppManager().addActivity(this); //将activity推入管理栈
         setContentView(R.layout.activity_boss);
         mSlidingPanel = (SlidingPaneLayout) findViewById(R.id.SlidingPanel);
         mSlidingPanel.setParallaxDistance(200);
         mSlidingPanel.setSliderFadeColor(getResources().getColor(R.color.transparent));
+        selectBillpay();
     }
 
 
+    private void getAllStore(){
+        Api.getAllStore(new BaseRequest.OnRequestListener() {
+            @Override
+            public void onSuccess(Result result)
+            {
+                if (result.getStatus() == 200) {
+                    try {
+                        JSONObject json = new JSONObject(result.getResult());
+                        storeList = FastJsonUtil.json2List(json.getString("storeList"), Store.class);
+                        new StorePopupWindowUtil(BossActivity.this, ipopCallListener).showActionWindow(btn_store, storeList);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onError(String errorCode, String message)
+            {
+
+            }
+        });
+    }
+
+
+    private StorePopupWindowUtil.IPopupWindowCallListener ipopCallListener = new StorePopupWindowUtil.IPopupWindowCallListener() {
+
+        @Override
+        public void onItemClick(int index,Store store)
+        {
+            btn_store.setText(store.getName());
+            storeId = store.getId();
+            BusinessSaleAnalyModel.getMoneyReport(storeId, startTime, currentTime);
+        }
+    };
+    private void selectBillpay()
+    {
+        curDate = new Date(System.currentTimeMillis());
+        currentTime = DateUtil.getStringByOffset(curDate, DateUtil.dateFormatYMDHMS, Calendar.DATE, 0);
+        startTime = DateUtil.getStringByOffset(curDate, DateUtil.dateFormatYMDHMS, Calendar.DATE, -1);
+        startTime = DateUtil.getStringByOffset(curDate, DateUtil.dateFormatYMDHMS, Calendar.DATE, selectData);
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();

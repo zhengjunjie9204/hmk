@@ -88,9 +88,8 @@ public class AnalysismoneyActivity extends BaseActivity implements View.OnClickL
     private void selectBillpay()
     {
         Date curDate = new Date(System.currentTimeMillis());
-        currentTime = DateUtil.getStringByOffset(curDate, DateUtil.dateFormatYMDHMS, Calendar.DATE, 0);
-        startTime = DateUtil.getStringByOffset(curDate, DateUtil.dateFormatYMDHMS, Calendar.DATE, -1);
-        startTime = DateUtil.getStringByOffset(curDate, DateUtil.dateFormatYMDHMS, Calendar.DATE, selectData);
+        currentTime = DateUtil.getStringByOffset(curDate, DateUtil.dateFormatYMD, Calendar.DATE, 0);
+        startTime = DateUtil.getStringByOffset(curDate, DateUtil.dateFormatYMD, Calendar.DATE, selectData);
     }
 
     @Override

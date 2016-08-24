@@ -1,5 +1,6 @@
 package com.xgx.syzj.ui;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -125,8 +126,6 @@ public class GoodsListActivity extends BaseActivity  {
         lv_goods.setOnItemClickListener(onItemClickListener);
 
         mDataModel.queryNextPage();
-
-
         flag = getIntent().getStringExtra(FLAG);
         if(CacheUtil.getmInstance().getUser().getRoles()==1){
             mDataModel.getAllProduct();
@@ -231,6 +230,7 @@ public class GoodsListActivity extends BaseActivity  {
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("goods", (Goods) mAdapter.getItem(position));
                 gotoActivityForResult(GoodsDetailActivity.class, bundle, 2001);
+
             }
         }
     };
@@ -284,4 +284,10 @@ public class GoodsListActivity extends BaseActivity  {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        defaultFinish();
+    }
 }

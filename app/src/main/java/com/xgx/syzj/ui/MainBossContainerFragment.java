@@ -2,6 +2,7 @@ package com.xgx.syzj.ui;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -68,6 +70,8 @@ public class MainBossContainerFragment extends BaseFragment implements View.OnCl
             , "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"};
     private int storeId;
     private List<Store> storeList;
+    private LinearLayout selling;
+    private Button btn_submit;
 
 
     @Override
@@ -91,12 +95,27 @@ public class MainBossContainerFragment extends BaseFragment implements View.OnCl
         View view = inflater.inflate(R.layout.fragment_main_boss_container, container, false);
         initView(view);
         mChart = (HorizontalBarChart) view.findViewById(R.id.chart);
+        btn_submit =(Button) view.findViewById(R.id.btn_submit);
+        btn_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                submit();
+            }
+        });
         tv_all_money = (TextView) view.findViewById(R.id.tv_all_money);
         tvAllCount = (TextView) view.findViewById(R.id.tv_all_money_count);
         tvProMoney = (TextView) view.findViewById(R.id.tv_project_money);
         tvGoodMoney = (TextView)view. findViewById(R.id.tv_goods_money);
         tvCardMoney = (TextView)view. findViewById(R.id.tv_card_money);
         tvCountMoney = (TextView) view.findViewById(R.id.tv_count_money);
+        selling =(LinearLayout)view.findViewById(R.id.selling);
+        selling.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),AnalysismoneyActivity.class);
+                startActivity(intent);
+            }
+        });
         btn_store = (Button) view.findViewById(R.id.btn_submit);
         initTabBar(view);
         initChart();
@@ -157,17 +176,6 @@ public class MainBossContainerFragment extends BaseFragment implements View.OnCl
         startTime = DateUtil.getStringByOffset(curDate, DateUtil.dateFormatYMDHMS, Calendar.DATE, selectData);
     }
 
-    private StorePopupWindowUtil.IPopupWindowCallListener ipopCallListener = new StorePopupWindowUtil.IPopupWindowCallListener() {
-
-        @Override
-        public void onItemClick(int index,Store store)
-        {
-            btn_store.setText(store.getName());
-            storeId = store.getId();
-            BusinessSaleAnalyModel.getMoneyReport(storeId, startTime, currentTime);
-        }
-    };
-
     @Override
     public void onClick(View v)
     {
@@ -193,6 +201,7 @@ public class MainBossContainerFragment extends BaseFragment implements View.OnCl
                 selectData = -265;
                 break;
 
+
         }
         selectBillpay();
         showShortToast(R.string.loading_date);
@@ -200,6 +209,48 @@ public class MainBossContainerFragment extends BaseFragment implements View.OnCl
     }
 
 
+    protected void submit() {
+        if(null == storeList || storeList.size()==0){
+            getAllStore();
+        }else{
+            new StorePopupWindowUtil(getActivity(), ipopCallListener).showActionWindow(btn_store, storeList);
+        }
+    }
+    private void getAllStore(){
+        Api.getAllStore(new BaseRequest.OnRequestListener() {
+            @Override
+            public void onSuccess(Result result)
+            {
+                if (result.getStatus() == 200) {
+                    try {
+                        JSONObject json = new JSONObject(result.getResult());
+                        storeList = FastJsonUtil.json2List(json.getString("storeList"), Store.class);
+                        new StorePopupWindowUtil(getActivity(), ipopCallListener).showActionWindow(btn_store, storeList);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onError(String errorCode, String message)
+            {
+
+            }
+        });
+    }
+
+
+    private StorePopupWindowUtil.IPopupWindowCallListener ipopCallListener = new StorePopupWindowUtil.IPopupWindowCallListener() {
+
+        @Override
+        public void onItemClick(int index,Store store)
+        {
+            btn_store.setText(store.getName());
+            storeId = store.getId();
+            BusinessSaleAnalyModel.getMoneyReport(storeId, startTime, currentTime);
+        }
+    };
 
     private SimpleEventHandler eventHandler = new SimpleEventHandler() {
         public void onEvent(Result result)

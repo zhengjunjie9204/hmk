@@ -24,6 +24,7 @@ import android.os.Vibrator;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -53,7 +54,24 @@ public class AppUtil {
 
         return new File(cachePath + File.separator + uniqueName);
     }
-
+    /**
+     * 获取版本号
+     */
+    /**
+     * 获取软件版本号
+     * @param context
+     * @return
+     */
+    public static int getVerCode(Context context) {
+        int verCode = -1;
+        try {
+            verCode = context.getPackageManager().getPackageInfo(
+                    "com.xgx.syzj", 0).versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e("msg",e.getMessage());
+        }
+        return verCode;
+    }
     /**
      * 获取程序外部的缓存目录
      *

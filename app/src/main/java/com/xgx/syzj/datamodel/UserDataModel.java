@@ -1,5 +1,6 @@
 package com.xgx.syzj.datamodel;
 
+import com.android.volley.Response;
 import com.xgx.syzj.app.Api;
 
 /**
@@ -14,6 +15,8 @@ public class UserDataModel extends BaseDataModel {
     public static final byte GET_CODENUM=0x14;
     public static final byte CHECK_CODENUM=0x15;
     public static final byte FORGET_PASSWORD=0x16;
+    public static final byte CHECK_VERSION_SUCCESS=0x17;
+    public static final byte DOWNLOAD_APK_SUCCESS=0x18;
 
     public static void loginByToken(String token){
         code = LOGIN_SUCCESS;
@@ -49,5 +52,14 @@ public class UserDataModel extends BaseDataModel {
     public static void forgetPsw(String mobilephone,String codenum, String newpassword){
         code=FORGET_PASSWORD;
         Api.forgetPassWord(mobilephone, codenum, newpassword, listener);
+    }
+
+    public static void checkVersion(){
+        code=CHECK_VERSION_SUCCESS;
+        Api.checkVersion(listener);
+    }
+    public static void downloadApk(String url, Response.ProgressListener pListener){
+        code=DOWNLOAD_APK_SUCCESS;
+        Api.downLoadAPK(url,listener,pListener);
     }
 }

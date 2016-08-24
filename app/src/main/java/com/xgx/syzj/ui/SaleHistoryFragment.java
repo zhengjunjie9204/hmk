@@ -71,17 +71,18 @@ public class SaleHistoryFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
+
         super.onCreate(savedInstanceState);
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_sale_history, null);
+
         initView(view);
         initListener();
         EventCenter.bindContainerAndHandler(this, eventHandler);
         mDataModel = new SaleListRecordModel(Constants.LOAD_COUNT);
-        mDataModel.setKey(null, type,null, null, null, null);
-        mDataModel.queryFirstPage();
+//        mDataModel.setKey(null, type,null, null, null, null);
         mDataModel.payOrder("","","","","");
         return view;
     }
@@ -109,13 +110,13 @@ public class SaleHistoryFragment extends BaseFragment {
                 menu.addMenuItem(deleteItem);
             }
         };
-             lv_data.setMenuCreator(creator);
-            mAdapter = new OrderListAdapter(getActivity(), mDataList);
+        lv_data.setMenuCreator(creator);
+        mAdapter = new OrderListAdapter(getActivity(), mDataList);
         if(type==1) {
             lv_data.setAdapter(mAdapter);
 
         }
-            mAdapter2 = new OrderListAdapter2(getActivity(), mDataList2);
+        mAdapter2 = new OrderListAdapter2(getActivity(), mDataList2);
         if(type==0) {
             lv_data.setAdapter(mAdapter2);
         }
@@ -128,10 +129,14 @@ public class SaleHistoryFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-                Intent intent = new Intent(getActivity(),SaleDetailActivity.class);
-                intent.putExtra("order",mDataList.get(position));
+                Intent intent = new Intent(getActivity(), SaleDetailActivity.class);
+                if(type==1) {
+                    intent.putExtra("order", mDataList.get(position));
+                }
+                if(type==0){
+                    intent.putExtra("order", mDataList2.get(position));
+                }
                 startActivity(intent);
-
             }
         });
         lv_data.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
@@ -162,18 +167,19 @@ public class SaleHistoryFragment extends BaseFragment {
 
         public void onEvent(List<OrderList> List)
         {
+                 mDataList.clear();
+                  mDataList2.clear();
             for (OrderList  list: List) {
                  orderType = list.getOrderType();
                 if("1".equals(orderType)){
                     mDataList.add(list);
-                    mAdapter.notifyDataSetChanged();}
+                }
                 if("0".equals(orderType)){
                     mDataList2.add(list);
-                    mAdapter2.notifyDataSetChanged();
                 }
-
             }
-
+            mAdapter.notifyDataSetChanged();
+            mAdapter2.notifyDataSetChanged();
 
         }
 
@@ -222,23 +228,9 @@ public class SaleHistoryFragment extends BaseFragment {
         }
     };
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != Activity.RESULT_OK) return;
-        if (requestCode == 2003) {
-            mDataList.clear();
-            mDataList2.clear();
-            mAdapter.notifyDataSetChanged();
-            mAdapter2.notifyDataSetChanged();
-            String maxTime = data.getStringExtra("maxTime");
-            String minTime = data.getStringExtra("minTime");
-            String minmoney = data.getStringExtra("minmoney");
-            String maxmoney = data.getStringExtra("maxmoney");
-            mDataModel.payOrder("",minmoney,maxmoney,minTime,maxTime);
 
-        }
+
+    public static void getData(String maxTime,String minTime,String minMoney,String maxMoney){
+        new SaleListRecordModel(40).payOrder("",minMoney,maxMoney,minTime,maxTime);
     }
-
-
 }

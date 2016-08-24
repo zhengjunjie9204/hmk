@@ -12,11 +12,37 @@ public class ProductItems {
      * laborTime : 2.0
      * name : 打蜡
      */
-
+    private int id;
     private double totalPrice;
     private double price;
     private double laborTime;
     private String name;
+    private int payType;
+    private int status;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getPayType() {
+        return payType;
+    }
+
+    public void setPayType(int payType) {
+        this.payType = payType;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public double getTotalPrice()
     {

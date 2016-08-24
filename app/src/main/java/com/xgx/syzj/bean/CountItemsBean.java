@@ -9,6 +9,25 @@ public class CountItemsBean implements Serializable {
     private int itemId;
     private String name;
     private int count;
+    private int labourTime;
+    private long price;
+
+    public long getPrice() {
+        return price;
+    }
+
+    public void setPrice(long price) {
+        this.price = price;
+    }
+
+    public int getLabourTime() {
+        return labourTime;
+    }
+
+    public void setLabourTime(int labourTime) {
+        this.labourTime = labourTime;
+    }
+
     public CountItemsBean(){}
 
     public CountItemsBean(int itemId,String name,int count){

@@ -117,6 +117,7 @@ public class RevenueFastActivity extends BaseActivity {
                     });
                 } else {//已完成
                     final Bundle bundle = new Bundle();
+                    bundle.putString("finish","已完成");
                     bundle.putSerializable("order", mDataList.get(position));
                     gotoActivity(RevenuseSellFinishActivity.class, bundle);
 //                    carNumber = mDataList.get(position).getCarNumber();
@@ -210,12 +211,13 @@ public class RevenueFastActivity extends BaseActivity {
     /**
      * @param isMember 是否是会员
      * */
-    private void toSellActivity(int memberId,List<CountItemsBean> countItemsList,boolean isMember)
+    private void toSellActivity(int memberId,String distance,List<CountItemsBean> countItemsList,boolean isMember)
     {
         Intent intent = new Intent(this,RevenuseSellFinishActivity.class);
         intent.putExtra("carNumber",carNumber);
         intent.putExtra("memberId",memberId);
         intent.putExtra("isMember",isMember);
+        intent.putExtra("distance",distance);
         if(null != countItemsList){
             intent.putExtra("countItemsList", (Serializable) countItemsList);
         }
@@ -232,8 +234,9 @@ public class RevenueFastActivity extends BaseActivity {
                     if (result.getStatus() == 200) {
                         JSONObject json = new JSONObject(result.getResult());
                         int memberId = json.optInt("memberId", 0);
+                        String distance = json.optString("distance", "0");
                         List<CountItemsBean> countItemsList = FastJsonUtil.json2List(json.getString("items"), CountItemsBean.class);
-                        toSellActivity(memberId, countItemsList,true);
+                        toSellActivity(memberId, distance,countItemsList,true);
                     } else if (result.getStatus() == 300) {
                         CustomAlertDialog.showRemindDialog(RevenueFastActivity.this, "温馨提示", "该车辆非会员，是否进行散客开单？", new CustomAlertDialog.IAlertDialogListener() {
                             @Override
@@ -266,7 +269,7 @@ public class RevenueFastActivity extends BaseActivity {
                     if (result.getStatus() == 200) {
                         JSONObject json = new JSONObject(result.getResult());
                         int memberId = json.optInt("memberId", 0);
-                        toSellActivity(memberId,null,false);
+                        toSellActivity(memberId,"0",null,false);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

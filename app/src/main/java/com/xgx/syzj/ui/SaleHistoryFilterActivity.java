@@ -120,6 +120,7 @@ public class SaleHistoryFilterActivity extends BaseActivity implements DatePicke
             intent.putExtra("minTime",min);
             intent.putExtra("minmoney",minmoney);
             intent.putExtra("maxmoney",maxmoney);
+            SaleHistoryFragment.getData(max,min,minmoney,maxmoney);
             setResult(RESULT_OK, intent);
             defaultFinish();
         }

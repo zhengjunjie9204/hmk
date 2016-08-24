@@ -8,7 +8,10 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.xgx.syzj.R;
 import com.xgx.syzj.adapter.ProjectListAdapter;
@@ -44,6 +47,7 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
     private ListViewExtend lv_data;
     private ScrollView sv;
     private Button btn_cancel;
+    private EditText et_distance;
     private Button btn_sure;
     private double allmoney;
     private List<Project> mProject = new ArrayList<>();
@@ -51,6 +55,7 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
     private ProjectListAdapter projectAdapter;
     private RevenueGoodListAdapter mAdapter;
     //传递值
+    private String distance;
     private OrderList order;
     private int memberId;
     private String carNumber;
@@ -67,6 +72,9 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
             }
         }
     };
+    private String finish;
+    private LinearLayout ll_distance;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -83,6 +91,7 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
     private void initData()
     {
         order = (OrderList) getIntent().getSerializableExtra("order");
+        finish = getIntent().getStringExtra("finish");
         if (null == order) {
             carNumber = getIntent().getStringExtra("carNumber");
             memberId = getIntent().getIntExtra("memberId", 0);
@@ -91,6 +100,7 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
                 countItemsList.addAll(list);
             }
             boolean isMember = getIntent().getBooleanExtra("isMember", false);
+            distance = getIntent().getStringExtra("distance");
             setTitleText(carNumber);
             if (isMember) {
                 setSubmit("会员");
@@ -108,9 +118,15 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
         lv_project = (ListViewExtend) findViewById(R.id.lv_project);
         lv_data = (ListViewExtend) findViewById(R.id.lv_data);
         sv = (ScrollView) findViewById(R.id.sv1);
+        et_distance = (EditText)findViewById(R.id.et_distance);
+        et_distance.setText(distance);
         btn_cancel = (Button) findViewById(R.id.btn_cancel);
         btn_sure = (Button) findViewById(R.id.btn_sure);
         btn_sure.setOnClickListener(this);
+        ll_distance = (LinearLayout)findViewById(R.id.ll_distance);
+        if("已完成".equals(finish)){
+            ll_distance.setVisibility(View.GONE);
+        }
         projectAdapter = new ProjectListAdapter(this, mProject, mHandler);
         lv_project.setAdapter(projectAdapter);
         mAdapter = new RevenueGoodListAdapter(this, mGood, mHandler);
@@ -174,7 +190,7 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
                         if (project.getId() > 0) {
                             JSONObject json = new JSONObject();
                             json.put("itemId", project.getId());
-                            json.put("amount", project.getLaborTime());
+                            json.put("labourTime", project.getLaborTime());
                             json.put("price",project.getPrice());
                             itemList.put(json);
                         }
@@ -184,7 +200,8 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
                             CountItemsBean value = (CountItemsBean) entry.getValue();
                             JSONObject json = new JSONObject();
                             json.put("itemId", value.getItemId());
-                            json.put("amount", value.getCount());
+                            json.put("labourTime", value.getLabourTime());
+                            json.put("price",value.getPrice());
                             itemList.put(json);
                         }
                     }
@@ -212,7 +229,8 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
                                 if (productList.length() == 0) {
                                     productList = null;
                                 }
-                                orderCreate(String.valueOf(allmoney), 3, productList, itemList);
+                                String diatance = et_distance.getText().toString();
+                                orderCreate(String.valueOf(allmoney),diatance, 3, productList, itemList);
                             }
                         }
                     }
@@ -337,9 +355,9 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
     }
 
     //创建含项目订单(7.2)
-    private void orderCreate(String fee, int payType, JSONArray productList, JSONArray itemList)
+    private void orderCreate(String fee,String distance, int payType, JSONArray productList, JSONArray itemList)
     {
-        Api.orderCreate(memberId, fee, payType, productList, itemList, new BaseRequest.OnRequestListener() {
+        Api.orderCreate(memberId, distance,fee, payType, productList, itemList, new BaseRequest.OnRequestListener() {
             @Override
             public void onSuccess(Result result)
             {
@@ -407,7 +425,7 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
             }
         });
     }
-
+    //
     private void getOrderDetails()
     {
         Api.getOrderDetail(order.getId(), new BaseRequest.OnRequestListener() {

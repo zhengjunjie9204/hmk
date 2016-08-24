@@ -6,9 +6,12 @@ import android.widget.TextView;
 
 import com.xgx.syzj.R;
 import com.xgx.syzj.adapter.OrderDetailItemAdapter;
+import com.xgx.syzj.adapter.OrderDetailItemAdapter2;
 import com.xgx.syzj.app.Constants;
 import com.xgx.syzj.base.BaseActivity;
 import com.xgx.syzj.bean.OrderList;
+import com.xgx.syzj.bean.PayTimes;
+import com.xgx.syzj.bean.PayType;
 import com.xgx.syzj.bean.Product;
 import com.xgx.syzj.bean.ProductItems;
 import com.xgx.syzj.bean.Result;
@@ -22,7 +25,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -47,6 +52,9 @@ public class SaleDetailActivity extends BaseActivity {
     private SaleListRecordModel mDataModel;
     private TextView tv_type;
     private TextView tv_pay;
+    private Map map;
+    private OrderDetailItemAdapter2 mItemAdapter2;
+    private OrderDetailItemAdapter2 mProAdapter2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,12 +62,21 @@ public class SaleDetailActivity extends BaseActivity {
         setContentView(R.layout.activity_sale_detail);
         setTitleText("销售详情");
         setSubmit("作废");
+
         initView();
         setData();
-        mItemAdapter = new OrderDetailItemAdapter(this,mItemList,null,0);
-        mProAdapter = new OrderDetailItemAdapter(this,null,mProList,1);
-        mItemListView.setAdapter(mItemAdapter);
-        mProductListView.setAdapter(mProAdapter);
+//        payorder_member_money_record.xml
+        mItemAdapter = new OrderDetailItemAdapter(this, mItemList, null, 0);
+        mProAdapter = new OrderDetailItemAdapter(this, null, mProList, 1);
+        mItemAdapter2 = new OrderDetailItemAdapter2(this, mItemList);
+        mProAdapter2 = new OrderDetailItemAdapter2(this, mProList);
+        if("1".equals(orderList.getOrderType())) {
+            mItemListView.setAdapter(mItemAdapter);
+            mProductListView.setAdapter(mProAdapter);
+        }else if("0".equals(orderList.getOrderType())){
+            mItemListView.setAdapter(mItemAdapter2);
+            mProductListView.setAdapter(mProAdapter2);
+        }
     }
 
     private void initView() {
@@ -72,6 +89,7 @@ public class SaleDetailActivity extends BaseActivity {
         tv_title2= (TextView) findViewById(R.id.title2);
         mItemListView = (ListViewExtend) findViewById(R.id.lv_data);
         mProductListView = (ListViewExtend) findViewById(R.id.lv_data2);
+
     }
 
     private void setData(){
@@ -95,8 +113,24 @@ public class SaleDetailActivity extends BaseActivity {
                     mItemList.addAll(list);
                     List<Product> list1 = FastJsonUtil.json2List(json.getString("products"), Product.class);
                     mProList.addAll(list1);
+                    List<PayTimes> list2 = FastJsonUtil.json2List(json.getString("payTimes"), PayTimes.class);
+                    String payOrderType = json.optString("payOrderType", "0");
+                    String payType = json.optString("payType", "0");
+                    int orderAmount = json.optInt("orderAmount", 0);
+                    int fee = json.optInt("fee", 0);
+                    int status = json.optInt("status", 0);
+                    String employee = json.optString("employee", "0");
+                    String carType = json.optString("carType", "0");
+                    tv_type.setText(carType);
+                    tv_name.setText(employee);
+                    HashMap<String, String> map = new HashMap<>();
+                    initMap(map);
+                    String PayTye = map.get(payType);
+                    tv_pay.setText(PayTye);
                     mItemAdapter.notifyDataSetChanged();
+                    mItemAdapter2.notifyDataSetChanged();
                     mProAdapter.notifyDataSetChanged();
+                    mProAdapter2.notifyDataSetChanged();
                     if (list.size()<1){
                         tv_title1.setVisibility(View.GONE);
                     }
@@ -113,6 +147,19 @@ public class SaleDetailActivity extends BaseActivity {
             showShortToast(errorStr);
         }
     };
+
+    private void initMap(Map payType) {
+        payType.put("1","微信支付");
+        payType.put("2","余额支付");
+        payType.put("3","现金支付");
+        payType.put("4","银行卡支付");
+        payType.put("5","支付宝支付");
+        payType.put("6","储值，现金");
+        payType.put("7","储值，微信");
+        payType.put("8","项目从计次里面扣除");
+        payType.put("9","项目不是从计次里面扣");
+
+    }
 
     @Override
     public void onSubmit(View view)

@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.xgx.syzj.R;
 import com.xgx.syzj.app.Api;
 import com.xgx.syzj.app.Constants;
@@ -18,6 +19,8 @@ import com.xgx.syzj.datamodel.GoodsDataModel;
 import com.xgx.syzj.event.EventCenter;
 import com.xgx.syzj.event.SimpleEventHandler;
 import com.xgx.syzj.widget.CustomAlertDialog;
+
+import java.util.List;
 
 import de.greenrobot.event.EventBus;
 
@@ -89,9 +92,14 @@ public class GoodsDetailActivity extends BaseActivity {
 
         tv_brand.setText(goods.getBrand());
         iv_one.setTag(1);
-        if(!TextUtils.isEmpty(goods.getImage())){
-            String path=goods.getImage().replace("\\","");
-            Api.loadBitmap(iv_one,path,1);
+        if(goods.getImages()!=null){
+            List<Goods.ImagesBean> images = goods.getImages();
+            for (Goods.ImagesBean image : images) {
+                String image1 = image.getImage();
+                Picasso.with(this).load(image1).fit().into(iv_one);
+            }
+
+
         }
     }
 
@@ -155,4 +163,11 @@ public class GoodsDetailActivity extends BaseActivity {
 //            initData();
 //        }
 //    }
+
+    @Override
+    public void onBackPressed() {
+        gotoActivity(GoodsListActivity.class);
+        finish();
+        super.onBackPressed();
+    }
 }

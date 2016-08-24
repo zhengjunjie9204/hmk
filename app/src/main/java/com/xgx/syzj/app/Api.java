@@ -4,7 +4,9 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 
+import com.android.volley.Response;
 import com.android.volley.request.StringRequest;
+import com.xgx.syzj.base.BaseDownLoad;
 import com.xgx.syzj.base.BaseRequest;
 import com.xgx.syzj.bean.BillDetail;
 import com.xgx.syzj.bean.GoodsCart;
@@ -138,8 +140,28 @@ public class Api extends BaseRequest {
 //            }
 //        });
 //    }
+    /**
+     * 版本更新
+     *
+     */
+    public static StringRequest checkVersion(OnRequestListener listener){
+        Map<String, String> info = null;
+        try {
+            info = new HashMap<String, String>();
+            info.put("model", "hmk");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getRequest2(Url.VERSION_UPDATE,info,getHeader(),listener);
+    }
 
+    /**
+     * 下载APK
+     */
+    public static BaseDownLoad downLoadAPK(String url, OnRequestListener listener, Response.ProgressListener pListener) {
 
+        return getDownRequest(url, null, Constants.PathClass.APK_PATH, listener,pListener);
+    }
     /**
      * 添加员工
      *
@@ -1032,7 +1054,7 @@ public class Api extends BaseRequest {
      * @param productList 商品
      * @param itemList    项目
      */
-    public static StringRequest orderCreate(int memberId, String fee, int payType, JSONArray productList, JSONArray itemList, OnRequestListener listener)
+    public static StringRequest orderCreate(int memberId, String distance,String fee, int payType, JSONArray productList, JSONArray itemList, OnRequestListener listener)
     {
         Map<String, String> params = null;
         try {
@@ -1045,6 +1067,7 @@ public class Api extends BaseRequest {
             info.put("payType", payType);
             info.put("productList", productList);
             info.put("itemList", itemList);
+            info.put("distance",distance);
             String json = Base64Util.encode(info.toString().getBytes("UTF-8"));
             params.put("info", json);
         } catch (Exception e) {

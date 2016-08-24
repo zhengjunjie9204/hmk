@@ -79,7 +79,7 @@ public class GoodsListAdapter extends BaseAdapter {
             if(!TextUtils.isEmpty(image.getImage())){
                 String pic1 = image.getImage();
                 Log.e("zjj",pic1);
-                Picasso.with(mContext).load(pic1).into( hold.iv_goods);
+                Picasso.with(mContext).load(pic1).fit().into(hold.iv_goods);
             }
         }
 

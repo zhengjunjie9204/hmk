@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xgx.syzj.R;
+import com.xgx.syzj.utils.CacheUtil;
 import com.xgx.syzj.widget.CustomAlertDialog;
 
 /**
@@ -64,6 +65,8 @@ public class MainContainerFragment extends Fragment implements View.OnClickListe
         iv_menu = (ImageView) view.findViewById(R.id.iv_menu);
         tv_location = (TextView) view.findViewById(R.id.tv_location);
         tv_name=(TextView) view.findViewById(R.id.tv_name);
+        String storeName = CacheUtil.getmInstance().getUser().getStoreName();
+        tv_name.setText(storeName);
         onDataChange();
 
         iv_menu.setOnClickListener(this);
