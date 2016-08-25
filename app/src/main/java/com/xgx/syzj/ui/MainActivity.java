@@ -196,7 +196,7 @@ public class MainActivity extends FragmentActivity implements IMainMenuListItemC
             return;
             }
         });
-                gotoActivity(OrderFormActivity.class);
+//                gotoActivity(OrderFormActivity.class);
 
 
 //        gotoActivity();

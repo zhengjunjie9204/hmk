@@ -97,20 +97,20 @@ public class SaleHistoryFragment extends BaseFragment {
         loadMoreListViewContainer = (LoadMoreListViewContainer) view.findViewById(R.id.load_more_list_view_container);
         loadMoreListViewContainer.useDefaultFooter();
         loadMoreListViewContainer.setShowLoadingForFirstPage(true);
-        SwipeMenuCreator creator = new SwipeMenuCreator() {
-            @Override
-            public void create(SwipeMenu menu)
-            {
-                SwipeMenuItem deleteItem = new SwipeMenuItem(getActivity());
-                deleteItem.setBackground(new ColorDrawable(Color.rgb(0xF9, 0x3F, 0x25)));
-                deleteItem.setWidth(Utils.dp2px(getActivity(), 90));
-                deleteItem.setTitle("作废");
-                deleteItem.setTitleColor(getResources().getColor(R.color.white));
-                deleteItem.setTitleSize(18);
-                menu.addMenuItem(deleteItem);
-            }
-        };
-        lv_data.setMenuCreator(creator);
+//        SwipeMenuCreator creator = new SwipeMenuCreator() {
+//            @Override
+//            public void create(SwipeMenu menu)
+//            {
+//                SwipeMenuItem deleteItem = new SwipeMenuItem(getActivity());
+//                deleteItem.setBackground(new ColorDrawable(Color.rgb(0xF9, 0x3F, 0x25)));
+//                deleteItem.setWidth(Utils.dp2px(getActivity(), 90));
+//                deleteItem.setTitle("作废");
+//                deleteItem.setTitleColor(getResources().getColor(R.color.white));
+//                deleteItem.setTitleSize(18);
+//                menu.addMenuItem(deleteItem);
+//            }
+//        };
+//        lv_data.setMenuCreator(creator);
         mAdapter = new OrderListAdapter(getActivity(), mDataList);
         if(type==1) {
             lv_data.setAdapter(mAdapter);

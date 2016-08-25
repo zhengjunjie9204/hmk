@@ -201,7 +201,7 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
                             JSONObject json = new JSONObject();
                             json.put("itemId", value.getItemId());
                             json.put("labourTime", value.getLabourTime());
-                            json.put("price",value.getPrice());
+                            json.put("price",0);
                             itemList.put(json);
                         }
                     }

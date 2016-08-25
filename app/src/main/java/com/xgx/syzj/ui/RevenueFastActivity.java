@@ -40,7 +40,7 @@ import java.util.List;
  */
 public class RevenueFastActivity extends BaseActivity {
     private Button btn_car_title;
-    private PercentRelativeLayout key_car, key_number;
+    private PercentRelativeLayout key_car;
     private EditText et_car_number;
     private PercentRelativeLayout english_car;
     private GridView lv_data;
@@ -76,11 +76,9 @@ public class RevenueFastActivity extends BaseActivity {
                 if (hasFocus) {
                     et_car_number.clearFocus();
                     Utils.hideSoftInput(RevenueFastActivity.this);
-                    key_number.setVisibility(View.VISIBLE);
                     key_car.setVisibility(View.GONE);
                     english_car.setVisibility(View.VISIBLE);
                 } else {
-                    key_number.setVisibility(View.GONE);
                     key_car.setVisibility(View.GONE);
                     Utils.hideSoftInput(RevenueFastActivity.this);
                 }
@@ -92,7 +90,6 @@ public class RevenueFastActivity extends BaseActivity {
             public void onScrollStateChanged(AbsListView absListView, int i)
             {
                 key_car.setVisibility(View.GONE);
-                key_number.setVisibility(View.GONE);
                 english_car.setVisibility(View.GONE);
             }
 
@@ -134,7 +131,6 @@ public class RevenueFastActivity extends BaseActivity {
         btn_car_title = (Button) findViewById(R.id.btn_car_title);
         et_car_number = (EditText) findViewById(R.id.et_car_number);
         key_car = (PercentRelativeLayout) findViewById(R.id.key_car);
-        key_number = (PercentRelativeLayout) findViewById(R.id.key_number);
         english_car = (PercentRelativeLayout) findViewById(R.id.english_car);
         lv_data = (GridView) findViewById(R.id.lv_data);
     }
@@ -175,7 +171,6 @@ public class RevenueFastActivity extends BaseActivity {
     public void onCarType(View view)
     {
         Utils.hideSoftInput(this);
-        key_number.setVisibility(View.GONE);
         english_car.setVisibility(View.GONE);
         et_car_number.clearFocus();
         key_car.setVisibility(View.VISIBLE);

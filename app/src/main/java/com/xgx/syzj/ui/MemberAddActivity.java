@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.percent.PercentRelativeLayout;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
@@ -26,6 +27,7 @@ import com.xgx.syzj.event.SimpleEventHandler;
 import com.xgx.syzj.utils.CacheUtil;
 import com.xgx.syzj.utils.FastJsonUtil;
 import com.xgx.syzj.utils.StrUtil;
+import com.xgx.syzj.utils.Utils;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -39,7 +41,7 @@ import java.util.List;
  * @author zajo
  * @created 2015年08月28日 11:25
  */
-public class MemberAddActivity extends BaseActivity {
+public class MemberAddActivity extends BaseActivity implements View.OnFocusChangeListener {
 
     private static final int LOAD_CARD_LIST = 0;
 
@@ -48,6 +50,8 @@ public class MemberAddActivity extends BaseActivity {
     private ArrayList<CardType> cards = new ArrayList<>();
     private EditText et_num,et_name, et_phone, et_carnumber, et_cartype;
     private ImageView iv_code,img_mipca;
+    private PercentRelativeLayout pr_english;
+    private PercentRelativeLayout key_car;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -60,7 +64,16 @@ public class MemberAddActivity extends BaseActivity {
 
         initView();
         initPic();
+        initLister();
         EventCenter.bindContainerAndHandler(this, eventHandler);
+    }
+
+    private void initLister() {
+        et_num.setOnFocusChangeListener(this);
+        et_name.setOnFocusChangeListener(this);
+        et_phone.setOnFocusChangeListener(this);
+        et_cartype.setOnFocusChangeListener(this);
+
     }
 
     private void initPic()
@@ -77,9 +90,24 @@ public class MemberAddActivity extends BaseActivity {
         iv_code = (ImageView) findViewById(R.id.iv_code);
         img_mipca = (ImageView) findViewById(R.id.img_mipca);
         et_num = (EditText) findViewById(R.id.et_num);
+        pr_english =(PercentRelativeLayout)findViewById(R.id.english_car);
+        key_car =(PercentRelativeLayout)findViewById(R.id.key_car);
         et_name = (EditText) findViewById(R.id.et_name);
         et_phone = (EditText) findViewById(R.id.et_phone);
         et_carnumber = (EditText) findViewById(R.id.et_carNumber);
+        et_carnumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    et_carnumber.clearFocus();
+                    Utils.hideSoftInput(MemberAddActivity.this);
+                    key_car.setVisibility(View.VISIBLE);
+                } else {
+                    key_car.setVisibility(View.GONE);
+                    Utils.hideSoftInput(MemberAddActivity.this);
+                }
+            }
+        });
         et_cartype = (EditText) findViewById(R.id.et_carType);
         img_mipca.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,7 +187,437 @@ public class MemberAddActivity extends BaseActivity {
             }
         }
     };
+    public void onCalculate(View view) {
+        String tag = (String) view.getTag();
+        String text = et_carnumber.getText().toString();
+        switch (tag) {
+            case "1":
+                et_carnumber.setText("京");
+                key_car.setVisibility(View.GONE);
+                pr_english.setVisibility(View.VISIBLE);
+                break;
+            case "2":
+                et_carnumber.setText("津");
+                key_car.setVisibility(View.GONE);
+                pr_english.setVisibility(View.VISIBLE);
+                break;
+            case "3":
+                et_carnumber.setText("冀");
+                key_car.setVisibility(View.GONE);
+                pr_english.setVisibility(View.VISIBLE);
+                break;
+            case "4":
+                et_carnumber.setText("晋");
+                key_car.setVisibility(View.GONE);
+                pr_english.setVisibility(View.VISIBLE);
+                break;
+            case "5":
+                et_carnumber.setText("蒙");
+                key_car.setVisibility(View.GONE);
+                pr_english.setVisibility(View.VISIBLE);
+                break;
+            case "6":
+                et_carnumber.setText("辽");
+                key_car.setVisibility(View.GONE);
+                pr_english.setVisibility(View.VISIBLE);
+                break;
+            case "7":
+                et_carnumber.setText("吉");
+                key_car.setVisibility(View.GONE);
+                pr_english.setVisibility(View.VISIBLE);
+                break;
+            case "8":
+                et_carnumber.setText("黑");
+                key_car.setVisibility(View.GONE);
+                pr_english.setVisibility(View.VISIBLE);
+                break;
+            case "9":
+                et_carnumber.setText("沪");
+                key_car.setVisibility(View.GONE);
+                pr_english.setVisibility(View.VISIBLE);
+                break;
+            case "10":
+                et_carnumber.setText("苏");
+                key_car.setVisibility(View.GONE);
+                pr_english.setVisibility(View.VISIBLE);
+                break;
+            case "11":
+                et_carnumber.setText("浙");
+                key_car.setVisibility(View.GONE);
+                pr_english.setVisibility(View.VISIBLE);
+                break;
+            case "12":
+                et_carnumber.setText("皖");
+                key_car.setVisibility(View.GONE);
+                pr_english.setVisibility(View.VISIBLE);
+                break;
+            case "13":
+                et_carnumber.setText("闽");
+                key_car.setVisibility(View.GONE);
+                pr_english.setVisibility(View.VISIBLE);
+                break;
+            case "14":
+                et_carnumber.setText("贛");
+                key_car.setVisibility(View.GONE);
+                pr_english.setVisibility(View.VISIBLE);
+                break;
+            case "15":
+                et_carnumber.setText("鲁");
+                key_car.setVisibility(View.GONE);
+                pr_english.setVisibility(View.VISIBLE);
+                break;
+            case "16":
+                et_carnumber.setText("豫");
+                key_car.setVisibility(View.GONE);
+                pr_english.setVisibility(View.VISIBLE);
+                break;
+            case "17":
+                et_carnumber.setText("鄂");
+                key_car.setVisibility(View.GONE);
+                pr_english.setVisibility(View.VISIBLE);
+                break;
+            case "18":
+                et_carnumber.setText("湘");
+                key_car.setVisibility(View.GONE);
+                pr_english.setVisibility(View.VISIBLE);
+                break;
+            case "19":
+                et_carnumber.setText("粤");
+                key_car.setVisibility(View.GONE);
+                pr_english.setVisibility(View.VISIBLE);
+                break;
+            case "20":
+                et_carnumber.setText("桂");
+                key_car.setVisibility(View.GONE);
+                pr_english.setVisibility(View.VISIBLE);
+                break;
+            case "21":
+                et_carnumber.setText("琼");
+                key_car.setVisibility(View.GONE);
+                pr_english.setVisibility(View.VISIBLE);
+                break;
+            case "22":
+                et_carnumber.setText("渝");
+                key_car.setVisibility(View.GONE);
+                pr_english.setVisibility(View.VISIBLE);
+                break;
+            case "23":
+                et_carnumber.setText("川");
+                key_car.setVisibility(View.GONE);
+                pr_english.setVisibility(View.VISIBLE);
+                break;
+            case "24":
+                et_carnumber.setText("贵");
+                key_car.setVisibility(View.GONE);
+                pr_english.setVisibility(View.VISIBLE);
+                break;
+            case "25":
+                et_carnumber.setText("云");
+                key_car.setVisibility(View.GONE);
+                pr_english.setVisibility(View.VISIBLE);
+                break;
+            case "26":
+                et_carnumber.setText("藏");
+                key_car.setVisibility(View.GONE);
+                pr_english.setVisibility(View.VISIBLE);
+                break;
+            case "27":
+                et_carnumber.setText("陕");
+                key_car.setVisibility(View.GONE);
+                pr_english.setVisibility(View.VISIBLE);
+                break;
+            case "28":
+                et_carnumber.setText("甘");
+                key_car.setVisibility(View.GONE);
+                pr_english.setVisibility(View.VISIBLE);
+                break;
+            case "29":
+                et_carnumber.setText("青");
+                key_car.setVisibility(View.GONE);
+                pr_english.setVisibility(View.VISIBLE);
+                break;
+            case "30":
+                et_carnumber.setText("宁");
+                key_car.setVisibility(View.GONE);
+                pr_english.setVisibility(View.VISIBLE);
+                break;
+            case "31":
+                et_carnumber.setText("新");
+                key_car.setVisibility(View.GONE);
+                pr_english.setVisibility(View.VISIBLE);
+                break;
+            case "one":
+                if (text.length() < 7) {
+                    text = text + "1";
+                    et_carnumber.setText(text);
+                    et_carnumber.setSelection(text.length());
+                }
+                break;
+            case "two":
+                if (text.length() < 7) {
+                    text = text + "2";
+                    et_carnumber.setText(text);
+                    et_carnumber.setSelection(text.length());
+                }
+                break;
+            case "three":
+                if (text.length() < 7) {
+                    text = text + "3";
+                    et_carnumber.setText(text);
+                    et_carnumber.setSelection(text.length());
+                }
+                break;
+            case "four":
+                if (text.length() < 7) {
+                    text = text + "4";
+                    et_carnumber.setText(text);
+                    et_carnumber.setSelection(text.length());
+                }
+                break;
+            case "five":
+                if (text.length() < 7) {
+                    text = text + "5";
+                    et_carnumber.setText(text);
+                    et_carnumber.setSelection(text.length());
+                }
+                break;
+            case "six":
+                if (text.length() < 7) {
+                    text = text + "6";
+                    et_carnumber.setText(text);
+                    et_carnumber.setSelection(text.length());
+                }
 
+                break;
+            case "seven":
+                if (text.length() < 7) {
+                    text = text + "7";
+                    et_carnumber.setText(text);
+                    et_carnumber.setSelection(text.length());
+                }
+                break;
+            case "eigth":
+                if (text.length() < 7) {
+                    text = text + "8";
+                    et_carnumber.setText(text);
+                    et_carnumber.setSelection(text.length());
+                }
+                break;
+            case "nine":
+                if (text.length() < 7) {
+                    text = text + "9";
+                    et_carnumber.setText(text);
+                    et_carnumber.setSelection(text.length());
+                }
+                break;
+            case "zero":
+                if (text.length() < 7) {
+                    text = text + "0";
+                    et_carnumber.setText(text);
+                    et_carnumber.setSelection(text.length());
+                }
+                break;
+            case "A":
+                if (text.length() < 7) {
+                    text = text + "A";
+                    et_carnumber.setText(text);
+                    et_carnumber.setSelection(text.length());
+                }
+                break;
+            case "B":
+                if (text.length() < 7) {
+                    text = text + "B";
+                    et_carnumber.setText(text);
+                    et_carnumber.setSelection(text.length());
+                }
+                break;
+            case "C":
+                if (text.length() < 7) {
+                    text = text + "C";
+                    et_carnumber.setText(text);
+                    et_carnumber.setSelection(text.length());
+                }
+                break;
+            case "D":
+                if (text.length() < 7) {
+                    text = text + "D";
+                    et_carnumber.setText(text);
+                    et_carnumber.setSelection(text.length());
+                }
+                break;
+            case "E":
+                if (text.length() < 7) {
+                    text = text + "E";
+                    et_carnumber.setText(text);
+                    et_carnumber.setSelection(text.length());
+                }
+                break;
+            case "F":
+                if (text.length() < 7) {
+                    text = text + "F";
+                    et_carnumber.setText(text);
+                    et_carnumber.setSelection(text.length());
+                }
+                break;
+            case "G":
+                if (text.length() < 7) {
+                    text = text + "G";
+                    et_carnumber.setText(text);
+                    et_carnumber.setSelection(text.length());
+                }
+                break;
+            case "H":
+                if (text.length() < 7) {
+                    text = text + "H";
+                    et_carnumber.setText(text);
+                    et_carnumber.setSelection(text.length());
+                }
+                break;
+            case "I":
+                if (text.length() < 7) {
+                    text = text + "I";
+                    et_carnumber.setText(text);
+                    et_carnumber.setSelection(text.length());
+                }
+                break;
+            case "J":
+                if (text.length() < 7) {
+                    text = text + "J";
+                    et_carnumber.setText(text);
+                    et_carnumber.setSelection(text.length());
+                }
+                break;
+            case "K":
+                if (text.length() < 7) {
+                    text = text + "K";
+                    et_carnumber.setText(text);
+                    et_carnumber.setSelection(text.length());
+                }
+                break;
+            case "L":
+                if (text.length() < 7) {
+                    text = text + "L";
+                    et_carnumber.setText(text);
+                    et_carnumber.setSelection(text.length());
+                }
+                break;
+            case "M":
+                if (text.length() < 7) {
+                    text = text + "M";
+                    et_carnumber.setText(text);
+                    et_carnumber.setSelection(text.length());
+                }
+                break;
+            case "N":
+                if (text.length() < 7) {
+                    text = text + "N";
+                    et_carnumber.setText(text);
+                    et_carnumber.setSelection(text.length());
+                }
+                break;
+            case "O":
+                if (text.length() < 7) {
+                    text = text + "O";
+                    et_carnumber.setText(text);
+                    et_carnumber.setSelection(text.length());
+                }
+                break;
+            case "P":
+                if (text.length() < 7) {
+                    text = text + "P";
+                    et_carnumber.setText(text);
+                    et_carnumber.setSelection(text.length());
+                }
+                break;
+            case "Q":
+                if (text.length() < 7) {
+                    text = text + "Q";
+                    et_carnumber.setText(text);
+                    et_carnumber.setSelection(text.length());
+                }
+                break;
+
+            case "R":
+                if (text.length() < 7) {
+                    text = text + "R";
+                    et_carnumber.setText(text);
+                    et_carnumber.setSelection(text.length());
+                }
+                break;
+
+            case "S":
+                if (text.length() < 7) {
+                    text = text + "S";
+                    et_carnumber.setText(text);
+                    et_carnumber.setSelection(text.length());
+                }
+                break;
+            case "T":
+                if (text.length() < 7) {
+                    text = text + "T";
+                    et_carnumber.setText(text);
+                    et_carnumber.setSelection(text.length());
+                }
+                break;
+            case "U":
+                if (text.length() < 7) {
+                    text = text + "U";
+                    et_carnumber.setText(text);
+                    et_carnumber.setSelection(text.length());
+                }
+                break;
+            case "V":
+                if (text.length() < 7) {
+                    text = text + "V";
+                    et_carnumber.setText(text);
+                    et_carnumber.setSelection(text.length());
+                }
+                break;
+            case "W":
+                if (text.length() < 7) {
+                    text = text + "W";
+                    et_carnumber.setText(text);
+                    et_carnumber.setSelection(text.length());
+                }
+                break;
+            case "X":
+                if (text.length() < 7) {
+                    text = text + "X";
+                    et_carnumber.setText(text);
+                    et_carnumber.setSelection(text.length());
+                }
+                break;
+            case "Y":
+                if (text.length() < 7) {
+                    text = text + "Y";
+                    et_carnumber.setText(text);
+                    et_carnumber.setSelection(text.length());
+                }
+                break;
+            case "Z":
+                if (text.length() < 7) {
+                    text = text + "Z";
+                    et_carnumber.setText(text);
+                    et_carnumber.setSelection(text.length());
+                }
+                break;
+            case "finish":
+                pr_english.setVisibility(View.GONE);
+                break;
+            case "delete2": {
+                if (text.length() > 0) {
+                    text = text.substring(0, text.length() - 1);
+                    et_carnumber.setText(text);
+                    et_carnumber.setSelection(text.length());
+                }
+                if(text.length()<1){
+                    pr_english.setVisibility(View.GONE);
+                     key_car.setVisibility(View.VISIBLE);
+                }
+                break;
+            }
+        }
+    }
     @Override
     protected void submit()
     {
@@ -230,4 +688,9 @@ public class MemberAddActivity extends BaseActivity {
 
     }
 
+    @Override
+    public void onFocusChange(View view, boolean b) {
+        key_car.setVisibility(View.GONE);
+        pr_english.setVisibility(View.GONE);
+    }
 }

@@ -346,14 +346,14 @@ public class BaseRequest {
         return stringRequest;
     }
     private static StringRequest generateRequest2(final String requestUrl, final Map<String, String> map, final Map<String, String> header, final OnRequestListener listener) {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, requestUrl,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, requestUrl,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            Log.e("==",response);
-                            JSONObject object=JSON.parseObject(response);
-                            Result result = JSON.parseObject(object.getString("result"), Result.class);
+                            Result result = new Result();
+                            result.setCode("9999999");
+                            result.setResult(response);
                             showResponseDetail(result);
                             if (listener != null) {
                                 if (result.APISuccess()) {

@@ -27,6 +27,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_height="match_parent"
         android:layout_above="@id/btn_delete"
         android:layout_below="@+id/iv_code"
@@ -215,9 +216,1124 @@
                 android:textColor="@color/title_6_color"
                 android:textSize="14sp"/>
         </LinearLayout>
+        <android.support.percent.PercentRelativeLayout
+            android:id="@+id/key_car"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:visibility="gone"
+            android:paddingBottom="10dp"
+
+            android:background="#DBDCDE">
+
+            <Button
+                android:id="@+id/btn_jing"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="1"
+                android:text="京"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_jin1"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_jing"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="2"
+                android:text="津"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_ji1"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_jin1"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="3"
+                android:text="冀"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_jin2"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_ji1"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="4"
+                android:text="晋"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_meng"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_jin2"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="5"
+                android:text="蒙"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_liao"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_meng"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="6"
+                android:text="辽"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_ji2"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_liao"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="7"
+                android:text="吉"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_hei"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_ji2"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="8"
+                android:text="黑"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_hu"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_hei"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="9"
+                android:text="沪"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
 
 
-        <include layout="@layout/layout_line"/>
+            <Button
+                android:id="@+id/btn_su"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_below="@+id/btn_jing"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="10"
+                android:text="苏"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
 
+            <Button
+                android:id="@+id/btn_zhe"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_su"
+                android:layout_below="@+id/btn_jing"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="11"
+                android:text="浙"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_wan"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_zhe"
+                android:layout_below="@+id/btn_jing"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="12"
+                android:text="皖"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_min"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_wan"
+                android:layout_below="@+id/btn_jing"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="13"
+                android:text="闽"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_gong"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_min"
+                android:layout_below="@+id/btn_jing"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="14"
+                android:text="贛"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_lu"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_gong"
+                android:layout_below="@+id/btn_jing"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="15"
+                android:text="鲁"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_yu"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_liao"
+                android:layout_below="@+id/btn_jing"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="16"
+                android:text="豫"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_e"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_ji2"
+                android:layout_below="@+id/btn_jing"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="17"
+                android:text="鄂"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_xiang"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_hei"
+                android:layout_below="@+id/btn_jing"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="18"
+                android:text="湘"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+
+            <Button
+                android:id="@+id/btn_yue"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_below="@+id/btn_su"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="19"
+                android:text="粤"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_gui1"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_su"
+                android:layout_below="@+id/btn_su"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="20"
+                android:text="桂"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_qiong"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_zhe"
+                android:layout_below="@+id/btn_su"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="21"
+                android:text="琼"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_yu2"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_qiong"
+                android:layout_below="@+id/btn_su"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="22"
+                android:text="渝"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_chuan"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_min"
+                android:layout_below="@+id/btn_su"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="23"
+                android:text="川"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_gui2"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_gong"
+                android:layout_below="@+id/btn_su"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="24"
+                android:text="贵"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_yun"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_liao"
+                android:layout_below="@+id/btn_su"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="25"
+                android:text="云"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_zang"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_ji2"
+                android:layout_below="@+id/btn_su"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="26"
+                android:text="藏"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_shan"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_hei"
+                android:layout_below="@+id/btn_su"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="27"
+                android:text="陕"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_gan"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_below="@+id/btn_yue"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="28"
+                android:text="甘"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_qing"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_su"
+                android:layout_below="@+id/btn_yue"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="29"
+                android:text="青"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_ning"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_zhe"
+                android:layout_below="@+id/btn_yue"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="30"
+                android:text="宁"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_xin"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_qiong"
+                android:layout_below="@+id/btn_yue"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="31"
+                android:text="新"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+        </android.support.percent.PercentRelativeLayout>
+
+        <android.support.percent.PercentRelativeLayout
+            android:id="@+id/english_car"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:paddingBottom="10dp"
+
+            android:background="#DBDCDE">
+
+            <Button
+                android:id="@+id/btn_one"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="one"
+                android:text="1"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="8%" />
+
+            <Button
+                android:id="@+id/btn_two"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_one"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="two"
+                android:text="2"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="8%" />
+
+            <Button
+                android:id="@+id/btn_three"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_two"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="three"
+                android:text="3"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="8%" />
+
+            <Button
+                android:id="@+id/btn_four"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_three"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="four"
+                android:text="4"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="8%" />
+
+            <Button
+                android:id="@+id/btn_five"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_four"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="five"
+                android:text="5"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="8%" />
+
+            <Button
+                android:id="@+id/btn_six"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_five"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="six"
+                android:text="6"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="8%" />
+
+            <Button
+                android:id="@+id/btn_seven"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_six"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="seven"
+                android:text="7"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="8%" />
+
+            <Button
+                android:id="@+id/btn_eigth"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_seven"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="eigth"
+                android:text="8"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="8%" />
+
+            <Button
+                android:id="@+id/btn_nine"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_eigth"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="nine"
+                android:text="9"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="8%" />
+
+            <Button
+                android:id="@+id/btn_zero"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_nine"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="zero"
+                android:text="0"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="8%" />
+            <Button
+                android:id="@+id/btn_a"
+                android:layout_below="@id/btn_one"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="A"
+                android:text="A"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:layout_below="@id/btn_two"
+                android:id="@+id/btn_b"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_a"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="B"
+                android:text="B"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_c"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_below="@id/btn_three"
+                android:layout_toRightOf="@id/btn_b"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="C"
+                android:text="C"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_d"
+                android:layout_below="@id/btn_four"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_c"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="D"
+                android:text="D"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_e2"
+                android:layout_below="@id/btn_five"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_d"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="E"
+                android:text="E"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:layout_below="@id/btn_six"
+                android:id="@+id/btn_f"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_e2"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="F"
+                android:text="F"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:layout_below="@id/btn_seven"
+                android:id="@+id/btn_g"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_f"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="G"
+                android:text="G"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:layout_below="@id/btn_eigth"
+                android:id="@+id/btn_h"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_g"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="H"
+                android:text="H"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:layout_below="@id/btn_nine"
+                android:id="@+id/btn_i"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_h"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="I"
+                android:text="I"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+
+            <Button
+                android:id="@+id/btn_j"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_below="@+id/btn_a"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="J"
+                android:text="J"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_k"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_j"
+                android:layout_below="@+id/btn_b"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="K"
+                android:text="K"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_l"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_k"
+                android:layout_below="@+id/btn_c"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="L"
+                android:text="L"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_m"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_l"
+                android:layout_below="@+id/btn_d"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="M"
+                android:text="M"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_n"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_m"
+                android:layout_below="@+id/btn_e2"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="N"
+                android:text="N"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_o"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_n"
+                android:layout_below="@+id/btn_f"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="O"
+                android:text="O"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_p"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_o"
+                android:layout_below="@+id/btn_g"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="P"
+                android:text="P"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_q"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_p"
+                android:layout_below="@+id/btn_h"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="Q"
+                android:text="Q"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_r"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_q"
+                android:layout_below="@+id/btn_i"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="R"
+                android:text="R"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+
+            <Button
+                android:id="@+id/btn_s"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_below="@+id/btn_j"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="S"
+                android:text="S"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_t"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_s"
+                android:layout_below="@+id/btn_k"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="T"
+                android:text="T"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_u"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_t"
+                android:layout_below="@+id/btn_l"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="U"
+                android:text="U"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_v"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_u"
+                android:layout_below="@+id/btn_m"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="V"
+                android:text="V"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_w"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_v"
+                android:layout_below="@+id/btn_n"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="W"
+                android:text="W"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_x"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_w"
+                android:layout_below="@+id/btn_o"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="X"
+                android:text="X"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_y"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_x"
+                android:layout_below="@+id/btn_p"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="Y"
+                android:text="Y"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/btn_z"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toRightOf="@id/btn_y"
+                android:layout_below="@+id/btn_q"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_keybord_bg"
+                android:onClick="onCalculate"
+                android:tag="Z"
+                android:text="Z"
+                android:textColor="@color/gray"
+                android:textSize="20sp"
+                app:layout_widthPercent="9%" />
+
+            <Button
+                android:id="@+id/finish"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_below="@id/btn_z"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/btn_green"
+                android:onClick="onCalculate"
+                android:tag="finish"
+                android:text="完成"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_widthPercent="20%" />
+            <Button
+                android:id="@+id/btn_delete2"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_below="@id/btn_w"
+                android:layout_marginRight="100dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="5dp"
+                android:layout_alignParentRight="true"
+                android:background="@color/btn_green"
+                android:onClick="onCalculate"
+                android:tag="delete2"
+                android:text="删除"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_widthPercent="20%" />
+
+
+        </android.support.percent.PercentRelativeLayout>
     </LinearLayout>
+
+
 </RelativeLayout>

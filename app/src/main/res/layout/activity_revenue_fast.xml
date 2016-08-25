@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/appBG"
     android:orientation="vertical">
@@ -100,7 +99,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:paddingBottom="10dp"
-        android:visibility="gone"
         android:background="#DBDCDE">
 
         <Button
@@ -625,11 +623,11 @@
     </android.support.percent.PercentRelativeLayout>
 
     <android.support.percent.PercentRelativeLayout
-        android:id="@+id/key_number"
+        android:id="@+id/english_car"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="3dp"
+        android:paddingBottom="10dp"
         android:visibility="gone"
         android:background="#DBDCDE">
 
@@ -644,7 +642,7 @@
             android:onClick="onCalculate"
             android:tag="one"
             android:text="1"
-            android:textColor="@color/black"
+            android:textColor="@color/gray"
             android:textSize="20sp"
             app:layout_widthPercent="8%" />
 
@@ -659,7 +657,7 @@
             android:onClick="onCalculate"
             android:tag="two"
             android:text="2"
-            android:textColor="@color/black"
+            android:textColor="@color/gray"
             android:textSize="20sp"
             app:layout_widthPercent="8%" />
 
@@ -674,7 +672,7 @@
             android:onClick="onCalculate"
             android:tag="three"
             android:text="3"
-            android:textColor="@color/black"
+            android:textColor="@color/gray"
             android:textSize="20sp"
             app:layout_widthPercent="8%" />
 
@@ -689,7 +687,7 @@
             android:onClick="onCalculate"
             android:tag="four"
             android:text="4"
-            android:textColor="@color/black"
+            android:textColor="@color/gray"
             android:textSize="20sp"
             app:layout_widthPercent="8%" />
 
@@ -704,7 +702,7 @@
             android:onClick="onCalculate"
             android:tag="five"
             android:text="5"
-            android:textColor="@color/black"
+            android:textColor="@color/gray"
             android:textSize="20sp"
             app:layout_widthPercent="8%" />
 
@@ -719,7 +717,7 @@
             android:onClick="onCalculate"
             android:tag="six"
             android:text="6"
-            android:textColor="@color/black"
+            android:textColor="@color/gray"
             android:textSize="20sp"
             app:layout_widthPercent="8%" />
 
@@ -734,7 +732,7 @@
             android:onClick="onCalculate"
             android:tag="seven"
             android:text="7"
-            android:textColor="@color/black"
+            android:textColor="@color/gray"
             android:textSize="20sp"
             app:layout_widthPercent="8%" />
 
@@ -749,7 +747,7 @@
             android:onClick="onCalculate"
             android:tag="eigth"
             android:text="8"
-            android:textColor="@color/black"
+            android:textColor="@color/gray"
             android:textSize="20sp"
             app:layout_widthPercent="8%" />
 
@@ -764,7 +762,7 @@
             android:onClick="onCalculate"
             android:tag="nine"
             android:text="9"
-            android:textColor="@color/black"
+            android:textColor="@color/gray"
             android:textSize="20sp"
             app:layout_widthPercent="8%" />
 
@@ -780,22 +778,12 @@
             android:onClick="onCalculate"
             android:tag="zero"
             android:text="0"
-            android:textColor="@color/black"
+            android:textColor="@color/gray"
             android:textSize="20sp"
             app:layout_widthPercent="8%" />
-
-        </android.support.percent.PercentRelativeLayout>
-    <android.support.percent.PercentRelativeLayout
-        android:id="@+id/english_car"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:paddingBottom="10dp"
-        android:visibility="gone"
-        android:background="#DBDCDE">
-
         <Button
             android:id="@+id/btn_a"
+            android:layout_below="@id/btn_one"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:gravity="center"
@@ -810,6 +798,7 @@
             app:layout_widthPercent="9%" />
 
         <Button
+            android:layout_below="@id/btn_two"
             android:id="@+id/btn_b"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
@@ -828,6 +817,7 @@
             android:id="@+id/btn_c"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
+            android:layout_below="@id/btn_three"
             android:layout_toRightOf="@id/btn_b"
             android:layout_marginLeft="6dp"
             android:layout_marginTop="10dp"
@@ -841,6 +831,7 @@
 
         <Button
             android:id="@+id/btn_d"
+            android:layout_below="@id/btn_four"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_toRightOf="@id/btn_c"
@@ -856,6 +847,7 @@
 
         <Button
             android:id="@+id/btn_e2"
+            android:layout_below="@id/btn_five"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_toRightOf="@id/btn_d"
@@ -870,6 +862,7 @@
             app:layout_widthPercent="9%" />
 
         <Button
+            android:layout_below="@id/btn_six"
             android:id="@+id/btn_f"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
@@ -885,6 +878,7 @@
             app:layout_widthPercent="9%" />
 
         <Button
+            android:layout_below="@id/btn_seven"
             android:id="@+id/btn_g"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
@@ -900,6 +894,7 @@
             app:layout_widthPercent="9%" />
 
         <Button
+            android:layout_below="@id/btn_eigth"
             android:id="@+id/btn_h"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
@@ -915,6 +910,7 @@
             app:layout_widthPercent="9%" />
 
         <Button
+            android:layout_below="@id/btn_nine"
             android:id="@+id/btn_i"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
