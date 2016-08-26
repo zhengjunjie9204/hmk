@@ -59,7 +59,7 @@
                     android:layout_below="@id/tv_number"
                     android:layout_marginTop="8dp"
                     android:layout_marginLeft="5dp"
-                    android:text="本田 奥德赛 2015款 2.4L 尊享版"
+                    android:text=""
                     android:textColor="@color/white"
                     android:textSize="14sp" />
 

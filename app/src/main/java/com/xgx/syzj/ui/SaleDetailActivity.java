@@ -9,6 +9,7 @@ import com.xgx.syzj.adapter.OrderDetailItemAdapter;
 import com.xgx.syzj.adapter.OrderDetailItemAdapter2;
 import com.xgx.syzj.app.Constants;
 import com.xgx.syzj.base.BaseActivity;
+import com.xgx.syzj.bean.OrderDetail;
 import com.xgx.syzj.bean.OrderList;
 import com.xgx.syzj.bean.PayTimes;
 import com.xgx.syzj.bean.PayType;
@@ -47,6 +48,7 @@ public class SaleDetailActivity extends BaseActivity {
     private OrderDetailItemAdapter mProAdapter;
     private List<ProductItems> mItemList;
     private List<Product> mProList;
+    private ArrayList<OrderDetail> mOrderDet;
     //数据
     private OrderList orderList;
     private SaleListRecordModel mDataModel;
@@ -68,8 +70,8 @@ public class SaleDetailActivity extends BaseActivity {
 //        payorder_member_money_record.xml
         mItemAdapter = new OrderDetailItemAdapter(this, mItemList, null, 0);
         mProAdapter = new OrderDetailItemAdapter(this, null, mProList, 1);
-        mItemAdapter2 = new OrderDetailItemAdapter2(this, mItemList);
-        mProAdapter2 = new OrderDetailItemAdapter2(this, mProList);
+        mItemAdapter2 = new OrderDetailItemAdapter2(this, mItemList,null,0,mOrderDet);
+        mProAdapter2 = new OrderDetailItemAdapter2(this, null,mProList,1,mOrderDet);
         if("1".equals(orderList.getOrderType())) {
             mItemListView.setAdapter(mItemAdapter);
             mProductListView.setAdapter(mProAdapter);
@@ -95,6 +97,7 @@ public class SaleDetailActivity extends BaseActivity {
     private void setData(){
         mItemList = new ArrayList<>();
         mProList = new ArrayList<>();
+        mOrderDet = new ArrayList<>();
         orderList = (OrderList) getIntent().getSerializableExtra("order");
         EventCenter.getInstance().register(eventHandler);
         mDataModel = new SaleListRecordModel(Constants.LOAD_COUNT);
@@ -116,11 +119,14 @@ public class SaleDetailActivity extends BaseActivity {
                     List<PayTimes> list2 = FastJsonUtil.json2List(json.getString("payTimes"), PayTimes.class);
                     String payOrderType = json.optString("payOrderType", "0");
                     String payType = json.optString("payType", "0");
-                    int orderAmount = json.optInt("orderAmount", 0);
-                    int fee = json.optInt("fee", 0);
+                    long orderAmount = json.optLong("orderAmount", 0);
+                    long fee = json.optLong("fee", 0);
+                    long orderAmout = json.optLong("orderAmout", 0);
                     int status = json.optInt("status", 0);
                     String employee = json.optString("employee", "0");
                     String carType = json.optString("carType", "0");
+                    OrderDetail orderDetail = new OrderDetail(payOrderType, payType, orderAmount, fee, employee, carType, status,orderAmout);
+                    mOrderDet.add(orderDetail);
                     tv_type.setText(carType);
                     tv_name.setText(employee);
                     HashMap<String, String> map = new HashMap<>();

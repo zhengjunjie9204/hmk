@@ -207,7 +207,13 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
                     }
                     if (null != order) {
                         if (itemList.length() == 0 && productList.length() == 0) {
-                            orderPayItem(order.getId(), 0, 3);
+                            CustomAlertDialog.showPayModeDialog(this, true, new CustomAlertDialog.IAlertListDialogItemClickListener() {
+                                @Override
+                                public void onItemClick(int position) {
+                                    orderPayItem(order.getId(), 0, 3);
+                                }
+                            });
+
                         } else if (itemList.length() == 0) {
                             showShortToast("请选择项目");
                         } else {
@@ -224,13 +230,22 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
                         } else {
                             showLoadingDialog(R.string.loading_date);
                             if (mGood.size() > 0 && mProject.size() == 0 && (null == mdata || mdata.size() == 0)) {//只含商品
-                                orderPayProduct(0, 3, String.valueOf(allmoney), null, productList);
+                                final JSONArray finalProductList = productList;
+                                CustomAlertDialog.showPayModeDialog(this, true, new CustomAlertDialog.IAlertListDialogItemClickListener() {
+                                    @Override
+                                    public void onItemClick(int position) {
+                                        orderPayProduct(0, 3, String.valueOf(allmoney), null, finalProductList);
+
+                                    }
+                                });
+
+
                             } else {//包含商品和项目
                                 if (productList.length() == 0) {
                                     productList = null;
                                 }
                                 String diatance = et_distance.getText().toString();
-                                orderCreate(String.valueOf(allmoney),diatance, 3, productList, itemList);
+                                orderCreate(String.valueOf(allmoney),diatance, productList, itemList);
                             }
                         }
                     }
@@ -252,20 +267,7 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
     }
 
     //支付按钮
-    public void onAddSure(View view)
-    {
-        CustomAlertDialog.showPayModeDialog(this, true, new CustomAlertDialog.IAlertListDialogItemClickListener() {
-            @Override
-            public void onItemClick(int position)
-            {
-                showShortToast("支付成功");
-                Bundle bundle = new Bundle();
-                bundle.putString("money", allmoney + "");
-                bundle.putParcelable("member", new Member());
-                gotoActivity(RevenueResultActivity.class, bundle);
-            }
-        });
-    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
@@ -332,8 +334,9 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
     }
 
     //支付只含商品的订单(7.1)
-    private void orderPayProduct(int payTwiceFlag, int payType, String fee, String authCode, JSONArray productList)
+    private void orderPayProduct(final int payTwiceFlag, final int payType, final String fee, final String authCode, final JSONArray productList)
     {
+
         Api.orderPayProduct(memberId, payTwiceFlag, payType, fee, authCode, productList, new BaseRequest.OnRequestListener() {
             @Override
             public void onSuccess(Result result)
@@ -355,9 +358,9 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
     }
 
     //创建含项目订单(7.2)
-    private void orderCreate(String fee,String distance, int payType, JSONArray productList, JSONArray itemList)
+    private void orderCreate(String fee,String distance, JSONArray productList, JSONArray itemList)
     {
-        Api.orderCreate(memberId, distance,fee, payType, productList, itemList, new BaseRequest.OnRequestListener() {
+        Api.orderCreate(memberId, distance,fee, productList, itemList, new BaseRequest.OnRequestListener() {
             @Override
             public void onSuccess(Result result)
             {
@@ -435,13 +438,13 @@ public class RevenuseSellFinishActivity extends BaseActivity implements View.OnC
                 try {
                     if (result.getStatus() == 200) {
                         JSONObject json = new JSONObject(result.getResult());
-                        List<Project> proList = FastJsonUtil.json2List(json.getString("items"), Project.class);
-                        if (null != proList && proList.size() > 0) {
-                            for (Project project : proList) {
-                                if (project.getPayType() == 8) {
-                                    countItemsList.add(new CountItemsBean(project.getId(),project.getName(),(int)project.getLaborTime()));
+                        List<Project> itemList = FastJsonUtil.json2List(json.getString("items"), Project.class);
+                        if (null != itemList && itemList.size() > 0) {
+                            for (Project item : itemList) {
+                                if (item.getPayType() == 8) {
+                                    countItemsList.add(new CountItemsBean(item.getId(),item.getName(),(int)item.getLaborTime()));
                                 }else{
-                                    mProject.add(project);
+                                    mProject.add(item);
                                 }
                             }
                             projectAdapter.notifyDataSetChanged();

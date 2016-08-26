@@ -1,5 +1,6 @@
 package com.xgx.syzj.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.xgx.syzj.R;
 import com.xgx.syzj.base.BaseActivity;
@@ -89,5 +91,11 @@ public class HistoryActivity extends BaseActivity {
             // TODO Auto-generated method stub
             super.destroyItem(container, position, object);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        gotoActivity(MainActivity.class);
+        finish();
     }
 }

@@ -11,25 +11,10 @@
         android:layout_marginTop="15dp"
         />
 
-    <Button
-        android:id="@+id/btn_delete"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/button_menu_cancel"
-        android:onClick="onDelete"
-        android:paddingBottom="12dp"
-        android:paddingTop="12dp"
-        android:text="@string/app_button_delete"
-        android:textColor="@color/white"
-        android:textSize="14sp"
-        android:visibility="gone"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_height="match_parent"
-        android:layout_above="@id/btn_delete"
         android:layout_below="@+id/iv_code"
         android:orientation="vertical">
 
@@ -64,8 +49,8 @@
                 android:background="@null"
                 android:gravity="right|center_vertical"
                 android:hint="@string/member_add_card_hint"
-                android:inputType="number"
                 android:singleLine="true"
+                android:digits="1234567890"
                 android:layout_toLeftOf="@+id/img_mipca"
                 android:textColor="@color/title_6_color"
                 android:textSize="14sp"/>
@@ -188,6 +173,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
+            android:layout_marginTop="11dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -223,7 +209,6 @@
             android:layout_marginTop="40dp"
             android:visibility="gone"
             android:paddingBottom="10dp"
-
             android:background="#DBDCDE">
 
             <Button
@@ -718,14 +703,13 @@
                 android:textSize="20sp"
                 app:layout_widthPercent="9%" />
         </android.support.percent.PercentRelativeLayout>
-
         <android.support.percent.PercentRelativeLayout
             android:id="@+id/english_car"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:paddingBottom="10dp"
-
+            android:visibility="gone"
             android:background="#DBDCDE">
 
             <Button
@@ -1333,6 +1317,19 @@
 
 
         </android.support.percent.PercentRelativeLayout>
+        <Button
+            android:id="@+id/btn_delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/button_menu_cancel"
+            android:onClick="onDelete"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"
+            android:text="@string/app_button_delete"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:visibility="gone"/>
     </LinearLayout>
 
 

@@ -67,7 +67,6 @@ public class MemberDetailActivity extends BaseActivity {
         tv_time3 =(TextView) findViewById(R.id.tv_time3);
 //        tv_beizhu =(TextView) findViewById(R.id.tv_beizhu);
         tv_distance =(TextView) findViewById(R.id.tv_distance);
-
         EventCenter.bindContainerAndHandler(this, eventHandler);
         registerReceiver();
     }

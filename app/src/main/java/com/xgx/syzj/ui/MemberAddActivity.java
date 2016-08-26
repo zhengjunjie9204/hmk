@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.percent.PercentRelativeLayout;
 import android.support.v4.view.ViewPager;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -44,7 +45,7 @@ import java.util.List;
 public class MemberAddActivity extends BaseActivity implements View.OnFocusChangeListener {
 
     private static final int LOAD_CARD_LIST = 0;
-
+    private boolean FINASH=true;
     private ViewPager viewPager;
     private ArrayList<View> views = new ArrayList<>();
     private ArrayList<CardType> cards = new ArrayList<>();
@@ -57,7 +58,7 @@ public class MemberAddActivity extends BaseActivity implements View.OnFocusChang
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_member_add);
+        setContentView(R.layout.activity_member_add2);
 
         setTitleText(getString(R.string.member_add_title));
         setSubmit(getString(R.string.app_button_sure));
@@ -95,19 +96,7 @@ public class MemberAddActivity extends BaseActivity implements View.OnFocusChang
         et_name = (EditText) findViewById(R.id.et_name);
         et_phone = (EditText) findViewById(R.id.et_phone);
         et_carnumber = (EditText) findViewById(R.id.et_carNumber);
-        et_carnumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                if (hasFocus) {
-                    et_carnumber.clearFocus();
-                    Utils.hideSoftInput(MemberAddActivity.this);
-                    key_car.setVisibility(View.VISIBLE);
-                } else {
-                    key_car.setVisibility(View.GONE);
-                    Utils.hideSoftInput(MemberAddActivity.this);
-                }
-            }
-        });
+        check();
         et_cartype = (EditText) findViewById(R.id.et_carType);
         img_mipca.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,6 +108,23 @@ public class MemberAddActivity extends BaseActivity implements View.OnFocusChang
             }
         });
     }
+
+    private void check() {
+        et_carnumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    et_carnumber.clearFocus();
+                    Utils.hideSoftInput(MemberAddActivity.this);
+                    key_car.setVisibility(View.VISIBLE);
+                } else {
+
+                    Utils.hideSoftInput(MemberAddActivity.this);
+                }
+            }
+        });
+    }
+
 
     private void initData(String storePic)
     {
@@ -602,7 +608,10 @@ public class MemberAddActivity extends BaseActivity implements View.OnFocusChang
                 }
                 break;
             case "finish":
+                FINASH=false;
+                check();
                 pr_english.setVisibility(View.GONE);
+
                 break;
             case "delete2": {
                 if (text.length() > 0) {

@@ -1050,11 +1050,10 @@ public class Api extends BaseRequest {
      *
      * @param memberId    会员Id
      * @param fee         金额
-     * @param payType     支付方式
      * @param productList 商品
      * @param itemList    项目
      */
-    public static StringRequest orderCreate(int memberId, String distance,String fee, int payType, JSONArray productList, JSONArray itemList, OnRequestListener listener)
+    public static StringRequest orderCreate(int memberId, String distance,String fee, JSONArray productList, JSONArray itemList, OnRequestListener listener)
     {
         Map<String, String> params = null;
         try {
@@ -1064,7 +1063,6 @@ public class Api extends BaseRequest {
             info.put("employee", CacheUtil.getmInstance().getUser().getEmployeeId());
             info.put("memberId", memberId);
             info.put("fee", fee);
-            info.put("payType", payType);
             info.put("productList", productList);
             info.put("itemList", itemList);
             info.put("distance",distance);

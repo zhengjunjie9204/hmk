@@ -81,9 +81,9 @@ public class RevenueResultActivity extends BaseActivity implements View.OnClickL
                 }
                 break;
             case R.id.btn_send:
-                Intent intent = new Intent(this, SaleHistoryActivity.class);
+                Intent intent = new Intent(this, HistoryActivity.class);
 //                gotoActivity(SaleHistoryActivity.class);
-                intent.setFlags(3000);
+                intent.putExtra("finish",3000);
                 startActivity(intent);
                 defaultFinish();
                 break;
@@ -204,4 +204,5 @@ public class RevenueResultActivity extends BaseActivity implements View.OnClickL
         }
         return printer;
     }
+
 }

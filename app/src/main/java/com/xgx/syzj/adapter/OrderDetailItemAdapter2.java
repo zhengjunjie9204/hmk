@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.xgx.syzj.R;
+import com.xgx.syzj.bean.OrderDetail;
 import com.xgx.syzj.bean.Product;
 import com.xgx.syzj.bean.ProductItems;
 import com.xgx.syzj.widget.CustomAlertDialog;
@@ -19,21 +20,29 @@ import java.util.List;
  */
 public class OrderDetailItemAdapter2 extends BaseAdapter {
     private Context mContext;
-    private List list;
+    private List<ProductItems> list;
+    private List<Product> mProductList;
+    private List<OrderDetail> mOrderDet;
+    private int flag;//0项目信息 1商品信息
 
-
-    public OrderDetailItemAdapter2(Context mContext, List list)
+    public OrderDetailItemAdapter2(Context mContext, List<ProductItems> list, List<Product> mProductList, int flag, List<OrderDetail> mOrderDet)
     {
         this.mContext = mContext;
         this.list = list;
-
+        this.mProductList = mProductList;
+        this.flag = flag;
+        this.mOrderDet=mOrderDet;
     }
 
     @Override
     public int getCount()
     {
-
-        return 2;
+        if (flag == 0) {
+            return list.size();
+        }else if (flag == 1) {
+            return mProductList.size();
+        }
+        return 0;
     }
 
     @Override
@@ -52,26 +61,37 @@ public class OrderDetailItemAdapter2 extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent)
     {
         if (convertView == null) {
-            View v = LayoutInflater.from(mContext).inflate(R.layout.payorder_member_money_record, null);
+            View v = LayoutInflater.from(mContext).inflate(R.layout.payorder_member_money_record1, null);
             new ViewHolder(v);
             convertView = v;
         }
         ViewHolder holder = (ViewHolder) convertView.getTag();
-        holder.tv_time.setText("套餐A");
-        holder.tv_add.setText("1000");
-        holder.tv_count.setText(2000+"");
+        if(flag==0){
+            OrderDetail orderDetail = mOrderDet.get(position);
+            ProductItems project = list.get(position);
+            holder.tv_time.setText(project.getName());
+            holder.tv_add.setText(orderDetail.getFee()+"");
+//            holder.tv_count.setText(orderDetail.getOrderAmount()+"");
+        }else if(flag==1){
+            OrderDetail orderDetail = mOrderDet.get(position);
+            Product product = mProductList.get(position);
+            holder.tv_time.setText(product.getName());
+            holder.tv_add.setText(orderDetail.getFee()+"");
+//            holder.tv_count.setText(orderDetail.getOrderAmout()+"");
+        }
+
 
         return convertView;
     }
 
     static class ViewHolder {
-        TextView tv_time,tv_add,tv_count;
+        TextView tv_time,tv_add;
 
         public ViewHolder(View view)
         {
             tv_time = (TextView) view.findViewById(R.id.tv_time);
             tv_add = (TextView) view.findViewById(R.id.tv_add);
-            tv_count = (TextView) view.findViewById(R.id.tv_count);
+//            tv_count = (TextView) view.findViewById(R.id.tv_count);
             view.setTag(this);
         }
     }
