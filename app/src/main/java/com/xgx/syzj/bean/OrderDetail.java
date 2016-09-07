@@ -21,6 +21,7 @@ public class OrderDetail {
     private String carType;
     private int status;
     private long orderAmout;
+    private String name;
 
     public OrderDetail(String payOrderType, String payType, long orderAmount, long fee, String employee, String carType, int status, long orderAmout) {
         this.payOrderType = payOrderType;
@@ -30,7 +31,15 @@ public class OrderDetail {
         this.employee = employee;
         this.carType = carType;
         this.status = status;
+        this.name=name;
         this.orderAmout = orderAmout;
+    }
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public long getOrderAmout() {

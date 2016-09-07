@@ -116,8 +116,9 @@ public class RevenueFastActivity extends BaseActivity {
                     final Bundle bundle = new Bundle();
                     bundle.putString("finish","已完成");
                     bundle.putSerializable("order", mDataList.get(position));
-                    gotoActivity(RevenuseSellFinishActivity.class, bundle);
-//                    carNumber = mDataList.get(position).getCarNumber();
+                    gotoActivityForResult(RevenuseSellFinishActivity.class, bundle,0x102);
+
+// carNumber = mDataList.get(position).getCarNumber();
 //                    getCarNumber();
                 }
             }
@@ -139,7 +140,7 @@ public class RevenueFastActivity extends BaseActivity {
     private SimpleEventHandler eventHandler = new SimpleEventHandler() {
 
         public void onEvent(List<OrderList> list)
-        {
+        {   mDataList.clear();
             mDataList.addAll(list);
             mAdapter.notifyDataSetChanged();
         }
@@ -651,5 +652,13 @@ public class RevenueFastActivity extends BaseActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = getIntent();
+        String s = intent.getStringExtra("继续开单");
+        if("继续开单".equals(s)){
+            gotoActivity(MainActivity.class);
+        }
 
+    }
 }

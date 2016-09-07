@@ -10,8 +10,8 @@ public class BillGoodsReturnModel extends BaseDataModel{
     public static final byte NOTIFY_BILL_ITEMLIST = 0x01;
     public static final byte REMOVE_BILL_GOOODS = 0x02;
 
-    public static void doRequest(int billDetailsId,int returnReason){
+    public static void doRequest(int productId,int employeeId,int payOrderId,int count,String reason,double sum){
         code = NOTIFY_BILL_ITEMLIST;
-        Api.returnSaleBillGoods(billDetailsId,returnReason,listener);
+        Api.returnSaleBillGoods(productId,employeeId,payOrderId,count,reason,sum,listener);
     }
 }

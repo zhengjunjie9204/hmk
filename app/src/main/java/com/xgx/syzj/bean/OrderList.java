@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 public class OrderList implements Serializable {
     private int id;
-    private int payAmount;
+    private double payAmount;
     private String createTime;
     private String name;
     private String mobile;
@@ -74,12 +74,12 @@ public class OrderList implements Serializable {
         this.id = id;
     }
 
-    public int getPayAmount()
+    public double getPayAmount()
     {
         return payAmount;
     }
 
-    public void setPayAmount(int payAmount)
+    public void setPayAmount(double payAmount)
     {
         this.payAmount = payAmount;
     }

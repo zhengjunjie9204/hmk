@@ -50,9 +50,7 @@ public class AccountModifyPasswordActivity extends BaseActivity {
     }
 
     private void initData() {
-        pwd_old = et_pwd_old.getText().toString();
-        pwd_new = et_pwd_new.getText().toString();
-        user_pwd = et_user_pwd.getText().toString();
+
     }
 
     private void initView() {
@@ -63,6 +61,9 @@ public class AccountModifyPasswordActivity extends BaseActivity {
 
 
     public void onSure(View v){
+        pwd_old = et_pwd_old.getText().toString();
+        pwd_new = et_pwd_new.getText().toString();
+        user_pwd = et_user_pwd.getText().toString();
         if(pwd_new.equals(user_pwd)){
             showLoadingDialog(R.string.loading_update_password);
             new Thread(){
@@ -85,6 +86,9 @@ public class AccountModifyPasswordActivity extends BaseActivity {
             hideLoadingDialog();
             String message = result.getMessage();
             showShortToast(message);
+            if(result.getStatus()==200){
+                    finish();
+            }
         }
         public void onEvent(String error){
             hideLoadingDialog();

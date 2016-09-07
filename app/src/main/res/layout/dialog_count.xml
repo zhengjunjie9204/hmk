@@ -16,27 +16,15 @@
         android:padding="10dp"
         android:text="请输入数量"/>
 
-    <LinearLayout
-        android:id="@+id/ll_count"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_title1"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:padding="20dp">
-
-        <Button
-            android:id="@+id/btn_cut"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@mipmap/goods_out" />
 
         <EditText
             android:id="@+id/et_count"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@mipmap/goods_in_out"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_title1"
+            android:layout_margin="6dp"
+            android:padding="12dp"
+            android:background="@null"
             android:gravity="center"
             android:inputType="number"
             android:maxLength="6"
@@ -45,18 +33,12 @@
             android:textColorHint="@color/edite_color"
             android:textSize="14sp" />
 
-        <Button
-            android:id="@+id/btn_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@mipmap/goods_in" />
-    </LinearLayout>
 
     <View
         android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:layout_below="@id/ll_count"
+        android:layout_below="@id/et_count"
         android:background="@color/un_enable_color" />
 
     <LinearLayout

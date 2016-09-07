@@ -1,12 +1,10 @@
 package com.xgx.syzj.ui;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -15,8 +13,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
@@ -25,7 +21,6 @@ import com.xgx.syzj.R;
 import com.xgx.syzj.adapter.GoodsListAdapter;
 import com.xgx.syzj.app.Constants;
 import com.xgx.syzj.base.BaseActivity;
-import com.xgx.syzj.bean.AddGoods;
 import com.xgx.syzj.bean.Goods;
 import com.xgx.syzj.bean.GoodsCategory;
 import com.xgx.syzj.bean.Result;
@@ -36,7 +31,6 @@ import com.xgx.syzj.utils.CacheUtil;
 import com.xgx.syzj.utils.Utils;
 import com.xgx.syzj.widget.CustomAlertDialog;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,7 +50,6 @@ public class GoodsListActivity extends BaseActivity  {
     public static final String FLAG = "FLAG";
     public static final String FLAG_EXC_JIFEN = "FLAG_EXC_JIFEN";//兑换积分调用
 
-    private SwipeMenuListView lv_goods;
     private LoadMoreListViewContainer loadMoreListViewContainer;
     private GoodsListAdapter mAdapter;
     private ArrayList<Goods> goods = new ArrayList<>();
@@ -65,7 +58,6 @@ public class GoodsListActivity extends BaseActivity  {
     private TextView tv_count;
     private String flag;
     private int deleteIndex = -1;
-    private int storeId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +78,7 @@ public class GoodsListActivity extends BaseActivity  {
         }
         tv_count = (TextView) findViewById(R.id.tv_count);
         et_text.setOnEditorActionListener(onEditorActionListener);
-        lv_goods = (SwipeMenuListView) findViewById(R.id.lv_goods);
+        SwipeMenuListView lv_goods = (SwipeMenuListView) findViewById(R.id.lv_goods);
         SwipeMenuCreator creator = new SwipeMenuCreator() {
 
             @Override
@@ -109,7 +101,6 @@ public class GoodsListActivity extends BaseActivity  {
         EventCenter.bindContainerAndHandler(this, eventHandler);
         EventBus.getDefault().registerSticky(eventHandler);
         mDataModel = new GoodsDataModel(Constants.LOAD_COUNT);
-
         loadMoreListViewContainer = (LoadMoreListViewContainer) findViewById(R.id.load_more_list_view_container);
         loadMoreListViewContainer.useDefaultFooter();
         loadMoreListViewContainer.setShowLoadingForFirstPage(true);
@@ -119,7 +110,7 @@ public class GoodsListActivity extends BaseActivity  {
                 mDataModel.queryNextPage();
             }
         });
-        storeId = CacheUtil.getmInstance().getUser().getStoreId();
+        int storeId = CacheUtil.getmInstance().getUser().getStoreId();
         mDataModel.setStoreId(storeId);
         mAdapter = new GoodsListAdapter(this, this.goods);
         lv_goods.setAdapter(mAdapter);
@@ -134,9 +125,12 @@ public class GoodsListActivity extends BaseActivity  {
         }
     }
 
+    private ArrayList<Goods> mGoodList=new ArrayList<>();
     private SimpleEventHandler eventHandler = new SimpleEventHandler() {
 
         public void onEvent(List<Goods> list) {
+            mGoodList.clear();
+            mGoodList.addAll(list);
             loadMoreListViewContainer.loadMoreFinish(mDataModel.getListPageInfo().isEmpty(), mDataModel.getListPageInfo().hasMore());
             mAdapter.appendList(list);
             mAdapter.notifyDataSetChanged();
@@ -240,9 +234,12 @@ public class GoodsListActivity extends BaseActivity  {
     protected void submit() {
         if(CacheUtil.getmInstance().getUser().getRoles()==1) {
             gotoActivity(GoodsAddActivity.class);
-            finish();
+            defaultFinish();
         }else{
-            gotoActivity(GoodsSelectActivity.class);
+            Intent intent = new Intent(this,GoodsSelectActivity.class);
+            intent.putParcelableArrayListExtra("goodsArray", mGoodList);
+            startActivity(intent);
+            defaultFinish();
         }
     }
 
@@ -275,7 +272,7 @@ public class GoodsListActivity extends BaseActivity  {
             Goods g = data.getParcelableExtra("goods");
             if (g == null) return;
             for (Goods source : goods) {
-                if (source.getCategoryId() == g.getCategoryId()) {
+                if (source.getCategoryId().equals(g.getCategoryId())) {
                     goods.remove(source);
                     break;
                 }
@@ -285,9 +282,13 @@ public class GoodsListActivity extends BaseActivity  {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        defaultFinish();
+    public void onBackPressed() {
+        Intent intent = getIntent();
+        int tas = intent.getIntExtra("增加商品", 1000);
+        if(tas==1000){
+            gotoActivity(MainActivity.class);
+        }else{
+            gotoActivity(MainActivity.class);
+        }
     }
 }

@@ -2,10 +2,9 @@ package com.xgx.syzj.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.KeyEvent;
-import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -34,11 +33,10 @@ import in.srain.cube.views.loadmore.LoadMoreListViewContainer;
  * @author zajo
  * @created 2015年08月19日 17:44
  */
-public class ProjectListActivity extends BaseActivity implements AdapterView.OnItemClickListener{
+public class ProjectListActivity extends BaseActivity{
     private LoadMoreListViewContainer loadMoreListViewContainer;
     private ProjectListAdapter mAdapter;
     private ArrayList<Project> mList = new ArrayList<>();
-    private List<Project> sellLIst=new ArrayList<>();
     private ProjectDataModel mDataModel;
     private EditText et_text;
     private TextView tv_count;
@@ -48,6 +46,7 @@ public class ProjectListActivity extends BaseActivity implements AdapterView.OnI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_project_list);
         setTitleText(getString(R.string.project_list));
+        setSubmit(getString(R.string.app_button_sure));
         et_text = (EditText) findViewById(R.id.et_text);
         tv_count = (TextView) findViewById(R.id.tv_count);
         et_text.setOnEditorActionListener(onEditorActionListener);
@@ -68,7 +67,6 @@ public class ProjectListActivity extends BaseActivity implements AdapterView.OnI
         });
         mAdapter = new ProjectListAdapter(this, mList,null);
         lv_project.setAdapter(mAdapter);
-        lv_project.setOnItemClickListener(this);
         mDataModel.queryFirstPage();
     }
 
@@ -96,7 +94,7 @@ public class ProjectListActivity extends BaseActivity implements AdapterView.OnI
                 mAdapter.notifyDataSetChanged();
                 String text = et_text.getText().toString().trim();
                 mDataModel.setKey(text);
-                 mDataModel.queryNextPage();
+                mDataModel.queryNextPage();
                 Utils.hideSoftInput(ProjectListActivity.this);
             }
             return false;
@@ -104,11 +102,34 @@ public class ProjectListActivity extends BaseActivity implements AdapterView.OnI
     };
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Project project=mList.get(position);
-        Intent intent=new Intent();
-        intent.putExtra("project",project);
-        setResult(RESULT_OK,intent);
-        defaultFinish();
+    protected void submit() {
+        List<Project> list=mAdapter.getSellList();
+        if (list.size()>0){
+            Intent intent=new Intent();
+            Bundle bundle=new Bundle();
+            for (Project project:list){
+                double time;
+                double laborTime = project.getLaborTime();
+                double mylaborTime = project.getMylaborTime();
+                if(mylaborTime>0){
+                    time=mylaborTime;
+                }else{
+                    time=laborTime;
+                }
+                if(project.isFinish()){
+                    project.setPrice(project.getTotalPrice() );
+                }else {
+                    if(project.isChangePrice()){
+                        project.setPrice(project.getPrice());
+                    }else {
+                        project.setPrice((project.getPrice() / project.getLaborTime() )* time );
+                    }
+                }
+            }
+            bundle.putParcelableArrayList("list", (ArrayList<? extends Parcelable>) list);
+            intent.putExtras(bundle);
+            setResult(RESULT_OK,intent);
+            defaultFinish();
+        }
     }
 }

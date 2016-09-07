@@ -3,7 +3,6 @@ package com.xgx.syzj.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
@@ -49,9 +48,9 @@ public class RevenueResultActivity extends BaseActivity implements View.OnClickL
 
     @Override
     protected void submit() {
-        super.submit();
-        gotoActivity(RevenueFastActivity.class);
-        AppManager.getAppManager().finishActivityNotMain();
+        Intent intent = new Intent(this, RevenueFastActivity.class);
+        intent.putExtra("继续开单", "继续开单");
+        startActivity(intent);
     }
 
     @Override
@@ -59,9 +58,6 @@ public class RevenueResultActivity extends BaseActivity implements View.OnClickL
         Intent intent1;
         switch (v.getId()){
             case R.id.btn_continue:
-//                gotoActivity(RevenueActivity.class);
-////                AppManager.getAppManager().returnToActivity(RevenueActivity.class);
-////                ((RevenueActivity)(AppManager.getAppManager().currentActivity())).clean();
                  intent1 = PrintUtils.bindIntent(getPrinterQueue());
                 if (intent1 != null)
                 {

@@ -2,10 +2,10 @@ package com.xgx.syzj.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -35,7 +35,7 @@ import in.srain.cube.views.loadmore.LoadMoreListViewContainer;
  * @author ding
  * @create 2016/7/31 17:15
  */
-public class RevenueGoodsListActivity extends BaseActivity {
+public class RevenueGoodsListActivity extends BaseActivity{
     private LoadMoreListViewContainer loadMoreListViewContainer;
     private RevenueGoodListAdapter mAdapter;
     private ArrayList<Goods> mList = new ArrayList<>();
@@ -45,18 +45,17 @@ public class RevenueGoodsListActivity extends BaseActivity {
     private ListView mListView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_revenue_goods_list);
+        setSubmit("确定");
         initView();
         initListener();
 
         mDataModel.getProductsList();
     }
 
-    private void initView()
-    {
+    private void initView() {
         setTitleText(getString(R.string.goods_list));
         et_text = (EditText) findViewById(R.id.et_text);
         tv_count = (TextView) findViewById(R.id.tv_count);
@@ -66,8 +65,7 @@ public class RevenueGoodsListActivity extends BaseActivity {
         mListView.setAdapter(mAdapter);
     }
 
-    private void initListener()
-    {
+    private void initListener() {
         EventCenter.bindContainerAndHandler(this, eventHandler);
         EventBus.getDefault().registerSticky(eventHandler);
         mDataModel = new GoodsDataModel(Constants.LOAD_COUNT);
@@ -77,24 +75,8 @@ public class RevenueGoodsListActivity extends BaseActivity {
         loadMoreListViewContainer.setShowLoadingForFirstPage(true);
         loadMoreListViewContainer.setLoadMoreHandler(new LoadMoreHandler() {
             @Override
-            public void onLoadMore(LoadMoreContainer loadMoreContainer)
-            {
+            public void onLoadMore(LoadMoreContainer loadMoreContainer) {
                 mDataModel.queryNextPage();
-            }
-        });
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-            {
-                Goods goods = mList.get(position);
-                if(goods.getCount() > 0){
-                    Intent intent = new Intent();
-                    intent.putExtra("good", goods);
-                    setResult(RESULT_OK, intent);
-                    defaultFinish();
-                }else{
-                    showShortToast("请输入购买数量");
-                }
             }
         });
     }
@@ -102,15 +84,13 @@ public class RevenueGoodsListActivity extends BaseActivity {
 
     private SimpleEventHandler eventHandler = new SimpleEventHandler() {
 
-        public void onEvent(List<Goods> list)
-        {
+        public void onEvent(List<Goods> list) {
             loadMoreListViewContainer.loadMoreFinish(mDataModel.getListPageInfo().isEmpty(), mDataModel.getListPageInfo().hasMore());
             mList.addAll(list);
             mAdapter.notifyDataSetChanged();
         }
 
-        public void onEvent(String error)
-        {
+        public void onEvent(String error) {
             showShortToast(error);
             loadMoreListViewContainer.loadMoreError(0, error);
         }
@@ -119,8 +99,7 @@ public class RevenueGoodsListActivity extends BaseActivity {
     private TextView.OnEditorActionListener onEditorActionListener = new TextView.OnEditorActionListener() {
 
         @Override
-        public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
-        {
+        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 mList.clear();
                 mAdapter.notifyDataSetChanged();
@@ -132,4 +111,19 @@ public class RevenueGoodsListActivity extends BaseActivity {
             return false;
         }
     };
+
+    @Override
+    public void onSubmit(View view) {
+        super.onSubmit(view);
+        List<Goods> list=mAdapter.getSellList();
+        if (list.size() > 0) {
+            Intent intent = new Intent();
+            intent.putParcelableArrayListExtra("goodsList", (ArrayList<? extends Parcelable>) list);
+            setResult(RESULT_OK, intent);
+            defaultFinish();
+        } else {
+            showShortToast("请选择商品");
+        }
+
+    }
 }

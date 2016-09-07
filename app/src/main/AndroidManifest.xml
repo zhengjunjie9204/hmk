@@ -208,10 +208,6 @@
         <activity
             android:name=".ui.EmployeeDetalInfoActivity"
             android:screenOrientation="portrait" />
-        <!-- 收银销售 -->
-        <activity
-            android:name=".ui.RevenueActivity"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.RevenueFastActivity"
             android:screenOrientation="portrait" />
@@ -226,9 +222,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.RevenueMemberActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.RevenueGoodsActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.RevenueSellActivity"

@@ -8,10 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.xgx.syzj.R;
+import com.xgx.syzj.bean.Combos;
 import com.xgx.syzj.bean.OrderDetail;
-import com.xgx.syzj.bean.Product;
 import com.xgx.syzj.bean.ProductItems;
-import com.xgx.syzj.widget.CustomAlertDialog;
 
 import java.util.List;
 
@@ -21,15 +20,15 @@ import java.util.List;
 public class OrderDetailItemAdapter2 extends BaseAdapter {
     private Context mContext;
     private List<ProductItems> list;
-    private List<Product> mProductList;
+    private List<Combos> mCombos;
     private List<OrderDetail> mOrderDet;
     private int flag;//0项目信息 1商品信息
 
-    public OrderDetailItemAdapter2(Context mContext, List<ProductItems> list, List<Product> mProductList, int flag, List<OrderDetail> mOrderDet)
+    public OrderDetailItemAdapter2(Context mContext, List<ProductItems> list, List<Combos> mCombos, int flag, List<OrderDetail> mOrderDet)
     {
         this.mContext = mContext;
         this.list = list;
-        this.mProductList = mProductList;
+        this.mCombos = mCombos;
         this.flag = flag;
         this.mOrderDet=mOrderDet;
     }
@@ -38,9 +37,13 @@ public class OrderDetailItemAdapter2 extends BaseAdapter {
     public int getCount()
     {
         if (flag == 0) {
-            return list.size();
-        }else if (flag == 1) {
-            return mProductList.size();
+            if(list.size()>0){
+                return list.size();
+            }else if(mCombos.size()>0){
+                return mCombos.size();
+            } else{
+                return mOrderDet.size();
+            }
         }
         return 0;
     }
@@ -65,19 +68,27 @@ public class OrderDetailItemAdapter2 extends BaseAdapter {
             new ViewHolder(v);
             convertView = v;
         }
+        OrderDetail orderDetail = mOrderDet.get(0);
         ViewHolder holder = (ViewHolder) convertView.getTag();
         if(flag==0){
-            OrderDetail orderDetail = mOrderDet.get(position);
-            ProductItems project = list.get(position);
-            holder.tv_time.setText(project.getName());
-            holder.tv_add.setText(orderDetail.getFee()+"");
-//            holder.tv_count.setText(orderDetail.getOrderAmount()+"");
-        }else if(flag==1){
-            OrderDetail orderDetail = mOrderDet.get(position);
-            Product product = mProductList.get(position);
-            holder.tv_time.setText(product.getName());
-            holder.tv_add.setText(orderDetail.getFee()+"");
-//            holder.tv_count.setText(orderDetail.getOrderAmout()+"");
+            if(list.size()>0) {
+                ProductItems project = list.get(0);
+                String payOrderType = orderDetail.getPayOrderType();
+                if ("1".equals(payOrderType)) {
+                    holder.tv_time.setText("储值充值");
+                } else {
+                    holder.tv_time.setText(project.getName()+"X"+project.getLaborTime());
+                }
+                holder.tv_add.setText(orderDetail.getFee() + "");
+            }else if(mCombos.size()>0){
+
+                Combos combos = mCombos.get(0);
+                holder.tv_time.setText(combos.getName());
+                holder.tv_add.setText(orderDetail.getFee() + "");
+            }else{
+                holder.tv_time.setText("储值充值");
+                holder.tv_add.setText(orderDetail.getFee() + "");
+            }
         }
 
 

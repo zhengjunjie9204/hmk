@@ -473,42 +473,14 @@ public class CustomAlertDialog {
         dialog.show();
     }
 
-    public static void editTextDialog(final Context context,String count,String title, final IAlertDialogListener listener)
+    public static void editTextDialog(final Context context,String title, final IAlertDialogListener listener)
     {
         final Dialog dialog = new Dialog(context, R.style.MyDialog);
         dialog.setContentView(R.layout.dialog_count);
         final EditText et = (EditText) dialog.findViewById(R.id.et_count);
         TextView mTvTitle = (TextView) dialog.findViewById(R.id.tv_title1);
         mTvTitle.setText(title);
-        et.setHint(count + "");
         Utils.showSoftInput((Activity) context);
-        dialog.findViewById(R.id.btn_cut).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                int count = 0;
-                String strNum = et.getText().toString().trim();
-                if (!TextUtils.isEmpty(strNum)) {
-                    count = Integer.parseInt(strNum);
-                }
-                if (count > 0) {
-                    et.setText(count - 1 + "");
-                }
-            }
-        });
-
-        dialog.findViewById(R.id.btn_add).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                String val = et.getText().toString().trim();
-                int count = 0;
-                if(!TextUtils.isEmpty(val)){
-                    count = Integer.parseInt(val);
-                }
-                et.setText(count + 1 + "");
-            }
-        });
 
         dialog.findViewById(R.id.btn_left).setOnClickListener(new View.OnClickListener() {
             @Override

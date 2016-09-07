@@ -1,6 +1,7 @@
 package com.xgx.syzj.ui;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,7 +58,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class BossActivity extends FragmentActivity implements IBossMainMenuListItemClick {
+public class BossActivity extends FragmentActivity implements IBossMainMenuListItemClick{
 
     public static final int RESULT_SHORTCUT_MENU = 1000;
     private Button btn_store;
@@ -321,6 +323,7 @@ public class BossActivity extends FragmentActivity implements IBossMainMenuListI
         mLocationClient.setLocOption(option);
         mLocationClient.start();
     }
+
 
 
 

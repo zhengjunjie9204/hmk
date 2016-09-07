@@ -98,7 +98,7 @@ public class Url {
     public static final String CART_DELETE = HOST_URL + "cart/delete";//删除购物车
 
     public static final String STORE_UPDATE = HOST_URL + "store/update";//更新店铺信息
-    public static final String BILL_SALES_RETURN = HOST_URL + "bill/salesreturn";//退货
+    public static final String BILL_SALES_RETURN = HOST_URL + "qcmr/payOrder_returnProduct.action";//退货
 
     //报表分析
     public static final String ANALY_SALE_TOTAL = HOST_URL + "analysis/salestotal";//销售合计
@@ -147,7 +147,8 @@ public class Url {
     public static final String EDIT_ORDER = HOST_URL + "qcmr/memberStore_editOrder.action";//编辑已完成的订单(7.11)
 
     public static final String MONEY_REPORT = HOST_URL + "qcmr/statistics_moneyReport.action";//3.8.1.	资金流水
-    public static final String SALE_REPORT = HOST_URL + "qcmr/statistics_saleReport.action";//3.8.2.	销售分析
+    public static final String SALE_REPORT = HOST_URL + "qcmr/statistics_saleReport.action";//3.8.2.	销售分析(小时)
+    public static final String SALE_REPORT_BY_DAY = HOST_URL + "qcmr/statistics_saleReportByDay.action";//3.8.3.	销售分析2(天数)
     public static final String FIND_ALL_STORE = HOST_URL + "qcmr/store_findAllStore.action";//查询所有门店(8.3)
     //版本更新
     public static final String VERSION_UPDATE="http://sdkd168.com/comeout/upload/getapkinfo";

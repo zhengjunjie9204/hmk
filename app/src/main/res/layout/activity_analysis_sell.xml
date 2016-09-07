@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:atb="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/appBG"
-    android:orientation="vertical">
+              xmlns:atb="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/appBG"
+              android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,35 +16,35 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            atb:atbText="今天" />
+            atb:atbText="今天"/>
 
         <com.xgx.syzj.widget.AnalysisTabBar
             android:id="@+id/atb_b"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            atb:atbText="7天" />
+            atb:atbText="7天"/>
 
         <com.xgx.syzj.widget.AnalysisTabBar
             android:id="@+id/atb_c"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            atb:atbText="15天" />
+            atb:atbText="15天"/>
 
         <com.xgx.syzj.widget.AnalysisTabBar
             android:id="@+id/atb_d"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            atb:atbText="30天" />
+            atb:atbText="30天"/>
 
         <com.xgx.syzj.widget.AnalysisTabBar
             android:id="@+id/atb_e"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            atb:atbText="其他" />
+            atb:atbText="其他"/>
     </LinearLayout>
 
     <ScrollView
@@ -57,6 +57,55 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+
+            <LinearLayout
+                android:id="@+id/linear_time"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:visibility="gone"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                >
+
+                <Button
+                    android:id="@+id/btn_stime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/edittext_bg"
+                    android:gravity="center"
+                    android:hint="开始日期"
+                    android:onClick="onTime"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="至"/>
+
+                <Button
+                    android:id="@+id/btn_etime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/edittext_bg"
+                    android:gravity="center"
+                    android:hint="结束日期"
+                    android:onClick="onTime"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_selector_bg"
+                    android:onClick="onSearch"
+                    android:padding="5dp"
+                    android:text="查询"/>
+            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -67,15 +116,16 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
                     android:background="@color/white"
                     android:gravity="center_horizontal"
-                    android:layout_margin="1dp"
                     android:padding="10dp"
                     android:text="今日销售概况"
                     android:textColor="@color/title_6_color"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"/>
 
-                <include layout="@layout/layout_line"
+                <include
+                    layout="@layout/layout_line"
                     android:layout_width="match_parent"
                     android:layout_height="0.3dp"/>
 
@@ -83,25 +133,25 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="1dp"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
                     android:background="@drawable/custom_text_item_bg"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
                     >
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/title_6_color"
                         android:paddingLeft="20dp"
-                        android:text="销售总额:"/>
+                        android:text="销售总额:"
+                        android:textColor="@color/title_6_color"/>
 
                     <TextView
                         android:id="@+id/tv_all_money"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textColor="@color/red"
                         android:text="￥0.00"
+                        android:textColor="@color/red"
                         android:textSize="15sp"/>
 
                     <TextView
@@ -109,20 +159,21 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingRight="10dp"
-                        android:textColor="@color/gray"
-                        android:text="0笔"/>
+                        android:text="0笔"
+                        android:textColor="@color/gray"/>
 
                 </LinearLayout>
 
-                <include layout="@layout/layout_line"
+                <include
+                    layout="@layout/layout_line"
                     android:layout_width="match_parent"
                     android:layout_height="0.3dp"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="15dp"
-                    android:paddingBottom="15dp">
+                    android:paddingBottom="15dp"
+                    android:paddingTop="15dp">
 
                     <ImageView
                         android:id="@+id/iv_project"
@@ -136,27 +187,27 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:singleLine="true"
                         android:layout_toRightOf="@+id/iv_project"
-                        android:textColor="@color/title_3_color"
-                        android:text="￥0.00"/>
+                        android:singleLine="true"
+                        android:text="￥0.00"
+                        android:textColor="@color/title_3_color"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_project_money"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="5dp"
                         android:layout_toRightOf="@+id/iv_project"
-                        android:layout_below="@+id/tv_project_money"
-                        android:textColor="@color/title_3_color"
                         android:text="项目销售"
+                        android:textColor="@color/title_3_color"
                         />
 
                     <View
                         android:id="@+id/line1"
                         android:layout_width="1dp"
                         android:layout_height="30dp"
-                        android:layout_centerInParent="true" />
+                        android:layout_centerInParent="true"/>
 
                     <ImageView
                         android:id="@+id/iv_goods"
@@ -172,32 +223,33 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@+id/iv_goods"
-                        android:textColor="@color/title_3_color"
                         android:singleLine="true"
-                        android:text="￥0.00"/>
+                        android:text="￥0.00"
+                        android:textColor="@color/title_3_color"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_goods_money"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="5dp"
                         android:layout_toRightOf="@+id/iv_goods"
-                        android:layout_below="@+id/tv_goods_money"
-                        android:textColor="@color/title_3_color"
                         android:text="商品销售"
+                        android:textColor="@color/title_3_color"
                         />
 
                 </RelativeLayout>
 
-                <include layout="@layout/layout_line"
+                <include
+                    layout="@layout/layout_line"
                     android:layout_width="match_parent"
                     android:layout_height="0.3dp"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="15dp"
-                    android:paddingBottom="15dp">
+                    android:paddingBottom="15dp"
+                    android:paddingTop="15dp">
 
                     <ImageView
                         android:id="@+id/iv_card"
@@ -211,27 +263,27 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:singleLine="true"
                         android:layout_toRightOf="@+id/iv_card"
-                        android:textColor="@color/title_3_color"
-                        android:text="￥0.00"/>
+                        android:singleLine="true"
+                        android:text="￥0.00"
+                        android:textColor="@color/title_3_color"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_card_money"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="5dp"
                         android:layout_toRightOf="@+id/iv_card"
-                        android:layout_below="@+id/tv_card_money"
-                        android:textColor="@color/title_3_color"
                         android:text="储值卡销售"
+                        android:textColor="@color/title_3_color"
                         />
 
                     <View
                         android:id="@+id/line2"
                         android:layout_width="1dp"
                         android:layout_height="30dp"
-                        android:layout_centerInParent="true" />
+                        android:layout_centerInParent="true"/>
 
                     <ImageView
                         android:id="@+id/iv_count"
@@ -247,19 +299,19 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@+id/iv_count"
-                        android:textColor="@color/title_3_color"
                         android:singleLine="true"
-                        android:text="￥0.00"/>
+                        android:text="￥0.00"
+                        android:textColor="@color/title_3_color"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_count_money"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="5dp"
                         android:layout_toRightOf="@+id/iv_count"
-                        android:layout_below="@+id/tv_count_money"
-                        android:textColor="@color/title_3_color"
                         android:text="计次套餐销售"
+                        android:textColor="@color/title_3_color"
                         />
 
                 </RelativeLayout>
@@ -267,13 +319,12 @@
             </LinearLayout>
 
 
-
             <com.github.mikephil.charting.charts.HorizontalBarChart
                 android:id="@+id/chart"
                 android:layout_width="match_parent"
                 android:layout_height="500dp"
                 android:layout_marginTop="10dp"
-                android:background="@color/transparent" />
+                android:background="@color/transparent"/>
 
         </LinearLayout>
 

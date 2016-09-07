@@ -41,7 +41,7 @@ public class AccountStaffListActivity extends BaseActivity implements AdapterVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_staff_list);
         setTitleText("查看店员");
-        setSubmit(getString(R.string.app_button_new));
+        final int storeId = getIntent().getIntExtra("storeId1",0);
         final User user = CacheUtil.getmInstance().getUser();
         EventCenter.bindContainerAndHandler(this, eventHandler);
         EventBus.getDefault().registerSticky(eventHandler);
@@ -49,7 +49,7 @@ public class AccountStaffListActivity extends BaseActivity implements AdapterVie
             @Override
             public void run() {
                 super.run();
-                Api.findStoreEmployee((long)user.getStoreId(),listener);
+                Api.findStoreEmployee((long)storeId,listener);
             }
         }.start();
 
@@ -61,14 +61,6 @@ public class AccountStaffListActivity extends BaseActivity implements AdapterVie
         lv_data.setOnItemClickListener(this);
         mAdapter = new StaffUserAdapter(this, mList);
         lv_data.setAdapter(mAdapter);
-    }
-
-    @Override
-    public void onSubmit(View view) {
-        super.onSubmit(view);
-        gotoActivity(AccountNewEmployeeActivity.class);
-        finish();
-
     }
 
     @Override

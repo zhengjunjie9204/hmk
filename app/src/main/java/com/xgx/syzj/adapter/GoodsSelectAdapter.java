@@ -9,7 +9,6 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.xgx.syzj.R;
@@ -31,34 +30,29 @@ public class GoodsSelectAdapter extends BaseAdapter {
     private Map<Integer, Goods> selected = new HashMap<>();//选中的List集合
     private IGoodsItemCheck onGoodsitemCheck;
 
-    public GoodsSelectAdapter(Context context, List<Goods> list, IGoodsItemCheck onGoodsitemCheck)
-    {
+    public GoodsSelectAdapter(Context context, List<Goods> list, IGoodsItemCheck onGoodsitemCheck) {
         this.mContext = context;
         this.mList = list;
         this.onGoodsitemCheck = onGoodsitemCheck;
     }
 
     @Override
-    public int getCount()
-    {
+    public int getCount() {
         return mList.size();
     }
 
     @Override
-    public Object getItem(int position)
-    {
+    public Object getItem(int position) {
         return mList.get(position);
     }
 
     @Override
-    public long getItemId(int position)
-    {
+    public long getItemId(int position) {
         return position;
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent)
-    {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         final Goods goods = mList.get(position);
         HoldClass hold;
         if (convertView == null) {
@@ -66,7 +60,6 @@ public class GoodsSelectAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_goods_list, null);
             hold.iv_goods = (ImageView) convertView.findViewById(R.id.iv_good);
             hold.cb = (CheckBox) convertView.findViewById(R.id.cb);
-            hold.rl_item = (RelativeLayout) convertView.findViewById(R.id.rl_item);
             hold.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
             hold.tv_count = (TextView) convertView.findViewById(R.id.tv_count);
             hold.tv_money = (TextView) convertView.findViewById(R.id.tv_money);
@@ -92,15 +85,12 @@ public class GoodsSelectAdapter extends BaseAdapter {
         private ImageView iv_goods;
         private CheckBox cb;
         private TextView tv_name, tv_count, tv_money;
-        private RelativeLayout rl_item;
-        private TextView item_cancel;
     }
 
     private CompoundButton.OnCheckedChangeListener cbListener = new CompoundButton.OnCheckedChangeListener() {
 
         @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-        {
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             int index = (Integer) buttonView.getTag();
             Goods g = mList.get(index);
             if (!isChecked) {
@@ -115,25 +105,15 @@ public class GoodsSelectAdapter extends BaseAdapter {
         }
     };
 
-    public Map<Integer, Goods> getSelected()
-    {
+    public Map<Integer, Goods> getSelected() {
         return selected;
-    }
-
-
-    public void appendList(List<Goods> list)
-    {
-        if (list == null || list.size() == 0) return;
-        mList.addAll(list);
-        notifyDataSetChanged();
     }
 
     public interface IGoodsItemCheck {
         void onItemCheck(Map<Integer, Goods> list, int position);
     }
 
-    private String getKey(Goods goods)
-    {
+    private String getKey(Goods goods) {
         return goods.getProductName() + goods.getProductId();
     }
 

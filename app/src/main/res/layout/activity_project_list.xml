@@ -52,7 +52,7 @@
             android:background="@color/white"
             android:cacheColorHint="#00000000"
             android:listSelector="@drawable/list_item_selector_bg"
-            tools:listitem="@layout/item_revenue_goods_sell"/>
+            tools:listitem="@layout/item_revenue_project"/>
 
     </in.srain.cube.views.loadmore.LoadMoreListViewContainer>
 </LinearLayout>

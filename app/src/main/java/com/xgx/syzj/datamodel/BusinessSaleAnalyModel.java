@@ -24,6 +24,7 @@ import de.greenrobot.event.EventBus;
 public class BusinessSaleAnalyModel extends BaseDataModel{
     public static final byte MONEY_REPORT = 0x10;
     public static final byte SALE_REPORT = 0x11;
+    public static final byte SALE_REPORT_BY_DAY = 0x12;
 
     public static void getMoneyReport(int storeId,String startTime,String endTime){
         code = MONEY_REPORT;
@@ -33,6 +34,10 @@ public class BusinessSaleAnalyModel extends BaseDataModel{
     public static void getSaleReport(int storeId,String startTime,String endTime){
         code = SALE_REPORT;
         Api.getSaleReport(storeId,startTime,endTime, listener);
+    }
+    public static void getSaleReportByDay(int storeId,String startTime,String endTime){
+        code = SALE_REPORT_BY_DAY;
+        Api.getSaleReportByDay(storeId,startTime,endTime, listener);
     }
 
     //报表分析：销售分析 毛利总额

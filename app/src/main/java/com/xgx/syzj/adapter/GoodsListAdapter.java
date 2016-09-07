@@ -2,7 +2,6 @@ package com.xgx.syzj.adapter;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +11,6 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.xgx.syzj.R;
-import com.xgx.syzj.app.Api;
-import com.xgx.syzj.bean.AddGoods;
 import com.xgx.syzj.bean.Goods;
 
 import java.util.ArrayList;
@@ -30,7 +27,6 @@ public class GoodsListAdapter extends BaseAdapter {
     private Context mContext;
     private List<Goods> mList = new ArrayList<>();
     private HoldClass hold;
-    private List<AddGoods> mAddlist=new ArrayList<>();
 
     public GoodsListAdapter(Context context, List<Goods> list) {
         this.mContext = context;
@@ -78,7 +74,6 @@ public class GoodsListAdapter extends BaseAdapter {
         for (Goods.ImagesBean image : images) {
             if(!TextUtils.isEmpty(image.getImage())){
                 String pic1 = image.getImage();
-                Log.e("zjj",pic1);
                 Picasso.with(mContext).load(pic1).fit().into(hold.iv_goods);
             }
         }

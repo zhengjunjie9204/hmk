@@ -1,18 +1,15 @@
 package com.xgx.syzj.datamodel;
 
-import android.util.Log;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.xgx.syzj.app.Api;
-import com.xgx.syzj.app.Constants;
 import com.xgx.syzj.base.BaseRequest;
 import com.xgx.syzj.bean.Goods;
 import com.xgx.syzj.bean.Result;
-import com.xgx.syzj.bean.User;
 import com.xgx.syzj.event.EventCenter;
 import com.xgx.syzj.event.GoodsListDataEvent;
 import com.xgx.syzj.ui.SYZJApplication;
+import com.xgx.syzj.utils.CacheUtil;
 import com.xgx.syzj.utils.FastJsonUtil;
 import com.xgx.syzj.widget.list.ListPageInfo;
 import com.xgx.syzj.widget.list.PagedListDataModel;
@@ -27,10 +24,12 @@ public class GoodAddModel extends PagedListDataModel<Goods> {
     private String key;
     private String brand;
     private static byte code;
+    private int storeId;
     public static final byte ADDPRODUCT = 0x10;
     private GoodsListDataEvent data = new GoodsListDataEvent();
     public GoodAddModel(int num) {
         mListPageInfo = new ListPageInfo<>(num);
+         storeId = CacheUtil.getmInstance().getUser().getStoreId();
     }
 
     public void setKey(String key) {
@@ -47,11 +46,7 @@ public class GoodAddModel extends PagedListDataModel<Goods> {
     }
     @Override
     protected void doQueryData() {
-
-
-    }
-    public static void addProductByStore(long storeId){
-        Api.addProductByStore(storeId, new BaseRequest.OnRequestListener() {
+        Api.addProductByStore(storeId,mListPageInfo.getPage(), mListPageInfo.getNumPerPage(), new BaseRequest.OnRequestListener() {
             @Override
             public void onSuccess(Result result) {
                 JSONObject object= JSON.parseObject(result.getResult());//stockRecordHistory
@@ -61,7 +56,7 @@ public class GoodAddModel extends PagedListDataModel<Goods> {
                 }else {
                     list=new ArrayList<>();
                 }
-
+                setRequestResult(data.dataList, data.hasMore);
                 EventCenter.getInstance().post(list);
             }
 
@@ -71,7 +66,9 @@ public class GoodAddModel extends PagedListDataModel<Goods> {
 
             }
         });
+
     }
+
     private static BaseRequest.OnRequestListener listener = new BaseRequest.OnRequestListener() {
 
         @Override
@@ -86,11 +83,11 @@ public class GoodAddModel extends PagedListDataModel<Goods> {
             EventCenter.getInstance().post(message);
         }
     };
-    public static void addProduct(List<Goods> goods){
-        code=ADDPRODUCT;
-        int storeid = SYZJApplication.getInstance().getSpUtil().getInt("SP_STORE_ID");
-        for (Goods g : goods) {
-            Api.addProductToStore(storeid,g.getProductId(),listener);
-        }
-    }
+//    public static void addProduct(List<Goods> goods){
+//        code=ADDPRODUCT;
+//        int storeid = SYZJApplication.getInstance().getSpUtil().getInt("SP_STORE_ID");
+//        for (Goods g : goods) {
+//            Api.addProductToStore(storeid,g.getProductId(),listener);
+//        }
+//    }
 }

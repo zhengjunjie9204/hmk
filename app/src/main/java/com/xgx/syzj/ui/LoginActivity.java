@@ -21,7 +21,6 @@ import com.xgx.syzj.datamodel.UserDataModel;
 import com.xgx.syzj.event.EventCenter;
 import com.xgx.syzj.event.SimpleEventHandler;
 import com.xgx.syzj.utils.CacheUtil;
-import com.xgx.syzj.utils.FastJsonUtil;
 
 /**
  * 登录

@@ -103,7 +103,7 @@ public class GoodsrechargeAdapter extends BaseAdapter {
         public void onClick(View v)
         {
             if(isAlert){
-                CustomAlertDialog.editTextDialog(mContext, String.valueOf(item.getLaborTime()),"请输入充值次数", new MyIAlertDialogListener(item));
+                CustomAlertDialog.editTextDialog(mContext, "请输入充值次数", new MyIAlertDialogListener(item));
             }else{
                 if (selectMap.containsKey(item.getId())) {
                     selectMap.clear();

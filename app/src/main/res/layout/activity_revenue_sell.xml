@@ -87,7 +87,7 @@
                 android:background="@color/white"
                 android:divider="@null"
                 android:listSelector="@drawable/button_selector_bg"
-                tools:listitem="@layout/item_revenue_goods_sell"/>
+                tools:listitem="@layout/item_revenue_project"/>
 
             <include layout="@layout/layout_line"
                 android:layout_width="match_parent"
@@ -246,7 +246,7 @@
                 android:background="@color/white"
                 android:divider="@null"
                 android:listSelector="@drawable/button_selector_bg"
-                tools:listitem="@layout/item_revenue_goods_sell"/>
+                tools:listitem="@layout/item_revenue_project"/>
 
         </LinearLayout>
     </ScrollView>

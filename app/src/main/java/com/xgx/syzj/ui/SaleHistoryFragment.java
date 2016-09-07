@@ -49,7 +49,7 @@ import in.srain.cube.views.loadmore.LoadMoreListViewContainer;
  * @created 2015年09月24日 14:22
  */
 @SuppressLint("ValidFragment")
-public class SaleHistoryFragment extends BaseFragment {
+public class SaleHistoryFragment extends BaseFragment implements FragmentBackListener{
     public static final String SALE_MEMBER = "MEMBER";
     public static final String SALE_BILL_ITEM = "BIllITEMDETAIL";
     private LoadMoreListViewContainer loadMoreListViewContainer;
@@ -67,12 +67,21 @@ public class SaleHistoryFragment extends BaseFragment {
     public SaleHistoryFragment(int type){
         this.type=type;
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
-
         super.onCreate(savedInstanceState);
+
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if(activity instanceof HistoryActivity){
+            ((HistoryActivity)activity).setBackListener(this);
+            ((HistoryActivity)activity).setInterception(true);
+
+        }
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -97,6 +106,13 @@ public class SaleHistoryFragment extends BaseFragment {
         loadMoreListViewContainer = (LoadMoreListViewContainer) view.findViewById(R.id.load_more_list_view_container);
         loadMoreListViewContainer.useDefaultFooter();
         loadMoreListViewContainer.setShowLoadingForFirstPage(true);
+        loadMoreListViewContainer.setLoadMoreHandler(new LoadMoreHandler() {
+            @Override
+            public void onLoadMore(LoadMoreContainer loadMoreContainer) {
+                mDataModel.queryNextPage();
+            }
+        });
+
 //        SwipeMenuCreator creator = new SwipeMenuCreator() {
 //            @Override
 //            public void create(SwipeMenu menu)
@@ -155,20 +171,15 @@ public class SaleHistoryFragment extends BaseFragment {
                 return true;
             }
         });
-        loadMoreListViewContainer.setLoadMoreHandler(new LoadMoreHandler() {
-            @Override
-            public void onLoadMore(LoadMoreContainer loadMoreContainer) {
-                mDataModel.queryNextPage();
-            }
-        });
+
     }
 
     private SimpleEventHandler eventHandler = new SimpleEventHandler() {
 
         public void onEvent(List<OrderList> List)
         {
-                 mDataList.clear();
-                  mDataList2.clear();
+            loadMoreListViewContainer.loadMoreFinish(mDataModel.getListPageInfo().prepareForNextPage(), mDataModel.getListPageInfo().hasMore());
+
             for (OrderList  list: List) {
                  orderType = list.getOrderType();
                 if("1".equals(orderType)){
@@ -232,5 +243,11 @@ public class SaleHistoryFragment extends BaseFragment {
 
     public static void getData(String maxTime,String minTime,String minMoney,String maxMoney){
         new SaleListRecordModel(40).payOrder("",minMoney,maxMoney,minTime,maxTime);
+    }
+
+    @Override
+    public void onBackForward() {
+        Intent intent = new Intent(getActivity(),MainActivity.class);
+        startActivity(intent);
     }
 }

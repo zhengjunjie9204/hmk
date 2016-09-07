@@ -2,7 +2,6 @@ package com.xgx.syzj.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -10,7 +9,6 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.xgx.syzj.R;
-import com.xgx.syzj.app.Api;
 import com.xgx.syzj.app.Constants;
 import com.xgx.syzj.base.BaseActivity;
 import com.xgx.syzj.bean.Goods;
@@ -87,8 +85,8 @@ public class GoodsDetailActivity extends BaseActivity {
         tv_guige.setText(goods.getSpecification());
         tv_money.setText("￥" + goods.getInputPrice());
         tv_sell.setText("￥" + goods.getSellingPrice());
-        tv_vip.setText(goods.getVip_price() + "");
-        tv_unit.setText(goods.getSupplier());
+        tv_vip.setText(goods.getVipPrice() + "");
+        tv_unit.setText(goods.getUnit());
 
         tv_brand.setText(goods.getBrand());
         iv_one.setTag(1);
@@ -98,8 +96,6 @@ public class GoodsDetailActivity extends BaseActivity {
                 String image1 = image.getImage();
                 Picasso.with(this).load(image1).fit().into(iv_one);
             }
-
-
         }
     }
 
@@ -119,7 +115,6 @@ public class GoodsDetailActivity extends BaseActivity {
         }
 
         public void onEvent(Goods g){
-            //修改商品详情  出库入库
             goods = g;
             initData();
         }
@@ -153,16 +148,6 @@ public class GoodsDetailActivity extends BaseActivity {
         bundle.putParcelable("goods", goods);
         gotoActivity(GoodsModifyActivity.class, bundle);
     }
-
-    //    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (resultCode != RESULT_OK) return;
-//        if (requestCode == 2000){
-//            goods = data.getParcelableExtra("goods");
-//            initData();
-//        }
-//    }
 
     @Override
     public void onBackPressed() {

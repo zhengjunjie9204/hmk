@@ -129,7 +129,7 @@ public class SaleDetailAdapter extends BaseAdapter {
                 case 0x01:
                     String getStr =(String) msg.obj;
                     if(!TextUtils.isEmpty(getStr)){
-                        BillGoodsReturnModel.doRequest(returnId,1);
+//                        BillGoodsReturnModel.doRequest(returnId,1);
                         mList.remove(mList.get(removeItemId));
                         Map<String,Integer> map = new HashMap<String,Integer>();
                         map.put("returnId",returnId);

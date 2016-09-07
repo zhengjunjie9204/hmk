@@ -9,6 +9,7 @@ import com.xgx.syzj.adapter.OrderDetailItemAdapter;
 import com.xgx.syzj.adapter.OrderDetailItemAdapter2;
 import com.xgx.syzj.app.Constants;
 import com.xgx.syzj.base.BaseActivity;
+import com.xgx.syzj.bean.Combos;
 import com.xgx.syzj.bean.OrderDetail;
 import com.xgx.syzj.bean.OrderList;
 import com.xgx.syzj.bean.PayTimes;
@@ -57,6 +58,7 @@ public class SaleDetailActivity extends BaseActivity {
     private Map map;
     private OrderDetailItemAdapter2 mItemAdapter2;
     private OrderDetailItemAdapter2 mProAdapter2;
+    private ArrayList<Combos> mCombos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,15 +72,18 @@ public class SaleDetailActivity extends BaseActivity {
 //        payorder_member_money_record.xml
         mItemAdapter = new OrderDetailItemAdapter(this, mItemList, null, 0);
         mProAdapter = new OrderDetailItemAdapter(this, null, mProList, 1);
-        mItemAdapter2 = new OrderDetailItemAdapter2(this, mItemList,null,0,mOrderDet);
-        mProAdapter2 = new OrderDetailItemAdapter2(this, null,mProList,1,mOrderDet);
+        mItemAdapter2 = new OrderDetailItemAdapter2(this, mItemList,mCombos,0,mOrderDet);
         if("1".equals(orderList.getOrderType())) {
             mItemListView.setAdapter(mItemAdapter);
             mProductListView.setAdapter(mProAdapter);
         }else if("0".equals(orderList.getOrderType())){
             mItemListView.setAdapter(mItemAdapter2);
-            mProductListView.setAdapter(mProAdapter2);
+
         }
+        mItemAdapter.notifyDataSetChanged();
+        mItemAdapter2.notifyDataSetChanged();
+        mProAdapter.notifyDataSetChanged();
+//        mProAdapter2.notifyDataSetChanged();
     }
 
     private void initView() {
@@ -95,6 +100,7 @@ public class SaleDetailActivity extends BaseActivity {
     }
 
     private void setData(){
+        mCombos=new ArrayList<>();
         mItemList = new ArrayList<>();
         mProList = new ArrayList<>();
         mOrderDet = new ArrayList<>();
@@ -121,6 +127,8 @@ public class SaleDetailActivity extends BaseActivity {
                     String payType = json.optString("payType", "0");
                     long orderAmount = json.optLong("orderAmount", 0);
                     long fee = json.optLong("fee", 0);
+                    List<Combos> combos = FastJsonUtil.json2List(json.getString("combos"), Combos.class);
+                    mCombos.addAll(combos);
                     long orderAmout = json.optLong("orderAmout", 0);
                     int status = json.optInt("status", 0);
                     String employee = json.optString("employee", "0");
@@ -136,7 +144,7 @@ public class SaleDetailActivity extends BaseActivity {
                     mItemAdapter.notifyDataSetChanged();
                     mItemAdapter2.notifyDataSetChanged();
                     mProAdapter.notifyDataSetChanged();
-                    mProAdapter2.notifyDataSetChanged();
+//                    mProAdapter2.notifyDataSetChanged();
                     if (list.size()<1){
                         tv_title1.setVisibility(View.GONE);
                     }

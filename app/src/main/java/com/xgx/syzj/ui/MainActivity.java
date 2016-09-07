@@ -1,7 +1,6 @@
 package com.xgx.syzj.ui;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,21 +15,18 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.android.volley.Response;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.location.Poi;
 import com.xgx.syzj.R;
-import com.xgx.syzj.app.Api;
 import com.xgx.syzj.app.AppManager;
 import com.xgx.syzj.app.Constants;
 import com.xgx.syzj.app.lifecycle.IComponentContainer;
 import com.xgx.syzj.app.lifecycle.LifeCycleComponent;
 import com.xgx.syzj.app.lifecycle.LifeCycleComponentManager;
 import com.xgx.syzj.bean.Result;
-import com.xgx.syzj.datamodel.RecordsDataModel;
 import com.xgx.syzj.datamodel.UserDataModel;
 import com.xgx.syzj.event.EventCenter;
 import com.xgx.syzj.event.SimpleEventHandler;
@@ -44,12 +40,12 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends FragmentActivity implements IMainMenuListItemClick ,IComponentContainer {
+public class MainActivity extends FragmentActivity implements IMainMenuListItemClick, IComponentContainer {
 
     public static final int RESULT_SHORTCUT_MENU = 1000;
     private UserDataModel mDataModel;
     private SlidingPaneLayout mSlidingPanel;
-    private  CustomProgressDialog  loadingDiaLog;
+    private CustomProgressDialog loadingDiaLog;
     private LifeCycleComponentManager mComponentContainer = new LifeCycleComponentManager();
     private Handler hanler = new Handler() {
         @Override
@@ -64,7 +60,6 @@ public class MainActivity extends FragmentActivity implements IMainMenuListItemC
 
         }
     };
-
 
 
     @Override
@@ -100,16 +95,18 @@ public class MainActivity extends FragmentActivity implements IMainMenuListItemC
                             startService(intent);
                         }
                     });
-                }else{
-                    hanler.sendMessage( new Message());
+                } else {
+                    hanler.sendMessage(new Message());
                 }
             }
         }
-        public void onEvent(String error){
+
+        public void onEvent(String error) {
             loadingDiaLog.dismiss();
             Toast.makeText(MainActivity.this, error, Toast.LENGTH_SHORT).show();
         }
     };
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -146,9 +143,9 @@ public class MainActivity extends FragmentActivity implements IMainMenuListItemC
 
     //新增商品
     public void onAddGoods(View view) {
-        if(CacheUtil.getmInstance().getUser().getRoles()==1) {
+        if (CacheUtil.getmInstance().getUser().getRoles() == 1) {
             gotoActivity(GoodsAddActivity.class);
-        }else{
+        } else {
             gotoActivity(GoodsSelectActivity.class);
         }
     }
@@ -158,19 +155,22 @@ public class MainActivity extends FragmentActivity implements IMainMenuListItemC
         gotoActivity(MemberAddActivity.class);
     }
 
-    //收银销售
-    public void onAddRevenue(View view) {
-        gotoActivity(RevenueActivity.class);
-    }
 
     //资金流水
-    public void onAddPay(View view) { gotoActivity(AnalysismoneyActivity.class); }
+    public void onAddPay(View view) {
+        int roles=CacheUtil.getmInstance().getUser().getRoles();
+        if(roles==3){
+            Toast.makeText(this, "权限不足", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        gotoActivity(AnalysismoneyActivity.class);
+    }
 
     //商品管理
     public void onManGoods(View view) {
-        Bundle bundle=new Bundle();
+        Bundle bundle = new Bundle();
         bundle.putString("type", "goods");
-        gotoActivity(GoodsListActivity.class,bundle);
+        gotoActivity(GoodsListActivity.class, bundle);
     }
 
     //会员管理
@@ -184,7 +184,13 @@ public class MainActivity extends FragmentActivity implements IMainMenuListItemC
     }
 
     //报表分析
-    public void onGoodsAnalysis(View view) {gotoActivity(AnalysisSellActivity.class);
+    public void onGoodsAnalysis(View view) {
+        int roles=CacheUtil.getmInstance().getUser().getRoles();
+        if(roles==3){
+            Toast.makeText(this, "权限不足", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        gotoActivity(AnalysisSellActivity.class);
     }
 
     //我的微店
@@ -193,7 +199,7 @@ public class MainActivity extends FragmentActivity implements IMainMenuListItemC
         CustomAlertDialog.showRemindDialog2(MainActivity.this, "温馨提示", "请联系服务商开通微信预约功能\n4008-328-728", new CustomAlertDialog.IAlertDialogListener() {
             @Override
             public void onSure(Object obj) {
-            return;
+                return;
             }
         });
 //                gotoActivity(OrderFormActivity.class);
@@ -203,9 +209,10 @@ public class MainActivity extends FragmentActivity implements IMainMenuListItemC
     }
 
     //会员体系
-    public void onManSell(View view) {gotoActivity(CardListActivity.class);}
+    public void onManSell(View view) {
+        gotoActivity(CardListActivity.class);
+    }
 
-    public void onAddClick(View view) { Toast.makeText(this, "开发中...", Toast.LENGTH_SHORT).show(); }
 
     //考勤管理
     public void onManAttendance(View view) {
@@ -218,7 +225,9 @@ public class MainActivity extends FragmentActivity implements IMainMenuListItemC
     }
 
     //接车开单
-    public void onAddMoney(View view) { gotoActivity(RevenueFastActivity.class); }
+    public void onAddMoney(View view) {
+        gotoActivity(RevenueFastActivity.class);
+    }
 
     //微订单
     public void onSmallOrder(View view) {
@@ -256,7 +265,6 @@ public class MainActivity extends FragmentActivity implements IMainMenuListItemC
                 break;
             case 1:
                 gotoActivity(ShopInfoActivity.class);
-                //gotoActivity(WebViewActivity.class, WebViewActivity.VIEW_TYPE_KEY, WebViewActivity.VIEW_TYPE_HELP);
                 break;
             case 2:
                 gotoActivity(FeedBackActivity.class);
@@ -264,28 +272,12 @@ public class MainActivity extends FragmentActivity implements IMainMenuListItemC
             case 3:
                 loadingDiaLog = CustomProgressDialog.createDialog(this).setMessage("加载中...");
                 loadingDiaLog.show();
-                mDataModel.checkVersion();
-//                new Timer().schedule(new TimerTask(){
-//                   @Override
-//                   public void run() {
-//
-//                   }
-//               },2000);
-
-
-
-
+                UserDataModel.checkVersion();
                 break;
-//            case 4:
-//                gotoActivity(SettingActivity.class);
-//                break;
-//            case 101:
-//                gotoActivity(ShopInfoActivity.class);
-//                break;
             case 4:
                 onLogout();
                 break;
-            case   100:
+            case 100:
                 mSlidingPanel.openPane();
                 break;
             default:
@@ -299,7 +291,7 @@ public class MainActivity extends FragmentActivity implements IMainMenuListItemC
             CacheUtil.getmInstance().setUser(null);
             SYZJApplication.getInstance().getSpUtil().delete(Constants.SharedPreferencesClass.SP_PSW);
             SYZJApplication.getInstance().getSpUtil().delete(Constants.SharedPreferencesClass.SP_ROLES);
-            SYZJApplication.getInstance().getSpUtil().addString(Constants.SharedPreferencesClass.SP_TOKEN,"");
+            SYZJApplication.getInstance().getSpUtil().addString(Constants.SharedPreferencesClass.SP_TOKEN, "");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -363,12 +355,12 @@ public class MainActivity extends FragmentActivity implements IMainMenuListItemC
     }
 
     private LocationClient mLocationClient;
-    private double longtitude,latitude;
-    private double mLng = 23.121559,mLat = 113.369254;
+    private double longtitude, latitude;
+    private double mLng = 23.121559, mLat = 113.369254;
     private String address;
 
-    private void location(){
-        mLocationClient  = new LocationClient(this);
+    private void location() {
+        mLocationClient = new LocationClient(this);
         mLocationClient.registerLocationListener(new MyLocationListener());
         LocationClientOption option = new LocationClientOption();
         option.setLocationMode(LocationClientOption.LocationMode.Battery_Saving);//可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
@@ -412,6 +404,7 @@ public class MainActivity extends FragmentActivity implements IMainMenuListItemC
 //主Activity传递事件到Fragment
 interface IMainActivityClick {
     void onDataChange();
+
     void onLocation(String msg);
 //    void onChangeView();
 }

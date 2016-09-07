@@ -18,7 +18,10 @@ public class Goods implements Parcelable {
     private int productId;
     private String productName;
     private int storeId;
-    private int vip_price;
+
+
+
+    private int vipPrice;
     private String barcode;
     private String brand;
     private String categoryId;
@@ -37,6 +40,15 @@ public class Goods implements Parcelable {
     private int count;
     private double totalPrice;
     private List<ImagesBean> images;
+    private boolean isFinish=false;
+
+    public boolean isFinish() {
+        return isFinish;
+    }
+
+    public void setFinish(boolean finish) {
+        isFinish = finish;
+    }
 
     public Goods() {
     }
@@ -87,13 +99,6 @@ public class Goods implements Parcelable {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-    }
-
-    public int getVip_price() {
-        return vip_price;
-    }
-    public void setVip_price(int vip_price) {
-        this.vip_price = vip_price;
     }
 
     public int getProductId() {
@@ -187,6 +192,13 @@ public class Goods implements Parcelable {
         } else {
             return "0";
         }
+    }
+    public int getVipPrice() {
+        return vipPrice;
+    }
+
+    public void setVipPrice(int vipPrice) {
+        this.vipPrice = vipPrice;
     }
 
     public void setInputPrice(double inputPrice) {
@@ -311,7 +323,7 @@ public class Goods implements Parcelable {
         dest.writeInt(this.productId);
         dest.writeString(this.productName);
         dest.writeInt(this.storeId);
-        dest.writeInt(this.vip_price);
+        dest.writeInt(this.vipPrice);
         dest.writeString(this.barcode);
         dest.writeString(this.brand);
         dest.writeString(this.categoryId);
@@ -337,7 +349,7 @@ public class Goods implements Parcelable {
         this.productId = in.readInt();
         this.productName = in.readString();
         this.storeId = in.readInt();
-        this.vip_price = in.readInt();
+        this.vipPrice = in.readInt();
         this.barcode = in.readString();
         this.brand = in.readString();
         this.categoryId = in.readString();
@@ -372,4 +384,17 @@ public class Goods implements Parcelable {
             return new Goods[size];
         }
     };
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Goods goods = (Goods) o;
+
+        if (productId != goods.productId) return false;
+        if (storeId != goods.storeId) return false;
+        return images != null ? images.equals(goods.images) : goods.images == null;
+
+    }
 }

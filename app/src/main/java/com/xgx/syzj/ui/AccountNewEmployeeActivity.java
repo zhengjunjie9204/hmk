@@ -104,6 +104,9 @@ public class AccountNewEmployeeActivity extends BaseActivity {
             hideLoadingDialog();
             String message = result.getMessage();
             showShortToast(message);
+            if(result.getStatus()==200){
+                finish();
+            }
         }
 
 
@@ -115,6 +118,7 @@ public class AccountNewEmployeeActivity extends BaseActivity {
         @Override
         public void onSuccess(Result result) {
             EventCenter.getInstance().post(result);
+
         }
 
         @Override

@@ -2,18 +2,18 @@ package com.xgx.syzj.ui;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.components.Legend;
@@ -34,6 +34,7 @@ import com.xgx.syzj.utils.CacheUtil;
 import com.xgx.syzj.utils.DateUtil;
 import com.xgx.syzj.utils.FastJsonUtil;
 import com.xgx.syzj.widget.AnalysisTabBar;
+import com.xgx.syzj.widget.CustomDatePickerDialog;
 import com.xgx.syzj.widget.CustomProgressDialog;
 import com.xgx.syzj.widget.StorePopupWindowUtil;
 
@@ -45,15 +46,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import de.greenrobot.event.EventBus;
-
 /**
  * 主页面Fragment
  *
  * @author zajo
  * @created 2015年08月11日 11:26
  */
-public class MainBossContainerFragment extends BaseFragment implements View.OnClickListener,IMainBossActivityClick{
+public class MainBossContainerFragment extends BaseFragment implements View.OnClickListener,IMainBossActivityClick,DatePickerDialog.OnDateSetListener {
 
     private ImageView iv_menu;
     private CustomProgressDialog Dialog;
@@ -72,6 +71,16 @@ public class MainBossContainerFragment extends BaseFragment implements View.OnCl
     private List<Store> storeList;
     private LinearLayout selling;
     private Button btn_submit;
+    private Button btn_stime;
+    private LinearLayout linear_time;
+    private Button bt_onSearch;
+    private Button btn_etime;
+    private int year;
+    private int month;
+    private int day;
+    private boolean maxTime=true;
+    private boolean minTime=true;
+    private View view;
 
 
     @Override
@@ -86,13 +95,17 @@ public class MainBossContainerFragment extends BaseFragment implements View.OnCl
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        Bundle bundle = getArguments();
+//         year = bundle.getInt("year");
+//         month = bundle.getInt("month");
+//         day = bundle.getInt("day");
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main_boss_container, container, false);
+         view = inflater.inflate(R.layout.fragment_main_boss_container, container, false);
         initView(view);
         mChart = (HorizontalBarChart) view.findViewById(R.id.chart);
         btn_submit =(Button) view.findViewById(R.id.btn_submit);
@@ -108,6 +121,7 @@ public class MainBossContainerFragment extends BaseFragment implements View.OnCl
         tvGoodMoney = (TextView)view. findViewById(R.id.tv_goods_money);
         tvCardMoney = (TextView)view. findViewById(R.id.tv_card_money);
         tvCountMoney = (TextView) view.findViewById(R.id.tv_count_money);
+        linear_time = (LinearLayout)view.findViewById(R.id.linear_time);
         selling =(LinearLayout)view.findViewById(R.id.selling);
         selling.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,35 +191,51 @@ public class MainBossContainerFragment extends BaseFragment implements View.OnCl
     }
 
     @Override
-    public void onClick(View v)
-    {
+    public void onClick(View v) {
         switch (v.getId()) {
             case R.id.atb_a:
                 changeTabBar(atbA);
                 selectData = -1;
+                linear_time.setVisibility(View.GONE);
+                selectBillpay();
+                BusinessSaleAnalyModel.getSaleReport(storeId,startTime, currentTime);
                 break;
             case R.id.atb_b:
+
                 changeTabBar(atbB);
                 selectData = -7;
+                linear_time.setVisibility(View.GONE);
+                selectBillpay();
+                BusinessSaleAnalyModel.getSaleReport(storeId,startTime, currentTime);
                 break;
             case R.id.atb_c:
                 changeTabBar(atbC);
                 selectData = -15;
+                linear_time.setVisibility(View.GONE);
+                selectBillpay();
+                BusinessSaleAnalyModel.getSaleReport(storeId,startTime, currentTime);
                 break;
             case R.id.atb_d:
                 changeTabBar(atbD);
                 selectData = -30;
+                linear_time.setVisibility(View.GONE);
+                selectBillpay();
+                BusinessSaleAnalyModel.getSaleReport(storeId,startTime, currentTime);
                 break;
             case R.id.atb_e:
                 changeTabBar(atbE);
+                linear_time.setVisibility(View.VISIBLE);
                 selectData = -265;
+                selectBillpay();
+                BusinessSaleAnalyModel.getSaleReport(storeId,startTime, currentTime);
                 break;
-
-
+            case R.id.btn_stime:
+                setTime(btn_stime);
+                break;
+            case R.id.btn_etime:
+                setTime(btn_etime);
+                break;
         }
-        selectBillpay();
-        showShortToast(R.string.loading_date);
-        BusinessSaleAnalyModel.getSaleReport(storeId,startTime, currentTime);
     }
 
 
@@ -224,7 +254,10 @@ public class MainBossContainerFragment extends BaseFragment implements View.OnCl
                 if (result.getStatus() == 200) {
                     try {
                         JSONObject json = new JSONObject(result.getResult());
+                        Store store = new Store();
+                        store.setName("全部门店");
                         storeList = FastJsonUtil.json2List(json.getString("storeList"), Store.class);
+                        storeList.add(store);
                         new StorePopupWindowUtil(getActivity(), ipopCallListener).showActionWindow(btn_store, storeList);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -329,6 +362,21 @@ public class MainBossContainerFragment extends BaseFragment implements View.OnCl
 
     private void initView(View view) {
         iv_menu = (ImageView) view.findViewById(R.id.iv_menu);
+        btn_stime =(Button)view.findViewById(R.id.btn_stime);
+        btn_etime =(Button)view.findViewById(R.id.btn_etime);
+        btn_stime.setOnClickListener(this);
+        btn_etime.setOnClickListener(this);
+
+
+        bt_onSearch =(Button) view.findViewById(R.id.bt_onSearch);
+        bt_onSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BusinessSaleAnalyModel.getSaleReport(storeId,startTime, currentTime);
+
+            }
+        });
+
         iv_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -356,6 +404,41 @@ public class MainBossContainerFragment extends BaseFragment implements View.OnCl
     }
 
 
+    public void onTime(View view) {
+        switch (view.getId()) {
+            case R.id.btn_stime:
+                setTime(btn_stime);
+                break;
+            case R.id.btn_etime:
+                setTime(btn_etime);
+                break;
+        }
+    }
+
+    private void setTime(final Button btn) {
+        Calendar startCalendar=Calendar.getInstance();
+        CustomDatePickerDialog datePickerDialog = new CustomDatePickerDialog(getActivity(), 0, new CustomDatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker startDatePicker, int startYear, int startMonthOfYear,
+                                  int startDayOfMonth) {
+                String day, month;
+                if (startDayOfMonth < 10) {
+                    day = "0" + startDayOfMonth;
+                } else {
+                    day = "" + startDayOfMonth;
+                }
+                if (startMonthOfYear+1 < 10) {
+                    month = "0" + (startMonthOfYear + 1);
+                } else {
+                    month = "" + (startMonthOfYear + 1);
+                }
+                btn.setText(startYear + "-" + month + "-" + day);
+            }
+        }, startCalendar.get(Calendar.YEAR), startCalendar.get(Calendar.MONTH), startCalendar.get(Calendar.DAY_OF_MONTH), true);
+        datePickerDialog.show();
+    }
+
+
     @Override
     public void onDataChange() {
 
@@ -369,6 +452,24 @@ public class MainBossContainerFragment extends BaseFragment implements View.OnCl
     @Override
     public void onChangeView() {
 
+    }
+
+
+    @Override
+    public void onDateSet(DatePicker datePicker, int y, int m, int d) {
+        year=y;
+        month=m+1;
+        day=d;
+//        FragmentTransaction ft = getFragmentManager().beginTransaction();
+//        MainBossContainerFragment mf = new MainBossContainerFragment();
+//        Bundle bundle = new Bundle();
+//        bundle.putInt("year",y);
+//        bundle.putInt("month",m);
+//        bundle.putInt("day",d);
+//        mf.setArguments(bundle);
+//        ft.replace(R.id.ll_bossfragemnt,mf);
+//        ft.addToBackStack(null);
+//        ft.commit();
     }
 }
 

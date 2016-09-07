@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -26,6 +27,24 @@ public class HistoryActivity extends BaseActivity {
     private SaleHistoryFragment pmoFragment = new SaleHistoryFragment(1);//接车单
     private SaleHistoryFragment pmiFragment = new SaleHistoryFragment(0);//充值钱
     public static ViewPager pager = null;
+    public FragmentBackListener backListener;
+    private boolean isInterception = false;
+    public boolean isInterception() {
+        return isInterception;
+    }
+
+    public void setInterception(boolean interception) {
+        isInterception = interception;
+    }
+
+    public FragmentBackListener getBackListener() {
+        return backListener;
+    }
+
+    public void setBackListener(FragmentBackListener backListener) {
+        this.backListener = backListener;
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,8 +113,20 @@ public class HistoryActivity extends BaseActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        gotoActivity(MainActivity.class);
-        finish();
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+            if (isInterception()) {
+                if (backListener != null) {
+                    backListener.onBackForward();
+                    return false;
+                }
+            }
+
+        }
+        return false;
     }
+}
+interface FragmentBackListener{
+    void onBackForward();
 }

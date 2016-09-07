@@ -2,7 +2,6 @@ package com.xgx.syzj.ui;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -28,10 +27,8 @@ import com.xgx.syzj.utils.photos.PhotoReadyHandler;
 import com.xgx.syzj.utils.photos.SelectPhotoManager;
 import com.xgx.syzj.widget.UploadPictureView;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -97,8 +94,9 @@ public class GoodsModifyActivity extends BaseActivity implements UploadPictureVi
         et_brand.setText(goods.getBrand());
         et_input_money.setText(goods.getInputPrice() + "");
         et_sell_money.setText(goods.getSellingPrice() + "");
-        et_input_count.setText(goods.getVip_price()+ "");
+        et_input_count.setText(goods.getVipPrice()+ "");
         et_guige.setText(goods.getSpecification());
+        et_unit.setText(goods.getUnit());
     }
 
     private SimpleEventHandler eventHandler = new SimpleEventHandler() {
@@ -110,7 +108,7 @@ public class GoodsModifyActivity extends BaseActivity implements UploadPictureVi
                 JSONObject obj = JSON.parseObject(result.getResult());
                 goods = FastJsonUtil.json2Bean(obj.toJSONString(), Goods.class);
                 EventBus.getDefault().postSticky(goods);
-               gotoActivity(GoodsListActivity.class);
+                defaultFinish();
             } else {
                 showShortToast(result.getMessage());
             }
@@ -128,12 +126,11 @@ public class GoodsModifyActivity extends BaseActivity implements UploadPictureVi
             @Override
             public void onPhotoReady(int from, String imgPath) {
                 paths.put(index + "", imgPath);
-
                 Bitmap bitmap = BitmapUtil.scaleBitmap(GoodsModifyActivity.this, imgPath, 200);
                 image = BitmapUtil.convertIconToString(bitmap);
-                String image2 = Utils.GetImageBase64Str(imgPath);
-                images.add(image2);
-                Log.e("images",imgPath);
+                String image = Utils.GetImageBase64Str(imgPath);
+                images.add(image);
+                Log.e("images", image);
                 if (index == 0) {
                     upv_one.setImageViewPic(bitmap);
                     upv_one.setAddViewClickable(false);
@@ -145,7 +142,6 @@ public class GoodsModifyActivity extends BaseActivity implements UploadPictureVi
                     upv_three.setAddViewClickable(true);
                     upv_three.setAddViewBackground(R.mipmap.add_picture);
                 } else if (index == 2) {
-
                     upv_three.setImageViewPic(bitmap);
                     upv_three.setAddViewClickable(false);
                 }
@@ -174,7 +170,7 @@ public class GoodsModifyActivity extends BaseActivity implements UploadPictureVi
         if (checkInput()) {
             showLoadingDialog(R.string.loading_modify_goods);
             GoodsDataModel.modifyGoods(goods.getProductId(), strCode,
-                    strName, strType, strInputMoney, strSellMoney, strInputCount, strGuige, strBrand, "1", images);
+                    strName, strType, strInputMoney, strSellMoney, strInputCount, strGuige, strBrand, strUnit, images);
         }
     }
 
@@ -220,7 +216,8 @@ public class GoodsModifyActivity extends BaseActivity implements UploadPictureVi
         }
         if (strType.equals(goods.getCategoryId())&&strCode.equals(goods.getBarcode()) && strName.equals(goods.getProductName())
                 && strInputMoney.equals(goods.getInputPrice() + "") && strSellMoney.equals(goods.getSellingPrice() + "")
-                && strInputCount.equals(goods.getVip_price() + "") && strGuige.equals(goods.getSpecification())) {
+                && strInputCount.equals(goods.getVipPrice() + "") && strGuige.equals(goods.getSpecification())&&strUnit.equals(goods.getUnit())
+                ) {
             showShortToast("未做修改");
             return false;
         }
@@ -244,6 +241,11 @@ public class GoodsModifyActivity extends BaseActivity implements UploadPictureVi
     }
 
     @Override
+    public void back() {
+        AppManager.getAppManager().returnToActivity(MainActivity.class);
+    }
+
+    @Override
     public void onPicDeleteClick(View v) {
         switch (v.getId()) {
             case R.id.upv_one:
@@ -251,4 +253,12 @@ public class GoodsModifyActivity extends BaseActivity implements UploadPictureVi
         }
     }
 
+    public static String BytesToStr(byte[] target)
+    {
+        StringBuffer buf = new StringBuffer();
+        for (int i = 0, j = target.length; i < j; i++) {
+            buf.append((char) target[i]);
+        }
+        return buf.toString();
+    }
 }

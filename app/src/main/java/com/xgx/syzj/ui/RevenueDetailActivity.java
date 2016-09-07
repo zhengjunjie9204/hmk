@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.xgx.syzj.R;
 import com.xgx.syzj.adapter.RevenueDetailAutoAdapter;
 import com.xgx.syzj.adapter.RevenueDetailGoodsAdapter;
-import com.xgx.syzj.app.AppManager;
 import com.xgx.syzj.base.BaseActivity;
 import com.xgx.syzj.bean.BillDetail;
 import com.xgx.syzj.bean.Goods;
@@ -152,7 +151,6 @@ public class RevenueDetailActivity extends BaseActivity implements View.OnClickL
             hideLoadingDialog();
             if (result.geteCode() == CartDataModel.CART_PUT_UP) {
                 showShortToast("挂单成功");
-                AppManager.getAppManager().returnToActivity(RevenueActivity.class);
             } else if( result.geteCode() == CartDataModel.CART_BILL_CHECK) {
                 showShortToast("结帐成功");
                 Bundle bundle = new Bundle();

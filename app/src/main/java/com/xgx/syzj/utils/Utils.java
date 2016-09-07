@@ -45,6 +45,27 @@ public class Utils {
     }
 
     /**
+     * @param imgFilePath 图片路径
+     * @return String
+     * @deprecated 将图片文件转化为字节数组字符串，并对其进行Base64编码处理
+     */
+    public static byte[] GetImage(String imgFilePath)
+    {
+        byte[] data = null;
+        // 读取图片字节数组
+        try {
+            InputStream in = new FileInputStream(imgFilePath);
+            data = new byte[in.available()];
+            in.read(data);
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // 对字节数组Base64编码
+        return data;
+    }
+
+    /**
      * 获取版本号
      *
      * @return 当前应用的版本号

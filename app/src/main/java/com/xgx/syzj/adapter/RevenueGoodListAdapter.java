@@ -9,14 +9,13 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.xgx.syzj.R;
 import com.xgx.syzj.bean.Goods;
 import com.xgx.syzj.ui.RevenuseSellFinishActivity;
+import com.xgx.syzj.utils.ArithUtils;
 import com.xgx.syzj.utils.StrUtil;
-import com.xgx.syzj.widget.CustomAlertDialog;
 import com.xgx.syzj.widget.PhotoViewPagerDialog;
 
 import java.util.ArrayList;
@@ -27,128 +26,129 @@ public class RevenueGoodListAdapter extends BaseAdapter {
 
     private Context mContext;
     private List<Goods> mList = new ArrayList<>();
+    private List<Goods> sellList = new ArrayList<>();
     private Handler mHandler;
     private PhotoViewPagerDialog mDialog;
 
-    public RevenueGoodListAdapter(Context context, List<Goods> list, Handler mHandler)
-    {
+    public RevenueGoodListAdapter(Context context, List<Goods> list, Handler mHandler) {
         this.mContext = context;
         this.mList = list;
         this.mHandler = mHandler;
     }
 
     @Override
-    public int getCount()
-    {
+    public int getCount() {
         return mList.size();
     }
 
     @Override
-    public Object getItem(int position)
-    {
+    public Object getItem(int position) {
         return mList.get(position);
     }
 
     @Override
-    public long getItemId(int position)
-    {
+    public long getItemId(int position) {
         return position;
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent)
-    {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         final HoldClass hold;
         if (convertView == null) {
             hold = new HoldClass();
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_revenue_goods_sell, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_revenue_goods, null);
             hold.tv_money = (TextView) convertView.findViewById(R.id.tv_money);
-            hold.mTvUnit = (TextView) convertView.findViewById(R.id.item_tv_unit);
             hold.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
-            hold.et_time = (TextView) convertView.findViewById(R.id.et_time);
+            hold.tv_quantity = (TextView) convertView.findViewById(R.id.tv_quantity);
+            hold.tv_count = (TextView) convertView.findViewById(R.id.tv_count);
             hold.mImg = (ImageView) convertView.findViewById(R.id.item_img);
+            hold.iv_delete = (ImageView) convertView.findViewById(R.id.iv_delete);
+            hold.iv_add = (ImageView) convertView.findViewById(R.id.iv_add);
             convertView.setTag(hold);
         } else {
             hold = (HoldClass) convertView.getTag();
         }
-        hold.mTvUnit.setText("购买数量");
         Goods goods = mList.get(position);
         hold.tv_name.setText(goods.getProductName());
-        hold.et_time.setText(goods.getCount() + "");
+        hold.tv_count.setText(goods.getCount() + "");
+        hold.tv_quantity.setText(goods.getQuantity()+"");
+
+        if (goods.getCount()>0){
+            hold.iv_delete.setVisibility(View.VISIBLE);
+        }else{
+            hold.iv_delete.setVisibility(View.GONE);
+        }
         if (goods.getCount() > 0) {
-            hold.tv_money.setText("" + goods.getSellingPrice() * goods.getCount());
+            hold.tv_money.setText("￥" + ArithUtils.showString(ArithUtils.mul(goods.getSellingPrice(), goods.getCount())));
         } else {
-            hold.tv_money.setText("" + (goods.getSellingPrice() * 1));
+            hold.tv_money.setText("￥" + ArithUtils.showString(ArithUtils.mul(goods.getSellingPrice() ,1)));
         }
-        if(!StrUtil.isEmpty(goods.getImage())){
+        if (!StrUtil.isEmpty(goods.getImage())) {
             Picasso.with(mContext).load(goods.getImage()).into(hold.mImg);
-
         }
-
+        hold.iv_delete.setOnClickListener(new MyClickListener(goods));
+        hold.iv_add.setOnClickListener(new MyClickListener(goods));
         if (mHandler == null) {
-            hold.et_time.setOnClickListener(new MyClickListener(goods, 0));
-            hold.mImg.setOnClickListener(new MyClickListener(goods, 1));
+            hold.mImg.setOnClickListener(new MyClickListener(goods));
         }
         return convertView;
     }
 
     class MyClickListener implements View.OnClickListener {
         private Goods goods;
-        private int isDialog;//0不需要弹出view框 1是需要弹框
 
-        MyClickListener(Goods goods, int isDialog)
-        {
+        MyClickListener(Goods goods) {
             this.goods = goods;
-            this.isDialog = isDialog;
         }
 
         @Override
-        public void onClick(View v)
-        {
-            if (isDialog == 0) {
-                CustomAlertDialog.editTextDialog(mContext, String.valueOf(goods.getQuantity()), "请输入", new MyIAlertDialogListener(goods));
-            } else if (isDialog == 1) {
-                if (mDialog == null) {
-                    List<String> list = new ArrayList<>();
-                    for (Goods goods1 : mList) {
-                        if (!TextUtils.isEmpty(goods1.getImage())) {
-                            list.add(goods1.getImage());
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.item_img:
+                    if (mDialog == null) {
+                        List<String> list = new ArrayList<>();
+                        for (Goods goods1 : mList) {
+                            if (!TextUtils.isEmpty(goods1.getImage())) {
+                                list.add(goods1.getImage());
+                            }
                         }
+                        mDialog = new PhotoViewPagerDialog(mContext, list);
                     }
-                    mDialog = new PhotoViewPagerDialog(mContext, list);
-                }
-                mDialog.show();
+                    mDialog.show();
+                    break;
+                case R.id.iv_add:
+                    goods.setCount(goods.getCount()+1);
+                    if (null != mHandler) {
+                        mHandler.sendEmptyMessage(RevenuseSellFinishActivity.HANDLER_MONEY);
+                    }
+                    if (!sellList.contains(goods)) {
+                        sellList.add(goods);
+                    }
+                    notifyDataSetChanged();
+                    break;
+                case R.id.iv_delete:
+                    int count=goods.getCount()-1;
+                    goods.setCount(count);
+                    if (null != mHandler) {
+                        mHandler.sendEmptyMessage(RevenuseSellFinishActivity.HANDLER_MONEY);
+                    }
+                    if (count==0){
+                        sellList.remove(goods);
+                    }
+                    notifyDataSetChanged();
+                    break;
             }
-        }
-    }
 
-    class MyIAlertDialogListener implements CustomAlertDialog.IAlertDialogListener {
-        private Goods goods;
-
-        MyIAlertDialogListener(Goods goods)
-        {
-            this.goods = goods;
-        }
-
-        @Override
-        public void onSure(Object obj)
-        {
-            int count = (int) obj;
-            if (count > goods.getQuantity()) {
-                Toast.makeText(mContext, "数量不能大于库存", Toast.LENGTH_SHORT).show();
-            } else {
-                goods.setCount((int) obj);
-                if (null != mHandler) {
-                    mHandler.sendEmptyMessage(RevenuseSellFinishActivity.HANDLER_MONEY);
-                }
-                notifyDataSetChanged();
-            }
         }
     }
 
     class HoldClass {
-        TextView tv_name, tv_money;
-        TextView et_time, mTvUnit;
-        ImageView mImg;
+        TextView tv_name, tv_money,tv_quantity;
+        TextView tv_count;
+        ImageView mImg,iv_delete,iv_add;
+    }
+
+    public List<Goods> getSellList() {
+        return sellList;
     }
 }

@@ -14,6 +14,7 @@ import com.xgx.syzj.secret.Base64Util;
 import com.xgx.syzj.secret.RSAManager;
 import com.xgx.syzj.utils.CacheUtil;
 import com.xgx.syzj.utils.FastJsonUtil;
+import com.xgx.syzj.widget.list.ListPageInfo;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -334,8 +335,9 @@ public class Api extends BaseRequest {
             if (!TextUtils.isEmpty(key)) {
                 params.put("key", key);
             }
-            params.put("page", page + "");
-            params.put("pageSize", pageSize + "");
+            ListPageInfo<Object> objectListPageInfo = new ListPageInfo<>(Constants.LOAD_COUNT);
+            params.put("page", objectListPageInfo.getPage()+"");
+            params.put("pageSize", objectListPageInfo.getNumPerPage()+"");
             String json = FastJsonUtil.bean2Json(params);
             info = Base64Util.encode(json.getBytes("UTF-8"));
         } catch (UnsupportedEncodingException e) {
@@ -425,9 +427,9 @@ public class Api extends BaseRequest {
             json.put("inputPrice", inputPrice);
             json.put("sellingPrice", sellingPrice);
             json.put("brand", brand);
-            json.put("vip_price", vip_price);
+            json.put("vipPrice", vip_price);
             json.put("specification", specification);
-            json.put("unitid", unitid);
+            json.put("unit", unitid);
             JSONArray jsonArray=null;
             for ( String image :images){
                 jsonArray = new JSONArray();
@@ -457,12 +459,14 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest addProductByStore(long storeID, OnRequestListener listener)
+    public static StringRequest addProductByStore(long storeID, int pageNo,int pageSize, OnRequestListener listener)
     {
         Map<String, String> params = null;
         try {
             params = new HashMap<>();
-            params.put("storeID", storeID + "");
+            params.put("storeId",  storeID + "");
+            params.put("pageNo",   pageNo+"");
+            params.put("pageSize", pageSize+ "");
             String json = FastJsonUtil.bean2Json(params);
             String info = Base64Util.encode(json.getBytes("UTF-8"));
             params.clear();
@@ -481,13 +485,13 @@ public class Api extends BaseRequest {
      * @param listener
      * @return
      */
-    public static StringRequest addProductToStore(long storeID, long productID, OnRequestListener listener)
+    public static StringRequest addProductToStore(long storeID, List productList, OnRequestListener listener)
     {
         Map<String, String> params = null;
         try {
             params = new HashMap<>();
             params.put("storeId", storeID + "");
-            params.put("productId", productID + "");
+            params.put("productList", productList + "");
             String json = FastJsonUtil.bean2Json(params);
             String info = Base64Util.encode(json.getBytes("UTF-8"));
             params.clear();
@@ -1110,7 +1114,7 @@ public class Api extends BaseRequest {
         try {
             params = new HashMap<>();
             JSONObject info = new JSONObject();
-            info.put("storeId", CacheUtil.getmInstance().getUser().getStoreId());
+//            info.put("storeId", CacheUtil.getmInstance().getUser().getStoreId());
             info.put("payOrderId", payOrderId);
             String json = Base64Util.encode(info.toString().getBytes("UTF-8"));
             params.put("info", json);
@@ -1526,6 +1530,32 @@ public class Api extends BaseRequest {
             e.printStackTrace();
         }
         return getRequest(Url.SALE_REPORT, params, getHeader(), listener);
+    }
+    /**
+     * 3.8.2.	资金流水
+     *
+     * @param startTime
+     * @param endTime
+     * @param listener
+     * @return
+     */
+    public static StringRequest getSaleReportByDay(int storeId,String startTime, String endTime, OnRequestListener listener)
+    {
+        Map<String, String> params = null;
+        Map<String, Object> info;
+        try {
+            params = new HashMap<>();
+            info = new HashMap<>();
+            info.put("startTime", startTime);
+            info.put("endTime", endTime);
+            info.put("storeId", storeId);
+            String json = FastJsonUtil.bean2Json(info);
+            json = Base64Util.encode(json.getBytes("UTF-8"));
+            params.put("info", json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getRequest(Url.SALE_REPORT_BY_DAY, params, getHeader(), listener);
     }
 
     /**
@@ -2118,12 +2148,10 @@ public class Api extends BaseRequest {
     /**
      * 订单退货
      *
-     * @param billDetailsId
-     * @param returnReason
      * @param listener
      * @return
      */
-    public static StringRequest returnSaleBillGoods(int billDetailsId, int returnReason, OnRequestListener listener)
+    public static StringRequest returnSaleBillGoods(int productId, int employeeId,int payOrderId,int count,String reason, double sum,OnRequestListener listener)
     {
         Map<String, String> params = null;
         Map<String, Integer> objMap = null;
@@ -2131,10 +2159,15 @@ public class Api extends BaseRequest {
         try {
             params = new HashMap<>();
             objMap = new HashMap<>();
-            objMap.put("billDetailsId", billDetailsId);
-            objMap.put("returnReason", returnReason);
+            params.put("productId", productId+"");
+            params.put("employeeId", employeeId+"");
+            params.put("payOrderId", payOrderId+"");
+            params.put("count", count+"");
+            params.put("reason", reason);
+            params.put("sum", sum+"");
             String json = FastJsonUtil.bean2Json(objMap);
             info = Base64Util.encode(json.getBytes("UTF-8"));
+            params.clear();
             params.put("info", info);
         } catch (Exception e) {
             e.printStackTrace();

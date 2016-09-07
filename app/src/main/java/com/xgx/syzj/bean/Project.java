@@ -15,6 +15,34 @@ public class Project implements Parcelable{
     private String status;
     private int payType;
     private String type;
+    private boolean isFinish=false;
+    private double MylaborTime=0;
+    private boolean changePrice=false;
+    public boolean isChangePrice() {
+        return changePrice;
+    }
+
+    public void setChangePrice(boolean changePrice) {
+        this.changePrice = changePrice;
+    }
+
+    public double getMylaborTime() {
+        return MylaborTime;
+    }
+
+    public void setMylaborTime(double mylaborTime) {
+        MylaborTime = mylaborTime;
+    }
+
+    public boolean isFinish() {
+        return isFinish;
+    }
+
+    public void setFinish(boolean finish) {
+        isFinish = finish;
+    }
+
+
 
     public Project(){}
 
@@ -105,6 +133,8 @@ public class Project implements Parcelable{
         dest.writeString(this.status);
         dest.writeInt(this.payType);
         dest.writeString(this.type);
+        dest.writeDouble(this.MylaborTime);
+
     }
 
     protected Project(Parcel in)
@@ -117,6 +147,7 @@ public class Project implements Parcelable{
         this.status = in.readString();
         this.payType = in.readInt();
         this.type = in.readString();
+        this.MylaborTime = in.readDouble();
     }
 
     public static final Creator<Project> CREATOR = new Creator<Project>() {
@@ -132,4 +163,15 @@ public class Project implements Parcelable{
             return new Project[size];
         }
     };
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Project project = (Project) o;
+
+        return id == project.id;
+
+    }
 }
